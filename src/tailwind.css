@@ -12,9 +12,18 @@ body {
 }
 
 article {
-  @apply font-serif leading-normal;
+  max-width: 70ch;
+  @apply font-serif leading-normal ml-auto mr-auto text-lg;
 }
 
 code, pre {
   @apply font-mono leading-snug;
+}
+
+code {
+  @apply border border-red-400 text-red-600 px-1 text-base;
+}
+
+article p:not(:first-child) {
+  @apply mt-4;
 }
