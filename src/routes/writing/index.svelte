@@ -1,6 +1,6 @@
 <script context="module">
   export async function preload() {
-    let posts = await this.fetch('/api/posts/').then((r) => r.json());
+    let posts = await this.fetch('/api/posts/all').then((r) => r.json());
     return { posts };
   }
 </script>
@@ -49,7 +49,7 @@
     {#each activePosts as post (post.id)}
       <div
         animate:flip={{ duration: 300 }}
-        transition:blur
+        transition:blur|local
         class="border border-teal-700 p-2 m-4 shadow-md">
         <p class="text-lg">
           <a rel="prefetch" href="writing/{post.id}">{post.title}</a>
