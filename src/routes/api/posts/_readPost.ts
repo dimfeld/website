@@ -5,8 +5,11 @@ import { Dictionary } from 'lodash';
 
 export interface Post {
   id: string;
+  title: string;
+  tags: string;
+  date: string;
+  summary: string;
   content: string;
-  [header: string]: string;
 }
 
 export const contentDir = path.join(
@@ -14,7 +17,7 @@ export const contentDir = path.join(
   'posts'
 );
 
-export async function readPost(filePath: string) {
+export async function readPost(filePath: string): Promise<Post | null> {
   try {
     var data = (await fs.readFile(filePath)).toString();
   } catch (e) {
@@ -34,9 +37,11 @@ export async function readPost(filePath: string) {
       return acc;
     }, {});
 
+  let id = path.basename(filePath);
+  let ext = path.extname(id);
   return {
-    id: path.basename(filePath),
+    id: id.slice(0, -ext.length),
     content: content.trim(),
     ...headers,
-  };
+  } as Post;
 }

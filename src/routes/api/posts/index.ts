@@ -1,4 +1,4 @@
-import { Dictionary } from 'lodash';
+import { orderBy, Dictionary } from 'lodash';
 import { ServerResponse } from 'http';
 import * as path from 'path';
 import globMod from 'glob';
@@ -12,12 +12,12 @@ const contentGlob = path.join(contentDir, '*.md');
 export async function get(req, res: ServerResponse, next) {
   let fileNames = await glob(contentGlob);
   let files = await Promise.all(fileNames.map(readPost));
-  let output = files.reduce((acc: Dictionary<Post>, file) => {
-    if (file) {
-      acc[file.id] = file;
-    }
-    return acc;
-  }, {});
+  let output = files.filter(Boolean).map((file) => {
+    let { content, ...rest } = file;
+    return rest;
+  });
+
+  output = orderBy(output, 'date', 'desc');
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(output));
