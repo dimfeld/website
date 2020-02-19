@@ -1,25 +1,38 @@
 <script>
-  import capitalize from "lodash/capitalize";
+  import capitalize from 'lodash/capitalize';
   export let segment;
-  const links = ["about", "writing", "work"];
+  const links = ['about', 'writing', 'work'];
+
+  $: linkIndex = links.indexOf(segment);
+
+  let backgroundHighlightStyle = '';
+  $: {
+    // The size of the first element + the size of each element + the extra skew offset
+    let width;
+    let left;
+    if (linkIndex === -1) {
+      left = -8;
+      width = 226 + left;
+    } else {
+      left = 226 + linkIndex * 120;
+      width = 120;
+    }
+
+    backgroundHighlightStyle = `width:${width}px;left:${left}px`;
+  }
 </script>
 
 <style lang="postcss">
   a {
-    @apply align-middle h-full transition-colors duration-500 ease-out flex flex-row items-center;
+    @apply h-full transition-colors duration-500 ease-in-out flex flex-row items-center;
   }
 
   a.section-link {
-    @apply px-6 font-medium transform -skew-x-12;
+    @apply justify-center font-medium;
   }
 
   a.section-link.current-link {
-    @apply text-white bg-teal-700;
-  }
-
-  a.section-link > * {
-    /* Unskew the outer element's skew, so that the text is upright */
-    @apply transform skew-x-12;
+    @apply text-white;
   }
 
   a.section-link:not(.current-link) {
@@ -29,18 +42,36 @@
   a.section-link:not(.current-link):hover {
     @apply text-teal-500;
   }
+
+  #bg-highlight {
+    transition-property: left, width;
+    transform: skewX(-20deg);
+  }
 </style>
 
 <div
   id="navbar"
-  class="flex flex-row items-stretch h-12 inset-x-0 px-2 text-xl shadow-sm
-  shadow-inner bg-teal-900">
-  <a class="text-teal-100 hover:text-teal-200 ml-4 mr-8" href="/">
-    Daniel Imfeld
+  class="flex flex-row items-stretch inset-x-0 text-xl shadow-sm shadow-inner
+  bg-teal-900"
+  style="height:48px">
+  <div
+    id="bg-highlight"
+    class="absolute h-full bg-teal-700 duration-1000 ease-out
+    transition-transform top-0 left-0"
+    style={backgroundHighlightStyle} />
+  <a
+    class="text-teal-100 hover:text-teal-200"
+    style="width:226px;padding-left:24px;padding-right:32px"
+    href="/">
+    <span>Daniel Imfeld</span>
   </a>
   {#each links as link (link)}
-    <a class:current-link={segment === link} class="section-link" href={link}>
-      <span>{capitalize(link)}</span>
+    <a
+      class:current-link={segment === link}
+      class="section-link"
+      style="width:120px"
+      href={link}>
+      {capitalize(link)}
     </a>
   {/each}
 </div>
