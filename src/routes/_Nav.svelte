@@ -60,6 +60,7 @@
     transition-transform top-0 left-0"
     style={backgroundHighlightStyle} />
   <a
+    rel="prefetch"
     class="text-teal-100 hover:text-teal-200"
     style="width:226px;padding-left:24px;padding-right:32px"
     href="/">
@@ -67,6 +68,7 @@
   </a>
   {#each links as link (link)}
     <a
+      rel="prefetch"
       class:current-link={segment === link}
       class="section-link"
       style="width:120px"
