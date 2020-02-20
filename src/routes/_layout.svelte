@@ -1,7 +1,9 @@
 <script>
-  import Nav from "./_Nav.svelte";
+  import Nav from './_Nav.svelte';
   export let segment;
 </script>
 
-<Nav {segment} />
-<slot />
+<div class="flex flex-row flex-col">
+  <Nav {segment} />
+  <slot />
+</div>

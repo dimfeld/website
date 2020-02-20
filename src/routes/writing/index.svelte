@@ -26,8 +26,8 @@
   let tags = Array.from(tagsSet).sort();
 </script>
 
-<div class="flex flex-row">
-  <div class="flex flex-col w-1/4 ml-4 mt-4">
+<div class="flex flex-row items-baseline flex-shrink">
+  <!-- <div class="flex flex-col ml-4 mt-4" style="width:15ch">
     <a
       class:bg-gray-300={!activeTag}
       class="p-1"
@@ -44,18 +44,20 @@
         {tag}
       </a>
     {/each}
-  </div>
-  <div class="flex flex-row sm:w-3/4 ml-auto mr-auto">
+  </div> -->
+  <div class="flex flex-row flex-shrink flex-wrap justify-center">
     {#each activePosts as post (post.id)}
       <div
         animate:flip={{ duration: 300 }}
         transition:blur|local
-        class="border border-teal-700 p-2 m-4 shadow-md">
+        style="flex-basis:300px"
+        class="border border-teal-700 p-2 m-4 shadow-md flex-shrink flex
+        flex-col">
         <p class="text-lg">
           <a rel="prefetch" href="writing/{post.id}">{post.title}</a>
         </p>
         <p>{post.summary}</p>
-        <p class="flex flex-row text-sm text-right">
+        <p class="flex flex-row text-sm text-right mt-auto pt-2">
           <span>{post.tags}</span>
           <span class="ml-auto">{post.date}</span>
         </p>
