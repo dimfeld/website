@@ -53,10 +53,10 @@
         style="flex-basis:300px"
         class="border border-teal-700 p-2 m-4 shadow-md flex-shrink flex
         flex-col">
-        <p class="text-lg">
-          <a rel="prefetch" href="writing/{post.id}">{post.title}</a>
-        </p>
-        <p>{post.summary}</p>
+        <a rel="prefetch" href="writing/{post.id}">
+          <p class="text-lg">{post.title}</p>
+          <p>{post.summary}</p>
+        </a>
         <p class="flex flex-row text-sm text-right mt-auto pt-2">
           <span>{post.tags}</span>
           <span class="ml-auto">{post.date}</span>
