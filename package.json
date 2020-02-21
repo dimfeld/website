@@ -4,8 +4,8 @@
   "license": "Apache-2.0",
   "version": "0.0.1",
   "scripts": {
-    "dev": "sapper dev",
-    "build": "sapper export",
+    "dev": "sapper dev --ext '.svx .svelte'",
+    "build": "sapper export --ext '.svx .svelte'",
     "build-local": "sapper build",
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
@@ -19,6 +19,7 @@
     "date-fns": "^2.8.1",
     "date-fns-tz": "^1.0.8",
     "debug": "^4.1.1",
+    "front-matter": "^3.1.0",
     "glob": "^7.1.6",
     "highlight.js": "^9.18.1",
     "linkify-it": "^2.2.0",

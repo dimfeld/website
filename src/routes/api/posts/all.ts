@@ -1,7 +1,9 @@
 import { orderBy, Dictionary } from 'lodash';
 import { ServerResponse } from 'http';
+import { promises as fs } from 'fs';
 import * as path from 'path';
 import globMod from 'glob';
+import frontMatter from 'front-matter';
 import { promisify } from 'util';
 import { contentDir, readPost, Post } from './_readPost';
 import pkgDir from 'pkg-dir';
@@ -24,12 +26,18 @@ async function readMdFiles() {
 }
 
 async function readSvelteFiles() {
-  let filenames = (await glob(svelteGlob)).filter((f) => {
-    let base = path.basename(f);
-    return base !== '[id].svelte' && base !== 'index.svelte';
-  });
-  let components = await Promise.all(filenames.map((f) => import(f)));
-  return components.map((c) => c.metadata);
+  let filenames = await glob(svelteGlob);
+  return Promise.all(
+    filenames.map(async (f) => {
+      let data = await fs.readFile(f);
+      let { attributes } = frontMatter(data.toString());
+      let id = path.basename(f).slice(0, -4);
+      return {
+        id,
+        ...attributes,
+      };
+    })
+  );
 }
 
 export async function get(req, res: ServerResponse, next) {

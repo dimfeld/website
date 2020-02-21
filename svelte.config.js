@@ -1,5 +1,6 @@
 const sveltePreprocess = require('svelte-preprocess');
 const { mdsvex } = require('mdsvex');
+const path = require('path');
 
 const highlight = require('highlight.js');
 const footnote = require('markdown-it-footnote');
@@ -21,6 +22,7 @@ module.exports = {
     }),
     mdsvex({
       extension: '.svx',
+      layout: path.join(__dirname, 'src/routes/writing/_Article.svelte'),
       parser: (md) =>
         md
           .use(footnote)

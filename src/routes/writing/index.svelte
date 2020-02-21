@@ -45,17 +45,19 @@
       </a>
     {/each}
   </div> -->
-  <div class="flex flex-row flex-shrink flex-wrap justify-center">
+  <!-- <div class="flex flex-row flex-shrink flex-wrap justify-center"> -->
+  <div
+    class="w-full flex flex-row flex-wrap justify-center sm:grid"
+    style="grid-template-columns: repeat(auto-fit, 300px);">
     {#each activePosts as post (post.id)}
       <div
         animate:flip={{ duration: 300 }}
         transition:blur|local
         style="flex-basis:300px"
-        class="border border-teal-700 p-2 m-4 shadow-md flex-shrink flex
-        flex-col">
+        class="border border-teal-700 p-2 m-4 shadow-md flex-1 flex flex-col">
         <a rel="prefetch" href="writing/{post.id}">
           <p class="text-lg">{post.title}</p>
-          <p>{post.summary}</p>
+          <p>{post.summary || ''}</p>
         </a>
         <p class="flex flex-row text-sm text-right mt-auto pt-2">
           <span>{post.tags}</span>

@@ -1,0 +1,15 @@
+---
+title: Another Post
+date: 2019-05-01
+tags: Tech
+---
+
+```js exec
+let x = 5;
+```
+
+This is something
+
+{x}
+
+{_metadata.title}

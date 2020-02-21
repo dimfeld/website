@@ -2,6 +2,7 @@ import { promises as fs } from 'fs';
 import * as path from 'path';
 import pkgDir from 'pkg-dir';
 import { Dictionary } from 'lodash';
+import frontMatter from 'front-matter';
 
 export interface Post {
   id: string;
@@ -19,29 +20,17 @@ export const contentDir = path.join(
 
 export async function readPost(filePath: string): Promise<Post | null> {
   try {
-    var data = (await fs.readFile(filePath)).toString();
+    var data = await fs.readFile(filePath);
   } catch (e) {
     return null;
   }
 
-  let [headerText, content] = data.split('---', 2);
-
-  let headers = headerText
-    .split('\n')
-    .reduce((acc: Dictionary<string>, headerLine) => {
-      let [key, value] = headerLine.split(':', 2);
-      key = key.trim().toLowerCase();
-      if (key) {
-        acc[key] = value.trim();
-      }
-      return acc;
-    }, {});
-
+  let { attributes, body } = frontMatter(data.toString());
   let id = path.basename(filePath);
   let ext = path.extname(id);
   return {
     id: id.slice(0, -ext.length),
-    content: content.trim(),
-    ...headers,
+    content: body.trim(),
+    ...attributes,
   } as Post;
 }
