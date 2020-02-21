@@ -61,9 +61,6 @@
     @apply text-teal-500;
   }
 
-  #vert-navbar a {
-  }
-
   #bg-highlight {
     transition-property: left, width;
     transform: skewX(-20deg);
@@ -90,7 +87,9 @@
       style={backgroundHighlightStyle} />
     <a
       rel="prefetch"
-      class="text-teal-100 hover:text-teal-200"
+      class="hover:text-teal-200"
+      class:text-white={!segment}
+      class:text-teal-100={segment}
       style="width:226px;padding-left:24px;padding-right:32px"
       href="/">
       <span class="whitespace-no-wrap">Daniel Imfeld</span>
@@ -108,8 +107,13 @@
   </div>
 
   <div id="vert-navbar" class="w-full flex sm:hidden flex-row items-center">
+    <div
+      id="bg-highlight"
+      class="absolute bg-teal-700 h-full top-0"
+      style="left:-8px;width:218px" />
     <a
-      class="section-link current-link ml-4"
+      class="text-white"
+      style="padding-left:24px"
       href={currentLink ? currentLink.name : '/'}>
       {currentLink ? capitalize(currentLink.name) : 'Daniel Imfeld'}
     </a>
@@ -131,16 +135,41 @@
 
     {#if displayNav}
       <div
-        class="absolute bg-teal-900 w-full z-30 flex flex-col pl-4 pb-4 border-t
-        border-teal-600 shadow-md"
+        class="absolute bg-teal-900 w-full z-30 flex flex-col pb-4 border-t
+        border-teal-700 shadow-md"
         style="top:48px"
         transition:slide={{ duration: 200 }}>
+        <a
+          rel="prefetch"
+          class:current-link={!segment}
+          class="section-link justify-start font-medium pl-4 py-2 w-full
+          hover:bg-teal-800"
+          on:click={() => (displayNav = false)}
+          href="/">
+          <span class="w-8 h-8">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              class="icon-home">
+              <path
+                class="primary"
+                d="M9 22H5a1 1 0 0 1-1-1V11l8-8 8 8v10a1 1 0 0 1-1 1h-4a1 1 0 0
+                1-1-1v-4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v4a1 1 0 0 1-1 1zm3-9a2 2
+                0 1 0 0-4 2 2 0 0 0 0 4z" />
+              <path
+                class="secondary"
+                d="M12.01 4.42l-8.3 8.3a1 1 0 1 1-1.42-1.41l9.02-9.02a1 1 0 0 1
+                1.41 0l8.99 9.02a1 1 0 0 1-1.42 1.41l-8.28-8.3z" />
+            </svg>
+          </span>
+          <span class="ml-2">Home</span>
+        </a>
         {#each links as { name, icon }}
           <a
             rel="prefetch"
             class:current-link={segment === name}
-            class="section-link justify-start font-medium py-2 w-full"
-            style="width:120px"
+            class="section-link justify-start font-medium pl-4 py-2 w-full
+            hover:bg-teal-800"
             on:click={() => (displayNav = false)}
             href={name}>
             <span class="w-8 h-8">
