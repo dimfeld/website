@@ -41,13 +41,17 @@ async function readSvelteFiles() {
 }
 
 export async function get(req, res: ServerResponse, next) {
-  let [mdPosts, sveltePosts] = await Promise.all([
-    readMdFiles(),
-    readSvelteFiles(),
-  ]);
+  try {
+    let [mdPosts, sveltePosts] = await Promise.all([
+      readMdFiles(),
+      readSvelteFiles(),
+    ]);
 
-  let output = orderBy([...mdPosts, ...sveltePosts], 'date', 'desc');
+    let output = orderBy([...mdPosts, ...sveltePosts], 'date', 'desc');
 
-  res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(output));
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(output));
+  } catch (e) {
+    next(e);
+  }
 }
