@@ -79,7 +79,7 @@
   class="flex flex-row items-stretch inset-x-0 text-xl shadow-sm shadow-inner
   bg-teal-900"
   style="height:48px">
-  <div id="horz-navbar" class="hidden sm:flex flex-row">
+  <div id="horz-navbar" class="hidden sm:flex flex-row w-full">
     <div
       id="bg-highlight"
       class="absolute h-full bg-teal-700 duration-1000 ease-out
@@ -104,6 +104,15 @@
         {capitalize(name)}
       </a>
     {/each}
+
+    <a
+      class="ml-auto mr-4 text-teal-200"
+      rel="alternate"
+      type="application/rss+xml"
+      href="/rss.xml">
+      RSS
+    </a>
+
   </div>
 
   <div id="vert-navbar" class="w-full flex sm:hidden flex-row items-center">

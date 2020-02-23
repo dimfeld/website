@@ -1,15 +1,17 @@
 ---
-title: Another Post
+title: SVX Sample
 date: 2019-05-01
 tags: Tech
 ---
 
 ```js exec
-let x = 5;
+import { onDestroy } from 'svelte';
+let x = 0;
+let t = setInterval(() => x += 1, 1000);
+onDestroy(() => clearInterval(t));
 ```
 
 This is something
 
 {x}
 
-{_metadata.title}
