@@ -7,17 +7,20 @@ export async function get(req, res, next) {
     let posts = await getAll();
     posts = orderBy(posts, 'date', 'desc').slice(0, 10);
 
+    let host = `https://${req.headers.host || 'imfeld.dev'}`;
+
     let feed = new RSS({
       title: `Daniel Imfeld's blog`,
+      managingEditor: 'Daniel Imfeld',
       description: 'Tech writing from Daniel Imfeld',
-      feed_url: 'https://imfeld.dev/rss.xml',
-      site_url: 'https://imfeld.dev/',
-      copyright: 'Daniel Imfeld 2020-',
+      feed_url: `${host}/rss.xml`,
+      site_url: host,
+      copyright: 'Daniel Imfeld 2020',
       categories: ['technology', 'programming'],
       language: 'English',
     });
 
-    let baseUrl = `https://imfeld.dev/writing/`;
+    let baseUrl = `${host}/writing/`;
     for (let post of posts) {
       feed.item({
         date: post.date,
