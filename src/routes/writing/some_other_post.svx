@@ -1,7 +1,9 @@
 ---
-title: SVX Sample
+title: SVX Sample with a really really long title. I mean this is a long one.
 date: 2019-05-01
 tags: Tech
+summary: A test of Svelte code inline with Markdown
+longSummary: I've been wondering about how to do it. Now I know. Isn't that interesting? You can mix markdown with Svelte code.
 ---
 
 ```js exec

@@ -54,9 +54,15 @@
       <div
         animate:flip={{ duration: 300 }}
         transition:blur|local
-        class="border border-teal-700 p-2 m-4 shadow-md flex-1 flex flex-col">
-        <a rel="prefetch" href="writing/{post.id}">
-          <h2 class="text-lg">{post.title}</h2>
+        class="rounded-sm border border-teal-700 p-2 m-4 shadow-md flex-1 flex
+        flex-col">
+        <a rel="prefetch" href="writing/{post.id}" class="text-lg">
+          {post.title}
+        </a>
+        <a
+          class="hover:no-underline text-black"
+          rel="prefetch"
+          href="writing/{post.id}">
           <p>{post.summary || ''}</p>
         </a>
         <p class="flex flex-row text-sm text-right mt-auto pt-2">

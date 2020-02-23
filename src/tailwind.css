@@ -34,3 +34,29 @@ pre > code {
 article p:not(:first-child) {
   @apply mt-2;
 }
+
+a {
+  @apply text-teal-700;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  @apply text-2xl;
+}
+
+h2 {
+  @apply text-xl;
+}
+
+h3 {
+  @apply text-lg;
+}
+
+h1:not(:first-child),
+h2:not(:first-child),
+h3:not(:first-child) {
+  @apply mt-4;
+}
