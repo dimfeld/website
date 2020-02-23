@@ -7,7 +7,7 @@ export async function get(req, res, next) {
     let posts = await getAll();
     posts = orderBy(posts, 'date', 'desc').slice(0, 10);
 
-    let host = `https://${req.headers.host || 'imfeld.dev'}`;
+    let host = `https://imfeld.dev`;
 
     let feed = new RSS({
       title: `Daniel Imfeld's blog`,
