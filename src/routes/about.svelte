@@ -6,20 +6,19 @@
 
   <p>
     I'm a co-founder of
-    <a href="https://www.carevoyance.com">Carevoyance</a>
-    , a sales acceleration tool that enables healthcare sellers to find their
-    best prospects and then generate custom reports specific to each one. He
-    spends most of this time building and maintaining the data analyses, backend
-    API and database systems, and utilities to automate repetitive data tasks.
+    <a href="https://www.carevoyance.com">Carevoyance</a>, a sales acceleration
+    tool that enables healthcare sellers to find their best prospects and then
+    generate custom reports specific to each one. He spends most of this time
+    building and maintaining the data analyses, backend API and database
+    systems, and utilities to automate repetitive data tasks.
   </p>
 
   <p>
     Before starting my own venture, I interfaced with advanced network switching
-    chips at
-    <a href="https://www.arista.com">Arista Networks</a>
-    and worked on JTAG hardware debuggers and embedded operating systems at
-    <a href="https://www.ghs.com">Green Hills Software</a>
-    . Although the rollercoaster
+    chips at <a href="https://www.arista.com">Arista Networks</a> and worked on
+    JTAG hardware debuggers and embedded operating systems at
+    <a href="https://www.ghs.com">Green Hills Software</a>. Although the
+    rollercoaster
   </p>
 
   <p>
@@ -37,5 +36,4 @@
       <a href="http:///www.github.com/dimfeld">Github</a>
     </li>
   </ul>
-
 </article>

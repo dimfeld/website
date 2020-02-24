@@ -1,5 +1,14 @@
 {
   "singleQuote": true,
   "trailingComma": "es5",
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "overrides": [
+    {
+      "files": ["*.svelte", "*.svx"],
+      "options": {
+        "quoteProps": "preserve",
+        "parser": "lwc"
+      }
+    }
+  ]
 }
