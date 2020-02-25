@@ -50,14 +50,14 @@
   </div> -->
   <!-- <div class="flex flex-row flex-shrink flex-wrap justify-center"> -->
   <div
-    class="w-full flex flex-col items-stretch sm:grid max-w-lg w-64
+    class="w-full flex flex-col items-stretch sm:grid
     sm:max-w-none"
     style="grid-template-columns: repeat(auto-fit, 300px);">
     {#each activePosts as post (post.id)}
       <div
         animate:flip={{ duration: 300 }}
         transition:blur|local
-        class="rounded-sm border border-teal-700 p-2 m-4 shadow-md flex-1 flex
+        class="sm:rounded-sm border-b  sm:border border-teal-500 sm:border-teal-700 p-2 sm:m-4 sm:shadow-md flex-1 flex
         flex-col">
         <a rel="prefetch" href="writing/{post.id}" class="text-lg">
           {post.title}
