@@ -14,10 +14,11 @@
   </p>
 
   <p>
-    I spend most of my time adding new data analyses, updating and maintaining
-    the backend API and database systems, and tooling to automate repetitive
-    data tasks. Now and then I get to touch the front-end too, and most recently
-    have been spearheading a transition from AngularJS (1.x) to Svelte.
+    I spend most of my time there adding new data analyses, updating and
+    maintaining the backend API and database systems, and developing tooling to
+    research data anomalies and automate repetitive tasks. Now and then I get to
+    touch the front-end too, and most recently have been spearheading a
+    transition from AngularJS (1.x) to Svelte.
   </p>
 
   <p>
@@ -34,8 +35,8 @@
   <p>
     Sometimes I wish I could code all day and night, but when not hacking on
     something or spending time with my family, I enjoy good coffee, nature
-    photography, and improving my design and UX skills. I'm also active in my
-    church and run the sound board there every few weeks.
+    photography, reading, and improving my nascent design and UX skills. I'm
+    also active in my church and run the sound board there every few weeks.
   </p>
 
   <h1>Where to find me</h1>
@@ -49,5 +50,15 @@
     biggest project is a
     <a href="https://github.com/dimfeld/httptreemux">Go HTTP router</a> I wrote
     in 2014 but never advertised :)
+  </p>
+
+  <h1>About this site</h1>
+  <p>
+    The website is written using <a href="https://svelte.dev/">Svelte</a>,
+    <a href="https://sapper.svelte.dev/">Sapper</a>, and
+    <a href="https://tailwindcss.com/">Tailwind</a>, and hosted on
+    <a href="https://zeit.co/">ZEIT Now</a>. Icons sourced from the
+    <a href="https://refactoringui.com/">Refactoring UI</a> icon set and
+    <a href="https://iconmonstr.com/">iconmonstr</a>.
   </p>
 </article>
