@@ -8,7 +8,10 @@
 <script>
   import { blur } from 'svelte/transition';
   import { flip } from 'svelte/animate';
+  import { getContext } from 'svelte';
   export let posts;
+
+  getContext('title').set('Writing');
 
   let activeTag;
   $: activePosts = posts.filter(

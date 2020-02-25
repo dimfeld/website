@@ -8,6 +8,8 @@
 <script>
   export let latestPost;
   import Article from './writing/_Article.svelte';
+  import { getContext } from 'svelte';
+  getContext('title').set('');
 </script>
 
 <div class="m-4">
@@ -21,5 +23,4 @@
   <p class="mt-4">
     <a class="text-black" rel="prefetch" href="writing">See All Posts...</a>
   </p>
-
 </div>

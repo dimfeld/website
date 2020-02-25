@@ -1,6 +1,10 @@
 <script>
   export let title;
   export let date;
+
+  import { getContext } from 'svelte';
+  getContext('title').set(title);
+
 </script>
 
 <article class="mt-4">

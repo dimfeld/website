@@ -1,3 +1,8 @@
+<script>
+  import { getContext } from 'svelte';
+  getContext('title').set('About');
+</script>
+
 <article class="mt-2">
   <p>
     Welcome! I've been programming since an early age when my dad gave me a book
@@ -30,10 +35,10 @@
   <h1>Where to find me</h1>
   <ul>
     <li>
-      <a href="http:///www.twitter.com/dimfeld">Twitter</a>
+      <a href="https:///www.twitter.com/dimfeld">Twitter</a>
     </li>
     <li>
-      <a href="http:///www.github.com/dimfeld">Github</a>
+      <a href="https:///www.github.com/dimfeld">Github</a>
     </li>
   </ul>
 </article>

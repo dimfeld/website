@@ -1,7 +1,18 @@
 <script>
+  import { setContext } from 'svelte';
+  import { writable } from 'svelte/store';
   import Nav from './_Nav.svelte';
   export let segment;
+
+  const titleStore = writable('');
+  setContext('title', titleStore);
+
+  $: title = $titleStore ? `${$titleStore} - Daniel Imfeld` : 'Daniel Imfeld'
 </script>
+
+<svelte:head>
+  <title>{title}</title>
+</svelte:head>
 
 <div class="flex flex-row flex-col">
   <Nav {segment} />
