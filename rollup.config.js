@@ -9,6 +9,7 @@ import postcss from 'rollup-plugin-postcss';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
+import * as glob from 'glob';
 const svelteConfig = require('./svelte.config');
 
 const mode = process.env.NODE_ENV;
@@ -74,6 +75,16 @@ const babelClientConfig = {
   ].filter(Boolean),
 };
 
+const watchPlugin = {
+  name: 'watch-content',
+  buildStart(id) {
+    let files = glob.sync(__dirname + '/posts/**/*.md');
+    for (let file of files) {
+      this.addWatchFile(file);
+    }
+  },
+};
+
 export default {
   client: {
     input: config.client.input(),
@@ -114,6 +125,7 @@ export default {
     input: config.server.input(),
     output: config.server.output(),
     plugins: [
+      watchPlugin,
       replace({
         'process.browser': false,
         'process.env.NODE_ENV': JSON.stringify(mode),

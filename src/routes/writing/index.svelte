@@ -57,7 +57,7 @@
       <div
         animate:flip={{ duration: 300 }}
         transition:blur|local
-        class="sm:rounded-sm border-b  sm:border border-teal-500 sm:border-teal-700 p-2 sm:m-4 sm:shadow-md flex-1 flex
+        class="sm:rounded-sm border-b sm:border border-teal-500 sm:border-teal-700 p-2 sm:m-4 sm:shadow-md flex-1 flex
         flex-col">
         <a rel="prefetch" href="writing/{post.id}" class="text-lg">
           {post.title}
@@ -69,8 +69,10 @@
           <p>{post.summary || ''}</p>
         </a>
         <p class="flex flex-row text-sm text-right mt-auto pt-2">
-          <span>{post.tags}</span>
+          <span>{post.tags || ''}</span>
+          {#if post.date}
           <time class="ml-auto">{post.date.slice(0, 10)}</time>
+          {/if}
         </p>
       </div>
     {/each}

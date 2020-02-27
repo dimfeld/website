@@ -17,6 +17,6 @@
   export let post;
 </script>
 
-<Article title={post.title} date={post.date}>
+<Article {...post}>
   {@html post.content}
 </Article>

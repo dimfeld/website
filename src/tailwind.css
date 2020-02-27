@@ -35,6 +35,14 @@ article p + p {
   @apply mt-2;
 }
 
+hr.footnotes-sep {
+  @apply mt-8;
+}
+
+section.footnotes > ol > li {
+  @apply list-outside list-decimal;
+}
+
 a {
   @apply text-teal-700;
 }

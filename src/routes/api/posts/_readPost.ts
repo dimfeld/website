@@ -5,41 +5,17 @@ import { Dictionary } from 'lodash';
 import frontMatter from 'front-matter';
 import globMod from 'glob';
 import { promisify } from 'util';
-import markdownIt from 'markdown-it';
-import * as highlight from 'highlight.js';
-import * as footnote from 'markdown-it-footnote';
-import * as abbr from 'markdown-it-abbr';
-import * as toc from 'markdown-it-toc-done-right';
-import * as anchor from 'markdown-it-anchor';
-
-export const renderer = markdownIt({
-  linkify: true,
-  highlight: function(str, lang) {
-    if (lang && highlight.getLanguage(lang)) {
-      try {
-        return highlight.highlight(lang, str).value;
-      } catch (__) {}
-    }
-
-    return ''; // use external default escaping
-  },
-})
-  .use(footnote)
-  .use(abbr)
-  .use(toc)
-  .use(anchor, {
-    permalink: true,
-    permalinkSymbol: '§',
-  });
 
 export interface Post {
   id: string;
   format: 'md' | 'svx';
   title: string;
-  tags: string;
+  tags?: string;
   date: string;
   summary: string;
   content: string;
+  epistemic_status?: string;
+  epistemic_effort?: string;
 }
 
 export const contentDir = path.join(
