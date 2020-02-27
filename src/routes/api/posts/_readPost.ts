@@ -14,8 +14,8 @@ export interface Post {
   date: string;
   summary: string;
   content: string;
-  epistemic_status?: string;
-  epistemic_effort?: string;
+  status?: string;
+  status_code?: string;
 }
 
 export const contentDir = path.join(

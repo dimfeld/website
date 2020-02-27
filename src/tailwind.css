@@ -18,6 +18,14 @@ article {
   @apply font-serif leading-normal ml-auto mr-auto text-lg;
 }
 
+article ol > li {
+  @apply list-outside list-decimal;
+}
+
+article ul > li {
+  @apply list-outside list-disc;
+}
+
 code,
 pre {
   @apply font-mono leading-snug;
@@ -31,16 +39,12 @@ pre > code {
   @apply block border-gray-400 bg-gray-200 text-black p-4;
 }
 
-article p + p {
-  @apply mt-2;
+article p:not(:first-child) {
+  @apply mt-4;
 }
 
 hr.footnotes-sep {
   @apply mt-8;
-}
-
-section.footnotes > ol > li {
-  @apply list-outside list-decimal;
 }
 
 a {

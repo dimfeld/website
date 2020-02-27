@@ -14,7 +14,7 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="flex flex-row flex-col">
+<div class="flex flex-col min-h-screen">
   <Nav {segment} />
   <slot />
 </div>

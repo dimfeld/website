@@ -17,6 +17,8 @@
   export let post;
 </script>
 
-<Article {...post}>
-  {@html post.content}
-</Article>
+<div class="mx-8">
+  <Article {...post}>
+    {@html post.content}
+  </Article>
+</div>

@@ -12,16 +12,12 @@ for (let status of labels.statuses) {
 function formatPostHeader(post: Post) {
   let headerLines = [];
 
-  if (post.epistemic_status) {
-    let status = statuses[post.epistemic_status];
-    let statusText = status ? status.long : post.epistemic_status;
-    if (statusText) {
-      headerLines.push(`Epistemic Status: ${statusText}`);
-    }
+  if (post.status) {
+    headerLines.push(`Status: ${post.status}`);
   }
 
-  if (post.epistemic_effort) {
-    headerLines.push(`Epistemic Effort: ${post.epistemic_effort}`);
+  if (post.tags) {
+    headerLines.push(`Tags: ${post.tags}`);
   }
 
   if (headerLines.length) {
