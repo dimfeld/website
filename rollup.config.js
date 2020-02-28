@@ -59,7 +59,7 @@ const babelClientConfig = {
     [
       '@babel/preset-env',
       {
-        targets: { chrome: 78 }, // dev ? { chrome: 78 } : '> 0.25%, not dead',
+        targets: dev ? { chrome: 78 } : '> 0.25%, not dead',
       },
     ],
     '@babel/preset-typescript',
@@ -79,6 +79,11 @@ const watchPlugin = {
   name: 'watch-content',
   buildStart(id) {
     let files = glob.sync(__dirname + '/posts/**/*.md');
+    for (let file of files) {
+      this.addWatchFile(file);
+    }
+
+    files = glob.sync(__dirname + '/notes/**/*.md');
     for (let file of files) {
       this.addWatchFile(file);
     }

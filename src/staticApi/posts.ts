@@ -1,9 +1,12 @@
+import get from 'lodash/get';
+import each from 'lodash/each';
+import partition from 'lodash/partition';
+import set from 'lodash/set';
 import orderBy from 'lodash/orderBy';
-import { postsGlob, notesGlob, readMdFiles, Post } from './readPosts';
+import { postsDir, notesDir, readMdFiles, Post } from './readPosts';
 import send from '@polka/send-type';
 import { Dictionary } from 'lodash';
-
-export { Post };
+import { IncomingMessage, ServerResponse } from 'http';
 
 export interface PostCache {
   tags: Map<string, Post[]>;
@@ -13,12 +16,17 @@ export interface PostCache {
   notes: Map<string, Post>;
 }
 
+function stripContent(p: Post) {
+  let { content, ...rest } = p;
+  return rest;
+}
+
 export var postCache: PostCache;
 
 export async function initPostCache() {
   let [postList, noteList] = await Promise.all([
-    readMdFiles(postsGlob, 'post'),
-    readMdFiles(notesGlob, 'note'),
+    readMdFiles(postsDir, 'post'),
+    readMdFiles(notesDir, 'note'),
   ]);
 
   postList = orderBy(postList, 'date', 'desc');
@@ -54,7 +62,7 @@ export async function initPostCache() {
 }
 
 export function allPosts(req, res) {
-  send(res, 200, postCache.postList);
+  send(res, 200, postCache.postList.map(stripContent));
 }
 
 export function getPost(req, res) {
@@ -62,20 +70,22 @@ export function getPost(req, res) {
   if (post) {
     send(res, 200, post);
   } else {
-    res.status(404).end();
+    res.writeHead(404).end();
   }
 }
 
 export function allNotes(req, res) {
-  send(res, 200, postCache.noteList);
+  send(res, 200, postCache.noteList.map(stripContent));
 }
 
-export function getNote(req, res) {
-  let post = postCache.notes.get(req.param.id);
+export function getNote(req, res: ServerResponse) {
+  let id = req.path.slice('/api/notes/'.length);
+  let post = postCache.notes.get(id);
+
   if (post) {
-    send(res, 200, post);
+    send(res, 200, { type: 'post', post });
   } else {
-    res.status(404).end();
+    res.writeHead(404).end(id);
   }
 }
 
@@ -92,7 +102,7 @@ export function noteTags(req, res) {
 export function getTag(req, res) {
   let tagNotes = postCache.tags.get(req.params.id);
   if (!tagNotes) {
-    return res.status(404).end();
+    return res.writeHead(404).end();
   }
 
   let strippedNotes = tagNotes.map((note) => {

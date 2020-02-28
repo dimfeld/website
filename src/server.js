@@ -30,8 +30,8 @@ async function run() {
     )
     .get('/api/posts', allPosts)
     .get('/api/posts/:id', getPost)
+    .get('/api/notes/*', getNote)
     .get('/api/notes', allNotes)
-    .get('/api/notes/:id', getNote)
     .get('/api/tags', noteTags)
     .get('/api/tags/:id', getTag)
     .listen(PORT, (err) => {

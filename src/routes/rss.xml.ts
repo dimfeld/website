@@ -32,14 +32,21 @@ export async function get(req, res, next) {
     let type = req.query.type;
     let host = `https://imfeld.dev`;
 
+    let title = `Daniel Imfeld's blog`;
+    let url = `${host}/rss.xml`;
     let posts: Post[];
     // Get whichever type of post we want. These are already sorted in descending date order so we
     // only need to sort again if combining them.
     if (type === 'writing') {
       posts = postCache.postList.slice(0, 10);
+      title += ' - Writing';
+      url += '?type=writing';
     } else if (type === 'notes') {
       posts = postCache.noteList.slice(0, 10);
+      title += ' - Notes';
+      url += 'type=notes';
     } else {
+      title += ' - All Content';
       posts = orderBy(
         [...postCache.postList, ...postCache.noteList],
         'date',
@@ -59,10 +66,10 @@ export async function get(req, res, next) {
     };
 
     let feed = new RSS({
-      title: `Daniel Imfeld's blog`,
+      title,
       managingEditor: 'Daniel Imfeld',
-      description: 'Tech writing from Daniel Imfeld',
-      feed_url: `${host}/rss.xml`,
+      description: `Daniel Imfeld's Writing and Notes`,
+      feed_url: url,
       site_url: host,
       copyright: 'Daniel Imfeld 2020',
       categories: ['technology', 'programming'],
