@@ -1,8 +1,8 @@
-import { getAll, Post } from './api/posts/_readPost';
 import renderFactory from '../markdown';
 import * as labels from '../postMeta';
 import orderBy from 'lodash/orderBy';
 import RSS from 'rss';
+import { postCache, Post } from '../staticApi/posts';
 
 let statuses: any = {};
 for (let status of labels.statuses) {
@@ -12,12 +12,12 @@ for (let status of labels.statuses) {
 function formatPostHeader(post: Post) {
   let headerLines = [];
 
-  if (post.status) {
-    headerLines.push(`Status: ${post.status}`);
+  if (post.tags && post.tags.length) {
+    headerLines.push(`Tags: ${post.tags.join(', ')}`);
   }
 
-  if (post.tags) {
-    headerLines.push(`Tags: ${post.tags}`);
+  if (post.status) {
+    headerLines.push(`Status: ${post.status}`);
   }
 
   if (headerLines.length) {
@@ -29,7 +29,23 @@ function formatPostHeader(post: Post) {
 
 export async function get(req, res, next) {
   try {
+    let type = req.query.type;
     let host = `https://imfeld.dev`;
+
+    let posts: Post[];
+    // Get whichever type of post we want. These are already sorted in descending date order so we
+    // only need to sort again if combining them.
+    if (type === 'writing') {
+      posts = postCache.postList.slice(0, 10);
+    } else if (type === 'notes') {
+      posts = postCache.noteList.slice(0, 10);
+    } else {
+      posts = orderBy(
+        [...postCache.postList, ...postCache.noteList],
+        'date',
+        'desc'
+      ).slice(0, 10);
+    }
 
     let renderer = renderFactory();
 
@@ -42,9 +58,6 @@ export async function get(req, res, next) {
       return defaultNormalize(url);
     };
 
-    let posts = await getAll();
-    posts = orderBy(posts, 'date', 'desc').slice(0, 10);
-
     let feed = new RSS({
       title: `Daniel Imfeld's blog`,
       managingEditor: 'Daniel Imfeld',
@@ -56,9 +69,9 @@ export async function get(req, res, next) {
       language: 'English',
     });
 
-    let baseUrl = `${host}/writing/`;
     for (let post of posts) {
-      let url = baseUrl + post.id;
+      let type = post.type === 'post' ? 'writing' : 'notes';
+      let url = `${host}/${type}/${post.id}`;
       let desc;
       if (post.format === 'md') {
         let body = renderer.render(post.content, { base: url });
@@ -72,7 +85,7 @@ export async function get(req, res, next) {
         title: post.title,
         description: desc,
         url,
-        categories: (post.tags || '').split(',').map((t) => t.trim()),
+        categories: post.tags || [],
       });
     }
 
