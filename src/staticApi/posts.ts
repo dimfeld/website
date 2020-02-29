@@ -1,12 +1,11 @@
-import get from 'lodash/get';
-import each from 'lodash/each';
-import partition from 'lodash/partition';
-import set from 'lodash/set';
 import orderBy from 'lodash/orderBy';
 import { postsDir, notesDir, readMdFiles, Post } from './readPosts';
 import send from '@polka/send-type';
 import { Dictionary } from 'lodash';
 import { IncomingMessage, ServerResponse } from 'http';
+import md from '../markdown';
+
+const renderer = md();
 
 export interface PostCache {
   tags: Map<string, Post[]>;
@@ -42,7 +41,7 @@ export async function initPostCache() {
 
   for (let note of noteList) {
     noteOutput.set(note.id, note);
-    for (let tag of note.tags || []) {
+    for (let tag of note.tags) {
       let tagNotes = tags.get(tag);
       if (tagNotes) {
         tagNotes.push(note);
@@ -65,9 +64,16 @@ export function allPosts(req, res) {
   send(res, 200, postCache.postList.map(stripContent));
 }
 
+export function latestPost(req, res) {
+  send(res, 200, postCache.postList[0]);
+}
+
 export function getPost(req, res) {
-  let post = postCache.posts.get(req.param.id);
+  let post = postCache.posts.get(req.params.id);
   if (post) {
+    post.content = renderer.render(post.content, {
+      base: `/writing/${post.id}`,
+    });
     send(res, 200, post);
   } else {
     res.writeHead(404).end();
@@ -79,21 +85,26 @@ export function allNotes(req, res) {
 }
 
 export function getNote(req, res: ServerResponse) {
-  let id = req.path.slice('/api/notes/'.length);
+  // req.params['*'] only contains the first path component so we have to do this.
+  let id = req.path.slice('/static-api/notes/'.length);
   let post = postCache.notes.get(id);
 
   if (post) {
-    send(res, 200, { type: 'post', post });
+    post = {
+      ...post,
+      content: renderer.render(post.content, { base: `/notes/${post.id}` }),
+    };
+
+    send(res, 200, post);
   } else {
     res.writeHead(404).end(id);
   }
 }
 
 export function noteTags(req, res) {
-  let output: Dictionary<{ count: number }> = {};
-
+  let output: Dictionary<{ posts: string[] }> = {};
   for (let [tagName, tagPosts] of postCache.tags.entries()) {
-    output[tagName] = { count: tagPosts.length };
+    output[tagName] = { posts: tagPosts.map((p) => p.id) };
   }
 
   send(res, 200, output);

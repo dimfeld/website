@@ -12,7 +12,7 @@ export interface Post {
   format: 'md' | 'svx';
   type: 'post' | 'note';
   title: string;
-  tags?: string[];
+  tags: string[];
   date: string;
   summary: string;
   content: string;
@@ -68,18 +68,18 @@ export async function readMdFiles(
   });
 }
 
-export async function readSvelteFiles() {
-  let filenames = await glob(svelteGlob);
-  return Promise.all(
-    filenames.map(async (f) => {
-      let data = await fs.readFile(f);
-      let { attributes } = frontMatter(data.toString());
-      let id = path.basename(f).slice(0, -4);
-      return {
-        id,
-        format: 'svx',
-        ...attributes,
-      };
-    })
-  );
-}
+// export async function readSvelteFiles() {
+//   let filenames = await glob(svelteGlob);
+//   return Promise.all(
+//     filenames.map(async (f) => {
+//       let data = await fs.readFile(f);
+//       let { attributes } = frontMatter(data.toString());
+//       let id = path.basename(f).slice(0, -4);
+//       return {
+//         id,
+//         format: 'svx',
+//         ...attributes,
+//       };
+//     })
+//   );
+// }

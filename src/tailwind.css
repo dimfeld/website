@@ -72,3 +72,12 @@ h2:not(:first-child),
 h3:not(:first-child) {
   @apply mt-4;
 }
+
+svg .primary {
+  fill: #b2f5ea;
+}
+
+svg .secondary {
+  fill: #2c7a7b;
+  color: #2c7a7b;
+}

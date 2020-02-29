@@ -21,7 +21,7 @@ Finally, I am patterning this after Swyx's [Digital Garden Terms of Service](htt
 
 When I publish content here, I will try to:
 
-1. Really understand and opinions I disagree with, and address their best points.
+1. Really understand any opinions I disagree with, and address their best points.
 2. Make my confidence in my opinions clear.
 3. Listen and respond to feedback.
 4. Update content as my opinions change or make mistakes.

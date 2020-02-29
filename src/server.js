@@ -1,3 +1,4 @@
+import 'source-map-support';
 import sirv from 'sirv';
 import polka from 'polka';
 import compression from 'compression';
@@ -5,6 +6,7 @@ import * as sapper from '@sapper/server';
 import {
   allPosts,
   getPost,
+  latestPost,
   allNotes,
   getNote,
   noteTags,
@@ -25,15 +27,16 @@ async function run() {
       compression({ threshold: 0 }),
       sirv('static', { dev }),
       sapper.middleware({
-        ignore: '/api',
+        ignore: '/static-api',
       })
     )
-    .get('/api/posts', allPosts)
-    .get('/api/posts/:id', getPost)
-    .get('/api/notes/*', getNote)
-    .get('/api/notes', allNotes)
-    .get('/api/tags', noteTags)
-    .get('/api/tags/:id', getTag)
+    .get('/static-api/latestPost', latestPost)
+    .get('/static-api/allPosts', allPosts)
+    .get('/static-api/posts/:id', getPost)
+    .get('/static-api/notes/*', getNote)
+    .get('/static-api/allNotes', allNotes)
+    .get('/static-api/allTags', noteTags)
+    .get('/static-api/tags/:id', getTag)
     .listen(PORT, (err) => {
       if (err) console.log('error', err);
     });

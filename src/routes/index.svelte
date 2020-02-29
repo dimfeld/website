@@ -1,6 +1,6 @@
 <script context="module">
   export async function preload() {
-    let post = await this.fetch('/api/posts/latest').then((r) => r.json());
+    let post = await this.fetch('/api/latestPost').then((r) => r.json());
     return { latestPost: post };
   }
 </script>

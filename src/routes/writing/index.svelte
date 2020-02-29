@@ -1,6 +1,6 @@
 <script context="module">
   export async function preload() {
-    let posts = await this.fetch('/api/posts/all').then((r) => r.json());
+    let posts = await this.fetch('/api/allPosts').then((r) => r.json());
     return { posts };
   }
 </script>
@@ -20,8 +20,7 @@
 
   let tagsSet = new Set();
   for (let post of posts) {
-    let tags = post.tags ? post.tags.split(',').map((t) => t.trim()) : [];
-    for (let tag of tags) {
+    for (let tag of post.tags || []) {
       tagsSet.add(tag);
     }
   }
@@ -50,15 +49,14 @@
   </div> -->
   <!-- <div class="flex flex-row flex-shrink flex-wrap justify-center"> -->
   <div
-    class="w-full flex flex-col items-stretch sm:grid
-    sm:max-w-none"
+    class="w-full flex flex-col items-stretch sm:grid sm:max-w-none"
     style="grid-template-columns: repeat(auto-fit, 300px);">
     {#each activePosts as post (post.id)}
       <div
         animate:flip={{ duration: 300 }}
         transition:blur|local
-        class="sm:rounded-sm border-b sm:border border-teal-500 sm:border-teal-700 p-2 sm:m-4 sm:shadow-md flex-1 flex
-        flex-col">
+        class="sm:rounded-sm border-b sm:border border-teal-500
+        sm:border-teal-700 p-2 sm:m-4 sm:shadow-md flex-1 flex flex-col">
         <a rel="prefetch" href="writing/{post.id}" class="text-lg">
           {post.title}
         </a>
@@ -71,7 +69,7 @@
         <p class="flex flex-row text-sm text-right mt-auto pt-2">
           <span>{post.tags || ''}</span>
           {#if post.date}
-          <time class="ml-auto">{post.date.slice(0, 10)}</time>
+            <time class="ml-auto">{post.date.slice(0, 10)}</time>
           {/if}
         </p>
       </div>

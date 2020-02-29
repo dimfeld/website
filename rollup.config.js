@@ -59,7 +59,7 @@ const babelClientConfig = {
     [
       '@babel/preset-env',
       {
-        targets: dev ? { chrome: 78 } : '> 0.25%, not dead',
+        targets: dev ? { chrome: 78 } : { esmodules: true },
       },
     ],
     '@babel/preset-typescript',
@@ -108,8 +108,6 @@ export default {
       }),
       json(),
 
-      babel(babelClientConfig),
-
       resolve({
         browser: true,
         extensions: ['.mjs', '.js', '.json', '.ts'],
@@ -117,10 +115,12 @@ export default {
       }),
       commonjs(),
 
-      !dev &&
-        terser({
-          module: true,
-        }),
+      babel(babelClientConfig),
+
+      // !dev &&
+      //   terser({
+      //     module: true,
+      //   }),
     ],
 
     onwarn,
@@ -142,7 +142,6 @@ export default {
         preprocess: svelteConfig.preprocess,
       }),
       json(),
-      babel(babelServerConfig),
 
       resolve({
         dedupe,
@@ -150,6 +149,7 @@ export default {
       }),
 
       commonjs(),
+      babel(babelServerConfig),
       postcss({
         extract: path.resolve(__dirname, './static/global.css'),
         plugins: require('./postcss.config').plugins,
