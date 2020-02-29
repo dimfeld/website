@@ -4,7 +4,7 @@ tags: debate
 date: 2019-01-01
 ---
 
-From [5 Tactics Used By Passive-Aggressive Arguers (And The Best Forms of Defense)](https://medium.com/the-mission/5-tactics-used-by-passive-aggressive-arguers-and-the-best-forms-of-defense-42a9348b60ed) by Robert Greene
+Notes on [5 Tactics Used By Passive-Aggressive Arguers (And The Best Forms of Defense)](https://medium.com/the-mission/5-tactics-used-by-passive-aggressive-arguers-and-the-best-forms-of-defense-42a9348b60ed) by Robert Greene
 
 Passive aggressive arguers are often playing to the audience more than they’re trying to convince you.
 

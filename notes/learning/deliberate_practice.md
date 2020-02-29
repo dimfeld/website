@@ -3,7 +3,7 @@ title: Deliberate Practice
 date: 2018-12-11
 ---
 
-Source: [The Complete Guide to Deliberate Practice](https://betterhumans.coach.me/the-complete-guide-to-deliberate-practice-3a70319be3af)
+Notes on [The Complete Guide to Deliberate Practice](https://betterhumans.coach.me/the-complete-guide-to-deliberate-practice-3a70319be3af)
 
 [Deliberate Practice - Mastery](deliberate_practice_mastery)
 
