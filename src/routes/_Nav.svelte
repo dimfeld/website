@@ -132,7 +132,7 @@
         aria-label="RSS Feed"
         title="RSS Feed"
         type="application/rss+xml"
-        href="/rss.xml">
+        href="/rss/all.xml">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -265,7 +265,7 @@
               aria-label="RSS Feed"
               title="RSS Feed"
               type="application/rss+xml"
-              href="/rss.xml">
+              href="/rss/all.xml">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

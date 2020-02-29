@@ -89,8 +89,6 @@ export async function get(req, res, next) {
       });
     }
 
-    console.log('done');
-
     res.setHeader('Content-Type', 'application/rss+xml');
     res.end(feed.xml());
   } catch (e) {

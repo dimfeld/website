@@ -20,7 +20,7 @@
       p-2 sm:m-4 sm:shadow-md flex-1 flex flex-col">
       <a rel="prefetch" href="{base}/{post.id}" class="text-lg">{post.title}</a>
       <a
-        class="hover:no-underline text-gray-500 font-normal text-sm"
+        class="hover:no-underline text-gray-800 font-medium text-sm"
         rel="prefetch"
         href="{base}/{post.id}">
         <p>{post.summary || ''}</p>

@@ -135,10 +135,19 @@
   <!-- Large screen tag list -->
   <div class="hidden sm:block m-4 w-48">
     <TagList on:change={handleTagChange} />
+
+    <div class="text-sm text-center">
+      <a href="/rss/notes.xml">Notes RSS</a>
+    </div>
+
   </div>
 
   <div class="mt-4 flex-grow">
     <slot />
+  </div>
+
+  <div class="sm:hidden text-center mt-4">
+    <a href="/rss/notes.xml">Notes RSS</a>
   </div>
 
 </div>

@@ -32,3 +32,7 @@
 <div class="flex flex-row justify-center items-baseline flex-shrink">
   <PostList base="writing" posts={activePosts} />
 </div>
+
+<div class="text-sm text-center">
+  <a href="/rss/writing.xml">Writing RSS</a>
+</div>
