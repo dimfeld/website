@@ -4,6 +4,7 @@
   import orderBy from 'lodash/orderBy';
   import uniq from 'lodash/uniq';
   import { getContext } from 'svelte';
+  import PostList from '../_PostList.svelte';
   const notes = getContext('noteList');
   const noteLookup = getContext('noteLookup');
   const tags = getContext('tags');
@@ -21,11 +22,4 @@
     : notes;
 </script>
 
-<div id="notelist">
-  {#each activeNotes as note (note.id)}
-    <div>
-      <a href="/notes/{note.id}">{note.title}</a>
-    </div>
-  {/each}
-
-</div>
+<PostList base="notes" posts={activeNotes} />

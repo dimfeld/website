@@ -17,9 +17,10 @@
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import { fade } from 'svelte/transition';
-  import { goto, stores } from '@sapper/app';
+  import { stores } from '@sapper/app';
   import TagList from './_TagList.svelte';
 
+  export let segment;
   export let tags;
   export let notes;
 
@@ -60,6 +61,23 @@
 
     mobileTagListVisible = false;
   }
+
+  async function clickOutside(node, { ignore, cb }) {
+    var handleOutsideClick = ({ target }) => {
+      if (!node.contains(target) && (!ignore || !ignore.contains(target))) {
+        cb();
+      }
+    };
+
+    window.addEventListener('click', handleOutsideClick);
+    return {
+      destroy: () => window.removeEventListener('click', handleOutsideClick),
+    };
+  }
+
+  $: indexPage = !segment;
+
+  let tagsButton;
 </script>
 
 <div class="flex flex-col sm:flex-row">
@@ -78,6 +96,7 @@
       </div>
 
       <button
+        bind:this={tagsButton}
         on:click={() => (mobileTagListVisible = !mobileTagListVisible)}
         class="ml-2 flex-shrink inline-flex justify-start justify-center
         rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5
@@ -101,11 +120,11 @@
     </div>
 
     {#if mobileTagListVisible}
-      <!-- Hide on outside click -->
       <div
+        use:clickOutside={{ ignore: tagsButton, cb: () => (mobileTagListVisible = false) }}
         transition:fade={{ duration: 200 }}
-        class="absolute origin-right z-20 w-full max-h-screen overflow-y-auto
-        px-2 pb-4">
+        style="max-height:75vh"
+        class="absolute z-20 w-full overflow-y-auto px-2 pb-4">
         <div class="bg-white rounded-md shadow-lg">
           <TagList on:change={handleTagChange} />
         </div>
@@ -118,7 +137,7 @@
     <TagList on:change={handleTagChange} />
   </div>
 
-  <div class="mt-4">
+  <div class="mt-4 flex-grow">
     <slot />
   </div>
 

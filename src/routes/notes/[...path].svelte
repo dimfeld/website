@@ -9,12 +9,14 @@
 
 <script>
   import { getContext } from 'svelte';
+  import Article from '../writing/_Article.svelte';
   export let note;
 
   getContext('activeTags').set(note.tags);
 </script>
 
-<div>
-  <h1>{note.title}</h1>
-  {@html note.content}
+<div class="sm:mr-8">
+  <Article {...note}>
+    {@html note.content}
+  </Article>
 </div>

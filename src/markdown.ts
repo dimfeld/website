@@ -21,10 +21,7 @@ export default function renderer() {
     .use(footnote)
     .use(abbr)
     .use(toc)
-    .use(anchor, {
-      permalink: true,
-      permalinkSymbol: '§',
-    });
+    .use(anchor);
 
   r.renderer.rules.footnote_ref = function render_footnote_ref(
     tokens,
@@ -42,7 +39,7 @@ export default function renderer() {
     }
 
     return (
-      `<sup class="footnote-ref"><a href="${env.base}#fn` +
+      `<sup class="footnote-ref"><a href="${env.url}#fn` +
       id +
       '" id="fnref' +
       refid +
@@ -66,7 +63,31 @@ export default function renderer() {
     }
 
     /* ↩ with escape code to prevent display as Apple Emoji on iOS */
-    return `<a href="${env.base}#fnref${id}" class="footnote-backref">\u21a9\uFE0E</a>`;
+    return `<a href="${env.url}#fnref${id}" class="footnote-backref">\u21a9\uFE0E</a>`;
   };
-  return r;
+
+  let defaultNormalize = r.normalizeLink;
+
+  return (content: string, env: { [key: string]: string }) => {
+    let { url: base, host } = env;
+
+    let lastSlash = base.lastIndexOf('/');
+    base = base.slice(0, lastSlash + 1);
+
+    // Convert links to absolute for RSS.
+    r.normalizeLink = (url) => {
+      if (!url.includes('//')) {
+        if (!url.startsWith('/')) {
+          url = `${base}${url}`;
+        }
+
+        if (host) {
+          url = `${host}${url}`;
+        }
+      }
+      return defaultNormalize(url);
+    };
+
+    return r.render(content, env);
+  };
 }

@@ -3,7 +3,7 @@
   getContext('title').set('About');
 </script>
 
-<article class="my-2 px-4">
+<article class="font-serif my-2 px-4">
   <h1>Work</h1>
 
   <p>

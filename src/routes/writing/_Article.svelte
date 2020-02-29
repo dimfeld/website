@@ -9,16 +9,24 @@
   getContext('title').set(title);
 </script>
 
-<article class="mt-4">
+<article class="font-serif mt-4 px-4 sm:px-0 sm:text-lg">
   <div class="mb-4 leading-tight">
     <h2 class="text-2xl">{title}</h2>
 
     <div>
-      {#if date}Written <time>{date.slice(0, 10)}</time>{/if}
-      {#if updated}&mdash; Updated <time>{updated.slice(0, 10)}</time>{/if}
+      {#if date}
+        Written
+        <time>{date.slice(0, 10)}</time>
+      {/if}
+      {#if updated}
+        &mdash; Updated
+        <time>{updated.slice(0, 10)}</time>
+      {/if}
     </div>
 
-    {#if status}<p>Status: {status}</p>{/if}
+    {#if status}
+      <p>Status: {status}</p>
+    {/if}
   </div>
 
   <slot />
