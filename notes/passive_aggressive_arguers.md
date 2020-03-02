@@ -1,5 +1,5 @@
 ---
-title: 5 Tactics Used By Passive-Aggressive Arguers (And The Best Forms of Defense)
+title: Passive-Aggressive Arguers (And The Best Forms of Defense)
 tags: debate
 date: 2019-01-01
 ---
@@ -9,7 +9,7 @@ Notes on [5 Tactics Used By Passive-Aggressive Arguers (And The Best Forms of De
 Passive aggressive arguers are often playing to the audience more than they’re trying to convince you.
 
 # Begging the Question
-This uses loaded words that subtly hint at the conclusion. It often involves using negative adjectives to describe something without saying anything about why that description applies. Calling an author cynical, for example, implies knowledge of his intentions and uses that to tilt the audiences thinking in the same direction.
+This uses loaded words that subtly hint at the conclusion. It often involves using negative adjectives to describe something without saying anything about why that description applies. Calling an author cynical, for example, implies knowledge of his intentions and uses that to tilt the audience’s thinking in the same direction.
 
 When responding to this, point out the use of these words and ask the questioner to justify their use. Keep at it until it’s clear that they simply were trying to achieve an emotional response.
 
@@ -24,7 +24,7 @@ This often happens when you are starting to win an argument, and it involves cha
 As before the correct response is to expose the tactic as a diversion, and walk the debate back to the actual subject.
 
 # Pushing Buttons
-This makes the opponent angry so that they will lash out and look like the irrational one. The only solution to this is to stay calm and measured in your demeanor.
+This tries to make you angry so that you will lash out and look like the irrational one. The only solution to this is to stay calm and measured in your demeanor.
 
 # Invoking Authority
 This involves citing unverifiable statistics or slogans from some revered third party.
