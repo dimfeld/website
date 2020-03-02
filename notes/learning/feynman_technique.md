@@ -9,5 +9,5 @@ This boils down to the idea that the best way to learn something is to explain i
 
 Once you’ve written your explanation, go through it and see which parts still seem vague or over complicated, and take the time to understand those parts until you can explain them plainly.
 
-Continue this until you have the entire concept written out simply. Optionally you can read your explanation to another person and see how they understand it.
+Continue this until you have the entire concept written out simply. You can also read your explanation to another person and see how they understand it. As with code comments, this helps you to understand what you meant when you come back to your explanation months later. 
 
