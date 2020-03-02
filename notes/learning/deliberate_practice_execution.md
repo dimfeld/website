@@ -3,7 +3,7 @@ title: Deliberate Practice - Execution
 date: 2018-12-11
 ---
 
-From [Deliberate Practice](deliberate_practice)
+Main Note: [Deliberate Practice](deliberate_practice)
 
 # Choose well-defined goals
 Set small, achievable, goals for yourself.

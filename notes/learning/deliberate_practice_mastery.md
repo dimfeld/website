@@ -3,7 +3,7 @@ title: Deliberate Practice - Mastery
 date: 2018-12-11
 ---
 
-From [Deliberate Practice](deliberate_practice)
+Main Note: [Deliberate Practice](deliberate_practice)
 
 # Lessons from practice under a master teacher
 * Great coaches are, themselves, experts in the exact thing they’re teaching

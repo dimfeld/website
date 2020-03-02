@@ -10,7 +10,6 @@ The circle of competence is the set of things we actually know.
 Knowing the boundaries of the circle is much more important than the actual size of it. We usually think this circle is larger than it is.
 
 > I’m no genius. I’m smart in spots—but I stay around those spots.
->
 > Tom Watson Sr., Founder of IBM
 
 As Buffett said in his 1996 shareholder letter, we don’t even necessarily need to have an understanding of something. We just need to be aware of the limits of our understanding and act appropriately by avoiding those areas until we have a true understanding of them.
