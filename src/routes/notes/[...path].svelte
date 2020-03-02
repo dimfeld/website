@@ -8,11 +8,8 @@
 </script>
 
 <script>
-  import { getContext } from 'svelte';
   import Article from '../writing/_Article.svelte';
   export let note;
-
-  getContext('activeTags').set(note.tags);
 </script>
 
 <div class="sm:mr-8">

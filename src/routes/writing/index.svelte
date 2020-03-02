@@ -33,6 +33,6 @@
   <PostList base="writing" posts={activePosts} />
 </div>
 
-<div class="text-sm text-center">
-  <a href="/rss/writing.xml">Writing RSS</a>
+<div class="text-center sm:text-left mt-8">
+  <a href="/rss/writing.xml">Writing RSS Feed</a>
 </div>

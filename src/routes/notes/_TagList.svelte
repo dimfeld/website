@@ -1,10 +1,38 @@
 <script>
   import { createEventDispatcher, getContext } from 'svelte';
+  export let currentPost = null;
 
   const dispatch = createEventDispatcher();
 
-  const activeTags = getContext('activeTags');
+  const search = getContext('search');
+  const activeTag = getContext('activeTag');
   const tagList = getContext('tagList');
+  const noteLookup = getContext('noteLookup');
+
+  $: tags = tagList.map((t) => {
+    let count = t.posts.length;
+    if ($search) {
+      let searchValue = $search.toLowerCase();
+      count = t.posts.reduce((acc, postId) => {
+        let post = noteLookup[postId];
+        if (post && post.title.toLowerCase().includes(searchValue)) {
+          return acc + 1;
+        } else {
+          return acc;
+        }
+      }, 0);
+    }
+
+    let selected = currentPost
+      ? currentPost.tags.includes(t.id)
+      : $activeTag === t.id;
+
+    return {
+      ...t,
+      selected,
+      count,
+    };
+  });
 
   const selectedDivClasses =
     'group flex items-center px-3 py-2 text-sm leading-5 font-medium text-gray-900 sm:rounded-md bg-gray-200 hover:text-gray-900 focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 hover:no-underline';
@@ -21,23 +49,22 @@
   <a
     href="/notes"
     on:click={() => dispatch('change', null)}
-    class={$activeTags.length === 0 ? selectedDivClasses : unselectedDivClasses}>
+    class={!$activeTag && !currentPost ? selectedDivClasses : unselectedDivClasses}>
     <span class="truncate group-hover:underline">All Notes</span>
   </a>
-  {#each tagList.map((t) => ({
-    ...t,
-    selected: $activeTags.includes(t.id),
-  })) as tag (tag.id)}
+  {#each tags as tag (tag.id)}
     <a
       href="/notes?tag={tag.id}"
       aria-roledescription="Notes tagged {tag.id}"
       on:click={() => dispatch('change', tag.id)}
       class="mt-1 {tag.selected ? selectedDivClasses : unselectedDivClasses}">
       <span class="truncate group-hover:underline">{tag.label}</span>
-      <span
-        class={tag.selected ? selectedBubbleClasses : unselectedBubbleClasses}>
-        {tag.posts.length}
-      </span>
+      {#if tag.count}
+        <span
+          class={tag.selected ? selectedBubbleClasses : unselectedBubbleClasses}>
+          {tag.count}
+        </span>
+      {/if}
     </a>
   {/each}
 </nav>

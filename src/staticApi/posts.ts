@@ -71,9 +71,12 @@ export function latestPost(req, res) {
 export function getPost(req, res) {
   let post = postCache.posts.get(req.params.id);
   if (post) {
-    post.content = renderer(post.content, {
-      url: `/writing/${post.id}`,
-    });
+    post = {
+      ...post,
+      content: renderer(post.content, {
+        url: `/writing/${post.id}`,
+      }),
+    };
     send(res, 200, post);
   } else {
     res.writeHead(404).end();

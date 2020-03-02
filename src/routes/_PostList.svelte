@@ -1,7 +1,6 @@
 <script>
   import capitalize from 'lodash/capitalize';
   import { flip } from 'svelte/animate';
-  import { blur } from 'svelte/transition';
   export let posts;
   export let base;
 
@@ -11,13 +10,13 @@
 </script>
 
 <div
-  class="w-full flex flex-col items-stretch sm:grid sm:max-w-none"
+  class="w-full flex flex-col items-stretch sm:grid sm:max-w-none gap-8 sm:mt-4"
   style="grid-template-columns: repeat(auto-fit, 300px);">
   {#each posts as post (post.id)}
     <div
       animate:flip={{ duration: 300 }}
       class="sm:rounded-sm border-b sm:border border-teal-100 sm:border-teal-100
-      p-2 sm:m-4 sm:shadow-md flex-1 flex flex-col">
+      p-2 sm:shadow-md flex-1 flex flex-col">
       <a rel="prefetch" href="{base}/{post.id}" class="text-lg">{post.title}</a>
       <a
         class="hover:no-underline text-gray-800 font-medium text-sm"

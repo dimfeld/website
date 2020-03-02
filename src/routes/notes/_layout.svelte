@@ -19,6 +19,7 @@
   import { fade } from 'svelte/transition';
   import { stores } from '@sapper/app';
   import TagList from './_TagList.svelte';
+  import Popup from '../../Popup.svelte';
 
   export let segment;
   export let tags;
@@ -31,14 +32,13 @@
 
   const { page } = stores();
 
-  let initialPath = $page.path.slice('/notes/'.length);
-  let initialNote = noteLookup[initialPath];
+  $: currentNoteId = $page.path.slice('/notes/'.length);
+  $: currentNote = noteLookup[currentNoteId];
 
-  let initialTags = initialNote
-    ? initialNote.tags
-    : [$page.query.tag].filter(Boolean);
-  let activeTags = writable(initialTags);
-  setContext('activeTags', activeTags);
+  let activeTag = writable($page.query.tag);
+  let searchStore = writable('');
+  setContext('activeTag', activeTag);
+  setContext('search', searchStore);
   setContext('noteList', notes);
   setContext('noteLookup', noteLookup);
   setContext('tags', tags);
@@ -53,26 +53,12 @@
   let mobileTagListVisible = false;
 
   function handleTagChange({ detail: tag }) {
-    if (tag) {
-      $activeTags = [tag];
-    } else {
-      $activeTags = [];
-    }
-
+    $activeTag = tag || null;
     mobileTagListVisible = false;
   }
 
-  async function clickOutside(node, { ignore, cb }) {
-    var handleOutsideClick = ({ target }) => {
-      if (!node.contains(target) && (!ignore || !ignore.contains(target))) {
-        cb();
-      }
-    };
-
-    window.addEventListener('click', handleOutsideClick);
-    return {
-      destroy: () => window.removeEventListener('click', handleOutsideClick),
-    };
+  function handleSearchBox({ target }) {
+    $searchStore = (target.value || '').trim();
   }
 
   $: indexPage = !segment;
@@ -89,7 +75,8 @@
         <label for="search" class="sr-only">Search</label>
         <div class="relative rounded-md shadow-sm">
           <input
-            id="search"
+            on:input={handleSearchBox}
+            type="search"
             class="form-input block w-full sm:text-sm sm:leading-5"
             placeholder="Search..." />
         </div>
@@ -117,24 +104,30 @@
             1.4-1.4l3.3 3.29 3.3-3.3z" />
         </svg>
       </button>
-    </div>
 
-    {#if mobileTagListVisible}
-      <div
-        use:clickOutside={{ ignore: tagsButton, cb: () => (mobileTagListVisible = false) }}
-        transition:fade={{ duration: 200 }}
-        style="max-height:75vh"
-        class="absolute z-20 w-full overflow-y-auto px-2 pb-4">
-        <div class="bg-white rounded-md shadow-lg">
-          <TagList on:change={handleTagChange} />
-        </div>
-      </div>
-    {/if}
+    </div>
+    <Popup
+      bind:visible={mobileTagListVisible}
+      triggerElement={tagsButton}
+      class="w-full px-2 overflow-y-auto"
+      style="max-height:75vh">
+      <TagList currentPost={currentNote} on:change={handleTagChange} />
+    </Popup>
   </div>
 
-  <!-- Large screen tag list -->
+  <!-- Large screen filters -->
   <div class="hidden sm:block m-4 w-48">
-    <TagList on:change={handleTagChange} />
+
+    <label for="search" class="sr-only">Search</label>
+    <div class="relative rounded-md shadow-sm mb-2">
+      <input
+        on:input={handleSearchBox}
+        type="search"
+        class="form-input block w-full sm:text-sm sm:leading-5"
+        placeholder="Search..." />
+    </div>
+
+    <TagList currentPost={currentNote} on:change={handleTagChange} />
 
     <div class="text-sm text-center">
       <a href="/rss/notes.xml">Notes RSS</a>
@@ -142,12 +135,8 @@
 
   </div>
 
-  <div class="mt-4 flex-grow">
+  <div class="flex-grow">
     <slot />
-  </div>
-
-  <div class="sm:hidden text-center mt-4">
-    <a href="/rss/notes.xml">Notes RSS</a>
   </div>
 
 </div>
