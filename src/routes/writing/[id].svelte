@@ -17,7 +17,7 @@
   export let post;
 </script>
 
-<div class="mx-8">
+<div class="sm:mx-8">
   <Article {...post}>
     {@html post.content}
   </Article>

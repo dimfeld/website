@@ -29,10 +29,12 @@
   let tags = Array.from(tagsSet).sort();
 </script>
 
-<div class="flex flex-row justify-center items-baseline flex-shrink">
-  <PostList base="writing" posts={activePosts} />
-</div>
+<div class="ml-4">
+  <div class="flex flex-row justify-center items-baseline flex-shrink">
+    <PostList base="writing" posts={activePosts} />
+  </div>
 
-<div class="text-center sm:text-left mt-8">
-  <a href="/rss/writing.xml">Writing RSS Feed</a>
+  <div class="text-center sm:text-left mt-8">
+    <a href="/rss/writing.xml">Writing RSS Feed</a>
+  </div>
 </div>
