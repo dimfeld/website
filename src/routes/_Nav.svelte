@@ -156,21 +156,16 @@
   <div
     id="vert-navbar"
     class="w-full flex sm:hidden flex-row items-center"
-    on:click={() => (displayNav = false)}>
+    on:click={() => (displayNav = !displayNav)}>
     <div
       id="bg-highlight"
       class="absolute bg-teal-700 h-full top-0"
       style="left:-8px;width:218px" />
-    <a
-      class="text-white"
-      style="padding-left:24px"
-      href={currentLink ? currentLink.name : '/'}>
+    <span class="text-white" style="padding-left:24px">
       {currentLink ? capitalize(currentLink.name) : 'Daniel Imfeld'}
-    </a>
+    </span>
 
-    <span
-      class="ml-auto mr-2 cursor-pointer w-12 h-12"
-      on:click|stopPropagation={() => (displayNav = !displayNav)}>
+    <span class="ml-auto mr-2 cursor-pointer w-12 h-12">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
