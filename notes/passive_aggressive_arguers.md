@@ -6,7 +6,7 @@ date: 2019-01-01
 
 Notes on [5 Tactics Used By Passive-Aggressive Arguers (And The Best Forms of Defense)](https://medium.com/the-mission/5-tactics-used-by-passive-aggressive-arguers-and-the-best-forms-of-defense-42a9348b60ed) by Robert Greene
 
-Passive aggressive arguers are often playing to the audience more than they’re trying to convince you.
+Passive aggressive arguers are often playing to the audience or making themselves feel good, more than they’re trying to convince you.
 
 # Begging the Question
 This uses loaded words that subtly hint at the conclusion. It often involves using negative adjectives to describe something without saying anything about why that description applies. Calling an author cynical, for example, implies knowledge of his intentions and uses that to tilt the audience’s thinking in the same direction.
