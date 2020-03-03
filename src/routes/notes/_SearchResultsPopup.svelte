@@ -12,5 +12,5 @@
     {result.title}
   </a>
 {:else}
-  <div class="p-4">No results</div>
+  <div class="block px-4 py-2 text-sm leading-5 text-gray-700">No results</div>
 {/each}

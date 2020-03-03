@@ -12,7 +12,6 @@
   export { classNames as class };
 
   function clickOutside(node, { ignore, cb }) {
-    console.log(ignore);
     var handleOutsideClick = ({ target }) => {
       if (!node.contains(target) && (!ignore || !ignore.contains(target))) {
         cb();
