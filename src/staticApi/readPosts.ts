@@ -42,10 +42,11 @@ export async function readPost(
 
   let pathTags = id.split('/').slice(0, -1);
 
+  let content = body.trim().replace(/([^-]?)--([^-]?)/g, '$1—$2');
   return {
     ...attributes,
     id: id.slice(0, -ext.length),
-    content: body.trim(),
+    content,
     tags: uniq([...metadataTags, ...pathTags]),
   } as Post;
 }
