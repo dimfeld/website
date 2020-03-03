@@ -116,7 +116,7 @@
   </div>
 
   <!-- Large screen filters -->
-  <div class="hidden sm:block m-4 w-48">
+  <div class="hidden sm:block m-4 w-48 flex-none">
 
     <label for="search" class="sr-only">Search</label>
     <div class="relative rounded-md shadow-sm mb-2">
@@ -135,7 +135,7 @@
 
   </div>
 
-  <div class="flex-grow">
+  <div class="flex-grow sm:ml-4">
     <slot />
   </div>
 
