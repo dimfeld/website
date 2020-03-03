@@ -73,6 +73,9 @@
 
   function handleSearchBox({ target }) {
     $searchStore = (target.value || '').trim();
+    if ($searchStore) {
+      activeFilterBox = FILTER_SEARCH;
+    }
   }
 
   function handleSearchBoxFocus() {

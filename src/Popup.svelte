@@ -23,8 +23,12 @@
     };
 
     window.addEventListener('click', handleOutsideClick);
+    window.addEventListener('touchend', handleOutsideClick);
     return {
-      destroy: () => window.removeEventListener('click', handleOutsideClick),
+      destroy: () => {
+        window.removeEventListener('click', handleOutsideClick);
+        window.removeEventListener('touchend', handleOutsideClick);
+      },
     };
   }
 
