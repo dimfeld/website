@@ -155,8 +155,9 @@
       visible={activeFilterBox === FILTER_TAGS}
       on:close={closeTagsPopup}
       triggerElement={mobileTagsButton}
-      containerClass="w-full px-2 overflow-y-auto"
-      style="max-height:75vh">
+      containerClass="w-full px-2"
+      class="overflow-y-auto"
+      style="max-height:60vh">
       <TagList currentPost={currentNote} on:change={handleTagChange} />
     </Popup>
 
@@ -165,8 +166,9 @@
       triggerElement={mobileSearchBox}
       on:close={closeSearchPopup}
       on:click={closeSearchPopup}
-      style="max-height:75vh"
-      containerClass="w-full px-2 overflow-y-auto">
+      containerClass="w-full px-2"
+      style="max-height:60vh"
+      class="overflow-y-auto">
       <SearchResultsPopup
         on:click={closeSearchPopup}
         base="notes"
@@ -178,11 +180,10 @@
   <div class="hidden sm:block m-4 w-48 flex-none">
 
     <label for="search" class="sr-only">Search</label>
-    <div class="relative rounded-md shadow-sm mb-2">
+    <div class="relative rounded-md shadow-sm mb-2" bind:this={largeSearchBox}>
       <input
         on:input={handleSearchBox}
         on:focus={handleSearchBoxFocus}
-        bind:this={largeSearchBox}
         type="search"
         class="form-input block w-full sm:text-sm sm:leading-5"
         placeholder="Search..." />
@@ -190,9 +191,11 @@
       <Popup
         visible={Boolean(searchPopupNotes)}
         triggerElement={largeSearchBox}
+        on:close={closeSearchPopup}
         on:click={closeSearchPopup}
         style="max-height:75vh;width:400px"
-        containerClass="overflow-y-auto top-0 left-48 ml-2">
+        containerClass="top-0 left-48 ml-2"
+        class="overflow-y-auto">
         <SearchResultsPopup
           on:click={closeSearchPopup}
           base="notes"

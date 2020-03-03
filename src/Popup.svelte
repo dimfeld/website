@@ -11,9 +11,13 @@
   let classNames = '';
   export { classNames as class };
 
-  function clickOutside(node, { ignore, cb }) {
+  function clickOutside(node, cb) {
     var handleOutsideClick = ({ target }) => {
-      if (!node.contains(target) && (!ignore || !ignore.contains(target))) {
+      if (
+        node.offsetParent !== null &&
+        !node.contains(target) &&
+        (!triggerElement || !triggerElement.contains(target))
+      ) {
         cb();
       }
     };
@@ -32,10 +36,10 @@
 
 {#if visible}
   <div
-    use:clickOutside={{ ignore: triggerElement, cb: hide }}
+    use:clickOutside={hide}
     transition:fade={{ duration: 200 }}
     {style}
-    class="absolute z-20 pb-4 {containerClass}">
+    class="absolute z-20 pb-4 flex flex-col {containerClass}">
     <div class="bg-white rounded-md shadow-lg {classNames}">
       <slot />
     </div>
