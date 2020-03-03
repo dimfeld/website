@@ -1,5 +1,5 @@
 ---
-title: Postgres CLI Cheat Sheet
+title: PostgreSQL CLI Cheat Sheet
 date: 2020-03-02
 ---
 
