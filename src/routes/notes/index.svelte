@@ -10,6 +10,7 @@
   const tags = getContext('tags');
   const activeTag = getContext('activeTag');
   const search = getContext('search');
+  getContext('title').set('Notes');
 
   const sortField = 'date';
   let activeNotes = notes;

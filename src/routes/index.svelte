@@ -7,7 +7,6 @@
 
 <script>
   export let latestPost;
-  import Article from './writing/_Article.svelte';
   import { getContext } from 'svelte';
   getContext('title').set('');
 </script>
