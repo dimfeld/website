@@ -5,6 +5,7 @@
   import uniq from 'lodash/uniq';
   import { getContext } from 'svelte';
   import PostList from '../_PostList.svelte';
+  import { filterText } from './_filters.ts';
   const notes = getContext('noteList');
   const noteLookup = getContext('noteLookup');
   const tags = getContext('tags');
@@ -24,12 +25,7 @@
       );
     }
 
-    if ($search) {
-      let searchValue = $search.toLowerCase();
-      activeNotes = activeNotes.filter((n) =>
-        n.title.toLowerCase().includes(searchValue)
-      );
-    }
+    activeNotes = filterText(activeNotes, $search);
   }
 </script>
 

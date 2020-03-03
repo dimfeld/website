@@ -20,6 +20,8 @@
   import { stores } from '@sapper/app';
   import TagList from './_TagList.svelte';
   import Popup from '../../Popup.svelte';
+  import SearchResultsPopup from './_SearchResultsPopup.svelte';
+  import { filterText } from './_filters.ts';
 
   export let segment;
   export let tags;
@@ -50,20 +52,61 @@
   let tagList = orderBy(tagData, 'id');
   setContext('tagList', tagList);
 
-  let mobileTagListVisible = false;
+  const FILTER_TAGS = 'tags';
+  const FILTER_SEARCH = 'search';
+  let activeFilterBox = null;
 
   function handleTagChange({ detail: tag }) {
     $activeTag = tag || null;
-    mobileTagListVisible = false;
+    if (activeFilterBox === FILTER_TAGS) {
+      closeTagsPopup();
+    }
+  }
+
+  function toggleMobileTagList() {
+    if (activeFilterBox === FILTER_TAGS) {
+      closeTagsPopup();
+    } else {
+      activeFilterBox = FILTER_TAGS;
+    }
   }
 
   function handleSearchBox({ target }) {
     $searchStore = (target.value || '').trim();
   }
 
+  function handleSearchBoxFocus() {
+    activeFilterBox = FILTER_SEARCH;
+  }
+
+  function closeTagsPopup() {
+    if (activeFilterBox === FILTER_TAGS) {
+      activeFilterBox = null;
+    }
+  }
+
+  function closeSearchPopup() {
+    if (activeFilterBox === FILTER_SEARCH) {
+      activeFilterBox = null;
+    }
+  }
+
   $: indexPage = !segment;
 
-  let tagsButton;
+  let searchPopupNotes = [];
+  $: {
+    // Show the search results popup if we're not on the main page. If on the main
+    // page then the PostList is the search results.
+    if (!indexPage && activeFilterBox === FILTER_SEARCH && $searchStore) {
+      searchPopupNotes = orderBy(filterText(notes, $searchStore), 'title');
+    } else {
+      searchPopupNotes = null;
+    }
+  }
+
+  let mobileTagsButton;
+  let mobileSearchBox;
+  let largeSearchBox;
 </script>
 
 <div class="flex flex-col sm:flex-row">
@@ -76,6 +119,8 @@
         <div class="relative rounded-md shadow-sm">
           <input
             on:input={handleSearchBox}
+            on:focus={handleSearchBoxFocus}
+            bind:this={mobileSearchBox}
             type="search"
             class="form-input block w-full sm:text-sm sm:leading-5"
             placeholder="Search..." />
@@ -83,8 +128,8 @@
       </div>
 
       <button
-        bind:this={tagsButton}
-        on:click={() => (mobileTagListVisible = !mobileTagListVisible)}
+        bind:this={mobileTagsButton}
+        on:click={toggleMobileTagList}
         class="ml-2 flex-shrink inline-flex justify-start justify-center
         rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5
         font-medium text-gray-700 hover:text-gray-500 focus:outline-none
@@ -107,11 +152,25 @@
 
     </div>
     <Popup
-      bind:visible={mobileTagListVisible}
-      triggerElement={tagsButton}
-      class="w-full px-2 overflow-y-auto"
+      visible={activeFilterBox === FILTER_TAGS}
+      on:close={closeTagsPopup}
+      triggerElement={mobileTagsButton}
+      containerClass="w-full px-2 overflow-y-auto"
       style="max-height:75vh">
       <TagList currentPost={currentNote} on:change={handleTagChange} />
+    </Popup>
+
+    <Popup
+      visible={Boolean(searchPopupNotes)}
+      triggerElement={mobileSearchBox}
+      on:close={closeSearchPopup}
+      on:click={closeSearchPopup}
+      style="max-height:75vh"
+      containerClass="w-full px-2 overflow-y-auto">
+      <SearchResultsPopup
+        on:click={closeSearchPopup}
+        base="notes"
+        posts={searchPopupNotes} />
     </Popup>
   </div>
 
@@ -122,9 +181,23 @@
     <div class="relative rounded-md shadow-sm mb-2">
       <input
         on:input={handleSearchBox}
+        on:focus={handleSearchBoxFocus}
+        bind:this={largeSearchBox}
         type="search"
         class="form-input block w-full sm:text-sm sm:leading-5"
         placeholder="Search..." />
+
+      <Popup
+        visible={Boolean(searchPopupNotes)}
+        triggerElement={largeSearchBox}
+        on:click={closeSearchPopup}
+        style="max-height:75vh;width:400px"
+        containerClass="overflow-y-auto top-0 left-48 ml-2">
+        <SearchResultsPopup
+          on:click={closeSearchPopup}
+          base="notes"
+          posts={searchPopupNotes} />
+      </Popup>
     </div>
 
     <TagList currentPost={currentNote} on:change={handleTagChange} />
