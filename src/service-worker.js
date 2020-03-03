@@ -71,16 +71,13 @@ self.addEventListener('fetch', (event) => {
   // might prefer a cache-first approach to a network-first one.)
   event.respondWith(
     caches.open(`offline${timestamp}`).then(async (cache) => {
-      try {
-        const response = await fetch(event.request);
+      // Try cache first since all the content is static.
+      let response = await cache.match(event.request);
+      if (!response) {
+        response = await fetch(event.request);
         cache.put(event.request, response.clone());
-        return response;
-      } catch (err) {
-        const response = await cache.match(event.request);
-        if (response) return response;
-
-        throw err;
       }
+      return response;
     })
   );
 });
