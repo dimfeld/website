@@ -11,7 +11,7 @@
 
 <div
   class="w-full flex flex-col items-stretch sm:grid sm:max-w-none gap-8 sm:mt-4"
-  style="grid-template-columns: repeat(auto-fit, 300px);">
+  style="grid-template-columns: repeat(auto-fit, 400px);">
   {#each posts as post (post.id)}
     <div
       animate:flip={{ duration: 300 }}
