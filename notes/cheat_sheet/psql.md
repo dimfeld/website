@@ -1,7 +1,10 @@
 ---
 title: PostgreSQL CLI Cheat Sheet
 date: 2020-03-02
+updated: 2020-03-03
 ---
+
+Also see [PostgreSQL Cheat Sheet](postgresql).
 
 # Backslash Commands
 
@@ -30,14 +33,14 @@ Set these with `\set VAR VALUE`.
 Adding the file `~/pg_service.conf` lets you define connection string presets.
 
 ```
-[SERVICE_NAME]
+[YOUR_SERVICE_NAME]
 host=HOST
 port=PORT
 dbname=DBNAME
 user=USER
 ```
 
-Run `psql service=SERVICE_NAME` to connect to it.
+Run `psql service=YOUR_SERVICE_NAME` to connect to it.
 
 [Full Documentation](https://www.postgresql.org/docs/current/libpq-pgservice.html)
 
