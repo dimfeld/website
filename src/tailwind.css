@@ -58,7 +58,19 @@ pre > code {
   @apply block border-gray-400 bg-gray-200 text-black px-4 py-2 mt-4 whitespace-pre-wrap;
 }
 
-article p:not(:first-child) {
+article h1 + p {
+  @apply mt-0;
+}
+
+article h2 + p {
+  @apply mt-0;
+}
+
+article h3 + p {
+  @apply mt-0;
+}
+
+article * + p {
   @apply mt-4;
 }
 
