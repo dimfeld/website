@@ -21,6 +21,9 @@
     transition from AngularJS (1.x) to Svelte.
   </p>
 
+
+  <p>In the past I worked almost exclusively in C++ and various assembly languages. Now that I'm more in the web ecosystem, I'm mostly writing Javascript, but I also enjoy using Go and Rust for more heavy-duty backend work.</p>
+
   <p>
     Before starting my own venture, I interfaced with advanced network switching
     chips at
