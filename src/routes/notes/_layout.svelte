@@ -118,9 +118,10 @@
     <div class="m-2 text-lg flex flex-row">
 
       <div class="flex-grow">
-        <label for="search" class="sr-only">Search</label>
+        <label for="mobile-search" class="sr-only">Search</label>
         <div class="relative rounded-md shadow-sm">
           <input
+            id="mobile-search"
             on:input={handleSearchBox}
             on:focus={handleSearchBoxFocus}
             bind:this={mobileSearchBox}
@@ -182,9 +183,10 @@
   <!-- Large screen filters -->
   <div class="hidden sm:block m-4 w-48 flex-none">
 
-    <label for="search" class="sr-only">Search</label>
+    <label for="large-search" class="sr-only">Search</label>
     <div class="relative rounded-md shadow-sm mb-2" bind:this={largeSearchBox}>
       <input
+        id="large-search"
         on:input={handleSearchBox}
         on:focus={handleSearchBoxFocus}
         type="search"
