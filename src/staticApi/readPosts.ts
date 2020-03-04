@@ -14,7 +14,9 @@ export interface Post {
   title: string;
   tags: string[];
   date: string;
-  summary: string;
+  updated?: string;
+  summary?: string;
+  frontPageSummary?: string;
   content: string;
   status?: string;
   status_code?: string;

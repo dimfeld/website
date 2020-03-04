@@ -30,7 +30,7 @@ async function run() {
         ignore: '/static-api',
       })
     )
-    .get('/static-api/latestPost', latestPost)
+    .get('/static-api/latest', latestPost)
     .get('/static-api/allPosts', allPosts)
     .get('/static-api/posts/:id', getPost)
     .get('/static-api/notes/*', getNote)

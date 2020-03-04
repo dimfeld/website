@@ -1,25 +1,53 @@
 <script context="module">
   export async function preload() {
-    let post = await this.fetch('/api/latestPost').then((r) => r.json());
-    return { latestPost: post };
+    let { post, note, lastCreatedNote } = await this.fetch('/api/latest').then(
+      (r) => r.json()
+    );
+    return { latestPost: post, latestNote: note, lastCreatedNote };
   }
 </script>
 
 <script>
   export let latestPost;
+  export let latestNote;
+  export let lastCreatedNote;
   import { getContext } from 'svelte';
   getContext('title').set('');
 </script>
 
-<div class="m-4">
-  <h1 class="font-medium text-gray-700">Latest Post</h1>
-  <h1 class="mx-2">
-    <a href="writing/{latestPost.id}">{latestPost.title}</a>
-  </h1>
-
-  <p class="px-2">{latestPost.longSummary || latestPost.summary || ''}</p>
-
-  <p class="mt-4">
-    <a class="text-black" rel="prefetch" href="writing">See All Posts...</a>
+<article class="m-4 self-center font-serif">
+  <p>
+    Welcome! This site is inspired by the
+    <a href="writing/digital_garden">Digital Garden</a>
+    concept, which essentially means that I'm writing not just to share
+    information, but also to encourage discussion and mutual learning. Please
+    feel free to reach out on
+    <a href="https://www.twitter.com/dimfeld">Twitter</a>
+    if you have some thoughts about anything here.
   </p>
-</div>
+
+  <p>
+    My latest post is
+    {#if latestPost.frontPageSummary}
+      <a href="writing/{latestPost.id}">{latestPost.title}</a>, about {latestPost.frontPageSummary}.
+    {:else}
+      <a href="writing/{latestPost.id}">{latestPost.title}</a>.
+    {/if}
+  </p>
+
+  <p>
+    I also post my
+    <a rel="prefetch" href="notes">notes</a>
+    publicly, in hopes that some readers will be educated and others can help
+    fill in the gaps.
+    {#if lastCreatedNote.id !== latestNote.id}
+      <a href="notes/{lastCreatedNote.id}">{lastCreatedNote.title}</a>
+      is the newest note and
+      <a href="notes/{latestNote.id}">{latestNote.title}</a>
+      was updated most recently.
+    {:else}
+      The newest note is
+      <a href="notes/{latestNote.id}">{latestNote.title}</a>.
+    {/if}
+  </p>
+</article>

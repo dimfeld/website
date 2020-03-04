@@ -1,4 +1,5 @@
 import orderBy from 'lodash/orderBy';
+import maxBy from 'lodash/maxBy';
 import { postsDir, notesDir, readMdFiles, Post } from './readPosts';
 import send from '@polka/send-type';
 import { Dictionary } from 'lodash';
@@ -28,8 +29,12 @@ export async function initPostCache() {
     readMdFiles(notesDir, 'note'),
   ]);
 
-  postList = orderBy(postList, 'date', 'desc');
-  noteList = orderBy(noteList, 'date', 'desc');
+  postList = orderBy(postList, ['date', 'title'], ['desc', 'asc']);
+  noteList = orderBy(
+    noteList,
+    [(n) => n.updated || n.date, 'title'],
+    ['desc', 'asc']
+  );
 
   let tags = new Map<string, Post[]>();
   let postOutput = new Map<string, Post>();
@@ -65,7 +70,15 @@ export function allPosts(req, res) {
 }
 
 export function latestPost(req, res) {
-  send(res, 200, postCache.postList[0]);
+  let { content: postContent, ...post } = postCache.postList[0];
+  let { content: noteContent, ...note } = postCache.noteList[0];
+  let { content: _, ...lastCreatedNote } = maxBy(postCache.noteList, 'date');
+
+  send(res, 200, {
+    post,
+    lastCreatedNote,
+    note,
+  });
 }
 
 export function getPost(req, res) {
