@@ -65,7 +65,7 @@
     text-decoration: inherit;
   }
 
-  #bg-highlight {
+  .bg-highlight {
     transition-property: left, width;
     transform: skewX(-20deg);
   }
@@ -78,8 +78,7 @@
   style="height:40px">
   <div class="hidden sm:flex flex-row w-full">
     <div
-      id="bg-highlight"
-      class="absolute h-full bg-teal-700 duration-1000 ease-out
+      class="bg-highlight absolute h-full bg-teal-700 duration-1000 ease-out
       transition-transform top-0 left-0"
       style={backgroundHighlightStyle} />
     <a
@@ -158,8 +157,7 @@
     class="w-full flex sm:hidden flex-row items-center"
     on:click={() => (displayNav = false)}>
     <div
-      id="bg-highlight"
-      class="absolute bg-teal-700 h-full top-0"
+      class="bg-highlight absolute bg-teal-700 h-full top-0"
       style="left:-8px;width:218px" />
     <a
       class="text-white"
