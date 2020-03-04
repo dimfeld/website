@@ -50,7 +50,7 @@ pre {
 }
 
 code {
-  @apply border border-red-400 text-red-600 px-1 text-base;
+  @apply border border-red-400 text-red-700 px-1 text-base;
 }
 
 pre > code {
