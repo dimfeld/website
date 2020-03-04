@@ -33,7 +33,7 @@
   <meta name="Description" content="Notes by Daniel Imfeld" />
 </svelte:head>
 
-<PostList base="notes" posts={activeNotes} />
+<PostList base="notes" posts={activeNotes} useUpdatedDate={true} />
 
 <div class="text-center sm:hidden mt-8">
   <a href="/rss/notes.xml">Notes RSS Feed</a>

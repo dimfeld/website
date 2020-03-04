@@ -3,6 +3,7 @@
   import { flip } from 'svelte/animate';
   export let posts;
   export let base;
+  export let useUpdatedDate = false;
 
   function tagLabels(tags) {
     return (tags || []).map((t) => capitalize(t.replace(/_/g, ' '))).join(', ');
@@ -10,7 +11,7 @@
 </script>
 
 <div
-  class="w-full flex flex-col items-stretch sm:grid sm:max-w-none gap-8 sm:mt-4"
+  class="w-full flex flex-col items-stretch sm:grid sm:gap-8 sm:mt-4"
   style="grid-template-columns: repeat(auto-fit, 400px);">
   {#each posts as post (post.id)}
     <div
@@ -27,7 +28,9 @@
       <p class="flex flex-row text-sm mt-auto pt-2">
         <span>{tagLabels(post.tags)}</span>
         {#if post.date}
-          <time class="ml-auto">{post.date.slice(0, 10)}</time>
+          <time class="ml-auto">
+            {useUpdatedDate && post.updated ? post.updated.slice(0, 10) : post.date.slice(0, 10)}
+          </time>
         {/if}
       </p>
     </div>
