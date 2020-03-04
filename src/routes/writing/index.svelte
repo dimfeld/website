@@ -29,6 +29,10 @@
   let tags = Array.from(tagsSet).sort();
 </script>
 
+<svelte:head>
+  <meta name="Description" content="Writing by Daniel Imfeld" />
+</svelte:head>
+
 <div class="ml-4">
   <div class="flex flex-row justify-center items-baseline flex-shrink">
     <PostList base="writing" posts={activePosts} />

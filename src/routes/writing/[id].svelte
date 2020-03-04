@@ -17,6 +17,14 @@
   export let post;
 </script>
 
+<svelte:head>
+  <meta
+    name="Description"
+    content={[`${post.title} by Daniel Imfeld`, post.summary]
+      .filter(Boolean)
+      .join(' - ')} />
+</svelte:head>
+
 <div class="sm:mx-8">
   <Article {...post}>
     {@html post.content}

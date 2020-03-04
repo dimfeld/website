@@ -29,6 +29,10 @@
   }
 </script>
 
+<svelte:head>
+  <meta name="Description" content="Notes by Daniel Imfeld" />
+</svelte:head>
+
 <PostList base="notes" posts={activeNotes} />
 
 <div class="text-center sm:hidden mt-8">

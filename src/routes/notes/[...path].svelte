@@ -12,6 +12,14 @@
   export let note;
 </script>
 
+<svelte:head>
+  <meta
+    name="Description"
+    content={[`${note.title} by Daniel Imfeld`, note.summary]
+      .filter(Boolean)
+      .join(' - ')} />
+</svelte:head>
+
 <div class="sm:mr-8">
   <Article {...note}>
     {@html note.content}
