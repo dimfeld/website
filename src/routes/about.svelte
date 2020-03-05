@@ -64,4 +64,7 @@
     <a href="https://refactoringui.com/">Refactoring UI</a> icon set and
     <a href="https://iconmonstr.com/">iconmonstr</a>.
   </p>
+
+  <p>The content on this site is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+     The code can be viewed on <a href="https://github.com/dimfeld/website">Github</a> and is licensed under the <a href="https://choosealicense.com/licenses/mit/">MIT license</a>.</p>
 </article>
