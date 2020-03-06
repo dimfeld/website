@@ -12,7 +12,7 @@ module.exports = {
       purgecss({
         content: ['./**/*.html', './**/*.svelte'],
         defaultExtractor: (content) => {
-          const regExp = new RegExp(/[A-Za-z0-9-_:/]+/g);
+          const regExp = new RegExp(/[A-Za-z0-9-_:/.]+/g);
 
           const matchedTokens = [];
 
