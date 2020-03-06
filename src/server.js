@@ -24,7 +24,7 @@ async function run() {
 
   polka() // You can also use Express
     .use(
-      compression({ threshold: 0 }),
+      compression({ threshold: process.env.SAPPER_EXPORT ? 1000000 : 0 }),
       sirv('static', { dev }),
       sapper.middleware({
         ignore: '/static-api',
