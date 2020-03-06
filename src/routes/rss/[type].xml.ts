@@ -77,7 +77,7 @@ export async function get(req, res, next) {
         let body = render(post.content, { url: path, host });
         desc = formatPostHeader(post) + body;
       } else {
-        desc = post.summary;
+        desc = post.summary || '';
       }
 
       feed.item({
