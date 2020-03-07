@@ -54,7 +54,7 @@ select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
        '{"a": [3, 4]}'::jsonb as matches;
  matches
 ---------
- t
+ f
 
 -- Order of items in the array does not matter.
 select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
