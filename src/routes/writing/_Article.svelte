@@ -9,7 +9,7 @@
   getContext('title').set(title);
 </script>
 
-<article class="font-serif mt-4 px-4 sm:px-0">
+<article class="font-serif my-4 px-4 sm:px-0">
   <div class="mb-4 leading-tight">
     <h2 class="text-2xl">{title}</h2>
 
