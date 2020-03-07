@@ -4,6 +4,7 @@ import * as footnote from 'markdown-it-footnote';
 import * as abbr from 'markdown-it-abbr';
 import * as toc from 'markdown-it-toc-done-right';
 import * as anchor from 'markdown-it-anchor';
+import StateCore from 'markdown-it/lib/rules_core/state_core';
 
 export default function renderer() {
   let r = markdownIt({
@@ -21,7 +22,12 @@ export default function renderer() {
     .use(footnote)
     .use(abbr)
     .use(toc)
-    .use(anchor);
+    .use(anchor, {
+      permalink: true,
+      permalinkSymbol: '🔗',
+      permalinkHref: (slug: string, state: StateCore) =>
+        `${state.env.host}${state.env.url}#${slug}`,
+    });
 
   r.renderer.rules.footnote_ref = function render_footnote_ref(
     tokens,
@@ -68,7 +74,7 @@ export default function renderer() {
 
   let defaultNormalize = r.normalizeLink;
 
-  return (content: string, env: { [key: string]: string }) => {
+  return (content: string, env: { url: string; host?: string }) => {
     let { url: base, host } = env;
 
     let lastSlash = base.lastIndexOf('/');
@@ -88,6 +94,11 @@ export default function renderer() {
       return defaultNormalize(url);
     };
 
-    return r.render(content, env);
+    let renderEnv = {
+      ...env,
+      host: env.host || '',
+    };
+
+    return r.render(content, renderEnv);
   };
 }
