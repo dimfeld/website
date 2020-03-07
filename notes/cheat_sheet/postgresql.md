@@ -43,7 +43,7 @@ Fortunately, PostgreSQL's JSON support is top-notch and this is actually very ea
 -- At least one item in the array overlaps with the criteria, so
 -- this is true.
 select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
-       '[{"a":[3, 4]}]'::jsonb as matches;
+       '[{"a": [3, 4]}]'::jsonb as matches;
  matches
 ---------
  t
@@ -51,14 +51,14 @@ select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
 -- When matching against arrays, the match criteria must also be
 -- an array. Again, think overlap more than containment.
 select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
-       '{"a":[3, 4]}'::jsonb as matches;
+       '{"a": [3, 4]}'::jsonb as matches;
  matches
 ---------
  t
 
 -- Order of items in the array does not matter.
 select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
-       '[{"a":[4, 3]}]'::jsonb as matches;
+       '[{"a": [4, 3]}]'::jsonb as matches;
  matches
 ---------
  t
@@ -66,7 +66,7 @@ select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
 -- Here we match against an array item where the array doesn't
 -- overlap, so it's false.
 select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
-       '[{"a":[4,5]}]'::jsonb as matches;
+       '[{"a": [4, 5]}]'::jsonb as matches;
  matches
 ---------
  f
@@ -75,7 +75,7 @@ select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
 -- two array items [4] and they both overlap with the same
 -- array [2,3,4]. Postgres calls this a match.
 select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
-       '[{"a":[4]}, {"a":[4]}]'::jsonb as matches;
+       '[{"a": [4]}, {"a": [4]}]'::jsonb as matches;
  matches
 ---------
  t
@@ -83,7 +83,7 @@ select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
 -- And here one of the array items matches but the other
 -- does not, so it's false.
 select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
-       '[{"a":[4]}, {"a":[5]}]'::jsonb as matches;
+       '[{"a": [4]}, {"a": [5]}]'::jsonb as matches;
  matches
 ---------
  f
