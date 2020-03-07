@@ -17,7 +17,7 @@ CREATE FUNCTION update_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
     NEW.updated = now();
-    RETURN new;
+    RETURN NEW;
 END;
 $$ LANGUAGE 'plpgsql';
 
