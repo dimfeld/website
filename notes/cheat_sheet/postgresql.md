@@ -88,3 +88,17 @@ select '[{"a": [2, 3, 4]}, {"a": [1, 2, 3]}]'::jsonb @>
 ---------
  f
 ```
+
+Finally, to make it fast in a real application, just create a GIN index on the entire column.
+
+```
+CREATE INDEX ON table USING GIN (data_column);
+```
+
+And if you only need the `@>`, `@@`, and `@?` operators, you can specify `jsonb_path_ops` to make the index faster and smaller.
+
+```
+CREATE INDEX ON table USING GIN (data_column jsonb_path_ops);
+```
+
+The [PostgreSQL documentation](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING) provides a thorough and easy-to-read discussion of the tradeoffs between the two types of indexes.
