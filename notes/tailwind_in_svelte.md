@@ -130,7 +130,7 @@ Svelte:
 {/if}
 ```
 
-This could also be done using a `use:` action similar to the [Click Outside](#click-outside) example.
+This could also be done with a `use:` action similar to the Click Outside example.
 
 # Transitions
 
