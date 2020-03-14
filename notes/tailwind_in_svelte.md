@@ -64,13 +64,13 @@ Alpine:
 </div>
 ```
 
-Svelte:
+Svelte ([REPL](https://svelte.dev/repl/dae848c2157e48ab932106779960f5d5?version=3.19.2)):
 ```html
 
 <script>
-function clickOutside(node, { enabled, cb }) {
+function clickOutside(node, { enabled: initialEnabled, cb }) {
     const handleOutsideClick = ({ target }) => {
-      if (enabled && !node.contains(target)) {
+      if (!node.contains(target)) {
         cb();
       }
     };
@@ -83,7 +83,7 @@ function clickOutside(node, { enabled, cb }) {
       }
     }
 
-    update(enabled);
+    update(initialEnabled);
     return {
       update,
       destroy() {
@@ -91,9 +91,11 @@ function clickOutside(node, { enabled, cb }) {
       }
     };
   }
+
+  let open = true;
 </script>
 
-<div use:clickOutside={{ enable: open, cb: () => open = false }}>
+<div use:clickOutside={{ enabled: open, cb: () => open = false }}>
    <button>...</button>
    {#if open}
     <div>
