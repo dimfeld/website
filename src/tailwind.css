@@ -74,6 +74,22 @@ article * + p {
   @apply mt-4;
 }
 
+article table {
+  @apply align-middle inline-block shadow overflow-hidden border-b border-gray-200 font-sans;
+}
+
+article table th {
+  @apply px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider;
+}
+
+article table td {
+  @apply px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900;
+}
+
+@media (min-width: 640px) {
+  @apply rounded-lg;
+}
+
 hr.footnotes-sep {
   @apply mt-8;
 }
