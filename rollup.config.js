@@ -5,7 +5,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import babel from 'rollup-plugin-babel';
 import json from '@rollup/plugin-json';
-import postcss from 'rollup-plugin-postcss';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
@@ -117,10 +116,10 @@ export default {
 
       babel(babelClientConfig),
 
-      // !dev &&
-      //   terser({
-      //     module: true,
-      //   }),
+      !dev &&
+        terser({
+          module: true,
+        }),
     ],
 
     onwarn,
@@ -150,10 +149,6 @@ export default {
 
       commonjs(),
       babel(babelServerConfig),
-      postcss({
-        extract: path.resolve(__dirname, './static/global.css'),
-        plugins: require('./postcss.config').plugins,
-      }),
     ],
     external: Object.keys(pkg.dependencies).concat(
       require('module').builtinModules ||
