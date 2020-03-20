@@ -80,7 +80,7 @@
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-svelte": "^5.1.1",
     "rollup-plugin-terser": "^5.2",
-    "sapper": "^0.27.10",
+    "sapper": "^0.27.11",
     "svelte": "^3.19.2",
     "svelte-awesome": "^2.2.1",
     "svelte-preprocess": "^3.2.0",
