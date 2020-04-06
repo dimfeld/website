@@ -37,7 +37,7 @@ A few days later, Lea Verou wrote a [blog post](http://lea.verou.me/2020/04/lch-
 This seemed like the answer to my dilemna, so I gave it a try. I started with Material blue-gray 500, RGB value `#607d8b`:
 <div style="background-color:#607d8b" class="w-12 h-12"></div>
 
-Plugging that into Lea's color picker give an LCH value of `lch(50.534% 13.837 234.058)`. The first value there is the lightness, and the second and third values are the "Chroma" and "Hue," somewhat similar to the Saturation and Hue of HSL. (Again, Lea's post explains this better.)
+Lea's color picker says this color has an LCH value of `lch(50.534% 13.837 234.058)`. The first value there is the lightness, and the second and third values are the "Chroma" and "Hue," somewhat similar to the Saturation and Hue of HSL. (Again, Lea's post explains this better.)
 
 From there, I took the Tailwind UI "indigo" color palette as my base and copied each color into the LCH color tool. Here, I only cared about getting the lightness values:
 
