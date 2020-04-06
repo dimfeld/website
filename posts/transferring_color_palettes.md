@@ -5,7 +5,7 @@ date: 2020-04-03
 status: Not fully confident that this is the right way to do it, but I like the results I got this time.
 ---
 
-Almost every web developer has heard of the RGB system of representing colors, which is a direct corollary to how colors are representing in video hardware. Many of us are familiar with HSL as well, in which a color is represented by hue (representing the raw color), saturation (representing how much white is mixed in to the color), and lightness.
+Almost every web developer has heard of the RGB system of representing colors, which is a direct corollary to how colors are represented in video hardware. Many of us are familiar with HSL as well, in which a color is made up of hue (the raw color), saturation (how much white is mixed in to the color), and lightness.
 
 These methods have served us well enough, but ultimately they are not very useful when you want to take a color value, modify it in some way, and have a good idea of how the resulting color will look. In the color world, they say that these color spaces are not perceptually uniform.
 
