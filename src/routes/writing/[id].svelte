@@ -23,6 +23,12 @@
     content={[`${post.title} by Daniel Imfeld`, post.summary]
       .filter(Boolean)
       .join(' - ')} />
+  <meta property="og:title" content={post.title} />
+  <meta property="twitter:title" content={post.title} />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content={post.summary} />
+  <meta property="twitter:description" content={post.summary} />
+
 </svelte:head>
 
 <div class="sm:mx-8">
