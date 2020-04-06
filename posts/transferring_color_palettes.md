@@ -54,7 +54,7 @@ From there, I took the Tailwind UI "indigo" color palette as my base and copied 
 <div class="flex items-center"><div class="mr-4 bg-indigo-900 h-12 w-12"></div> 900 -- 23.662% lightness</div>
 </div>
 
-From there, I used the LCH color tool to create a palette with the Chroma and Hue value of the Material Blue-Gray 500 color, but the lightness values taken from Tailwind's Indigo palette. LCH is not yet widely supported in browsers, so I copied the RGB values out of the tool, and created a in my Tailwind config.
+From there, I used the LCH color tool to create a palette with the Chroma and Hue value of the Material Blue-Gray 500 color, but the lightness values taken from Tailwind's Indigo palette. LCH is not yet widely supported in browsers, so I copied the RGB values out of the tool, and put the resulting palette into my Tailwind config.
 
 ```js
 lchBlueGray: {
