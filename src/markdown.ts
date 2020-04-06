@@ -8,8 +8,9 @@ import StateCore from 'markdown-it/lib/rules_core/state_core';
 
 export default function renderer() {
   let r = markdownIt({
+    html: true,
     linkify: true,
-    highlight: function(str, lang) {
+    highlight: function (str, lang) {
       if (lang && highlight.getLanguage(lang)) {
         try {
           return highlight.highlight(lang, str).value;
