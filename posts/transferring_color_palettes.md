@@ -13,35 +13,48 @@ This is a well-known problem, and I most recently encountered it on the Tailwind
 
 > Bad news: color is complicated and we've yet to find a tool that does a good job generating these sorts of color palettes. We picked all of Tailwind's default colors by hand, balancing them by eye. Sorry!
 
-At work, we use the material blue-gray palette, mostly the primary `500` color. I tried copying the entire palette into my Tailwind CSS config, but the results looked fairly drab. Worse, the Tailwind UI components that I have been using tend to use `600` as their primary shade.
+At work, our existing site uses the Angular Material Blue-Gray palette, mostly the primary `500` color. I tried copying the entire palette into my Tailwind CSS config, but as more colors were used the results looked drab. Worse, the Tailwind UI components that I have been using tend to use `600` as their primary shade, so everything was rather dark without extra work to shift the color palette.
+
+The entire Material blue-gray palette:
+<div class="flex">
+<div class="h-12 w-12" style="background-color:#eceff1"></div>
+<div class="h-12 w-12" style="background-color:#cfd8dc"></div>
+<div class="h-12 w-12" style="background-color:#b0bec5"></div>
+<div class="h-12 w-12" style="background-color:#90a4ae"></div>
+<div class="h-12 w-12" style="background-color:#78909c"></div>
+<div class="h-12 w-12" style="background-color:#607d8b"></div>
+<div class="h-12 w-12" style="background-color:#546e7a"></div>
+<div class="h-12 w-12" style="background-color:#455a64"></div>
+<div class="h-12 w-12" style="background-color:#37474f"></div>
+<div class="h-12 w-12" style="background-color:#263238"></div>
+</div>
+
 
 So I was left with the question of how to make a palette which is consistent with the existing website, but also looks like something that I would want to use. My initial decision was just to punt on the decision and figure it out later.
 
-But just over the weekend, Lea Verou wrote a [blog post](http://lea.verou.me/2020/04/lch-colors-in-css-what-why-and-how/) about using the LCH color space in CSS, and also published a great [color tool](https://css.land/lch/) for playing with LCH. LCH, like the somewhat-better-known color space LAB, is a perceptually uniform color space, meaning that you changing the lightness value actually does something predictable, and importantly, similar to the human eye independent of the other two values of the color. If you're curious about more details, Lea's post does a great job of explaining LCH and how it differs from RGB and HSL.
+A few days later, Lea Verou wrote a [blog post](http://lea.verou.me/2020/04/lch-colors-in-css-what-why-and-how/) about using the LCH color space in CSS, and also published a great [color tool](https://css.land/lch/) for playing with LCH. LCH, like the somewhat-better-known color space LAB, is a perceptually uniform color space, meaning the human eye perceives a change in the lightness value independent of the other two values of the color. If you're curious about more details, Lea's post does a great job of explaining LCH and how it differs from RGB and HSL.
 
-This seemed like the answer to my dilemna, so I gave it a try.
-
-I started with Material blue-gray 500, RGB value `#607d8b`:
+This seemed like the answer to my dilemna, so I gave it a try. I started with Material blue-gray 500, RGB value `#607d8b`:
 <div style="background-color:#607d8b" class="w-12 h-12"></div>
 
-Plugging that into Lea's color picker give an LCH value of `lch(50.534% 13.837 234.058)`. The first value there is the lightness, and the second and third values are the "Chroma" and "Hue," somewhat similar to the Hue and Saturation of HSL.
+Plugging that into Lea's color picker give an LCH value of `lch(50.534% 13.837 234.058)`. The first value there is the lightness, and the second and third values are the "Chroma" and "Hue," somewhat similar to the Saturation and Hue of HSL. (Again, Lea's post explains this better.)
 
-From there, I took the Tailwind UI "indigo" color palette as my base. Here, I only cared about getting the lightness values:
+From there, I took the Tailwind UI "indigo" color palette as my base and copied each color into the LCH color tool. Here, I only cared about getting the lightness values:
 
 <div class="flex flex-col sm:ml-4 my-4">
-<div class="flex items-center"><div class="mr-4 bg-indigo-50 h-12 w-12"></div> 50 - 96.372% lightness</div>
-<div class="flex items-center"><div class="mr-4 bg-indigo-100 h-12 w-12"></div> 100 - 93.54% lightness</div>
-<div class="flex items-center"><div class="mr-4 bg-indigo-200 h-12 w-12"></div> 200 - 87.18% lightness</div>
-<div class="flex items-center"><div class="mr-4 bg-indigo-300 h-12 w-12"></div> 300 - 79.92% lightness</div>
-<div class="flex items-center"><div class="mr-4 bg-indigo-400 h-12 w-12"></div> 400 - 67.781% lightness</div>
-<div class="flex items-center"><div class="mr-4 bg-indigo-500 h-12 w-12"></div> 500 - 53.349% lightness</div>
-<div class="flex items-center"><div class="mr-4 bg-indigo-600 h-12 w-12"></div> 600 - 42.773% lightness</div>
-<div class="flex items-center"><div class="mr-4 bg-indigo-700 h-12 w-12"></div> 700 - 37.477% lightness</div>
-<div class="flex items-center"><div class="mr-4 bg-indigo-800 h-12 w-12"></div> 800 - 29.641% lightness</div>
-<div class="flex items-center"><div class="mr-4 bg-indigo-900 h-12 w-12"></div> 900 - 23.662% lightness</div>
+<div class="flex items-center"><div class="mr-4 bg-indigo-50 h-12 w-12"></div> 50 -- 96.372% lightness</div>
+<div class="flex items-center"><div class="mr-4 bg-indigo-100 h-12 w-12"></div> 100 -- 93.54% lightness</div>
+<div class="flex items-center"><div class="mr-4 bg-indigo-200 h-12 w-12"></div> 200 -- 87.18% lightness</div>
+<div class="flex items-center"><div class="mr-4 bg-indigo-300 h-12 w-12"></div> 300 -- 79.92% lightness</div>
+<div class="flex items-center"><div class="mr-4 bg-indigo-400 h-12 w-12"></div> 400 -- 67.781% lightness</div>
+<div class="flex items-center"><div class="mr-4 bg-indigo-500 h-12 w-12"></div> 500 -- 53.349% lightness</div>
+<div class="flex items-center"><div class="mr-4 bg-indigo-600 h-12 w-12"></div> 600 -- 42.773% lightness</div>
+<div class="flex items-center"><div class="mr-4 bg-indigo-700 h-12 w-12"></div> 700 -- 37.477% lightness</div>
+<div class="flex items-center"><div class="mr-4 bg-indigo-800 h-12 w-12"></div> 800 -- 29.641% lightness</div>
+<div class="flex items-center"><div class="mr-4 bg-indigo-900 h-12 w-12"></div> 900 -- 23.662% lightness</div>
 </div>
 
-From there, I used the LCH color picker to create a color palette with the Chroma and Hue value of the Material Blue-Gray 500 color, but the lightness values taken from Tailwind's Indigo palette. LCH is not yet widely supported in browsers, so copied the RGB values out of the tool, and created a in my Tailwind config.
+From there, I used the LCH color tool to create a palette with the Chroma and Hue value of the Material Blue-Gray 500 color, but the lightness values taken from Tailwind's Indigo palette. LCH is not yet widely supported in browsers, so copied the RGB values out of the tool, and created a in my Tailwind config.
 
 ```js
 lchBlueGray: {
@@ -58,7 +71,7 @@ lchBlueGray: {
 }
 ```
 
-And this is how it looks!
+And this is how it looks! I like this better because the different shades retain more of the blue of the middle color, while I didn't have to guess to make the brightness match the existing palettes that the Tailwind UI components come with.
 <div class="flex">
 <div class="h-12 w-12" style="background-color:rgb(91.1% 96.96% 100%)"></div>
 <div class="h-12 w-12" style="background-color:rgb(83.93% 94.59% 100%)"></div>
