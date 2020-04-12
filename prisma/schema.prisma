@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model posts {
+  content   String?
+  created   DateTime? @default(now())
+  id        String    @id
+  meta      String?
+  path      String
+  post_type post_type
+  published Boolean?  @default(false)
+  tags      String[]
+  title     String
+  updated   DateTime? @default(now())
+
+  @@index([updated], name: "posts_note_updated")
+  @@index([updated], name: "posts_post_updated")
+}
+
+enum post_type {
+  note
+  post
+}
