@@ -26,7 +26,7 @@ Likewise, `$postLink` simply turns into either `use:` directives or `bind:this={
 
 ## Sharing Code Between Svelte and AngularJS
 
-Angular 1.x uses dependency injection to distributing services around.
+Angular 1.x uses dependency injection to distribute services throughout the codebase.
 
 ```js
 // Define a service
@@ -60,7 +60,7 @@ export function doThat { ... };
 import { doThis } from './configs';
 ```
 
-This works for our own services where we have control over how they are exposed. But for third-party Angular packages, we can't easily do this. Svelte components sometimes need access to things like `ui-router` to create links to other places in the app, or `$mdDialog` to show dialogs using the existing system.
+But for third-party Angular packages, we can't easily do this. Svelte components sometimes need access to things like `ui-router` to create links to other places in the app, or `$mdDialog` to show dialogs using the existing system.
 
 Eventually all of these third-party services will be replaced with more modern ones that aren't dependent on Angular, but for now we created a hack solution by defining a `services` object in a file. The Angular module-level `run` function fills that object in with the various services, and then Svelte components can `import` that object and access the services they need. It's a horrible hack, but it works fine. Over time, we are converting our Angular services into normal modules that can be imported from anywhere.
 
