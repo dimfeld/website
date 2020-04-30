@@ -20,7 +20,7 @@ Directives like `ng-if="info.report.revenue"` sort of work in Angular if `info.r
 
 Svelte slots are much easier to use and reason about than Angular transclude, especially in cases where you don't want an extra wrapper element around the slot content.
 
-It's much easier to reason about what's going on when writing a Svelte component. No need to deal with $onChanges happening before $onInit, or even special handling of changes since it's all taken care of with Svelte's `$:` syntax.
+It's also much easier to reason about the lifecycle of a Svelte component. No need to deal with `$onChanges` happening before `$onInit`, or even special handling of changes at all, since it's all taken care of with Svelte's `$:` syntax.
 
 Likewise, `$postLink` simply turns into either `use:` directives or `bind:this={element}` on the relevant DOM node.
 
