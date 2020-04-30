@@ -1,9 +1,12 @@
 ---
 title: Tailwind UI in Svelte
 date: 2020-03-13
+updated: 2020-04-30
 ---
 
 The [Tailwind UI](https://tailwindui.com) dynamic code is written using [Alpine.js](https://github.com/alpinejs/alpine/), so most of the integration effort goes into translating the Alpine.js code to Svelte.
+
+Update: Since I wrote this the Tailwind UI site has changed to use informative comments instead of Alpine code samples. The Svelte techniques below still apply.
 
 # Conditional Showing of Elements
 
