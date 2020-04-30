@@ -1,8 +1,8 @@
 ---
 title: Converting an Angular Webapp to Svelte
 date: 2020-04-30
-summary: My experience converting a 6-year-old SPA to Angular
-frontPageSummary: my experience converting a 6-year-old SPA to Angular
+summary: My experience converting a 6-year-old SPA to Svelte
+frontPageSummary: my experience converting a 6-year-old SPA to Svelte
 status: Pretty confident in this. Not necessarily the ideal solution.
 ---
 
