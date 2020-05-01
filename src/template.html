@@ -16,6 +16,21 @@
     <link rel="alternate" type="application/rss+xml" href="/rss/notes.xml" />
 
     %sapper.base% %sapper.styles% %sapper.head%
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-51350393-2"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'UA-51350393-2');
+    </script>
   </head>
   <body class="bg-gray-100 m-0 box-border leading-snug">
     <div id="sapper">%sapper.html%</div>
