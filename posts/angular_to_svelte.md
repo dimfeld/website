@@ -1,6 +1,7 @@
 ---
 title: Converting an Angular Webapp to Svelte
 date: 2020-04-30
+updated: 2020-05-04
 summary: My experience converting a 6-year-old SPA to Svelte
 frontPageSummary: my experience converting a 6-year-old SPA to Svelte
 status: Pretty confident in this. Not necessarily the ideal solution.
@@ -23,6 +24,22 @@ Svelte slots are much easier to use and reason about than Angular transclude, es
 It's also much easier to reason about the lifecycle of a Svelte component. No need to deal with `$onChanges` happening before `$onInit`, or even special handling of changes at all, since it's all taken care of with Svelte's `$:` syntax.
 
 Likewise, `$postLink` simply turns into either `use:` directives or `bind:this={element}` on the relevant DOM node.
+
+## Asynchronous Code
+
+When calling asynchronous code in an Angular controller, you need to make sure that something triggers Angular to update the DOM once the callback or promise is done. Otherwise the DOM may not be updated with your latest changes.
+
+Angular calls this a "digest update," and it provides various methods of doing this, as well as its own promise implementation which automates performing the updates. But you can still run into strange race conditions where the browser displays stale data depending on if some other unrelated code has caused a digest update to run after the buggy code or not.
+
+Svelte doesn't have this problem, because the compiler sees where you assign to variables and automatically marks them dirty and schedules an update. (Of course, Svelte has its own gotchas around detecting mutation of variables [in ways not obvious to the compiler](https://svelte.dev/docs#2_Assignments_are_reactive).)
+
+## Watchers
+
+Much of Angular's update detection is done by using watchers. A watcher runs an expression, and if the value of that expression has changed, Angular updates the value.
+
+Watchers can become a performance issue because every active watcher needs to be run on every digest to see if a change is required. Angular provides some methods of getting around this, such as prefixing a template expression with `::` to indicate that you don't need a watcher for that expression. But watchers are often unavoidable.
+
+As with asynchronous code, Svelte's advantage here is that it indicates the need for an update at the place where the associated data is updated, instead of at each place the data is used. Then each template expression of reactive statement is able to check very quickly if it needs to rerender or not.
 
 ## Sharing Code Between Svelte and AngularJS
 
@@ -66,7 +83,7 @@ Eventually all of these third-party services will be replaced with more modern o
 
 ```js
 import { services as svelteServices } from './svelte-services';
-ng.module('mainModule', [...allTheDependendModules]).run(function($mdDialog, $state) {
+ng.module('mainModule', [...allTheDependentModules]).run(function($mdDialog, $state) {
   Object.assign(services, {
     mdDialog: $mdDialog,
     state: $state,
