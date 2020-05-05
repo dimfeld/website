@@ -32,7 +32,7 @@ const dedupe = (importee) =>
 
 const babelServerConfig = {
   extensions: ['.js', '.mjs', '.html', '.svelte', '.ts'],
-  exclude: ['node_modules/@babel/**'],
+  exclude: ['node_modules/@babel/**', '_GlobalCss.svelte'],
   presets: [
     [
       '@babel/preset-env',

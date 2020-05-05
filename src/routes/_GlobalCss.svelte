@@ -1,5 +1,5 @@
 <style global lang="postcss">
-  @import 'highlight.js/styles/github.css';
+  @import 'highlight.js/styles/vs.css';
 
   @tailwind base;
   @tailwind components;
@@ -52,7 +52,7 @@
   }
 
   code {
-    @apply border border-red-400 text-red-700 px-1 text-base;
+    @apply border border-red-400 bg-gray-200 text-red-700 px-1 text-base;
   }
 
   pre > code {
