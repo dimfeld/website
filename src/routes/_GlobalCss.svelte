@@ -60,15 +60,15 @@
   }
 
   article h1 + p {
-    @apply mt-0;
+    @apply mt-2;
   }
 
   article h2 + p {
-    @apply mt-0;
+    @apply mt-2;
   }
 
   article h3 + p {
-    @apply mt-0;
+    @apply mt-2;
   }
 
   article * + p {
