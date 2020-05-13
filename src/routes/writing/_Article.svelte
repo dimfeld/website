@@ -30,4 +30,11 @@
   </div>
 
   <slot />
+
+  <hr />
+  <p>
+    Thanks for reading! If you have any comments, please
+    <!-- prettier-ignore -->
+    <a href="https://www.twitter.com/dimfeld">send me a note on Twitter.</a>
+  </p>
 </article>
