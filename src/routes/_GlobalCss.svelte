@@ -56,7 +56,7 @@
   }
 
   pre > code {
-    @apply block border-gray-400 bg-gray-200 text-black px-4 py-2 mt-4 whitespace-pre-wrap;
+    @apply block border-gray-400 bg-gray-200 text-black px-4 py-2 mt-4 whitespace-pre-wrap overflow-x-auto;
   }
 
   article h1 + p {
@@ -91,6 +91,10 @@
     article table {
       @apply rounded-lg;
     }
+  }
+
+  hr {
+    @apply mt-4;
   }
 
   hr.footnotes-sep {
