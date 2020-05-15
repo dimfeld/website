@@ -12,7 +12,7 @@ We might start with a simple `loading` variable to track if a component has load
 
 If we're not careful, we end up with a huge number of variables that flag different aspects of the state, many of which should be mutually exclusive. We have to take care to check and manage each flag, and make sure that we don't unintentionally set them into an invalid state.
 
-A simple example I worked with recently was a small dialog box that tracks the progress of a video encode. It shows the progress of the video encoding, handles errors, and allows cancelling the process.
+I’ll cover more complex examples in later articles, but here’s a simple one I worked with recently. I have a small dialog box that tracks the progress of a video encoding task. It shows the progress of the video encoding, handles errors, and allows cancelling the process.
 
 This state might be modeled with a few different boolean variables, some event handlers, and . I'm using [Svelte](https://svelte.dev) and skipping boilerplate, but the syntax should be readily familiar even if you haven't worked with it before.
 
