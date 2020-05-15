@@ -3,53 +3,92 @@ title: Super Simple State Machines
 date: 2020-05-13
 summary: Fortifying component state with simple state machines
 frontPageSummary: fortifying component state with simple state machines
-status: Very confident.
+status: I've implemented state matchines in various forms over the past couple of decades.
 ---
 
-When writing any sort of code that needs to maintain state, it's very easy for that state to grow into a morass of flags to represent various aspects.
+When writing any sort of stateful code, it's very easy to end up with a tangle of variables that represent various aspects. This happens especially when adding additional functionality into a component.
 
-We might start with a simple `loading` variable to track if a component has loaded its initial data and is ready to render. But later we need to know an error occurred. Oh, and if an asynchronous data fetch is taking place, and once external actions start applying (whether from direct user interaction or via API calls) that adds more to track.
+We might start with a simple `loading` variable to track if a component has loaded its initial data and is ready to render. But later we need to flag if an error occurred. And then, if an asynchronous data fetch is taking place, and once external actions start applying (whether from direct user interaction or via API calls) that adds more to track.
 
-If we're not careful, we end up with something like this:
+If we're not careful, we end up with a huge number of variables that flag different aspects of the state, many of which should be mutually exclusive. We have to take care to check and manage each flag, and make sure that we don't unintentionally set them into an invalid state.
+
+A simple example I worked with recently was a small dialog box that tracks the progress of a video encode. It shows the progress of the video encoding, handles errors, and allows cancelling the process.
+
+This state might be modeled with a few different boolean variables, some event handlers, and . I'm using [Svelte](https://svelte.dev) and skipping boilerplate, but the syntax should be readily familiar even if you haven't worked with it before.
 
 ```js
-let loading = true;
+let started = false;
 let error = false;
-let active = false;
-let currentValue = null;
-let data = [];
-let dataIndex = 0;
-let popupMenuOpen = false;
-let popupMenuFocused = false;
+let cancelling = false;
+let done = false;
+
+let errorMessage = null;
+let progress = { percent: 0, fps: 0 };
+
+encoder.on('encode-progress', (data) => progress = data);
+encoder.on('encode-start', () => started = true);
+encoder.on('encode-end', () => {
+  if(cancelling) {
+    closeDialog();
+  }
+  done = true;
+});
+encoder.on('encode-error', (message) => {
+  errorMessage = message;
+  error = true;
+});
 ```
 
-While a few flags for tracking state may feel ok, as the code develops it starts to fill up with this sort of code:
+Then some simple UI. I haven't made it look nice yet as of this writing, but here's what it looks like right now.
 
-```js
-function handleKeyArrowDown() {
-  if(loading || error) {
-    return;
+![Encoding Dialog](encoding-dialog.png)
+
+We have a label at the top, a progress bar, and a button.
+
+```html
+<div>{label}</div>
+{#if showProgress}
+<progress max="100" value={progress.percent}>{progress.percent}%</progress>
+{/if}
+<button on:click|once={handleButton}>{buttonText}</button>
+
+<script>
+let label;
+let buttonText;
+// $: tells Svelte to rerun when the variables change.
+$: showProgress = started && !(done || error);
+$: {
+  if(error) {
+    label = 'Failed: ' + errorMessage;
+  } else if(done) {
+    label = 'Done!';
+  } else if(started) {
+    label = `Encoded ${progress.percent}% at ${progress.fps} FPS`;
+  } else {
+    label = 'Starting...';
   }
 
-  if(popupMenuOpen) {
-    if(popupMenuFocused) {
-      // If it's focused, go to the next item.
-      selectedPopupIndex =
-          Math.min(selectedPopupIndex + 1, data.length);
-    } else {
-      // Focus the menu and select the first item
-      selectedPopupIndex = 0;
-      popupMenuFocused = true;
-    }
+  if(done || error) {
+    buttonText = 'Close';
+  } else if(cancelling) {
+    buttonText = 'Cancelling...';
   } else {
-    // Open the menu
-    popupMenuOpen = true;
+    buttonText = 'Cancel';
   }
 }
 
+function handleButton() {
+  if(done || error) {
+    closeDialog();
+  } else if(!cancelling) {
+    encoder.cancel();
+    cancelling = true;
+  }
+}
+</script>
 ```
 
-This is a simple exaple, but as the code grows this quickly becomes a source for bugs. Tracking all these flags in your mind leads to a lot of possible states to consider, especially when coming back to it months later with little recollection of your thought processes.
+This is a very simple example, but as the code grows this can quickly become a source for bugs. At each step, we have to consider all of the flags, and moreover they have to be checked in the correct order.
 
 Tests help, of course, but tests won't catch any edge cases we fail to consider, and as more boolean flags are added, more edge cases and invalid states appear too.
 
@@ -57,49 +96,73 @@ Tests help, of course, but tests won't catch any edge cases we fail to consider,
 
 [Yaron Minksy of Jane Street Capital](https://blog.janestreet.com/effective-ml-revisited/) coined this phrase, and it is the guiding rule for converting the state from a bunch of booleans into something more succinct. If it's impossible for the code to get into an invalid state in the first place, then we don't have to worry about checking, testing, or handling it.
 
-In the example above, it would never make sense for the popup menu to be focused but not open. So let's collapse those two booleans into a single variable.
-
-```typescript
-// In Typescript
-enum PopupState {
-  Closed,
-  Open,
-  Focused
-}
-let popupMenuState = PopupState.Closed;
-
-// Or in plain Javascript:
-const POPUP_MENU_CLOSED = Symbol('popupMenuClosed');
-const POPUP_MENU_OPEN = Symbol('popupMenuOpen');
-const POPUP_MENU_FOCUSED = Symbol('popupMenuFocused');
-let popupMenuState = POPUP_MENU_CLOSED;
-```
-
-So instead of having two related boolean variables with a total of four states, we have one variable which can be in three states. There's no longer any need make sure that to avoid the state of `popupMenuFocused && !popupMenuOpen` because it's impossible for the code to event get into that state. The down arrow handler becomes:
+We have four related boolean variables with a total of sixteen potential combinations. Let's reduce this to just one variable with five states.
 
 ```js
-function handleKeyArrowDown() {
-  if(loading || error) {
-    return;
+const WAITING_TO_START = 0, ENCODING = 1, CANCELLING = 2, DONE = 3, ERROR = 4;
+let state = WAITING_TO_START;
+encoder.on('encode-progress', (data) => (progress = data));
+encoder.on('encode-start', () => (state = ENCODING));
+encoder.on('encode-end', () => {
+  if(state === CANCELLING) {
+    closeDialog();
   }
+  state = DONE;
+});
+encoder.on('encode-error', (message) => {
+  errorMessage = message;
+  state = ERROR;
+});
 
-  switch(popupMenuState) {
-    case PopupState.Closed:
-      popupMenuState = PopupState.Open;
+```
+
+Not much change there so far, but we'll improve more this later. Let's look at the UI code.
+
+```js
+$: showProgress = state === ENCODING;
+$: switch(state) {
+  case WAITING_TO_START:
+    label = 'Starting...';
+    buttonText = 'Close';
+    break;
+  case ENCODING:
+    label = `Encoded ${progress.percent}% at ${progress.fps} FPS`;
+    buttonText = 'Cancel';
+    break;
+  case CANCELLING:
+    label = '';
+    buttonText = 'Cancelling...';
+    break;
+  case DONE:
+    label = `Done!`;
+    buttonText = 'Close';
+    break;
+  case ERROR:
+    label = 'Failed: ' + errorMessage;
+    buttonText = 'Close';
+    break;
+}
+
+function handleButton() {
+  switch(state) {
+    case WAITING_TO_START:
+    case ENCODING:
+      encoder.cancel();
+      state = CANCELLING;
       break;
-    case PopupState.Open:
-      popupMenuState = PopupState.Focused;
-      selectedPopupIndex = 0;
-      break;
-    case PopupState.Focused:
-      selectedPopupIndex =
-          Math.min(selectedPopupIndex + 1, data.length);
+    case DONE:
+    case ERROR:
+      closeDialog();
       break;
   }
 }
 ```
 
-This is a very simple example, but it's already starting to look cleaner. Let's go further.
+Instead of needing to check `done` and `error` before `started` in every place, and all the other logic, we just check the value of `state`. It's easy to follow both the code and the reasoning behind it.
+
+# Control Transitions
+
+
 
 # Finite State Machines
 

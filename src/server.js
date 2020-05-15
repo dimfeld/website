@@ -1,4 +1,5 @@
 import 'source-map-support';
+import path from 'path';
 import sirv from 'sirv';
 import polka from 'polka';
 import compression from 'compression';
@@ -21,13 +22,15 @@ async function run() {
   await initPostCache();
 
   polka() // You can also use Express
+    .use(compression({ threshold: process.env.SAPPER_EXPORT ? 1000000 : 0 }))
+    .use('/images', sirv('images', { dev }))
+
     .use(
-      compression({ threshold: process.env.SAPPER_EXPORT ? 1000000 : 0 }),
-      // sirv('static', { dev }),
       sapper.middleware({
-        ignore: '/static-api',
+        ignore: /^\/(?:static-api|images)\//,
       })
     )
+
     .get('/static-api/latest', latestPost)
     .get('/static-api/allPosts', allPosts)
     .get('/static-api/posts/:id', getPost)
