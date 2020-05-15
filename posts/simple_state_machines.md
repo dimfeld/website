@@ -158,7 +158,8 @@ function handleButton() {
 }
 ```
 
-Instead of needing to check `done` and `error` before `started` in every place, and all the other logic, we just check the value of `state`. It's easy to follow both the code and the reasoning behind it.
+
+Now it’s easy to follow both the code and the reasoning behind it. There’s no longer any need to check different combinations of variables or to be sensitive to the order in which we check them. We just look at `state` to determine what to do.
 
 # Control Transitions
 
