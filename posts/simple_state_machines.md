@@ -3,18 +3,18 @@ title: Super Simple State Machines
 date: 2020-05-13
 summary: Fortifying component state with simple state machines
 frontPageSummary: fortifying component state with simple state machines
-status: I've implemented state matchines in various forms over the past couple of decades.
+status: Some CS/EE undergrad training, and I've implemented state matchines in various forms over the past couple of decades.
 ---
 
-When writing any sort of stateful code, it's very easy to end up with a tangle of variables that represent various aspects. This happens especially when adding additional functionality into a component.
+State management is a perennial problem in computer programming. As code becomes more complex, it's easy to end up with a tangle of variables and a huge number of combinations of values, some valid and some not. This can lead to bugs where  State machines are one method of keeping a component's state manageable, which reduces bugs, enhances testability, and makes later modifications easier.
 
-We might start with a simple `loading` variable to track if a component has loaded its initial data and is ready to render. But later we need to flag if an error occurred. And then, if an asynchronous data fetch is taking place, and once external actions start applying (whether from direct user interaction or via API calls) that adds more to track.
+In this series of articles, I'll start by building a simple state machine from scratch, and progressively introduce more features and ways to deal with state changes. Later in the series I'll cover the popular [XState](https://xstate.js.org/) library as well, which provides a lot of niceties for more complex implementations.
 
-If we're not careful, we end up with a huge number of variables that flag different aspects of the state, many of which should be mutually exclusive. We have to take care to check and manage each flag, and make sure that we don't unintentionally set them into an invalid state.
+So let's start with a simple example. I have recently been writing a small [Electron application for trimming video files](https://github.com/dimfeld/video-trimmer-gui). One part of this application is a dialog box that tracks the progress of a video encoding task.
 
-I’ll cover more complex examples in later articles, but here’s a simple one I worked with recently. I have a small dialog box that tracks the progress of a video encoding task. It shows the progress of the video encoding, handles errors, and allows cancelling the process.
+The dialog shows the progress of the video encoding, handles errors, and allows cancelling the process. Its state could be modeled with a few different boolean variables and some event handlers. The code samples here use [Svelte](https://svelte.dev) and skip some boilerplate and other mundane details, but the syntax should be readily familiar even if you haven't worked with it before.
 
-This state might be modeled with a few different boolean variables, some event handlers, and . I'm using [Svelte](https://svelte.dev) and skipping boilerplate, but the syntax should be readily familiar even if you haven't worked with it before.
+One obvious way to represent the data involved in the dialog is by adding some event handlers on the encoder, and keeping track of what has happened so far.
 
 ```js
 let started = false;
@@ -39,7 +39,7 @@ encoder.on('encode-error', (message) => {
 });
 ```
 
-Then some simple UI. I haven't made it look nice yet as of this writing, but here's what it looks like right now.
+Then some UI. I haven't made it look nice yet as of this writing, but here's what it looks like right now.
 
 ![Encoding Dialog](encoding-dialog.png)
 
@@ -55,7 +55,7 @@ We have a label at the top, a progress bar, and a button.
 <script>
 let label;
 let buttonText;
-// $: tells Svelte to rerun when the variables change.
+// $: tells Svelte to rerun this whenever the variables change.
 $: showProgress = started && !(done || error);
 $: {
   if(error) {
@@ -90,7 +90,7 @@ function handleButton() {
 
 This is a very simple example, but as the code grows this can quickly become a source for bugs. At each step, we have to consider all of the flags, and moreover they have to be checked in the correct order.
 
-Tests help, of course, but tests won't catch any edge cases we fail to consider, and as more boolean flags are added, more edge cases and invalid states appear too.
+Tests help, of course, but tests won't catch any edge cases we fail to consider, and as more flags are added, more edge cases and invalid states appear too.
 
 # Make Invalid States Unrepresentable
 
@@ -116,7 +116,7 @@ encoder.on('encode-error', (message) => {
 
 ```
 
-Not much change there so far, but we'll improve more this later. Let's look at the UI code.
+Not much change there so far, but we'll improve more this later. Let's look at the UI functions.
 
 ```js
 $: showProgress = state === ENCODING;
@@ -161,22 +161,73 @@ function handleButton() {
 
 Now it’s easy to follow both the code and the reasoning behind it. There’s no longer any need to check different combinations of variables or to be sensitive to the order in which we check them. We just look at `state` to determine what to do.
 
-# Control Transitions
+# Controlling State Transitions
 
+One wrinkle with this change is that there's no control over how we transition between states. If the dialog receives an `encode-error` event, it will enter the `ERROR` state, but if the encoder then sends an `encode-end` event, the dialog enters the `DONE` state and the error message disappears. The user might not even know an error occurred and then wonder why the output video file isn't there.
 
+Fortunately, we can control the transitions between states by listing what the next state should be for each event that happens.
 
-# Finite State Machines
+```js
+const transitions = {
+  WAITING_TO_START: {
+    'encode-error': ERROR,
+    'encode-start': ENCODING,
+    'encode-cancel': CANCELLING,
+  },
+  ENCODING: {
+    'encode-error': ERROR,
+    'encode-end': DONE,
+    'encode-cancel': CANCELLING,
+  },
+  CANCELLING: {},
+  DONE: {
+    'encode-error': ERROR,
+  },
+  ERROR: {}
+}
 
-Finite State Machines, or FSMs, are...
+function stepState(event) {
+  let nextStates = transitions[state];
+  let nextState = nextStates[event];
+  if(nextState) {
+    state = nextState;
+  }
+}
+```
 
-Brief history
+If we're in the `ENCODING` state and receive an `encode-error` event, we go into the `ERROR` state. The `ERROR` state lists no events, which means that once we end up there, nothing can make it leave. Receiving an `encode-done` event will keep the state machine at `ERROR`, and so there's no need to worry or have other special logic to make sure that we don't inadvertently switch into an undesired state.
 
-Simple state transitions
+With this data structure in place and the function to handle the events, we alter the code to use `stepState` instead of setting the state directly.
 
-Representing in Xstate
+```js
+encoder.on('encode-progress', (data) => (progress = data));
+encoder.on('encode-start', () => stepState('encode-start'));
+encoder.on('encode-end', () => {
+  if(state === CANCELLING) {
+    closeDialog();
+  }
+  stepState('encode-end');
+});
+encoder.on('encode-error', (message) => {
+  errorMessage = message;
+  stepState('encode-error');
+});
 
+function handleButton() {
+  switch(state) {
+    case WAITING_TO_START:
+    case ENCODING:
+      encoder.cancel();
+      stepState('encode-cancel');
+      break;
+    case DONE:
+    case ERROR:
+      closeDialog();
+      break;
+  }
+}
+```
 
+Not a huge change in the code, but it adds a lot of robustness. This code is now robust to changes in how the events arrive, and any potential bugs are completely prevented. What we have now, a list of states and a set of transitions between them, sets up the bare minimum of a "Finite State Machine."
 
-
-
-
+One remaining messy part is in the interaction with the outside world. The code still manually checks when to call `encoder.cancel` or `closeDialog`, and it would be nice to automate these calls as we move through the state machine. In part 2 of this series, I'll touch on a bit of state machine theory, and in doing so set up the ability to handle these cases nicely.
