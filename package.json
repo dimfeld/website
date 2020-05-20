@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev --ext '.svx .svelte'",
-    "build": "sapper export --ext '.svx .svelte'",
+    "build": "NODE_ENV=production sapper export --ext '.svx .svelte'",
     "build-local": "sapper build",
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
@@ -22,7 +22,8 @@
     "front-matter": "^3.1.0",
     "glob": "^7.1.6",
     "got": "^10.6.0",
-    "highlight.js": "^9.18.1",
+    "highlight.js": "^10.0.3",
+    "highlightjs-svelte": "^1.0.5",
     "linkify-it": "^2.2.0",
     "lodash": "^4.17.15",
     "markdown-it": "^10.0.0",

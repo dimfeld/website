@@ -1,5 +1,6 @@
 import markdownIt from 'markdown-it';
 import * as highlight from 'highlight.js';
+import 'highlightjs-svelte';
 import * as footnote from 'markdown-it-footnote';
 import * as abbr from 'markdown-it-abbr';
 import * as toc from 'markdown-it-toc-done-right';

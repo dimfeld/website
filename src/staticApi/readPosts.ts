@@ -7,6 +7,19 @@ import globMod from 'glob';
 import { promisify } from 'util';
 import uniq from 'lodash/uniq';
 
+interface PostAttributes {
+  title: string;
+  tags: string;
+  date: string;
+  updated?: string;
+  summary?: string;
+  frontPageSummary?: string;
+  content: string;
+  status?: string;
+  status_code?: string;
+  draft?: boolean;
+}
+
 export interface Post {
   id: string;
   format: 'md' | 'svx';
@@ -32,7 +45,10 @@ export async function readPost(
     return null;
   }
 
-  let { attributes, body } = frontMatter(data.toString());
+  let { attributes, body } = frontMatter<PostAttributes>(data.toString());
+  if (attributes.draft && process.env.NODE_ENV === 'production') {
+    return null;
+  }
 
   let id = filePath.slice(basePath.length + 1);
   let ext = path.extname(id);

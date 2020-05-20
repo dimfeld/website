@@ -1,6 +1,7 @@
 ---
 title: Super Simple State Machines
 date: 2020-05-13
+draft: true
 summary: Fortifying component state with simple state machines
 frontPageSummary: fortifying component state with simple state machines
 status: Some CS/EE undergrad training, and I've implemented state matchines in various forms over the past couple of decades.
@@ -228,6 +229,6 @@ function handleButton() {
 }
 ```
 
-Not a huge change in the code, but it adds a lot of robustness. This code is now robust to changes in how the events arrive, and any potential bugs are completely prevented. What we have now, a list of states and a set of transitions between them, sets up the bare minimum of a "Finite State Machine."
+Not a huge change in the code, but it adds a lot of robustness. This code doesn't have to adapt to changes in how the events arrive, and any potential bugs are completely prevented. What we have now, a list of states and a set of transitions between them, sets up the bare minimum of a "Finite State Machine."
 
 One remaining messy part is in the interaction with the outside world. The code still manually checks when to call `encoder.cancel` or `closeDialog`, and it would be nice to automate these calls as we move through the state machine. In part 2 of this series, I'll touch on a bit of state machine theory, and in doing so set up the ability to handle these cases nicely.
