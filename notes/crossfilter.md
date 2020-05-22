@@ -1,7 +1,7 @@
 ---
 title: Interactive Visualizations with Crossfilter
 date: 2020-05-19
-status: In progress and largely untested so far
+confidence: In progress and largely untested so far
 ---
 
 [Crossfilter](https://crossfilter.github.io/crossfilter/) is a library for helping to manage data with multiple linked visualizations. Selecting a range of data on one graph will filter for that range on all the graphs. The official example on the Crossfilter home page has bar graphs of airplane travel statistics, with histogram graphs for things like distance traveled, how late the flight was, and the time of day it flew.
@@ -10,7 +10,7 @@ Selecting 10AM through 11AM on the "time of day" graph will cause all the other 
 
 So let's get into it. [`crossfilter`](https://github.com/crossfilter/crossfilter/wiki/API-Reference#wiki-crossfilter) is the primary object and it owns the data. You can give it an array of data as you create the `crossfilter`, or use the `add` and `remove` functions to modify the list of data after creation.
 
-A `crosssfilter` object on its own isn't too useful. To do anything with the data, you create dimensions on the crossfilter, and groups on the dimensions.
+A `crossfilter` object on its own isn't too useful. To do anything with the data, you create dimensions on the crossfilter, and groups on the dimensions.
 
 A `dimension` creates an ordering on the objects in the data. Often the dimension just exposes a single value from the object: `cf.dimension((d) => d.value)`. But the function can do whatever you want, so long as it returns the same value each time it is called for an object.
 

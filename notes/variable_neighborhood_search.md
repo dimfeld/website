@@ -2,7 +2,7 @@
 title: Variable Neighborhood Search
 date: 2018-11-19
 summary: A technique for solving NP-complete problems with multiple local minima
-status: Not an expert, but I've read a bunch of papers and written an implementation. I assume a passing familiarity with terminology around gradient descent.
+confidence: Not an expert, but I've read a bunch of papers and written an implementation. I assume a passing familiarity with terminology around gradient descent.
 ---
 
 There are some old notes I've cleaned up a little and copied here in preparation for maybe writing a longer article.

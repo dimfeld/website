@@ -2,7 +2,7 @@
   export let title;
   export let date = undefined;
   export let updated = undefined;
-  export let status = undefined;
+  export let confidence = undefined;
 
   import * as labels from '../../postMeta.ts';
   import { getContext } from 'svelte';
@@ -24,8 +24,10 @@
       {/if}
     </div>
 
-    {#if status}
-      <p>Status: {status}</p>
+    {#if confidence}
+      <p class="p-4 bg-gray-100 border-gray-300 border">
+        Confidence: {confidence}
+      </p>
     {/if}
   </div>
 

@@ -34,6 +34,10 @@
     @apply list-inside list-disc;
   }
 
+  article p > img:only-child {
+    @apply mx-auto;
+  }
+
   blockquote {
     @apply border-l-4 border-teal-600 -ml-2 pl-3 pr-4 mt-4 italic;
   }

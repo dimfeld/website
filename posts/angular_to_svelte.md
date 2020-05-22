@@ -4,7 +4,7 @@ date: 2020-04-30
 updated: 2020-05-04
 summary: My experience converting a 6-year-old SPA to Svelte
 frontPageSummary: my experience converting a 6-year-old SPA to Svelte
-status: Pretty confident in this. Not necessarily the ideal solution.
+confidence: Pretty confident in this. Not necessarily the ideal solution.
 ---
 
 [My company](https://www.carevoyance.com) in the process of converting our large  web application based on AngularJS 1.x and Angular Material to use Svelte and Tailwind CSS. Here are my experiences so far.

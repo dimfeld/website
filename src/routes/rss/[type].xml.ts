@@ -18,7 +18,7 @@ function formatPostHeader(post: Post) {
   }
 
   if (post.status) {
-    headerLines.push(`Status: ${post.status}`);
+    headerLines.push(`Confidence: ${post.confidence}`);
   }
 
   if (headerLines.length) {

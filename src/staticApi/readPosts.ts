@@ -15,7 +15,7 @@ interface PostAttributes {
   summary?: string;
   frontPageSummary?: string;
   content: string;
-  status?: string;
+  confidence?: string;
   status_code?: string;
   draft?: boolean;
 }
@@ -31,7 +31,7 @@ export interface Post {
   summary?: string;
   frontPageSummary?: string;
   content: string;
-  status?: string;
+  confidence?: string;
   status_code?: string;
 }
 
@@ -82,8 +82,8 @@ export async function readMdFiles(
 ): Promise<Post[]> {
   let filenames = await glob(basePath + '/**/*.md');
   let mdFiles = await Promise.all(filenames.map((f) => readPost(basePath, f)));
-  return mdFiles.filter(Boolean).map((file: Post) => {
-    return { ...file, type, format: 'md' };
+  return mdFiles.filter(Boolean).map((file) => {
+    return { ...file!, type, format: 'md' };
   });
 }
 
