@@ -23,7 +23,7 @@ async function run() {
 
   polka() // You can also use Express
     .use(compression({ threshold: process.env.SAPPER_EXPORT ? 1000000 : 0 }))
-    .use('/images', sirv('images', { dev }))
+    .use(sirv('static', { dev }))
 
     .use(
       sapper.middleware({
