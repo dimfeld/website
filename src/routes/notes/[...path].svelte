@@ -29,6 +29,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:description" content={note.summary} />
   <meta name="twitter:description" content={note.summary} />
+  <meta name="twitter:card" content="summary" />
   {#if imageUrl}
     <meta name="twitter:image" content={imageUrl} />
     <meta property="og:image" content={imageUrl} />
