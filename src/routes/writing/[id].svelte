@@ -15,6 +15,11 @@
 <script>
   import Article from './_Article.svelte';
   export let post;
+
+  let imageUrl = post.cardImage;
+  if (imageUrl && !imageUrl.startswith('http')) {
+    imageUrl = 'https://imfeld.dev/images/' + imageUrl;
+  }
 </script>
 
 <svelte:head>
@@ -24,11 +29,15 @@
       .filter(Boolean)
       .join(' - ')} />
   <meta property="og:title" content={post.title} />
-  <meta property="twitter:title" content={post.title} />
+  <meta name="twitter:title" content={post.title} />
+  <meta name="twitter:creator" content="@dimfeld" />
   <meta property="og:type" content="article" />
   <meta property="og:description" content={post.summary} />
-  <meta property="twitter:description" content={post.summary} />
-
+  <meta name="twitter:description" content={post.summary} />
+  {#if imageUrl}
+    <meta name="twitter:image" content={imageUrl} />
+    <meta property="og:image" content={imageUrl} />
+  {/if}
 </svelte:head>
 
 <div class="sm:mx-8">
