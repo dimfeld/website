@@ -17,7 +17,7 @@
   export let post;
 
   let imageUrl = post.cardImage;
-  if (imageUrl && !imageUrl.startswith('http')) {
+  if (imageUrl && !imageUrl.startsWith('http')) {
     imageUrl = 'https://imfeld.dev/images/' + imageUrl;
   }
 </script>

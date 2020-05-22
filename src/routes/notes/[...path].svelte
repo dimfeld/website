@@ -12,7 +12,7 @@
   export let note;
 
   let imageUrl = note.cardImage;
-  if (imageUrl && !imageUrl.startswith('http')) {
+  if (imageUrl && !imageUrl.startsWith('http')) {
     imageUrl = 'https://imfeld.dev/images/' + imageUrl;
   }
 </script>
