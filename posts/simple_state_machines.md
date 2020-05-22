@@ -1,17 +1,18 @@
 ---
 title: Super Simple State Machines
-date: 2020-05-13
-draft: true
+date: 2020-05-22
 summary: Fortifying component state with simple state machines
 frontPageSummary: fortifying component state with simple state machines
-status: Some CS/EE undergrad training, and I've implemented state matchines in various forms over the past couple of decades.
+confidence: Some CS/EE undergrad training, and I've implemented state machines in various forms over the past couple of decades.
 ---
 
-State management is a perennial problem in computer programming. Some code starts out with complex state requirements, while others begin as simple components and gradually grow more complex as features and requirements are placed on top of the original code. It's easy to end up with an unmanagable tangle of semi-correlated variables and a lot of code that makes sure to do the right thing when those variables are in a particular permutation. I've experienced this many times myself, adding additional variables to track whether a particular aspect of a component is open or closed, focused or not, updating or waiting for input, and so on.
+State management is a perennial problem in computer programming. Some modules start out with complex state requirements. Others begin simply, but gradually grow more complex as features and requirements are placed on top of the original code.
 
-Without a disciplined approach to managing all this, you can end up with messy code full of edge cases and complications. Updating code like this after months of not looking at it becomes a strenuous mental exercise, as you try to remember what you were thinking when you wrote a particular `if` clause or wrote a comment that must have made sense 6 months ago but now has lost all context. And that's even assuming it was your code in the first place and there's something to actually remember.
+It's easy to end up with an unmanagable tangle of semi-correlated variables and fragile checks for various permutations of those variables littered throughout the file. I've experienced this many times myself, adding additional variables to track whether a particular aspect of a component is open or closed, focused or not, updating or waiting for input, and so on.
 
-Clearly, the ad hoc method of adding state to components has problems. More structured systems can reduce bugs, enhance testability, and make later modifications easier. State machines are one way to do this.
+Updating code like this after months of not looking at it becomes a strenuous mental exercise, as you try to remember what you were thinking when you wrote a particular `if` clause or wrote a comment that must have made sense six months ago but now has lost all context. And that's even assuming it was your code in the first place and there's something to actually remember.
+
+This ad hoc method of adding state to components has problems. A more disciplined approach can reduce bugs, enhance testability, and make later modifications easier. State machines are one way to do this.
 
 In this series of articles, I'll start by converting a small component to use a state machine, and progressively introduce more features and ways to deal with state changes. Later in the series I'll cover the popular [XState](https://xstate.js.org/) library as well, which provides a lot of nice features for more complex implementations.
 
@@ -21,7 +22,7 @@ So let's start with an especially simple example. I have been writing a small [E
 
 # A Bunch of Booleans
 
-One obvious way to represent the data involved in the dialog is by adding some event handlers on the encoder, and keeping track of what has happened so far.
+One obvious way to represent the data involved in the dialog is by listening to events from the video encoder, and keeping track of what has happened so far.
 
 ```js
 let started = false;
@@ -50,7 +51,7 @@ Then some UI. I haven't made it look nice yet as of this writing, but here's wha
 
 ![Encoding Dialog](encoding-dialog.png)
 
-We have a label at the top, a progress bar, and a button.
+We have a label at the top, a progress bar, and a button. The code to support this looks at the boolean flags and decides what to show in the dialog:
 
 ```html
 <div>{label}</div>
@@ -95,7 +96,7 @@ function handleButton() {
 </script>
 ```
 
-This is a very simple example, but as code grows this "bunch of booleans" style of state representation can quickly become a source for bugs. At each step, we have to consider the various values of all of the flags, and moreover they have to be checked in the correct order.
+This is a very simple example, but as code grows this "bunch of booleans" style of state representation can become a problem. At each step, we have to consider the various values of all of the flags, and moreover they have to be checked in the correct order.
 
 Tests help, of course, but tests won't catch any edge cases we fail to consider, and as more flags are added, the number of edge cases and invalid states can grow exponentially. Eventually it becomes unsustainable, so let's get ahead of that before it becomes a real problem.
 
@@ -127,9 +128,9 @@ encoder.on('encode-error', (message) => {
 
 ```
 
-The various booleans are now all represented by a single `state` variable. We retain the `progress` and `errorMessage` variables. This type of extra data is sometimes called the "context" of the state machine.
+The various booleans are now all represented by a single `state` variable. We retain the `progress` and `errorMessage` variables. This type of extra data is sometimes called the "context" of the state machine. For now the context variables and the state don't really interact, but in more complex state machines the context and the state can have more effect on each other. I'll cover that later in this series.
 
-Overall, not a big change so far, but we'll make more improvements here later. Let's look at the UI functions.
+So although we've converted our state code, it's not really a big change so far. We'll make more improvements here soon. Let's look at the UI functions.
 
 ```js
 $: showProgress = state === ENCODING;
@@ -172,13 +173,13 @@ function handleButton() {
 ```
 
 
-Now it’s easy to follow both the code and the reasoning behind it. There’s no longer any need to check different combinations of variables or to be sensitive to the order in which we check them. We just look at `state` to determine what to do.
+There’s no longer any need to check different combinations of variables or to be sensitive to the order in which we check them. Now it’s easy to follow both the code and the reasoning behind it. We just look at `state` to determine what to do.
 
 # Controlling State Transitions
 
 While the code is cleaner, one wrinkle with this change is that there's no control over how we transition between states. If the dialog receives an `encode-error` event, it will enter the `ERROR` state, but if the encoder later sends an `encode-end` event, the dialog enters the `DONE` state and the error message disappears. The user might not even know an error occurred and then wonder why the output video file isn't there.
 
-Fortunately, we can control how each state responds to each event, and solve this problem with only a small effort.
+With a small change, we can solve this problem and control how each state responds to each event.
 
 ```js
 const transitions = {
@@ -247,4 +248,4 @@ function handleButton() {
 
 Not a huge change in the code, but it adds a lot of robustness. This code doesn't have to adapt to changes in how the events arrive, and any potential bugs are completely prevented. What we have now, a list of states and a set of transitions between them, sets up the bare minimum of a "Finite State Machine."
 
-One remaining messy part is in the interaction with the outside world. The code still manually checks when to call `encoder.cancel` or `closeDialog`, and it would be nice to automate these calls as we move through the state machine. In part 2 of this series, I'll touch on a bit of state machine theory, and in doing so set up the ability to handle these cases nicely.
+One remaining messy part is in the interaction with the outside world. The code still manually checks when to call `encoder.cancel` or `closeDialog`, and it would be nice to automate these calls as we move through the state machine. In part two of this series, I'll touch on a bit of state machine theory, and in doing so set up the ability to handle these cases nicely.
