@@ -7,13 +7,19 @@ frontPageSummary: fortifying component state with simple state machines
 status: Some CS/EE undergrad training, and I've implemented state matchines in various forms over the past couple of decades.
 ---
 
-State management is a perennial problem in computer programming. As code becomes more complex, it's easy to end up with a tangle of variables and a huge number of combinations of values, some valid and some not. This can lead to bugs where  State machines are one method of keeping a component's state manageable, which reduces bugs, enhances testability, and makes later modifications easier.
+State management is a perennial problem in computer programming. Some code starts out with complex state requirements, while others begin as simple components and gradually grow more complex as features and requirements are placed on top of the original code. It's easy to end up with an unmanagable tangle of semi-correlated variables and a lot of code that makes sure to do the right thing when those variables are in a particular permutation. I've experienced this many times myself, adding additional variables to track whether a particular aspect of a component is open or closed, focused or not, updating or waiting for input, and so on.
 
-In this series of articles, I'll start by building a simple state machine from scratch, and progressively introduce more features and ways to deal with state changes. Later in the series I'll cover the popular [XState](https://xstate.js.org/) library as well, which provides a lot of niceties for more complex implementations.
+Without a disciplined approach to managing all this, you can end up with messy code full of edge cases and complications. Updating code like this after months of not looking at it becomes a strenuous mental exercise, as you try to remember what you were thinking when you wrote a particular `if` clause or wrote a comment that must have made sense 6 months ago but now has lost all context. And that's even assuming it was your code in the first place and there's something to actually remember.
 
-So let's start with a simple example. I have recently been writing a small [Electron application for trimming video files](https://github.com/dimfeld/video-trimmer-gui). One part of this application is a dialog box that tracks the progress of a video encoding task.
+Clearly, the ad hoc method of adding state to components has problems. More structured systems can reduce bugs, enhance testability, and make later modifications easier. State machines are one way to do this.
 
-The dialog shows the progress of the video encoding, handles errors, and allows cancelling the process. Its state could be modeled with a few different boolean variables and some event handlers. The code samples here use [Svelte](https://svelte.dev) and skip some boilerplate and other mundane details, but the syntax should be readily familiar even if you haven't worked with it before.
+In this series of articles, I'll start by converting a small component to use a state machine, and progressively introduce more features and ways to deal with state changes. Later in the series I'll cover the popular [XState](https://xstate.js.org/) library as well, which provides a lot of nice features for more complex implementations.
+
+So let's start with an especially simple example. I have been writing a small [Electron application for trimming video files](https://github.com/dimfeld/video-trimmer-gui). One part of this application is a dialog box that tracks the progress of a video encoding task. The dialog shows the progress of the video encoding, handles errors, and allows cancelling the process. Its state could be modeled with a few different boolean variables and some event handlers.
+
+> The code samples here use [Svelte](https://svelte.dev) and skip some boilerplate and other mundane details, but the syntax should be readily familiar even if you haven't worked with it before.
+
+# A Bunch of Booleans
 
 One obvious way to represent the data involved in the dialog is by adding some event handlers on the encoder, and keeping track of what has happened so far.
 
@@ -89,18 +95,22 @@ function handleButton() {
 </script>
 ```
 
-This is a very simple example, but as the code grows this can quickly become a source for bugs. At each step, we have to consider all of the flags, and moreover they have to be checked in the correct order.
+This is a very simple example, but as code grows this "bunch of booleans" style of state representation can quickly become a source for bugs. At each step, we have to consider the various values of all of the flags, and moreover they have to be checked in the correct order.
 
-Tests help, of course, but tests won't catch any edge cases we fail to consider, and as more flags are added, more edge cases and invalid states appear too.
+Tests help, of course, but tests won't catch any edge cases we fail to consider, and as more flags are added, the number of edge cases and invalid states can grow exponentially. Eventually it becomes unsustainable, so let's get ahead of that before it becomes a real problem.
 
 # Make Invalid States Unrepresentable
 
-[Yaron Minksy of Jane Street Capital](https://blog.janestreet.com/effective-ml-revisited/) coined this phrase, and it is the guiding rule for converting the state from a bunch of booleans into something more succinct. If it's impossible for the code to get into an invalid state in the first place, then we don't have to worry about checking, testing, or handling it.
+> [Yaron Minksy of Jane Street Capital](https://blog.janestreet.com/effective-ml-revisited/) coined this phrase.
 
-We have four related boolean variables with a total of sixteen potential combinations. Let's reduce this to just one variable with five states.
+One important way to make our state manageable is to make invalid states unpresentable. If it's impossible for the code to get into an invalid state in the first place, then we don't have to worry about checking, testing, or handling it.
+
+The dialog has four related boolean variables with a total of sixteen potential combinations. The cardinal rule of a state machine is that is can only ever be in one state, so we'll reduce this to just one variable with five states.
 
 ```js
 const WAITING_TO_START = 0, ENCODING = 1, CANCELLING = 2, DONE = 3, ERROR = 4;
+let errorMessage = null;
+let progress = { percent: 0, fps: 0 };
 let state = WAITING_TO_START;
 encoder.on('encode-progress', (data) => (progress = data));
 encoder.on('encode-start', () => (state = ENCODING));
@@ -117,7 +127,9 @@ encoder.on('encode-error', (message) => {
 
 ```
 
-Not much change there so far, but we'll improve more this later. Let's look at the UI functions.
+The various booleans are now all represented by a single `state` variable. We retain the `progress` and `errorMessage` variables. This type of extra data is sometimes called the "context" of the state machine.
+
+Overall, not a big change so far, but we'll make more improvements here later. Let's look at the UI functions.
 
 ```js
 $: showProgress = state === ENCODING;
@@ -164,27 +176,27 @@ Now it’s easy to follow both the code and the reasoning behind it. There’s n
 
 # Controlling State Transitions
 
-One wrinkle with this change is that there's no control over how we transition between states. If the dialog receives an `encode-error` event, it will enter the `ERROR` state, but if the encoder then sends an `encode-end` event, the dialog enters the `DONE` state and the error message disappears. The user might not even know an error occurred and then wonder why the output video file isn't there.
+While the code is cleaner, one wrinkle with this change is that there's no control over how we transition between states. If the dialog receives an `encode-error` event, it will enter the `ERROR` state, but if the encoder later sends an `encode-end` event, the dialog enters the `DONE` state and the error message disappears. The user might not even know an error occurred and then wonder why the output video file isn't there.
 
-Fortunately, we can control the transitions between states by listing what the next state should be for each event that happens.
+Fortunately, we can control how each state responds to each event, and solve this problem with only a small effort.
 
 ```js
 const transitions = {
-  WAITING_TO_START: {
+  [WAITING_TO_START]: {
     'encode-error': ERROR,
     'encode-start': ENCODING,
     'encode-cancel': CANCELLING,
   },
-  ENCODING: {
+  [ENCODING]: {
     'encode-error': ERROR,
     'encode-end': DONE,
     'encode-cancel': CANCELLING,
   },
-  CANCELLING: {},
-  DONE: {
+  [CANCELLING]: {},
+  [DONE]: {
     'encode-error': ERROR,
   },
-  ERROR: {}
+  [ERROR]: {}
 }
 
 function stepState(event) {
@@ -196,9 +208,13 @@ function stepState(event) {
 }
 ```
 
-If we're in the `ENCODING` state and receive an `encode-error` event, we go into the `ERROR` state. The `ERROR` state lists no events, which means that once we end up there, nothing can make it leave. Receiving an `encode-done` event will keep the state machine at `ERROR`, and so there's no need to worry or have other special logic to make sure that we don't inadvertently switch into an undesired state.
+If we're in the `ENCODING` state and receive an `encode-error` event, we go into the `ERROR` state. The `ERROR` state lists no events, which means that once we end up there, we're in the `ERROR` state regardless of what happens afterward. In state machine parlance, this is called a "final state." Receiving an `encode-done` event will keep the state machine at `ERROR`, and so there's no need for special logic to make sure that we don't inadvertently switch into an undesired state.
 
-With this data structure in place and the function to handle the events, we alter the code to use `stepState` instead of setting the state directly.
+We can put together a diagram to visualize the state machine too. In this diagram, each box is a state and the arrows represent the various ways we can move between the states. State diagrams like this are invaluable for getting an overall picture of how a complex state machine functions.
+
+![State Machine](simple-state-machines-diagram.png)
+
+So, with this data structure in place and the function to handle the events, we alter the code to use `stepState` instead of setting the state directly.
 
 ```js
 encoder.on('encode-progress', (data) => (progress = data));
