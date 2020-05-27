@@ -15,6 +15,8 @@
   if (imageUrl && !imageUrl.startsWith('http')) {
     imageUrl = 'https://imfeld.dev/images/' + imageUrl;
   }
+
+  const cardType = note.cardType || 'summary';
 </script>
 
 <svelte:head>
@@ -29,7 +31,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:description" content={note.summary} />
   <meta name="twitter:description" content={note.summary} />
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content={cardType} />
   {#if imageUrl}
     <meta name="twitter:image" content={imageUrl} />
     <meta property="og:image" content={imageUrl} />
