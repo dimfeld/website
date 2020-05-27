@@ -1,9 +1,13 @@
 import { SvelteComponent } from 'svelte';
 
-import Test from './interactive/Test.svelte';
+import ReadingSince from './interactive/ReadingSince.svelte';
+import Slider from './interactive/Slider.svelte';
+import Roller from './interactive/Roller.svelte';
 
 const components = {
-  Test,
+  ReadingSince,
+  Slider,
+  Roller,
 };
 
 function instantiateComponent(element: Element) {

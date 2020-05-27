@@ -4,8 +4,8 @@
   "license": "Apache-2.0",
   "version": "0.0.1",
   "scripts": {
-    "dev": "sapper dev --ext '.svx .svelte'",
-    "build": "NODE_ENV=production sapper export --ext '.svx .svelte'",
+    "dev": "sapper dev",
+    "build": "NODE_ENV=production sapper export",
     "build-local": "sapper build",
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
@@ -17,7 +17,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@polka/send-type": "^0.5.2",
     "compression": "^1.7.4",
-    "date-fns": "^2.9.0",
+    "date-fns": "^2.14.0",
     "debug": "^4.1.1",
     "front-matter": "^3.1.0",
     "glob": "^7.1.6",
@@ -31,7 +31,6 @@
     "markdown-it-anchor": "^5.2.5",
     "markdown-it-footnote": "^3.0.2",
     "markdown-it-toc-done-right": "^4.1.0",
-    "mdsvex": "^0.4.0",
     "pkg-dir": "^4.2.0",
     "polka": "^0.5.2",
     "rss": "^1.2.2",
@@ -82,12 +81,12 @@
     "rollup-plugin-svelte": "^5.1.1",
     "rollup-plugin-terser": "^5.2",
     "sapper": "^0.27.11",
-    "svelte": "^3.19.2",
+    "svelte": "^3.23.0",
     "svelte-awesome": "^2.2.1",
     "svelte-preprocess": "^3.2.0",
     "svelte-preprocess-postcss": "^1.1.1",
-    "tailwindcss": "^1.2.0",
+    "tailwindcss": "^1.4.0",
     "tslint": "^5.20.0",
-    "typescript": "^3.8"
+    "typescript": "^3.9"
   }
 }

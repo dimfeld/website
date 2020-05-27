@@ -26,6 +26,14 @@
     @apply leading-relaxed ml-auto mr-auto;
   }
 
+  article ul {
+    @apply mt-4;
+  }
+
+  article ol {
+    @apply mt-4;
+  }
+
   article ol > li {
     @apply list-inside list-decimal;
   }
@@ -86,6 +94,10 @@
     @apply mt-4;
   }
 
+  article > * + div {
+    @apply mt-4;
+  }
+
   article table {
     @apply align-middle inline-block shadow overflow-hidden border-b border-gray-200 font-sans;
   }
@@ -121,20 +133,25 @@
   }
 
   h1 {
-    @apply text-2xl font-medium text-teal-900;
+    @apply text-2xl font-medium font-sans text-teal-900;
   }
 
   h2 {
-    @apply text-xl font-medium text-teal-900;
+    @apply text-xl font-medium font-sans text-teal-900;
   }
 
   h3 {
-    @apply text-lg font-medium text-teal-900;
+    @apply text-lg font-medium font-sans text-teal-900;
+  }
+
+  h4 {
+    @apply text-base font-medium font-sans text-teal-900;
   }
 
   h1:not(:first-child),
   h2:not(:first-child),
-  h3:not(:first-child) {
+  h3:not(:first-child),
+  h4:not(:first-child) {
     @apply mt-4;
   }
 
