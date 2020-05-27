@@ -1,7 +1,7 @@
 ---
 title: Shifting Color Palettes using the LCH Color Space
 date: 2020-04-03
-# updated: 2020-02-27
+updated: 2020-05-26
 confidence: Not fully confident that this is the right way to do it, but I like the results I got this time.
 ---
 
@@ -54,7 +54,7 @@ From there, I took the Tailwind UI "indigo" color palette as my base and copied 
 <div class="flex items-center"><div class="mr-4 bg-indigo-900 h-12 w-12"></div> 900 -- 23.662% lightness</div>
 </div>
 
-From there, I used the LCH color tool to create a palette with the Chroma and Hue value of the Material Blue-Gray 500 color, but the lightness values taken from Tailwind's Indigo palette. LCH is not yet widely supported in browsers, so I copied the RGB values out of the tool, and put the resulting palette into my Tailwind config.
+From there, I used the LCH color tool to create a palette with the Chroma and Hue value of the Material Blue-Gray 500 color, but the lightness values taken from Tailwind's Indigo palette. (Update: I’ve since found that it usually works best to also copy the chroma values from the source palette.) LCH is not yet widely supported in browsers, so I copied the RGB values out of the tool, and put the resulting palette into my Tailwind config.
 
 ```js
 lchBlueGray: {
