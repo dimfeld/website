@@ -3,8 +3,7 @@ title: Embedding Svelte Components
 date: 2020-05-27
 summary: Using the Svelte JS API to embed components
 frontPageSummary: using the Svelte JS API to embed components
-cardImage: and-thats-it.gif
-cardType: summary_large_image
+cardImage: roll-my-own.png
 ---
 
 One thing I've wanted for my site is the ability to embed interactive components in my writing. Inspired by [pngwn](https://twitter.com/evilpingwin)'s excellent work on the [mdsvex](https://mdsvex.pngwn.io/) Svelte plugin, and in preparation for my upcoming post on visualizations, I decided to finally take the plunge and get component embedding to work here too.

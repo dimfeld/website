@@ -16,7 +16,10 @@
     imageUrl = 'https://imfeld.dev/images/' + imageUrl;
   }
 
-  const cardType = note.cardType || 'summary';
+  let cardType = note.cardType;
+  if (!cardType) {
+    cardType = note.cardImage ? 'summary_large_image' : 'summary';
+  }
 </script>
 
 <svelte:head>
