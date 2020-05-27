@@ -5,8 +5,11 @@
   export let confidence = undefined;
 
   import * as labels from '../../postMeta.ts';
-  import { getContext } from 'svelte';
+  import { getContext, onMount } from 'svelte';
+  import instantiateComponents from '../../dynamicComponents';
   getContext('title').set(title);
+
+  onMount(() => instantiateComponents());
 </script>
 
 <article class="font-serif my-4 px-4 sm:px-0">
