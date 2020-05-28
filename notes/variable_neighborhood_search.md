@@ -66,50 +66,50 @@ Assume we’ve found a local minimum. We want to leave this valley and find a de
 - If the moves don’t get us out of the valley, how do we modify them? -- Go farther! Usually this takes the form of each of the neighborhood structures building upon the previous one to create a larger or more complex move (this is called nesting).
 
 ### Steps
-			* 	Init: Select a set of neighborhood structures, find initial solution, choose stopping condition, etc.
-			* 	1. Select neighborhood 1
-			* 	2. *Shaking*: Take a randomly selected change from the current neighborhood.
-			* 	3. If it’s better, use it and go back to step 1
-			* 	4. Otherwise, check the stopping condition, and then go to the next structure and go to step 2.
+
+0. Init: Select a set of neighborhood structures, find initial solution, choose stopping condition, etc.
+1. Select neighborhood 1
+2. *Shaking*: Take a randomly selected change from the current neighborhood.
+3. If it’s better, use it and go back to step 1
+4. Otherwise, check the stopping condition, and then go to the next structure and go to step 2.
 
 ## Basic Variable Neighborhood Search
-		* 	This combines the VND and RVNS methods above into a single method so that we have systematic movement around the current local minimum and also the possibility of a random jump into a better minimum.
-		▾	Steps
-			* 	Init: Select neighborhoods N (1 to kmax), initial solution x, stopping condition.
-			* 	1. Set k = 1
-			* 	2. Shaking: x’ = a random move in Nk.
-			* 	3. Local Search: x’’ = the result of the local search from x’
-			* 	4. If x’’ is better than x, set x = x’’ and jump to step 1.
-			* 	5. Otherwise increment k. If k = kmax, check the stopping condition and jump back to step 1.
+
+This combines the VND and RVNS methods above into a single method so that we have systematic movement around the current local minimum and also the possibility of a random jump into a better minimum.
+
+0. Init: Select neighborhoods N (1 to kmax), initial solution x, stopping condition.
+1. Set k = 1
+2. Shaking: x’ = a random move in Nk.
+3. Local Search: x’’ = the result of the local search from x’
+4. If x’’ is better than x, set x = x’’ and jump to step 1.
+5. Otherwise increment k. If k = kmax, check the stopping condition and jump back to step 1.
 
 ## General Variable Neighborhood Search
-		* 	This is the general one to use when you don’t have a specific reason to do otherwise. It is similar to the basic VNS, but uses VND as the local search step. We may use different neighborhood selections for the shaking step and the VND step, but it is not required.
+
+This is the general one to use when you don’t have a specific reason to do otherwise. It is similar to the basic VNS, but uses VND as the local search step. We may use different neighborhood selections for the shaking step and the VND step, but it is not required.
+
 ### Neighborhood Selection
-		▾	What properties of the neighborhoods are mandatory to be able to find a near-optimal solution
-			* 	The union of all the neighborhoods should cover the entire set of feasible solutions to guarantee this.
-		* 	What properties are helpful for finding a near-optimal solution?
-		▾	Should neighborhoods be nested, and if not, how should they be ordered?
-			* 	Nesting can easily be done by performing a type of move, and then having the next neighborhood make a similar move
-		▾	What are desirable properties of neighborhood size?
-			* 	Size should go up as we iterate through neighborhoods.
+
+-	What properties of the neighborhoods are mandatory to be able to find a near-optimal solution -- The union of all the neighborhoods should cover the entire set of feasible solutions to guarantee this.
+- 	What properties are helpful for finding a near-optimal solution?
+-	Should neighborhoods be nested, and if not, how should they be ordered? -- Nesting can easily be done by performing a type of move, and then having the next neighborhood make a similar move
+-	What are desirable properties of neighborhood size? -- Size should go up as we iterate through neighborhoods.
 
 ## Skewed VNS
-		* 	Some problems have local minima that are spaced far apart, and so if we happen to jump into one we probably want to explore around there.
-		* 	With an extremely large neighborhood, we might jump into one of these other minima, and so it can be desirable to try out a not-quite-the-best solution if it’s sufficiently far away from the current best solution.
-		* 	In this method, after we move we check if the candidate solution is better than or worse-but-within-a-tolerance of the best solution, and if it is then we move the search space to it.
-		* 	Throughout the process, we remember the best solution even if we’re not currently looking at it.
-		▾	Should we do this?
-			* 	The easiest way to answer the question is to run VNS for a short period of time from a bunch of different starting conditions and see if they end up in very different states with good solutions.
+
+- 	Some problems have local minima that are spaced far apart, and so if we happen to jump into one we probably want to explore around there.
+- 	With an extremely large neighborhood, we might jump into one of these other minima, and so it can be desirable to try out a not-quite-the-best solution if it’s sufficiently far away from the current best solution.
+- 	In this method, after we move we check if the candidate solution is better than or worse-but-within-a-tolerance of the best solution, and if it is then we move the search space to it.
+- 	Throughout the process, we remember the best solution even if we’re not currently looking at it.
+-	Should we do this? -- The easiest way to answer the question is to run VNS for a short period of time from a bunch of different starting conditions and see if they end up in very different states with good solutions.
 
 ## Variable Neighborhood Decomposition Search
-		* 	This scheme changes the local search option to select a subset of the space relating to the space modified by the neighborhood and optimize just that region. The optimization process used can be VNS again, applied to just that region.
+
+This scheme changes the local search option to select a subset of the space relating to the space modified by the neighborhood and optimize just that region. The optimization process used can be VNS again, applied to just that region.
 
 # Further Research for Approaching a Problem with VNS
-		▾	Initialization Conditions
-			* 	VNS results tend to not be too dependent on the initialization conditions, so long as the neighborhoods are defined well, and so simpler conditions are better.
-		▾	Neighborhood Selection
-			* 	Do research on the neighborhoods used by other approaches to the problem. They tend to be reusable in VNS.
-		▾	Distribution of Neighborhoods
-			* 	Should neighborhoods be assigned to the local search phase, the shaking phase, or both?
-		▾	Ancillary Tests
-			* 	Some additional logic can be used to make the “random” selection less random, if we know some useful things about the problem that can help with selection.
+
+-	Initialization Conditions -- VNS results tend to not be too dependent on the initialization conditions, so long as the neighborhoods are defined well, and so simpler conditions are better.
+-	Neighborhood Selection -- Do research on the neighborhoods used by other approaches to the problem. They tend to be reusable in VNS.
+-	Distribution of Neighborhoods -- Should neighborhoods be assigned to the local search phase, the shaking phase, or both?
+-	Ancillary Tests -- Some additional logic can be used to make the “random” selection less random, if we know some useful things about the problem that can help with selection.
