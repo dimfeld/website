@@ -63,7 +63,7 @@ c.a = c.a + 1;
 
 # Embedding in this Site
 
-For this site, I came up with a pretty simple solution. The file [dynamicComponents.ts](https://github.com/dimfeld/website/blob/master/src/dynamicComponents.ts) maintains a catalog of all the embeddable components and exposes a function `instantiateComponents` that searches the rendered HTML for special `div` elements with information on what should go in each one.
+For this site, I came up with a simple solution. The file [dynamicComponents.ts](https://github.com/dimfeld/website/blob/master/src/dynamicComponents.ts) maintains a catalog of all the embeddable components and exposes a function `instantiateComponents` that searches the rendered HTML for special `div` elements with information on what should go in each one.
 
 First, it looks for `div` elements that contain a `data-component` attribute.
 
@@ -78,7 +78,7 @@ for (let div of divs) {
 }
 ```
 
-The special div element is pretty simple. This is embedded directly in the markdown.
+The special div element is written directly in the markdown.
 
 ```html
 <div data-component="ReadingSince" data-prop-a="5"></div>
