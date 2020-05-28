@@ -39,7 +39,6 @@ const c = new Component({
     c: 10,
   }
 });
-
 ```
 
 And that's it. Of course, in a real web application, you will probably want to interact with the component after you create it.
