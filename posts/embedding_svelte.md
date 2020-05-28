@@ -23,7 +23,7 @@ In the interest of time, I decided to just write my own support. It's not nearly
 
 One nice thing about Svelte is that it exposes [an easy-to-use API](https://svelte.dev/docs#Client-side_component_API) for embedding components in non-Svelte environments. I've used this extensively at work as we do a [piecemeal upgrade of our website to Svelte](angular_to_svelte).
 
-Just as in Svelte, each component can be imported as an ES Module
+Just as in Svelte, each component can be imported as an ES Module. Then we use it as a constructor with arguments telling it where and what to render.
 
 ```js
 import Component from './CompiledComponent.js';
