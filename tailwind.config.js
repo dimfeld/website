@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       fontFamily: {
         serif: ['Merriweather', ...defaultTheme.fontFamily.serif],
+        mono: ['Inconsolata', ...defaultTheme.fontFamily.mono],
       },
     },
   },
