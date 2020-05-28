@@ -46,7 +46,7 @@
   {/if}
 </svelte:head>
 
-<div class="sm:mx-8">
+<div class="sm:mx-16">
   <Article {...post}>
     {@html post.content}
   </Article>

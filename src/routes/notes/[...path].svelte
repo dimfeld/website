@@ -41,7 +41,7 @@
   {/if}
 </svelte:head>
 
-<div class="sm:mr-8">
+<div class="sm:mr-16">
   <Article {...note}>
     {@html note.content}
   </Article>
