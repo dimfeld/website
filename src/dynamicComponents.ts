@@ -3,11 +3,13 @@ import { SvelteComponent } from 'svelte';
 import ReadingSince from './interactive/ReadingSince.svelte';
 import Slider from './interactive/Slider.svelte';
 import Roller from './interactive/Roller.svelte';
+import PostReplSvelteContext from './interactive/PostReplSvelteContext.svelte';
 
 const components = {
   ReadingSince,
   Slider,
   Roller,
+  PostReplSvelteContext,
 };
 
 function instantiateComponent(element: Element) {

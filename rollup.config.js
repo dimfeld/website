@@ -22,7 +22,7 @@ const onwarn = (warning, onwarn) => {
 
   return (
     (warning.code === 'CIRCULAR_DEPENDENCY' &&
-      /[/\\]@sapper[/\\]/.test(warning.message)) ||
+      /(?:[/\\]@sapper|node_modules)[/\\]/.test(warning.message)) ||
     onwarn(warning)
   );
 };
@@ -98,17 +98,17 @@ export default {
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       svelte({
-        extensions: ['.svelte', '.svx'],
         dev,
         hydratable: true,
         emitCss: true,
         preprocess: svelteConfig.preprocess,
       }),
       json(),
+      // html({ include: '**/*.html' }),
 
       resolve({
         browser: true,
-        extensions: ['.mjs', '.js', '.json', '.ts'],
+        extensions: ['.mjs', '.js', '.ts', '.json'],
         dedupe,
       }),
       commonjs(),
@@ -134,16 +134,16 @@ export default {
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       svelte({
-        extensions: ['.svelte', '.svx'],
         generate: 'ssr',
         dev,
         preprocess: svelteConfig.preprocess,
       }),
       json(),
+      // html({ include: '**/*.html' }),
 
       resolve({
         dedupe,
-        extensions: ['.mjs', '.js', '.json', '.ts'],
+        extensions: ['.mjs', '.js', '.ts', '.json'],
       }),
 
       commonjs(),
