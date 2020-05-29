@@ -9,7 +9,7 @@ cardImage: simple-state-machines-diagram.png
 
 State management is a perennial problem in computer programming. Some modules start out with complex state requirements. Others begin simply, but gradually grow more complex as features and requirements are placed on top of the original code.
 
-It's easy to end up with an unmanagable tangle of semi-correlated variables and fragile checks for various permutations of those variables littered throughout the file. I've experienced this many times myself, adding additional variables to track whether a particular aspect of a component is open or closed, focused or not, updating or waiting for input, and so on.
+It's easy to end up with an unmanageable tangle of semi-correlated variables and fragile checks for various permutations of those variables littered throughout the file. I've experienced this many times myself, adding additional variables to track whether a particular aspect of a component is open or closed, focused or not, updating or waiting for input, and so on.
 
 Updating code like this after months of not looking at it becomes a strenuous mental exercise, as you try to remember what you were thinking when you wrote a particular `if` clause or wrote a comment that must have made sense six months ago but now has lost all context. And that's even assuming it was your code in the first place and there's something to actually remember.
 
