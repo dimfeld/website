@@ -1,9 +1,12 @@
 ---
 title: Shifting Color Palettes using the LCH Color Space
 date: 2020-04-03
-updated: 2020-05-26
+updated: 2020-05-28
 confidence: Not fully confident that this is the right way to do it, but I like the results I got this time.
 ---
+
+Update: Since originally writing this post I've developed my own tool
+to automate this process. Check it out at https://palettes.imfeld.dev!
 
 Almost every web developer has heard of the RGB system of representing colors, which is a direct corollary to how colors are represented in video hardware. Many of us are familiar with HSL as well, in which a color is made up of hue (the raw color), saturation (how much white is mixed in to the color), and lightness.
 
