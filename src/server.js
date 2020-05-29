@@ -15,6 +15,9 @@ import {
   initPostCache,
 } from './staticApi/posts';
 
+import { config } from 'dotenv';
+config();
+
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 

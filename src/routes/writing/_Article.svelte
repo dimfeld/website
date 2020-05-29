@@ -3,6 +3,7 @@
   export let date = undefined;
   export let updated = undefined;
   export let confidence = undefined;
+  export let devto = undefined;
 
   import * as labels from '../../postMeta.ts';
   import { getContext, onMount } from 'svelte';
@@ -39,7 +40,13 @@
   <hr />
   <p>
     Thanks for reading! If you have any comments, please
-    <!-- prettier-ignore -->
-    <a href="https://www.twitter.com/dimfeld">send me a note on Twitter.</a>
+    {#if devto}
+      <a href="https://www.twitter.com/dimfeld">send me a note on Twitter</a>
+      or
+      <a href="{devto.url}#comments">comment on dev.to.</a>
+    {:else}
+      <a href="https://www.twitter.com/dimfeld">send me a note on Twitter.</a>
+    {/if}
+
   </p>
 </article>

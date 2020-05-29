@@ -7,6 +7,14 @@ import globMod from 'glob';
 import { promisify } from 'util';
 import uniq from 'lodash/uniq';
 
+export interface DevToArticle {
+  body_markdown: string;
+  canonical_url: string;
+  url: string;
+  positive_reactions_count: number;
+  public_reactions_count: number;
+}
+
 interface PostAttributes {
   title: string;
   tags: string;
@@ -33,6 +41,7 @@ export interface Post {
   content: string;
   confidence?: string;
   status_code?: string;
+  devto?: DevToArticle;
 }
 
 export async function readPost(

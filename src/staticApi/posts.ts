@@ -1,10 +1,17 @@
 import orderBy from 'lodash/orderBy';
 import maxBy from 'lodash/maxBy';
-import { postsDir, notesDir, readMdFiles, Post } from './readPosts';
+import {
+  postsDir,
+  notesDir,
+  readMdFiles,
+  Post,
+  DevToArticle,
+} from './readPosts';
 import send from '@polka/send-type';
 import { Dictionary } from 'lodash';
 import { IncomingMessage, ServerResponse } from 'http';
 import md from '../markdown';
+import got from 'got';
 
 const renderer = md();
 
@@ -24,10 +31,22 @@ function stripContent(p: Post) {
 export var postCache: PostCache;
 
 export async function initPostCache() {
-  let [postList, noteList] = await Promise.all([
+  let devtoApiKey = process.env.DEVTO_API_KEY;
+  let [postList, noteList, devtoArticleList] = await Promise.all([
     readMdFiles(postsDir, 'post'),
     readMdFiles(notesDir, 'note'),
+    devtoApiKey
+      ? got('https://dev.to/api/articles/me/published', {
+          headers: { api_key: devtoApiKey },
+        }).json<DevToArticle[]>()
+      : [],
   ]);
+
+  let devtoArticles: _.Dictionary<DevToArticle> = {};
+  for (let devtoArticle of devtoArticleList) {
+    let postId = devtoArticle.canonical_url.split('/').slice(-1)[0];
+    devtoArticles[postId] = devtoArticle;
+  }
 
   postList = orderBy(postList, ['date', 'title'], ['desc', 'asc']);
   noteList = orderBy(
@@ -41,6 +60,7 @@ export async function initPostCache() {
   let noteOutput = new Map<string, Post>();
 
   for (let post of postList) {
+    post.devto = devtoArticles[post.id];
     postOutput.set(post.id, post);
   }
 
