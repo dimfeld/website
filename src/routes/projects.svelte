@@ -7,6 +7,12 @@
       image: 'https://palettes.imfeld.dev/card.png',
     },
     {
+      name: 'Video Trimmer',
+      link: 'https://github.com/dimfeld/video-trimmer-gui',
+      text: `A mostly-finished project I'm putting together for my church. Take a selection from a video, and add an intro and outro without the complexity of a full-fledged video editor.`,
+      image: 'projects-video-trimmer.jpg',
+    },
+    {
       name: 'httptreemux',
       link: 'https://github.com/dimfeld/httptreemux',
       text: `I wrote a trie-based HTTP router library back in 2014 when I was learning Go. Its performance focus and flexible routing options have gained a small following, including some commercial users.`,
@@ -32,7 +38,7 @@
 
   <p class="font-serif">
     Until recently, most of my career work has been in proprietary code bases.
-    I'm steadily growing my open source contributions, and the more interesting
+    I'm steadily growing my open source contributions, and the more substantial
     ones will show up here.
   </p>
 
