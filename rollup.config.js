@@ -85,6 +85,8 @@ const watchPlugin = {
     for (let file of files) {
       this.addWatchFile(file);
     }
+
+    this.addWatchFile(__dirname + '/src/template.html');
   },
 };
 
