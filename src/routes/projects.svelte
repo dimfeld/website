@@ -9,7 +9,7 @@
     {
       name: 'httptreemux',
       link: 'https://github.com/dimfeld/httptreemux',
-      text: `I wrote a trie-based HTTP router library back in 2014 when I was learning Go. Its performance focus and flexible routing options have gained a small following including some commercial users.`,
+      text: `I wrote a trie-based HTTP router library back in 2014 when I was learning Go. Its performance focus and flexible routing options have gained a small following, including some commercial users.`,
       image: 'projects-httptreemux.svg',
     },
   ];
