@@ -25,6 +25,7 @@
   $: linkIndex = links.findIndex((l) => l.name === segment);
   $: currentLink = links[linkIndex];
 
+  const nameWidth = 160;
   let backgroundHighlightStyle = '';
   $: {
     // The size of the first element + the size of each element + the extra skew offset
@@ -32,9 +33,9 @@
     let left;
     if (linkIndex === -1) {
       left = -8;
-      width = 200 + left;
+      width = nameWidth + left;
     } else {
-      left = 200 + linkIndex * 100;
+      left = nameWidth + linkIndex * 100;
       width = 100;
     }
 
@@ -90,7 +91,7 @@
       class="hover:text-teal-200"
       class:text-white={!segment}
       class:text-teal-100={segment}
-      style="width:200px;padding-left:24px;padding-right:32px"
+      style="width:{nameWidth}px;padding-left:24px;padding-right:32px"
       href="/">
       <span class="whitespace-no-wrap">Daniel Imfeld</span>
     </a>
