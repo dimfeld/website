@@ -28,12 +28,6 @@
   }
 </script>
 
-<style>
-  /* img {
-    width: 200px;
-  } */
-</style>
-
 <article class="m-4 sm:mx-16 self-center">
 
   <p class="font-serif">
@@ -45,6 +39,9 @@
   {#each projects as project}
     <div
       class="flex flex-col space-y-4 mt-4 sm:flex-row sm:space-x-12 sm:space-y-0">
+      <h1 class="block sm:hidden">
+        <a href={project.link}>{project.name}</a>
+      </h1>
       <div
         class="flex-none flex flex-col items-stretch w-full justify-center
         sm:block sm:w-auto">
@@ -54,7 +51,7 @@
           src={imageUrl(project.image)} />
       </div>
       <div class="flex flex-col">
-        <h2>
+        <h2 class="hidden sm:block">
           <a href={project.link}>{project.name}</a>
         </h2>
         <p class="mt-0">
