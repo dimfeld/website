@@ -37,8 +37,7 @@
   </p>
 
   {#each projects as project}
-    <div
-      class="flex flex-col space-y-4 mt-4 sm:flex-row sm:space-x-12 sm:space-y-0">
+    <div class="flex flex-col space-y-4 mt-4 sm:flex-row sm:space-y-0">
       <h1 class="block sm:hidden">
         <a href={project.link}>{project.name}</a>
       </h1>
@@ -50,7 +49,7 @@
           alt="{project.name} image"
           src={imageUrl(project.image)} />
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col sm:ml-12 ">
         <h2 class="hidden sm:block">
           <a href={project.link}>{project.name}</a>
         </h2>
