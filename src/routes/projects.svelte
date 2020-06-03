@@ -1,6 +1,12 @@
 <script>
   const projects = [
     {
+      name: 'Fund The Rebuild',
+      link: 'https://fundtherebuild.com',
+      text: `We all hear about the GoFundMe pages that go viral and exceed their fundraising goals. But many don't attract much attention - fundraisers for goals just as important, but perhaps without the social media savvy to get coverage. This site brings attention to those forgotten GoFundMe campaigns that were started in the wake of the 2020 riots.`,
+      image: 'https://fundtherebuild.com/card.jpg',
+    },
+    {
       name: 'Palette Transformer',
       link: 'https://palettes.imfeld.dev',
       text: `Transform a color palette to fit any other color you want! I put this together after doing it manually once, and I wrote about the initial experience and the theory behind it <a href="/writing/transferring_color_palettes">here</a>.`,
