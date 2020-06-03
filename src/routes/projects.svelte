@@ -4,7 +4,7 @@
       name: 'Fund The Rebuild',
       repo: 'https://www.github.com/dimfeld/fund-the-rebuild',
       link: 'https://fundtherebuild.com',
-      text: `We all hear about the GoFundMe pages that go viral and exceed their fundraising goals. But many don't attract much attention - fundraisers for goals just as important, but perhaps without the social media savvy to get coverage. This site brings attention to those forgotten GoFundMe campaigns that were started in the wake of the 2020 riots.`,
+      text: `We all hear about the GoFundMe pages that go viral and exceed their fundraising goals. But many don't attract much attention &mdash; fundraisers for goals just as important, but perhaps without the social media savvy to get coverage. This site brings attention to those forgotten GoFundMe campaigns that were started in the wake of the 2020 riots.`,
       image: 'https://fundtherebuild.com/card.jpg',
     },
     {
