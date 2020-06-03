@@ -2,12 +2,14 @@
   const projects = [
     {
       name: 'Fund The Rebuild',
+      repo: 'https://www.github.com/dimfeld/fund-the-rebuild',
       link: 'https://fundtherebuild.com',
       text: `We all hear about the GoFundMe pages that go viral and exceed their fundraising goals. But many don't attract much attention - fundraisers for goals just as important, but perhaps without the social media savvy to get coverage. This site brings attention to those forgotten GoFundMe campaigns that were started in the wake of the 2020 riots.`,
       image: 'https://fundtherebuild.com/card.jpg',
     },
     {
       name: 'Palette Transformer',
+      repo: 'https://www.github.com/dimfeld/palette-swapper',
       link: 'https://palettes.imfeld.dev',
       text: `Transform a color palette to fit any other color you want! I put this together after doing it manually once, and I wrote about the initial experience and the theory behind it <a href="/writing/transferring_color_palettes">here</a>.`,
       image: 'https://palettes.imfeld.dev/card.png',
@@ -46,6 +48,7 @@
     <div class="flex flex-col space-y-4 mt-4 sm:flex-row sm:space-y-0">
       <h1 class="block sm:hidden">
         <a href={project.link}>{project.name}</a>
+        <a href={project.repo || project.link}>(Source)</a>
       </h1>
       <div
         class="flex-none flex flex-col items-stretch w-full justify-center
@@ -58,6 +61,7 @@
       <div class="flex flex-col sm:ml-12 ">
         <h2 class="hidden sm:block">
           <a href={project.link}>{project.name}</a>
+          <a href={project.repo || project.link}>(Source)</a>
         </h2>
         <p class="mt-0">
           {@html project.text}
