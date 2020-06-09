@@ -65,7 +65,8 @@ Remove @match and add @include
 + // @include *
 
 Optional, but can be useful. You can @require any script to load it into your userscript.
-+ // @require https://code.jquery.com/jquery-3.5.1.slim.min.js
+This may cause problems if you visit a website that expects different versions.
++ // @require https://code.jquery.com/jquery-3.5.1.min.js
 
   // ==/UserScript==
 ```
