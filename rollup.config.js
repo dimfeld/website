@@ -2,7 +2,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
@@ -26,10 +26,9 @@ const onwarn = (warning, onwarn) => {
     onwarn(warning)
   );
 };
-const dedupe = (importee) =>
-  importee === 'svelte' || importee.startsWith('svelte/');
 
 const babelServerConfig = {
+  babelHelpers: 'bundled',
   extensions: ['.js', '.mjs', '.html', '.svelte', '.ts'],
   exclude: ['node_modules/@babel/**', '_GlobalCss.svelte'],
   presets: [
@@ -52,7 +51,6 @@ const babelServerConfig = {
 
 const babelClientConfig = {
   ...babelServerConfig,
-  runtimeHelpers: !dev,
   presets: [
     [
       '@babel/preset-env',
@@ -94,6 +92,7 @@ export default {
   client: {
     input: config.client.input(),
     output: config.client.output(),
+    preserveEntrySignatures: false,
     plugins: [
       replace({
         'process.browser': true,
@@ -111,7 +110,7 @@ export default {
       resolve({
         browser: true,
         extensions: ['.mjs', '.js', '.ts', '.json'],
-        dedupe,
+        dedupe: ['svelte'],
       }),
       commonjs(),
 
@@ -129,6 +128,7 @@ export default {
   server: {
     input: config.server.input(),
     output: config.server.output(),
+    preserveEntrySignatures: 'strict',
     plugins: [
       watchPlugin,
       replace({
@@ -144,7 +144,7 @@ export default {
       // html({ include: '**/*.html' }),
 
       resolve({
-        dedupe,
+        dedupe: ['svelte'],
         extensions: ['.mjs', '.js', '.ts', '.json'],
       }),
 
@@ -162,6 +162,7 @@ export default {
   serviceworker: {
     input: config.serviceworker.input(),
     output: config.serviceworker.output(),
+    preserveEntrySignatures: false,
     plugins: [
       resolve(),
       replace({

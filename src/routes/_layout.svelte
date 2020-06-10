@@ -1,7 +1,6 @@
 <script>
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
-  import GlobalCss from './_GlobalCss.svelte';
   import Nav from './_Nav.svelte';
   export let segment;
 
@@ -11,7 +10,10 @@
   $: title = $titleStore ? `${$titleStore} - Daniel Imfeld` : 'Daniel Imfeld';
 </script>
 
-<style global>
+<style lang="postcss" global>
+  @import '../tailwind.css';
+  @import 'highlight.js/styles/vs.css';
+
   * {
     position: relative;
   }
@@ -78,23 +80,16 @@
     @apply block border-gray-400 bg-gray-200 text-black px-4 py-2 mt-4 whitespace-pre-wrap overflow-x-auto;
   }
 
-  article h1 + p {
+  article h1 + p,
+  article h2 + p,
+  article h3 + p,
+  article h4 + p {
     @apply mt-2;
   }
 
-  article h2 + p {
-    @apply mt-2;
-  }
-
-  article h3 + p {
-    @apply mt-2;
-  }
-
-  article * + p {
-    @apply mt-4;
-  }
-
-  article > * + div {
+  article * + p,
+  article > * + div,
+  hr {
     @apply mt-4;
   }
 
@@ -116,10 +111,6 @@
     }
   }
 
-  hr {
-    @apply mt-4;
-  }
-
   hr.footnotes-sep {
     @apply mt-8;
   }
@@ -132,20 +123,27 @@
     text-decoration: underline;
   }
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-medium font-sans text-teal-900;
+  }
+
   h1 {
-    @apply text-2xl font-medium font-sans text-teal-900;
+    @apply text-2xl;
   }
 
   h2 {
-    @apply text-xl font-medium font-sans text-teal-900;
+    @apply text-xl;
   }
 
   h3 {
-    @apply text-lg font-medium font-sans text-teal-900;
+    @apply text-lg;
   }
 
   h4 {
-    @apply text-base font-medium font-sans text-teal-900;
+    @apply text-base;
   }
 
   h1:not(:first-child),
@@ -163,11 +161,18 @@
     fill: #2c7a7b;
     color: #2c7a7b;
   }
+
+  .hljs-addition {
+    @apply text-green-600;
+  }
+
+  .hljs-deletion {
+    @apply text-red-600;
+  }
 </style>
 
 <svelte:head>
   <title>{title}</title>
-  <GlobalCss />
 </svelte:head>
 
 <div class="flex flex-col min-h-screen">
