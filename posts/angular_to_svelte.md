@@ -123,10 +123,9 @@ import svelteShim from './svelte-shim.ts';
 import MyComponent from './MyComponent.svelte';
 export default ng.module('modulename').component('myComponent', {
   controller: svelteShim(MyComponent,
+  // Events
   {
-    events: {
-      change: 'onChange',
-    }
+    change: 'onChange',
   }),
   bindings: {
     class: '@',
