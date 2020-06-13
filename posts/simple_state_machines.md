@@ -5,6 +5,7 @@ summary: Fortifying component state with simple state machines
 frontPageSummary: fortifying and simplifying component state
 confidence: Some CS/EE undergrad training, and I've implemented state machines in various forms over the past couple of decades.
 cardImage: simple-state-machines-diagram.png
+series: State Machines
 ---
 
 State management is a perennial problem in computer programming. Some modules start out with complex state requirements. Others begin simply, but gradually grow more complex as features and requirements are placed on top of the original code.
