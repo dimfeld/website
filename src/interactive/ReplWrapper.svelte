@@ -1,5 +1,4 @@
 <script>
-  import Repl from '@sveltejs/svelte-repl';
   import { onMount } from 'svelte';
 
   export let height = '400px';
