@@ -29,11 +29,11 @@
   }
 
   article ul {
-    @apply mt-4;
+    @apply my-4;
   }
 
   article ol {
-    @apply mt-4;
+    @apply my-4;
   }
 
   article ol > li {
@@ -49,7 +49,7 @@
   }
 
   blockquote {
-    @apply border-l-4 border-teal-600 -ml-2 pl-3 pr-4 mt-4 italic;
+    @apply border-l-4 border-teal-600 -ml-2 pl-3 pr-4 my-4 italic;
   }
 
   @media (min-width: 640px) {
@@ -77,20 +77,20 @@
   }
 
   pre > code {
-    @apply block border-gray-400 bg-gray-200 text-black px-4 py-2 mt-4 whitespace-pre-wrap overflow-x-auto;
+    @apply block border-gray-400 bg-gray-200 text-black px-4 py-2 my-4 whitespace-pre-wrap overflow-x-auto;
   }
 
   article h1 + p,
   article h2 + p,
   article h3 + p,
   article h4 + p {
-    @apply mt-2;
+    @apply mt-2 mb-4;
   }
 
   article * + p,
   article > * + div,
   hr {
-    @apply mt-4;
+    @apply my-4;
   }
 
   article table {
@@ -150,7 +150,7 @@
   h2:not(:first-child),
   h3:not(:first-child),
   h4:not(:first-child) {
-    @apply mt-4;
+    @apply mt-4 mb-2;
   }
 
   svg .primary {
@@ -168,6 +168,22 @@
 
   .hljs-deletion {
     @apply text-red-600;
+  }
+
+  div.responsive-svg {
+    @apply my-4 w-full mx-auto;
+  }
+
+  @media (min-width: 640px) {
+    div.responsive-svg {
+      @apply w-3/4;
+    }
+  }
+
+  @media (min-width: 768px) {
+    div.responsive-svg {
+      @apply w-1/2;
+    }
   }
 </style>
 

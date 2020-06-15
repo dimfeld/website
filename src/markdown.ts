@@ -86,7 +86,7 @@ export default function renderer() {
     r.normalizeLink = (url) => {
       if (!url.includes('//')) {
         if (!url.startsWith('/')) {
-          if (/\.(png|jpg|gif)$/.test(url)) {
+          if (/\.(svg|png|jpg|gif)$/.test(url)) {
             url = `/images/${url}`;
           } else {
             url = `${base}${url}`;
