@@ -4,7 +4,7 @@ date: 2020-06-12
 draft: true
 summary: Integrating more logic into your state machines
 frontPageSummary: making state machines actually do useful things
-cardImage: simple-state-machines-diagram.png
+cardImage: state-machine-actions-diagram.svg
 series: State Machines
 ---
 
@@ -17,6 +17,12 @@ FundTheRebuild.com is a website designed to highlight GoFundMe campaigns that ha
 When opening the page, users see a text box where they can paste the URL of a GoFundMe campaign. Upon submitting the form, the Javascript in the browser will try to download details about the supplied campaign. If it is valid, the user can then click an "Add" button to confirm, at which point that campaign is sent into a queue to be approved and added to the site.
 
 The initial implementation of the Add page uses a basic state machine with seven states:
+
+<div class="responsive-svg">
+
+![State Diagram](state-machine-actions-diagram.svg)
+
+</div>
 
 ```js
 {
