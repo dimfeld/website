@@ -1,7 +1,6 @@
 ---
 title: Add Actions to Your State Machines
 date: 2020-06-12
-draft: true
 summary: Integrating more logic into your state machines
 frontPageSummary: making state machines actually do useful things
 cardImage: state-machine-actions-diagram.svg
