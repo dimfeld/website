@@ -8,7 +8,7 @@ cardImage: simple-state-machines-diagram.png
 series: State Machines
 ---
 
-In the [previous article](simple_state_machines), we looked at how to transition a set of boolean flags into a simple state machine. In this article, we'll take it a step further with a different example, and look at linking states to actual actions.
+In the [previous article](simple_state_machines), we looked at how to transition a set of boolean flags into a simple state machine. In this article, we'll take it a step further with a different example, and look at making our states and transitions do actually useful things.
 
 # The State Machine
 
@@ -18,17 +18,48 @@ When opening the page, users see a text box where they can paste the URL of a Go
 
 The initial implementation of the Add page uses a basic state machine with seven states:
 
-- Idle - When the page has just loaded
-- Searching - When the code is searching for a campaign
-- Search Error - If the URL does not lead to a valid GoFundMe campaign
-- Search Found - Show the campaign that we found
-- Submitting - User clicked the Add button
-- Submit Failed - Something went wrong while submitting.
-- Submit Succeeded
+```js
+{
+  initial: IDLE,
+  states: {
+    // We start here
+    [IDLE]: {
+      'search': SEARCHING
+    },
+    // Looking for the campaign the user selected
+    [SEARCHING]: {
+      'search-succeeded': SEARCH_FOUND,
+      'search-failed': SEARCH_ERROR,
+    },
+    // Couldn't find the campaign
+    [SEARCH_ERROR]: {
+      'search': SEARCHING,
+    },
+    // Found the campaign, so we show the campaign details and an "Add" button.
+    [SEARCH_FOUND]: {
+      'search': SEARCHING,
+      'submit': SUBMITTING,
+    },
+    // Adding the campaign to the database
+    [SUBMITTING]: {
+      'submit-succeeded': SUBMIT_SUCCEEDED,
+      'submit-failed': SUBMIT_ERROR,
+    },
+    // It worked!
+    [SUBMIT_SUCCEEDED]: {
+      'search': SEARCHING,
+    },
+    // It didn't work.
+    [SUBMIT_ERROR]: {
+      'search': SEARCHING,
+    }
+  }
+}
+```
 
-Aside from the error states, the state machine proceeds through the states in the order they are listed above.
+The state machine starts in the `IDLE` state, proceeds through the `SEARCHING` states, and then moves to `SUBMITTING` if the user confirms that they want to add this campaign. At most points in the process, clicking the Search button wll go back to the `SEARCHING` states again.
 
-While the state machine simplifies the logic of figuring out what to display on the screen, just showing different things on the screen is usually not enough. Most applications need to talk to a server or otherwise interact with the user too. Currently the code manually manages the actions that occur as the states change:
+While the state machine simplifies the logic of figuring out what to display on the screen, most applications need to do more than just show things on the screen. Currently, these other actions exist alongside the state machine, and interact with it but are not part of it.
 
 ```js
 async function submitCampaign() {
@@ -53,123 +84,185 @@ async function findCampaign(url) {
 }
 ```
 
-This mostly works fine, but it has issues. In the previous article, we established a model where we could send any event to the state machine at any time, and it would take the correct action given the current state. Future additions to the code need to make sure to always use these functions instead of just sending events to the state machine, so that the network requests actually happen.
+This mostly works fine, but it has issues. In the previous article, we established a model where we could send any event to the state machine at any time, and it would use the transition definitions to go to the correct next state (or ignore the event). But here, future additions to the code need to make sure to always use these functions instead of just sending events to the state machine, so that the network requests actually happen.
 
-Worse, these functions perform the network request without any regard for if the state machine actually entered the appropriate state. We could add extra logic to fix that, but it's essentially duplicating the logic that is already in the state machine -- another source for bugs.
+Worse, these functions send the network requests without any regard for if the state machine actually entered the appropriate state. We could add extra logic to fix that, but it duplicates the logic that is already in the state machine -- another source for bugs.
 
 # Adding Actions
 
-The more we can do things by only talking to the state machine, the better, but we obviously can't give up useful things like network requests. So we'll integrate actions and their corresponding state transitions into the state machine itself.
+The more we can do by only talking to the state machine, the better, but we obviously can't give up the ability to actually do stuff. So we'll integrate actions and their corresponding state transitions into the state machine itself.
 
-Accounting for when actions can run, we end up with four types of actions:
+Looking at the various places and ways that actions can happen, we end up with four types:
 
-- Synchronous actions that happen during a specific transition
-- Synchronous actions that happen when entering a state
-- Synchronous actions that happen when leaving a state
-- Asynchronous actions that happen during a state
+- Synchronous actions during a specific transition
+- Synchronous actions when entering a state
+- Synchronous actions when exiting a state
+- Asynchronous actions that happen as part of a state
 
-Synchronous actions are any "plain" Javascript code that modifies some of the "context" variables in the module (e.g. `(event) => count += event.data`), while asynchronous actions would be anything involving Promises, callbacks, setTimeout, etc.
+Synchronous actions are any "plain" Javascript code that modifies some of the output variables in the module (e.g. `currentCampaign` in the examples above), while asynchronous actions would be anything involving Promises, callbacks, setTimeout, etc.
 
 Here we've limited asynchronous actions to running inside states. It's possible for transitions to trigger asynchronous actions, of course, but that causes some complications, such as leaving the state machine in between states while the transition runs, and having to deal specially with errors. So we'll only officially support asynchronous actions on states themselves.
 
 ## A Quick Digression into State Machine Theory
 
-Traditionally, there are two types of state machines that differ primarily in how they treat actions. A Moore state machine performs actions based on the state it's in, and a Mealy state machine places the actions on the transitions between states. It's possible to create any state machine using either paradigm, and to translate either type of state machine into the other by adding or removing states and moving around the actions.
+Traditionally, there are two types of state machines that differ primarily in how their outputs change. A Mealy state machine's outputs depend both on the current state and the inputs to the state machine. A Moore state machine's outputs depend only on the the state it's in, and its inputs are used solely to determine which transitions are taken.
 
-This distinction really matters most when putting a state machine into hardware, where adding extra configurability comes with a cost. For modern programming languages, a hybrid approach that allows actions either on transitions or on the states themselves works just fine.
+When drawing state diagrams, the actions of a Moore state machine are on the states, and the actions of a Mealy state machine are on the transitions. For the most part, state machine definitions can be translated between the two models by moving around the actions and possibly.
+
+This distinction really matters most when putting a state machine into hardware, where adding extra configurability comes with a cost. For modern programming languages, a hybrid approach that allows actions either on transitions or on the states themselves works just fine. The entry and exit actions are the same as placing an action on all the transitions going into or out of a state, so this is a lot like a Mealy machine, but it's much more convenient to write.
+
+## Global Event Handlers
+
+As an aside, one notable thing about the state definition at the top is that most of the states have a `'search': SEARCHING` transition. We can alter our state machine model to include global event handlers which will run on any state that doesn't have its own handler. This further reduces duplicated logic, and leaves us with this:
+
+```js
+{
+  initial: IDLE,
+  on: {
+    'search': SEARCHING
+  },
+  states: {
+    // We start here
+    [IDLE]: {},
+    // Looking for the campaign the user selected
+    [SEARCHING]: {
+      'search-succeeded': SEARCH_FOUND,
+      'search-failed': SEARCH_ERROR,
+      'search': null,
+    },
+    // Couldn't find the campaign
+    [SEARCH_ERROR]: {},
+    // Found the campaign, so we show the campaign details and an "Add" button.
+    [SEARCH_FOUND]: {
+      'submit': SUBMITTING,
+    },
+    // Adding the campaign to the database
+    [SUBMITTING]: {
+      'submit-succeeded': SUBMIT_SUCCEEDED,
+      'submit-failed': SUBMIT_ERROR,
+      'search': null,
+    },
+    // It worked!
+    [SUBMIT_SUCCEEDED]: {},
+    // It didn't work.
+    [SUBMIT_ERROR]: {}
+  }
+}
+```
+
+In the `SEARCHING` and `SUBMITTING` states we define empty transitions for `search` to indicate that the global handler should not be used.
+
 
 # Adding Synchronous Actions
 
-There's not much to synchronous actions, so let's add those first. To recap, the state machine configuration has a list of states, and each state has a list of which transition it takes when it receives a event.
+Ok, with those asides out of the way, let's get to the real task. Synchronous actions are pretty straightforward, so we'll add those first.
+
+First, we change our event handler from just the name of the target state to an object, which can specify an action, a target state, or both. The event handlers are also moved under the `on` key to make space for the other actions. I've used the same object keys as the [XState](https://xstate.js.org) library to make it easier to move from our homegrown implementation to XState should you want to in the future.
+
+Here's a partial example just to demonstrate the syntax.
 
 ```js
 {
-  IDLE: {
-    'find-campaign': 'SEARCHING',
-  }
-}
-```
-
-It's straightforward to support the various actions. While we're at it, we'll also add support for global fallback event handlers. These handlers will run if the current state does not handle an event.
-
-```js
-{
-  // Allow defining global handlers
+  // Allow defining global handlers. This `cancel` handler runs for any state that doesn't
+  // have its own handler.
   on: {
-    'cancel': {
-      target: 'IDLE',
-      action: ({ event, data}) => { ... },
+    'search': {
+      target: 'SEARCHING',
+      action: (context, { event, data}) => { ... },
     }
   },
   states: {
-    IDLE: {
-      entry: ({event, data}) => { ... },
-      exit: ({event, data}) => { ... },
+    SEARCH_FOUND: {
+      entry: (context, {event, data}) => { ... },
+      exit: (context, {event, data}) => { ... },
       on: {
-        'search': {
-          target: 'SEARCHING',
-          action: ({event, data}) => { ... }
-        }
+        'submit': {
+          target: 'SUBMITTING',
+          action: (context, {event, data}) => { ... }
+        },
+        // But we can also define an empty transition to NOT use the global handler or do anything else.
+        'search': {},
     }
   }
 }
 ```
 
-So when entering the IDLE state, the state machine runs the entry action, and when leaving it, the machine runs the exit action. When the `search` event comes in, the machine runs the associated action and then changes to the `SEARCHING` state.
+So when entering the `IDLE` state, the state machine runs the entry action, and when leaving it, the machine runs the exit action. When the `search` event comes in, the machine runs the associated action and then enters the `SEARCHING` state.
 
-All action functions are passed the name of the event that caused the transition, and the data associated with the event, if any.
+All action functions are passed the name of the event that caused the transition, and the data associated with the event, if any. They also receive a `context` object, which is shared between all the action handlers and can also be accessed by outside code that works with the state machine. In this case, `context` would be an object containing the `currentCampaign` variable used above.
 
-The `stepState` function is updated to handle these too:
+The `stepState` function is updated to handle actions as well, and we'll start to make the function reusable too:
 
 ```js
-function stepState(event, data) {
-  let stateInfo = stateMachine.states[currentState];
+import { writable } from 'svelte/store';
 
-  let next = stateInfo.on[event];
-  if(!next) {
-    // No transition for this event in the current state. Check the global handlers.
-    next = stateMachine.on[event];
+function createStateMachine(machineConfig, initialContext) {
+  let currentState = machineConfig.initial;
+  let context = initialContext;
+  let store = writable(null);
+
+  function updateStore() {
+    store.set({ state: currentState, context });
   }
 
-  if(!next) {
-    // No global handler for this event, and no handler in the current state, so ignore it.
-    return;
+  function sendEvent(event, data) {
+    let stateInfo = stateMachine.states[currentState];
+
+    let next = (stateInfo.on || {})[event];
+    if(!next) {
+      // No transition for this event in the current state. Check the global handlers.
+      next = stateMachine.on[event];
+    }
+
+    if(!next) {
+      // No global handler for this event, and no handler in the current state, so ignore it.
+      return;
+    }
+
+    runTransition(stateInfo, next, { event, data });
   }
 
-  runTransition(stateInfo, next, { event, data });
-}
+  function runTransition(stateInfo, transition, eventData) {
+    let targetState = transition.target;
 
-function runTransition(stateInfo, transition, eventData) {
-	let targetState = transition.target;
+    // If we're leaving this state, run the exit action first.
+    if(stateInfo.exit && targetState) stateInfo.exit(eventData);
 
-	// If we're leaving this state, run the exit action first.
-	if(stateInfo.exit && targetState) stateInfo.exit(eventData);
+    // Run the transition action if there is one.
+    if(transition.action) {
+      transition.action(data);
+    }
 
-	// Run the transition action if there is one.
-	if(transition.action) {
-    transition.action(data);
+    if(!targetState) {
+      // If the transition has no target, then it's just an action, so return.
+      updateStore();
+      return;
+    }
+
+    // Update the state if the transition has a target.
+    currentState = targetState;
+
+    // And then run the next state's entry action, if there is one.
+    let nextStateInfo = states[currentState];
+    if(nextStateInfo.entry) nextStateInfo.entry();
+    updateStore();
   }
 
-	if(!targetState) {
-    // If the transition has no target, then it's just an action, so return.
-		return;
-  }
-
-	// Update the state if the transition has a target.
-	currentState = targetState;
-
-	// And then run the next state's entry action, if there is one.
-  let nextStateInfo = states[currentState];
-  if(nextStateInfo.entry) nextStateInfo.entry();
+  return {
+    store: {
+      subscribe: store.subscribe,
+    },
+    send: sendEvent,
+  };
 }
 ```
 
-Note that both the action and the target on a transition are optional. If a transition just wants to alter a variable and stay in the current state, that's fine.
+Note that both the action and the target on a transition are optional. If we want to just alter a variable and stay in the current state, that's fine.
 
 
 # Adding Asynchronous Actions
 
-Asynchronous actions take a little more care. They can succeed or fail, and other events may occur while they are running. We should handle all of these cases.
+Asynchronous actions take a little more care. They can succeed or fail, and other events may occur while they are running. We should handle all of these cases. (Again, syntax copied from XState.)
 
 ```js
 {
@@ -179,10 +272,10 @@ Asynchronous actions take a little more care. They can succeed or fail, and othe
   states: {
     SEARCHING: {
       entry: entryFn, // runs first
-      action: {
-        handler: ({event, data}, abortController) => asyncFunction(),
-        success: { target: 'SEARCH-FOUND', action: searchFoundAction },
-        failure: { target: 'SEARCH-FAILED', action: searchFailedAction },
+      invoke: {
+        src: (context, {event, data}, abortController) => asyncFunction(),
+        onDone: { target: 'SEARCH_FOUND', action: searchFoundAction },
+        onError: { target: 'SEARCH_FAILED', action: searchFailedAction },
       },
       exit: exitFn, // runs last
     }
@@ -192,9 +285,9 @@ Asynchronous actions take a little more care. They can succeed or fail, and othe
 
 The action on the `SEARCHING` state specifies a handler and which transitions to run when the handler succeeds or fails. The success action is called with the handler's result as its argument, while the failure handler receives whatever error was thrown.
 
-If an event arrives that results in a state transition while the asynchronous action is running, the state machine will attempt to abort the asynchronous action, and it passes the `abortController` argument to the action handler to facilitiate this. An [`AbortController`'s](https://developer.mozilla.org/en-US/docs/Web/API/AbortController), which can be provided to a network request or otherwise handled to cancel the ongoing operation.
+If an event arrives that results in a state transition while the asynchronous action is running, the state machine will attempt to abort the asynchronous action, and it passes the `abortController` argument to the action handler to facilitiate this. An [AbortController's](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) signal can be provided to a network request or otherwise handled to cancel an ongoing operation.
 
-So lt's implement all this.
+So let's implement all this.
 
 ```js
 var currentAbortController;
@@ -202,15 +295,17 @@ var currentAbortController;
 function runTransition(stateInfo, transition, eventData) {
   let targetState = transition.target;
 
-  // Run the exit action
-  if(stateInfo.exit && targetState) {
+  if(targetState) {
     if(currentAbortController) {
       // We're transitioning to another state, so try to abort the action if
       // it hasn't finished running yet.
       currentAbortController.abort();
     }
 
-    stateInfo.exit();
+    // Run the exit action
+    if(stateInfo.exit) {
+      stateInfo.exit(context, eventData);
+    }
   }
 
   // Run the transition's action, if it has one.
@@ -235,29 +330,85 @@ function runTransition(stateInfo, transition, eventData) {
   if(asyncAction) {
     // Create a new abort controller and save it.
     let abort = currentAbortController = new AbortController();
-    asyncAction.fn(eventData, abort)
+    asyncAction.src(eventData, abort)
       .then((result) => {
         // If the request aborted, ignore it. This means that another event
         // came in and we've already transitioned elsewhere.
         if(abort.signal.aborted) { return; }
 
         // Run the success transition
-        if(asyncAction.success) {
-          runTransition(nextStateInfo, asyncAction.success,
-            { event: 'async-success', data: result });
+        if(asyncAction.onDone) {
+          runTransition(nextStateInfo, asyncAction.onDone,
+            { event: 'invoke.onDone', data: result });
         }
       })
       .catch((e) => {
         if(abort.signal.aborted) { return; }
 
         // Run the failure transition
-        if(asyncAction.failure) {
-          runTransition(nextStateInfo, asyncAction.failure,
-            { event: 'async-failure', data: e });
+        if(asyncAction.onError) {
+          runTransition(nextStateInfo, asyncAction.onError,
+            { event: 'invoke.onError', data: e });
         }
       });
   }
 }
 ```
 
-So with all that, our "Add a Cause" page has all of its logic embedded into the state machine, and robustness returns to the code. Anything that needs to be done can be accomplished by sending events to the state machine, and the logic embedded therein will make sure that the right thing happens. Let's take one last look at the updated code.
+One feature of this implementation is that self-transitions are possible. If a search is taking place, and the user changes the URL and resubmits, the state machine code will cancel the currently-running search, exit the `SEARCHING` state, and reenter it again. This includes running the exit and entry actions, if they exist.
+
+Here's one last look at the full, updated state machine definition.
+
+```js
+{
+  initial: IDLE,
+  on: {
+    'search': { target: SEARCHING }
+  },
+  states: {
+    // We start here
+    [IDLE]: {},
+    // Looking for the campaign the user selected
+    [SEARCHING]: {
+      invoke: {
+        src: (ctx, {data}, {signal}) => client.get(
+            '/api/get-campaign',
+            { searchParams: { campaign: url }, signal }
+          ).json(),
+        onDone: {
+          target: SEARCH_FOUND,
+          action: (ctx, {data}) => (ctx.currentCampaign = data)
+        },
+        onError: { target: SEARCH_ERROR }
+      }
+    },
+    // Couldn't find the campaign
+    [SEARCH_ERROR]: {},
+    // Found the campaign, so we show the campaign details and an "Add" button.
+    [SEARCH_FOUND]: {
+      'submit': SUBMITTING,
+    },
+    // Adding the campaign to the database
+    [SUBMITTING]: {
+      invoke: {
+        src: (ctx, event, {signal}) => client.post(
+            '/api/submit-campaign',
+            { json: currentCampaign, signal }
+          ).json(),
+        onDone: { target: SUBMIT_SUCCEEDED },
+        onError: { target: SUBMIT_ERROR }
+      },
+      on: {
+        // Don't start a search while submitting.
+        'search': {},
+      }
+    },
+    // It worked!
+    [SUBMIT_SUCCEEDED]: {},
+    // It didn't work.
+    [SUBMIT_ERROR]: {}
+  }
+}
+```
+
+So with all that, our "Add a Cause" page has all of its logic embedded into the state machine, and robustness returns to the code. Anything that needs to be done can be accomplished by sending events to the state machine, and the logic embedded therein will make sure that the right thing happens. We even get cancellable network requests for free!
