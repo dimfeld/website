@@ -1,9 +1,9 @@
 ---
 title: Add Actions to Your State Machines
 date: 2020-06-12
-summary: Integrating more logic into your state machines
+summary: Making state machines actually do useful things
 frontPageSummary: making state machines actually do useful things
-cardImage: state-machine-actions-diagram.svg
+cardImage: ftr-add-screen.png
 series: State Machines
 ---
 
@@ -14,6 +14,8 @@ In the [previous article](simple_state_machines), we looked at how to transition
 FundTheRebuild.com is a website designed to highlight GoFundMe campaigns that haven't gone viral and need a bit of extra attention. The "Add a Cause" page allows people to submit their own campaigns.
 
 When opening the page, users see a text box where they can paste the URL of a GoFundMe campaign. Upon submitting the form, the Javascript in the browser will try to download details about the supplied campaign. If it is valid, the user can then click an "Add" button to confirm, at which point that campaign is sent into a queue to be approved and added to the site.
+
+![Fund The Rebuild Add Screen](ftr-add-screen.png)
 
 The initial implementation of the Add page uses a basic state machine with seven states:
 
@@ -391,7 +393,9 @@ Here's one last look at the full, updated state machine definition.
     [SEARCH_ERROR]: {},
     // Found the campaign, so we show the campaign details and an "Add" button.
     [SEARCH_FOUND]: {
-      'submit': SUBMITTING,
+      on: {
+        'submit': SUBMITTING,
+      },
     },
     // Adding the campaign to the database
     [SUBMITTING]: {
