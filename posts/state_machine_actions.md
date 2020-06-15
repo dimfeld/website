@@ -1,6 +1,6 @@
 ---
 title: Add Actions to Your State Machines
-date: 2020-06-12
+date: 2020-06-15
 summary: Making state machines actually do useful things
 frontPageSummary: making state machines actually do useful things
 cardImage: ftr-add-screen.png
