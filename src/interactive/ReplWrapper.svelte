@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
 
-  export let height = '400px';
+  export let height = '800px';
   export let data;
 
   let container;
@@ -12,6 +12,7 @@
       target: container,
       props: {
         workersUrl: 'workers',
+        orientation: 'columns',
       },
     });
   });

@@ -4,12 +4,14 @@ import ReadingSince from './interactive/ReadingSince.svelte';
 import Slider from './interactive/Slider.svelte';
 import Roller from './interactive/Roller.svelte';
 import PostReplSvelteContext from './interactive/PostReplSvelteContext.svelte';
+import PostReplAddingStateMachineActions from './interactive/PostReplAddingStateMachineActions.svelte';
 
 const components = {
   ReadingSince,
   Slider,
   Roller,
   PostReplSvelteContext,
+  PostReplAddingStateMachineActions,
 };
 
 function instantiateComponent(element: Element) {

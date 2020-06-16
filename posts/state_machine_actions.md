@@ -7,7 +7,7 @@ cardImage: ftr-add-screen.png
 series: State Machines
 ---
 
-In the [previous article](simple_state_machines), we looked at how to transition a set of boolean flags into a simple state machine. In this article, we'll take it a step further with a different example, and look at making our states and transitions do actually useful things.
+In the [previous article](simple_state_machines), we looked at how to transition a set of boolean flags into a simple state machine. Here we'll take it a step further with a different example, and look at making our states and transitions do actually useful things.
 
 # The State Machine
 
@@ -29,44 +29,37 @@ The initial implementation of the Add page uses a basic state machine with seven
 {
   initial: IDLE,
   states: {
-    // We start here
-    [IDLE]: {
+    [IDLE]: { // We start here
       'search': SEARCHING
     },
-    // Looking for the campaign the user selected
-    [SEARCHING]: {
+    [SEARCHING]: { // Looking for the campaign the user selected
       'search-succeeded': SEARCH_FOUND,
       'search-failed': SEARCH_ERROR,
     },
-    // Couldn't find the campaign
-    [SEARCH_ERROR]: {
+    [SEARCH_ERROR]: { // Couldn't find the campaign
       'search': SEARCHING,
     },
-    // Found the campaign, so we show the campaign details and an "Add" button.
-    [SEARCH_FOUND]: {
+    [SEARCH_FOUND]: { // Found the campaign!
       'search': SEARCHING,
       'submit': SUBMITTING,
     },
-    // Adding the campaign to the database
-    [SUBMITTING]: {
+    [SUBMITTING]: { // Adding the campaign to the database
       'submit-succeeded': SUBMIT_SUCCEEDED,
       'submit-failed': SUBMIT_ERROR,
     },
-    // It worked!
-    [SUBMIT_SUCCEEDED]: {
+    [SUBMIT_SUCCEEDED]: { // It worked!
       'search': SEARCHING,
     },
-    // It didn't work.
-    [SUBMIT_ERROR]: {
+    [SUBMIT_ERROR]: { // It didn't work.
       'search': SEARCHING,
     }
   }
 }
 ```
 
-The state machine starts in the `IDLE` state, proceeds through the `SEARCHING` states, and then moves to `SUBMITTING` if the user confirms that they want to add this campaign. At most points in the process, clicking the Search button wll go back to the `SEARCHING` states again.
+The state machine starts in the `IDLE` state, proceeds through the `SEARCHING` states, and then moves to `SUBMITTING` if the user confirms that they want to add the campaign. At most points in the process, clicking the Search button wll go back to the `SEARCHING` states again.
 
-While the state machine simplifies the logic of figuring out what to display on the screen, most applications need to do more than just show things on the screen. Currently, these other actions exist alongside the state machine, and interact with it but are not part of it.
+While the state machine simplifies the logic of figuring out what to display on the screen, most applications need to do more than just show things on the screen. Currently these other actions exist alongside the state machine, and interact with it but are not part of it.
 
 ```js
 async function submitCampaign() {
@@ -91,9 +84,9 @@ async function findCampaign(url) {
 }
 ```
 
-This mostly works fine, but it has issues. In the previous article, we established a model where we could send any event to the state machine at any time, and it would use the transition definitions to go to the correct next state (or ignore the event). But here, future additions to the code need to make sure to always use these functions instead of just sending events to the state machine, so that the network requests actually happen.
+This mostly works fine, but it has issues. In the previous article, we established a model where we could send any event to the state machine at any time, and it would use the transition definitions to go to the correct next state (or ignore the event). But here, future additions to the code must use these functions instead of just sending events to the state machine. Otherwise the network requests won't actually happen.
 
-Worse, these functions send the network requests without any regard for if the state machine actually entered the appropriate state. We could add extra logic to fix that, but it duplicates the logic that is already in the state machine -- another source for bugs.
+Worse, the functions send the network requests without any regard for if the state machine actually responded to the event. We could add extra code to fix that, but it duplicates the logic that is already in the state machine -- another source for bugs.
 
 # Adding Actions
 
@@ -106,7 +99,7 @@ Looking at the various places and ways that actions can happen, we end up with f
 - Synchronous actions when exiting a state
 - Asynchronous actions that happen as part of a state
 
-Synchronous actions are any "plain" Javascript code that modifies some of the output variables in the module (e.g. `currentCampaign` in the examples above), while asynchronous actions would be anything involving Promises, callbacks, setTimeout, etc.
+Synchronous actions are any "plain" Javascript code that modifies some of the variables related to the state machine (e.g. `currentCampaign` in the examples above), while asynchronous actions would be anything involving Promises, callbacks, setTimeout, etc.
 
 Here we've limited asynchronous actions to running inside states. It's possible for transitions to trigger asynchronous actions, of course, but that causes some complications, such as leaving the state machine in between states while the transition runs, and having to deal specially with errors. So we'll only officially support asynchronous actions on states themselves.
 
@@ -129,30 +122,24 @@ As an aside, one notable thing about the state definition at the top is that mos
     'search': SEARCHING
   },
   states: {
-    // We start here
-    [IDLE]: {},
-    // Looking for the campaign the user selected
-    [SEARCHING]: {
+    [IDLE]: {}, // We start here
+    [SEARCHING]: { // Looking for the campaign the user selected
       'search-succeeded': SEARCH_FOUND,
       'search-failed': SEARCH_ERROR,
       'search': null,
     },
-    // Couldn't find the campaign
-    [SEARCH_ERROR]: {},
-    // Found the campaign, so we show the campaign details and an "Add" button.
-    [SEARCH_FOUND]: {
+
+    [SEARCH_ERROR]: {}, // Couldn't find the campaign
+    [SEARCH_FOUND]: { // Found the campaign!
       'submit': SUBMITTING,
     },
-    // Adding the campaign to the database
-    [SUBMITTING]: {
+    [SUBMITTING]: { // Adding the campaign to the database
       'submit-succeeded': SUBMIT_SUCCEEDED,
       'submit-failed': SUBMIT_ERROR,
       'search': null,
     },
-    // It worked!
-    [SUBMIT_SUCCEEDED]: {},
-    // It didn't work.
-    [SUBMIT_ERROR]: {}
+    [SUBMIT_SUCCEEDED]: {}, // It worked!
+    [SUBMIT_ERROR]: {} // It didn't work.
   }
 }
 ```
@@ -421,3 +408,5 @@ Here's one last look at the full, updated state machine definition.
 ```
 
 So with all that, our "Add a Cause" page has all of its logic embedded into the state machine, and robustness returns to the code. Anything that needs to be done can be accomplished by sending events to the state machine, and the logic embedded therein will make sure that the right thing happens. We even get cancellable network requests for free!
+
+<div data-component="PostReplAddingStateMachineActions" />
