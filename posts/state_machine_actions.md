@@ -200,12 +200,12 @@ function createStateMachine(machineConfig, initialContext) {
   }
 
   function sendEvent(event, data) {
-    let stateInfo = stateMachine.states[currentState];
+    let stateInfo = machineConfig.states[currentState];
 
     let next = (stateInfo.on || {})[event];
     if(!next) {
       // No transition for this event in the current state. Check the global handlers.
-      next = stateMachine.on[event];
+      next = machineConfig.on[event];
     }
 
     if(!next) {
@@ -309,6 +309,7 @@ function runTransition(stateInfo, transition, eventData) {
 
   if(!targetState) {
     // If the transition has no target, then it's just an action, so return.
+    updateStore();
     return;
   }
 
@@ -316,7 +317,7 @@ function runTransition(stateInfo, transition, eventData) {
   currentState = targetState;
 
   // And then run the next state's entry action, if there is one.
-  let nextStateInfo = states[currentState];
+  let nextStateInfo = machineConfig.states[currentState];
   if(nextStateInfo.entry) nextStateInfo.entry(eventData);
 
   // Run the asynchronous action if there is one.
@@ -346,6 +347,8 @@ function runTransition(stateInfo, transition, eventData) {
         }
       });
   }
+
+  updateStore();
 }
 ```
 
