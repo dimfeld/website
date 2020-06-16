@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
 
   export let height = '800px';
   export let data;
@@ -18,11 +18,16 @@
     });
   });
 
+  async function updateOrientation(w) {
+    // Occasionally the REPL gets a bit screwed up if we set orientation while it's still
+    // intializing, so wait a tick.
+    await tick();
+    repl.$set({ orientation: w > 600 ? 'columns' : 'rows' });
+  }
+
   $: ({ title, ...replData } = data);
   $: repl && repl.set(replData);
-  $: if (repl) {
-    repl.$set({ orientation: windowWidth > 600 ? 'columns' : 'rows' });
-  }
+  $: repl && updateOrientation(windowWidth);
 </script>
 
 <style>
