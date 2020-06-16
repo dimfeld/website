@@ -7,15 +7,15 @@ cardImage: ftr-add-screen.png
 series: State Machines
 ---
 
-In the [previous article](simple_state_machines), we looked at how to transition a set of boolean flags into a simple state machine. Here we'll take it a step further with a different example, and look at making our states and transitions do actually useful things.
+In the [previous article](simple_state_machines), we looked at how to transition a set of boolean flags into a simple state machine. Here we'll take it a step further with a different example, and make our states and transitions do actually useful things.
 
-# The State Machine
+# Actions on the Side
 
-FundTheRebuild.com is a website designed to highlight GoFundMe campaigns that haven't gone viral and need a bit of extra attention. The "Add a Cause" page allows people to submit their own campaigns.
+[FundTheRebuild.com](https://fundtherebuild.com) is a website designed to highlight GoFundMe campaigns that haven't gone viral and need a bit of extra attention. The "Add a Cause" page allows people to submit their own campaigns.
 
 ![Fund The Rebuild Add Screen](ftr-add-screen.png)
 
-When opening the page, users see a text box where they can paste the URL of a GoFundMe campaign. Upon submitting the form, the Javascript in the browser will try to download details about the supplied campaign. If it is valid, the user can then click an "Add" button to confirm, at which point that campaign is sent into a queue to be approved and added to the site.
+When opening the page, users see a text box where they can paste the URL of a GoFundMe campaign. Upon submitting the form, the page tries to find a valid campaign. It displays the details to the user, who can then click an "Add" button to put the campaign in a queue to be approved and added to the site.
 
 The initial implementation of the Add page uses a basic state machine with seven states:
 
@@ -84,15 +84,15 @@ async function findCampaign(url) {
 }
 ```
 
-This mostly works fine, but it has issues. In the previous article, we established a model where we could send any event to the state machine at any time, and it would use the transition definitions to go to the correct next state (or ignore the event). But here, future additions to the code must use these functions instead of just sending events to the state machine. Otherwise the network requests won't actually happen.
+This mostly works fine, but it has issues. In the previous article, we established a model where we could send any event to the state machine at any time, and it would use the transition definitions to go to the correct next state (or ignore the event). But here, future alterations to the code must use these functions instead of just sending events to the state machine. Otherwise the network requests won't actually happen.
 
-Worse, the functions send the network requests without any regard for if the state machine actually responded to the event. We could add extra code to fix that, but it duplicates the logic that is already in the state machine -- another source for bugs.
+Worse, the functions send the network requests without any regard for if the state machine actually responded to the event. We could add extra code to fix that, but it duplicates the logic already in the state machine -- another source for bugs.
 
-# Adding Actions
+# Integrating Actions
 
-The more we can do by only talking to the state machine, the better, but we obviously can't give up the ability to actually do stuff. So we'll integrate actions and their corresponding state transitions into the state machine itself.
+The more we can do by only talking to the state machine, the better, but we obviously can't give up the ability to actually do stuff. So we'll put actions and their corresponding state transitions into the state machine itself.
 
-Looking at the various places and ways that actions can happen, we end up with four types:
+There are various places and ways that actions can happen. We'll add four types:
 
 - Synchronous actions during a specific transition
 - Synchronous actions when entering a state
@@ -105,13 +105,13 @@ Here we've limited asynchronous actions to running inside states. It's possible 
 
 ## A Quick Digression into State Machine Theory
 
-Traditionally, there are two types of state machines that differ primarily in how their outputs change. A Mealy state machine's outputs depend both on the current state and the inputs to the state machine. A Moore state machine's outputs depend only on the the state it's in, and its inputs are used solely to determine which transitions are taken.
+Traditionally, there are two types of state machines that differ primarily in how their outputs change. A Mealy state machine's outputs depend both on the current state and the inputs to the state machine. A Moore state machine's outputs depend only on the the state it's in, and its inputs are used solely to determine the state.
 
-When drawing state diagrams, the actions of a Moore state machine are on the states, and the actions of a Mealy state machine are on the transitions. For the most part, state machine definitions can be translated between the two models by moving around the actions and possibly.
+When drawing state diagrams, the actions of a Moore state machine are on the states, and the actions of a Mealy state machine are on the transitions. For the most part, state machine definitions can be translated between the two models by moving around the actions and possibly adding or removing states.
 
-This distinction really matters most when putting a state machine into hardware, where adding extra configurability comes with a cost. For modern programming languages, a hybrid approach that allows actions either on transitions or on the states themselves works just fine. The entry and exit actions are the same as placing an action on all the transitions going into or out of a state, so this is a lot like a Mealy machine, but it's much more convenient to write.
+This distinction really matters most when putting a state machine into hardware, where adding extra configurability comes with a cost. For modern programming languages, a hybrid approach that allows actions both on transitions and states works just fine. The entry and exit actions are equivalent to placing an action on all the transitions going into or out of a state, so this is a lot like a Mealy machine, but it's more convenient to write and maintain.
 
-## Global Event Handlers
+# Global Event Handlers
 
 As an aside, one notable thing about the state definition at the top is that most of the states have a `'search': SEARCHING` transition. We can alter our state machine model to include global event handlers which will run on any state that doesn't have its own handler. This further reduces duplicated logic, and leaves us with this:
 
@@ -151,7 +151,7 @@ In the `SEARCHING` and `SUBMITTING` states we define empty transitions for `sear
 
 Ok, with those asides out of the way, let's get to the real task. Synchronous actions are pretty straightforward, so we'll add those first.
 
-First, we change our event handler from just the name of the target state to an object, which can specify an action, a target state, or both. The event handlers are also moved under the `on` key to make space for the other actions. I've used the same object keys as the [XState](https://xstate.js.org) library to make it easier to move from our homegrown implementation to XState should you want to in the future.
+First, we change our event handler from just the name of the target state to an object, which can specify an action, a target state, or both. The event handlers are also moved under the `on` key to make space for the other actions. I've used object keys similar to the [XState](https://xstate.js.org) library to make it easier to move from our homegrown implementation to XState should you want to in the future.
 
 Here's a partial example just to demonstrate the syntax.
 
@@ -174,7 +174,8 @@ Here's a partial example just to demonstrate the syntax.
           target: 'SUBMITTING',
           action: (context, {event, data}) => { ... }
         },
-        // But we can also define an empty transition to NOT use the global handler or do anything else.
+        // But we can also define an empty transition to
+        // NOT use the global handler or do anything else.
         'search': {},
     }
   }
@@ -183,7 +184,7 @@ Here's a partial example just to demonstrate the syntax.
 
 So when entering the `IDLE` state, the state machine runs the entry action, and when leaving it, the machine runs the exit action. When the `search` event comes in, the machine runs the associated action and then enters the `SEARCHING` state.
 
-All action functions are passed the name of the event that caused the transition, and the data associated with the event, if any. They also receive a `context` object, which is shared between all the action handlers and can also be accessed by outside code that works with the state machine. In this case, `context` would be an object containing the `currentCampaign` variable used above.
+All action functions are passed the name of the event that caused the transition, and any data associated with the event. They also receive a `context` object, which is shared between all the action handlers and can also be accessed by outside code that works with the state machine. In this case, `context` would be an object containing the `currentCampaign` variable used above.
 
 The `stepState` function is updated to handle actions as well, and we'll start to make the function reusable too:
 
@@ -195,6 +196,7 @@ function createStateMachine(machineConfig, initialContext) {
   let context = initialContext;
   let store = writable(null);
 
+  // Update the store so that all subscribers will be notified of the change.
   function updateStore() {
     store.set({ state: currentState, context });
   }
@@ -223,9 +225,7 @@ function createStateMachine(machineConfig, initialContext) {
     if(stateInfo.exit && targetState) stateInfo.exit(eventData);
 
     // Run the transition action if there is one.
-    if(transition.action) {
-      transition.action(data);
-    }
+    if(transition.action) transition.action(data);
 
     if(!targetState) {
       // If the transition has no target, then it's just an action, so return.
@@ -237,12 +237,14 @@ function createStateMachine(machineConfig, initialContext) {
     currentState = targetState;
 
     // And then run the next state's entry action, if there is one.
-    let nextStateInfo = states[currentState];
+    let nextStateInfo = machineConfig.states[currentState];
     if(nextStateInfo.entry) nextStateInfo.entry();
     updateStore();
   }
 
   return {
+    // Only expose the subscribe method so that outsiders can't modify
+    // the store directly.
     store: {
       subscribe: store.subscribe,
     },
@@ -251,7 +253,7 @@ function createStateMachine(machineConfig, initialContext) {
 }
 ```
 
-Note that both the action and the target on a transition are optional. If we want to just alter a variable and stay in the current state, that's fine.
+Note that both the action and the target on a transition are optional. If we want to just alter a variable and stay in the current state, or even do nothing at all, that's fine.
 
 
 # Adding Asynchronous Actions
@@ -277,11 +279,11 @@ Asynchronous actions take a little more care. They can succeed or fail, and othe
 }
 ```
 
-The action on the `SEARCHING` state specifies a handler and which transitions to run when the handler succeeds or fails. The success action is called with the handler's result as its argument, while the failure handler receives whatever error was thrown.
+The action on the `SEARCHING` state specifies a handler and which transitions to run when the handler succeeds or fails. The `onDone` transition's action is called with the handler's result as its argument, while the `onError` handler receives whatever error was thrown.
 
 If an event arrives that results in a state transition while the asynchronous action is running, the state machine will attempt to abort the asynchronous action, and it passes the `abortController` argument to the action handler to facilitiate this. An [AbortController's](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) signal can be provided to a network request or otherwise handled to cancel an ongoing operation.
 
-So let's implement all this.
+So let's implement all this. The only function that needs to change is `runTransition`.
 
 ```js
 var currentAbortController;
@@ -290,22 +292,17 @@ function runTransition(stateInfo, transition, eventData) {
   let targetState = transition.target;
 
   if(targetState) {
-    if(currentAbortController) {
-      // We're transitioning to another state, so try to abort the action if
-      // it hasn't finished running yet.
-      currentAbortController.abort();
-    }
+    // We're transitioning to another state, so try to abort the action if
+    // it hasn't finished running yet.
+    if(currentAbortController) currentAbortController.abort();
+
 
     // Run the exit action
-    if(stateInfo.exit) {
-      stateInfo.exit(context, eventData);
-    }
+    if(stateInfo.exit) stateInfo.exit(context, eventData);
   }
 
   // Run the transition's action, if it has one.
-  if(transition.action) {
-    transition.action(eventData);
-  }
+  if(transition.action) transition.action(eventData);
 
   if(!targetState) {
     // If the transition has no target, then it's just an action, so return.
@@ -352,7 +349,7 @@ function runTransition(stateInfo, transition, eventData) {
 }
 ```
 
-One feature of this implementation is that self-transitions are possible. If a search is taking place, and the user changes the URL and resubmits, the state machine code will cancel the currently-running search, exit the `SEARCHING` state, and reenter it again. This includes running the exit and entry actions, if they exist.
+One feature of this implementation is that self-transitions are possible. If the user changes the URL and resubmits while a search is running, the state machine code will cancel the currently-running search, exit the `SEARCHING` state, and reenter it again. This includes running the exit and entry actions, if they exist.
 
 Here's one last look at the full, updated state machine definition.
 
