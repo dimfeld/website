@@ -3315,6 +3315,31 @@ jsonfile@^4.0.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+just-capitalize@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/just-capitalize/-/just-capitalize-1.0.0.tgz#f30dc80b7fe27625377ff34c08d06286ea30d085"
+  integrity sha512-b3byxrtsLyeOJCb/BJXxvnwnPyj7tTTfBLb3KmFekAEYleZ2yp/maEDWU/NCkgZ43rm4r8jOqttb5AOkKZEkYA==
+
+just-clone@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/just-clone/-/just-clone-3.1.0.tgz#10efc422e9b041355c43b8076d7b768b7a09fbbd"
+  integrity sha512-sROn15yHaeNYSTG49HmfbQLtsZvMBb2COvVofNXbeUXx6GkERkdjG3dfejD0fe78gdHJLyS+fOz897H73S8LqA==
+
+just-map-values@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/just-map-values/-/just-map-values-1.1.0.tgz#a4798cfaf7a13f455eefd495ec15a57cff7f56c3"
+  integrity sha512-Bzx7DV2Mp9K5Hrvmi3/djXAlVF13EDVBXIh4qnDW4au7zV4s/+46MmeLex/5BAV8FBbbxhuzkBEvEgwhZiR04A==
+
+just-safe-get@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/just-safe-get/-/just-safe-get-2.0.0.tgz#a028262a8f1896fac4de90227b2d192dfdc3f907"
+  integrity sha512-OBUeNXA7efFIGh0hSLW4nxrOtFWfmjoc3T8B5oixm3b+D7SZN10VKwORUEk4oDeBaR/sqkDMxXb0gE0DRYreEA==
+
+just-unique@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/just-unique/-/just-unique-3.2.0.tgz#4157dc66a8e9056f3eb90272469ec06126b4b780"
+  integrity sha512-BWZgvsUVNCP5nMyqq0RQfebwfM+gez+hY+ruDVQZLOMMOmQioMs4ly2AkEylf3cW9Na/lH06dNfQr3GTUj0Dtg==
+
 keyv@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/keyv/-/keyv-4.0.0.tgz#2d1dab694926b2d427e4c74804a10850be44c12f"

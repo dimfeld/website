@@ -1,5 +1,6 @@
 <script>
   import { onMount, tick } from 'svelte';
+  import clone from 'just-clone';
 
   export let height = '800px';
   export let data;
@@ -26,8 +27,12 @@
   }
 
   $: ({ title, ...replData } = data);
-  $: repl && repl.set(replData);
+  $: repl && repl.set(clone(replData));
   $: repl && updateOrientation(windowWidth);
+
+  function reset() {
+    repl.set(clone(replData));
+  }
 </script>
 
 <style>
@@ -45,11 +50,25 @@
 <div class="w-expanded-95">
   <div
     class="flex flex-col font-sans border border-gray-100 shadow-md rounded-lg">
-    {#if title}
-      <div class="px-4 py-2 text-teal-800 border-b border-gray-200">
-        {title}
-      </div>
-    {/if}
+    <div
+      class="flex px-4 py-2 text-teal-800 border-b border-gray-200 items-start
+      sm:items-stretch">
+      {#if title}
+        <span>{title}</span>
+      {/if}
+      <span class="ml-auto inline-flex rounded-md shadow-sm">
+        <button
+          type="button"
+          class="inline-flex items-center px-2.5 py-1.5 border border-gray-300
+          text-xs leading-4 font-medium rounded text-gray-700 bg-white
+          hover:text-gray-500 focus:outline-none focus:border-blue-300
+          focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50
+          transition ease-in-out duration-150"
+          on:click={reset}>
+          Reset
+        </button>
+      </span>
+    </div>
     <div class="svelte-repl" style="height:{height};" bind:this={container} />
   </div>
 </div>
