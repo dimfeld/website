@@ -1,8 +1,6 @@
 <script>
-  import flatMap from 'lodash/flatMap';
-  import get from 'lodash/get';
+  import get from 'just-safe-get';
   import orderBy from 'lodash/orderBy';
-  import uniq from 'lodash/uniq';
   import { getContext } from 'svelte';
   import PostList from '../_PostList.svelte';
   import { filterText } from './_filters.ts';

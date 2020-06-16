@@ -5,7 +5,7 @@ import { Dictionary } from 'lodash';
 import frontMatter from 'front-matter';
 import globMod from 'glob';
 import { promisify } from 'util';
-import uniq from 'lodash/uniq';
+import uniq from 'just-unique';
 
 export interface DevToArticle {
   body_markdown: string;

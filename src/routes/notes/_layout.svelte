@@ -1,7 +1,7 @@
 <script context="module">
   import orderBy from 'lodash/orderBy';
-  import map from 'lodash/map';
-  import capitalize from 'lodash/capitalize';
+  import map from 'just-map-values';
+  import capitalize from 'just-capitalize';
 
   export async function preload() {
     let [notes, tags] = await Promise.all([

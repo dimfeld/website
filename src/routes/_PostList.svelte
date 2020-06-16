@@ -1,5 +1,5 @@
 <script>
-  import capitalize from 'lodash/capitalize';
+  import capitalize from 'just-capitalize';
   import { flip } from 'svelte/animate';
   export let posts;
   export let base;

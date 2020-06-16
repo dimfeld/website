@@ -1,5 +1,5 @@
 <script>
-  import capitalize from 'lodash/capitalize';
+  import capitalize from 'just-capitalize';
   import { fade } from 'svelte/transition';
   export let segment;
   const links = [

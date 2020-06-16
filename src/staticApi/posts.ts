@@ -92,7 +92,10 @@ export function allPosts(req, res) {
 export function latestPost(req, res) {
   let { content: postContent, ...post } = postCache.postList[0];
   let { content: noteContent, ...note } = postCache.noteList[0];
-  let { content: _, ...lastCreatedNote } = maxBy(postCache.noteList, 'date');
+  let { content: _, ...lastCreatedNote } = maxBy(
+    postCache.noteList,
+    (p) => p.date
+  );
 
   send(res, 200, {
     post,
