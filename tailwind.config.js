@@ -10,6 +10,10 @@ module.exports = {
       },
     },
   },
+  corePlugins: {
+    // Interferes with Svelte REPL
+    container: false,
+  },
   variants: {},
   plugins: [require('@tailwindcss/ui')],
 };

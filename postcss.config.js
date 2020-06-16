@@ -36,6 +36,7 @@ module.exports = {
           /^bg-indigo-/,
           /^CodeMirror-/,
           /^responsive-svg$/,
+          /^w-expanded/,
         ],
       }),
     production && require('cssnano'),

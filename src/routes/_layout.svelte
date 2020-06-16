@@ -185,6 +185,16 @@
       @apply w-1/2;
     }
   }
+
+  /* From https://css-tricks.com/full-width-containers-limited-width-parents/ */
+  .w-expanded-95 {
+    width: 95vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -47.5vw;
+    margin-right: -47.5vw;
+  }
 </style>
 
 <svelte:head>

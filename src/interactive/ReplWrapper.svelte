@@ -6,19 +6,23 @@
 
   let container;
   let repl;
+  let windowWidth;
   onMount(async () => {
     let Repl = (await import('@sveltejs/svelte-repl')).default;
     repl = new Repl({
       target: container,
       props: {
         workersUrl: 'workers',
-        orientation: 'columns',
+        orientation: windowWidth > 600 ? 'columns' : 'rows',
       },
     });
   });
 
   $: ({ title, ...replData } = data);
   $: repl && repl.set(replData);
+  $: if (repl) {
+    repl.$set({ orientation: windowWidth > 600 ? 'columns' : 'rows' });
+  }
 </script>
 
 <style>
@@ -32,11 +36,15 @@
   }
 </style>
 
-<div
-  class="flex flex-col w-full font-sans border border-gray-100 shadow-md
-  rounded-lg">
-  {#if title}
-    <div class="px-4 py-2 text-teal-800 border-b border-gray-200">{title}</div>
-  {/if}
-  <div class="svelte-repl" style="height:{height};" bind:this={container} />
+<svelte:window bind:innerWidth={windowWidth} />
+<div class="w-expanded-95">
+  <div
+    class="flex flex-col font-sans border border-gray-100 shadow-md rounded-lg">
+    {#if title}
+      <div class="px-4 py-2 text-teal-800 border-b border-gray-200">
+        {title}
+      </div>
+    {/if}
+    <div class="svelte-repl" style="height:{height};" bind:this={container} />
+  </div>
 </div>
