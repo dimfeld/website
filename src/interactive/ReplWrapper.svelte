@@ -37,12 +37,13 @@
 
 <style>
   .svelte-repl {
+    @apply bg-white leading-snug;
     --font: 'Inter', 'Open Sans', 'Helvetica', 'Verdana', sans-serif;
     --prime: rgb(3, 102, 114);
-  }
-
-  .svelte-repl :global(.CodeMirror) :global(pre) {
-    @apply font-mono;
+    --second: #676778;
+    --back-light: #f6fafd;
+    --font-mono: 'Inconsolata', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
+      'Courier New', monospace;
   }
 </style>
 
