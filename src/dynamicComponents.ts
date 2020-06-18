@@ -1,20 +1,16 @@
 import { SvelteComponent } from 'svelte';
 
-import ReadingSince from './interactive/ReadingSince.svelte';
-import Slider from './interactive/Slider.svelte';
-import Roller from './interactive/Roller.svelte';
-import PostReplSvelteContext from './interactive/PostReplSvelteContext.svelte';
-import PostReplAddingStateMachineActions from './interactive/PostReplAddingStateMachineActions.svelte';
-
 const components = {
-  ReadingSince,
-  Slider,
-  Roller,
-  PostReplSvelteContext,
-  PostReplAddingStateMachineActions,
+  ReadingSince: () => import('./interactive/ReadingSince.svelte'),
+  Slider: () => import('./interactive/Slider.svelte'),
+  Roller: () => import('./interactive/Roller.svelte'),
+  PostReplSvelteContext: () =>
+    import('./interactive/PostReplSvelteContext.svelte'),
+  PostReplAddingStateMachineActions: () =>
+    import('./interactive/PostReplAddingStateMachineActions.svelte'),
 };
 
-function instantiateComponent(element: Element) {
+async function instantiateComponent(element: Element) {
   let attrs = element.getAttributeNames();
 
   let component: typeof SvelteComponent | null = null;
@@ -26,7 +22,10 @@ function instantiateComponent(element: Element) {
     }
 
     if (attr === 'data-component') {
-      component = components[value];
+      let componentImporter = components[value];
+      if (componentImporter) {
+        component = (await componentImporter()).default;
+      }
     } else if (attr.startsWith('data-prop-')) {
       let propName = attr.slice('data-prop-'.length);
       props[propName] = value;
@@ -45,15 +44,11 @@ function instantiateComponent(element: Element) {
   return instance;
 }
 
-export default function instantiateComponents() {
-  let components: SvelteComponent[] = [];
-  let divs = document.querySelectorAll('[data-component]');
-  for (let div of divs) {
-    let instance = instantiateComponent(div);
-    if (instance) {
-      components.push(instance);
-    }
-  }
+export default async function instantiateComponents() {
+  let divs = Array.from(document.querySelectorAll('[data-component]'));
+  let components = (await Promise.all(divs.map(instantiateComponent))).filter(
+    Boolean
+  ) as SvelteComponent[];
 
   return () => {
     for (let component of components) {

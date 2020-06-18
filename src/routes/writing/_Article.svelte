@@ -6,11 +6,20 @@
   export let devto = undefined;
 
   import * as labels from '../../postMeta.ts';
-  import { getContext, onMount } from 'svelte';
+  import { getContext, onMount, onDestroy } from 'svelte';
   import instantiateComponents from '../../dynamicComponents';
   getContext('title').set(title);
 
-  onMount(() => instantiateComponents());
+  let destroyComponents;
+  onMount(async () => {
+    destroyComponents = await instantiateComponents();
+  });
+
+  onDestroy(() => {
+    if (destroyComponents) {
+      destroyComponents();
+    }
+  });
 </script>
 
 <article class="font-serif my-4 px-4 sm:px-0">

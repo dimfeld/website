@@ -52,7 +52,7 @@
     @apply border-l-4 border-teal-600 -ml-2 pl-3 pr-4 my-4 italic;
   }
 
-  @media (min-width: 640px) {
+  @screen sm {
     article ul > li {
       @apply list-outside;
     }
@@ -105,7 +105,7 @@
     @apply px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900;
   }
 
-  @media (min-width: 640px) {
+  @screen sm {
     article table {
       @apply rounded-lg;
     }
@@ -174,13 +174,13 @@
     @apply my-4 w-full mx-auto;
   }
 
-  @media (min-width: 640px) {
+  @screen sm {
     div.responsive-svg {
       @apply w-3/4;
     }
   }
 
-  @media (min-width: 768px) {
+  @screen md {
     div.responsive-svg {
       @apply w-1/2;
     }
