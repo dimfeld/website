@@ -89,19 +89,6 @@ const watchPlugin = {
   },
 };
 
-const replWorkerConfigs = ['compiler', 'bundler'].reduce((acc, x) => {
-  acc[`repl_worker_${x}`] = {
-    input: `node_modules/@sveltejs/svelte-repl/src/workers/${x}/index.js`,
-    output: {
-      file: `static/workers/${x}.js`,
-      format: 'iife',
-    },
-    plugins: [resolve(), json(), !dev && terser()],
-  };
-
-  return acc;
-}, {});
-
 export default {
   client: {
     input: config.client.input(),
@@ -198,6 +185,4 @@ export default {
 
     onwarn,
   },
-
-  ...replWorkerConfigs,
 };
