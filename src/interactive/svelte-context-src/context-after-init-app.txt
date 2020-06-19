@@ -1,0 +1,22 @@
+<script>
+	import { setContext } from 'svelte';
+	import Child from './Child.svelte';
+
+	let x = 6;
+	setContext('data', x);
+
+	function addX(value) {
+		x += 1;
+		setContext('data', x)
+	}
+</script>
+
+<div>
+	<button on:click={addX}>
+		 Increment X (causes an error)
+	</button>
+</div>
+
+<Child />
+
+<p>See the console for an error when you click the button</p>

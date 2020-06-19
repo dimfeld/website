@@ -5,6 +5,7 @@ import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
+import { string } from 'rollup-plugin-string';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 import * as glob from 'glob';
@@ -88,6 +89,19 @@ const watchPlugin = {
   },
 };
 
+const replWorkerConfigs = ['compiler', 'bundler'].reduce((acc, x) => {
+  acc[`repl_worker_${x}`] = {
+    input: `node_modules/@sveltejs/svelte-repl/src/workers/${x}/index.js`,
+    output: {
+      file: `static/workers/${x}.js`,
+      format: 'iife',
+    },
+    plugins: [resolve(), json(), !dev && terser()],
+  };
+
+  return acc;
+}, {});
+
 export default {
   client: {
     input: config.client.input(),
@@ -105,6 +119,10 @@ export default {
         preprocess: svelteConfig.preprocess,
       }),
       json(),
+      string({
+        // Required to be specified
+        include: '**/*.txt',
+      }),
       // html({ include: '**/*.html' }),
 
       resolve({
@@ -141,6 +159,10 @@ export default {
         preprocess: svelteConfig.preprocess,
       }),
       json(),
+      string({
+        // Required to be specified
+        include: '**/*.txt',
+      }),
       // html({ include: '**/*.html' }),
 
       resolve({
@@ -176,4 +198,6 @@ export default {
 
     onwarn,
   },
+
+  ...replWorkerConfigs,
 };

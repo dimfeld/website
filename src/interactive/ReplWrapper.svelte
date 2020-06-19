@@ -1,9 +1,48 @@
-<script>
-  import { onMount, tick } from 'svelte';
+<script context="module">
   import clone from 'just-clone';
+
+  let currentSet;
+  let queuedSets = [];
+
+  async function setRepl(repl, data, title) {
+    if (currentSet) {
+      console.log('queueing repl', title);
+      queuedSets.push({ repl, data, title });
+      return;
+    }
+
+    console.log('Setting repl', title);
+
+    currentSet = repl.set(data);
+    try {
+      await currentSet;
+      console.log(title, 'done');
+    } catch (e) {
+      console.error(e);
+    }
+
+    if (queuedSets.length) {
+      setTimeout(() => {
+        currentSet = null;
+        let next = queuedSets.shift();
+        setRepl(next.repl, next.data, next.title);
+      });
+    } else {
+      currentSet = null;
+    }
+  }
+
+  function clearSets(repl) {
+    queuedSets = queuedSets.filter((item) => item.repl === repl);
+  }
+</script>
+
+<script>
+  import { onMount, onDestroy, tick } from 'svelte';
 
   export let height = '800px';
   export let data;
+  export let expandedWidth = true;
 
   let container;
   let repl;
@@ -19,6 +58,12 @@
     });
   });
 
+  onDestroy(() => {
+    if (repl) {
+      clearSets(repl);
+    }
+  });
+
   async function updateOrientation(w) {
     // Occasionally the REPL gets a bit screwed up if we set orientation while it's still
     // intializing, so wait a tick.
@@ -27,11 +72,11 @@
   }
 
   $: ({ title, ...replData } = data);
-  $: repl && repl.set(clone(replData));
+  $: repl && setRepl(repl, clone(replData), title);
   $: repl && updateOrientation(windowWidth);
 
   function reset() {
-    repl.set(clone(replData));
+    repl.update(clone(replData));
   }
 </script>
 
@@ -48,7 +93,7 @@
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
-<div class="w-expanded-95">
+<div class:w-expanded-95={expandedWidth}>
   <div
     class="flex flex-col font-sans border border-gray-100 shadow-md rounded-lg">
     <div

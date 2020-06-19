@@ -1,0 +1,7 @@
+<script>
+	import contextKey from './context';
+	import { getContext } from 'svelte';
+	const x = getContext(contextKey);
+</script>
+
+Value from context: {x}

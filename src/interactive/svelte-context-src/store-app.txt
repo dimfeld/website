@@ -1,0 +1,24 @@
+<script>
+	import { setContext } from 'svelte';
+	import { writable } from 'svelte/store';
+	import Child from './Child.svelte';
+
+	let x = writable(0);
+	setContext('data', x);
+</script>
+
+<div style="display:flex; flex-direction:row">
+
+	<div style="margin-right:2rem">
+		<h2>Parent</h2>
+		<button on:click={() => $x = $x + 1}>
+	 		Increment X
+		</button>
+
+		<p>X value: {$x}</p>
+	</div>
+
+	<div style="margin-right:2rem"><Child /></div>
+	<div><Child /></div>
+
+</div>

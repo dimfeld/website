@@ -1,0 +1,10 @@
+<script>
+	import { getContext } from 'svelte';
+	let x = getContext('data');
+	setTimeout(() => {
+		// Uncomment this to get an error
+		// x = getContext('data') + 1;
+	});
+</script>
+
+Value from context: {x}

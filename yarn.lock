@@ -925,10 +925,9 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-2.1.0.tgz#6ad4ca610f696098e92954ab431ff83bea0ce13f"
   integrity sha512-lXKXfypKo644k4Da4yXkPCrwcvn6SlUW2X2zFbuflKHNjf0w9htru01bo26uMhleMXsDmnZ12eJLdrAZa9MANg==
 
-"@sveltejs/svelte-repl@^0.1.19":
+"@sveltejs/svelte-repl@github:dimfeld/svelte-repl":
   version "0.1.19"
-  resolved "https://registry.yarnpkg.com/@sveltejs/svelte-repl/-/svelte-repl-0.1.19.tgz#c724a708c55b75574313f85a395de611f1a10cd4"
-  integrity sha512-35R94X6uYgy6PHLQnQCsKcZ4zb6rGGQXjBYqjuCkoCykIlSLx8/avq6BGqudmE5pzVWDP3kk4063cHgccy1xYg==
+  resolved "https://codeload.github.com/dimfeld/svelte-repl/tar.gz/0228b3c2d8d0367880ed954d5ab79e972ce96b92"
   dependencies:
     codemirror "^5.49.2"
     estree-walker "^0.9.0"
@@ -4964,6 +4963,13 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
+rollup-plugin-string@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-string/-/rollup-plugin-string-3.0.0.tgz#fed2d6301fae1e59eb610957df757ef13fada3f0"
+  integrity sha512-vqyzgn9QefAgeKi+Y4A7jETeIAU1zQmS6VotH6bzm/zmUQEnYkpIGRaOBPY41oiWYV4JyBoGAaBjYMYuv+6wVw==
+  dependencies:
+    rollup-pluginutils "^2.4.1"
+
 rollup-plugin-svelte@^5.2.2:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/rollup-plugin-svelte/-/rollup-plugin-svelte-5.2.2.tgz#709244243c79ae47394a6943a3d899516d4a610d"
@@ -4983,7 +4989,7 @@ rollup-plugin-terser@^6.1.0:
     serialize-javascript "^3.0.0"
     terser "^4.7.0"
 
-rollup-pluginutils@^2.8.2:
+rollup-pluginutils@^2.4.1, rollup-pluginutils@^2.8.2:
   version "2.8.2"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.8.2.tgz#72f2af0748b592364dbd3389e600e5a9444a351e"
   integrity sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==

@@ -1,0 +1,8 @@
+<script>
+	import contextKey from './context';
+	import { setContext } from 'svelte';
+	import Child from './Child.svelte';
+	setContext(contextKey, 5);
+</script>
+
+<Child />
