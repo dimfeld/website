@@ -1,189 +1,197 @@
+<script>
+  import TailwindCss from './_TailwindCss.svelte';
+</script>
+
 <style lang="postcss" global>
   @import 'highlight.js/styles/vs.css';
 
-  * {
-    position: relative;
-  }
+  html {
+    * {
+      position: relative;
+    }
 
-  body {
-    font-family: 'Inter', 'Open Sans', 'Helvetica', 'Verdana', sans-serif;
-    font-size: 16px;
-  }
+    body {
+      font-family: 'Inter', 'Open Sans', 'Helvetica', 'Verdana', sans-serif;
+      font-size: 16px;
+    }
 
-  article {
-    max-width: 95ch;
-    @apply leading-relaxed ml-auto mr-auto;
-  }
+    article {
+      max-width: 95ch;
+      @apply leading-relaxed ml-auto mr-auto;
+    }
 
-  article ul {
-    @apply my-4;
-  }
+    article ul {
+      @apply my-4;
+    }
 
-  article ol {
-    @apply my-4;
-  }
-
-  article ol > li {
-    @apply list-inside list-decimal;
-  }
-
-  article ul > li {
-    @apply list-inside list-disc;
-  }
-
-  article p > img:only-child {
-    @apply mx-auto;
-  }
-
-  blockquote {
-    @apply border-l-4 border-teal-600 -ml-2 pl-3 pr-4 my-4 italic;
-  }
-
-  @screen sm {
-    article ul > li {
-      @apply list-outside;
+    article ol {
+      @apply my-4;
     }
 
     article ol > li {
-      @apply list-outside;
+      @apply list-inside list-decimal;
+    }
+
+    article ul > li {
+      @apply list-inside list-disc;
+    }
+
+    article p > img:only-child {
+      @apply mx-auto;
     }
 
     blockquote {
-      @apply -ml-5 pl-7 pr-0;
+      @apply border-l-4 border-teal-600 -ml-2 pl-3 pr-4 my-4 italic;
     }
-  }
 
-  code,
-  pre {
-    @apply font-mono leading-snug;
-    box-decoration-break: clone;
-  }
+    @screen sm {
+      article ul > li {
+        @apply list-outside;
+      }
 
-  code {
-    @apply bg-gray-200 text-teal-900 px-1 text-base;
-  }
+      article ol > li {
+        @apply list-outside;
+      }
 
-  a code {
-    @apply underline;
-  }
+      blockquote {
+        @apply -ml-5 pl-7 pr-0;
+      }
+    }
 
-  pre > code {
-    @apply block border-cool-gray-300 bg-cool-gray-200 text-black px-4 py-2 my-4 whitespace-pre-wrap overflow-x-auto shadow-lg;
-  }
+    code,
+    pre {
+      @apply font-mono leading-snug;
+      box-decoration-break: clone;
+    }
 
-  article h1 + p,
-  article h2 + p,
-  article h3 + p,
-  article h4 + p {
-    @apply mt-2 mb-4;
-  }
+    code {
+      @apply bg-gray-200 text-teal-900 px-1 text-base;
+    }
 
-  article * + p,
-  article > * + div,
-  hr {
-    @apply my-4;
-  }
+    a code {
+      @apply underline;
+    }
 
-  article table {
-    @apply align-middle inline-block shadow overflow-hidden border-b border-gray-200 font-sans;
-  }
+    pre > code {
+      @apply block border-cool-gray-300 bg-cool-gray-200 text-black px-4 py-2 my-4 whitespace-pre-wrap overflow-x-auto shadow-lg;
+    }
 
-  article table th {
-    @apply px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider;
-  }
+    article h1 + p,
+    article h2 + p,
+    article h3 + p,
+    article h4 + p {
+      @apply mt-2 mb-4;
+    }
 
-  article table td {
-    @apply px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900;
-  }
+    article * + p,
+    article > * + div,
+    hr {
+      @apply my-4;
+    }
 
-  @screen sm {
     article table {
-      @apply rounded-lg;
+      @apply align-middle inline-block shadow overflow-hidden border-b border-gray-200 font-sans;
     }
-  }
 
-  hr.footnotes-sep {
-    @apply mt-8;
-  }
+    article table th {
+      @apply px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider;
+    }
 
-  a {
-    @apply text-teal-700;
-  }
+    article table td {
+      @apply px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900;
+    }
 
-  a:hover {
-    text-decoration: underline;
-  }
+    @screen sm {
+      article table {
+        @apply rounded-lg;
+      }
+    }
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply font-medium font-sans text-teal-900;
-  }
+    hr.footnotes-sep {
+      @apply mt-8;
+    }
 
-  h1 {
-    @apply text-2xl;
-  }
+    a {
+      @apply text-teal-700;
+    }
 
-  h2 {
-    @apply text-xl;
-  }
+    a:hover {
+      text-decoration: underline;
+    }
 
-  h3 {
-    @apply text-lg;
-  }
+    h1,
+    h2,
+    h3,
+    h4 {
+      @apply font-medium font-sans text-teal-900;
+    }
 
-  h4 {
-    @apply text-base;
-  }
+    h1 {
+      @apply text-2xl;
+    }
 
-  h1:not(:first-child),
-  h2:not(:first-child),
-  h3:not(:first-child),
-  h4:not(:first-child) {
-    @apply mt-4 mb-2;
-  }
+    h2 {
+      @apply text-xl;
+    }
 
-  svg .primary {
-    fill: #b2f5ea;
-  }
+    h3 {
+      @apply text-lg;
+    }
 
-  svg .secondary {
-    fill: #2c7a7b;
-    color: #2c7a7b;
-  }
+    h4 {
+      @apply text-base;
+    }
 
-  .hljs-addition {
-    @apply text-green-600;
-  }
+    h1:not(:first-child),
+    h2:not(:first-child),
+    h3:not(:first-child),
+    h4:not(:first-child) {
+      @apply mt-4 mb-2;
+    }
 
-  .hljs-deletion {
-    @apply text-red-600;
-  }
+    svg .primary {
+      fill: #b2f5ea;
+    }
 
-  div.responsive-svg {
-    @apply my-4 w-full mx-auto;
-  }
+    svg .secondary {
+      fill: #2c7a7b;
+      color: #2c7a7b;
+    }
 
-  @screen sm {
+    .hljs-addition {
+      @apply text-green-600;
+    }
+
+    .hljs-deletion {
+      @apply text-red-600;
+    }
+
     div.responsive-svg {
-      @apply w-3/4;
+      @apply my-4 w-full mx-auto;
     }
-  }
 
-  @screen md {
-    div.responsive-svg {
-      @apply w-1/2;
+    @screen sm {
+      div.responsive-svg {
+        @apply w-3/4;
+      }
     }
-  }
 
-  /* From https://css-tricks.com/full-width-containers-limited-width-parents/ */
-  .w-expanded-95 {
-    width: 95vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -47.5vw;
-    margin-right: -47.5vw;
+    @screen md {
+      div.responsive-svg {
+        @apply w-1/2;
+      }
+    }
+
+    /* From https://css-tricks.com/full-width-containers-limited-width-parents/ */
+    .w-expanded-95 {
+      width: 95vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -47.5vw;
+      margin-right: -47.5vw;
+    }
   }
 </style>
+
+<TailwindCss />
