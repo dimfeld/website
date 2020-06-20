@@ -4,6 +4,8 @@
   let currentSet;
   let queuedSets = [];
 
+  // Ensure that only one bundle happens at a time since they interfere with
+  // each other.
   async function setRepl(repl, data, title) {
     if (currentSet) {
       console.log('queueing repl', title);

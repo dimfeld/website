@@ -11,6 +11,10 @@
   import preventingKeyInterferenceChild from './svelte-context-src/preventing-key-interference-child.txt';
   import preventingKeyInterferenceContext from './svelte-context-src/preventing-key-interference-context.txt';
 
+  import storeSeparateFileApp from './svelte-context-src/store-separate-file-app.txt';
+  import storeSeparateFileChild from './svelte-context-src/store-separate-file-child.txt';
+  import storeSeparateFileStore from './svelte-context-src/store-separate-file-store.txt';
+
   export let preset;
 
   const presets = {
@@ -61,6 +65,26 @@
           type: 'svelte',
           name: 'Child',
           source: storeChild,
+        },
+      ],
+    },
+    store_separate_file: {
+      title: 'Global Store in a Separate File',
+      components: [
+        {
+          type: 'svelte',
+          name: 'App',
+          source: storeSeparateFileApp,
+        },
+        {
+          type: 'svelte',
+          name: 'Child',
+          source: storeSeparateFileChild,
+        },
+        {
+          type: 'js',
+          name: 'store',
+          source: storeSeparateFileStore,
         },
       ],
     },

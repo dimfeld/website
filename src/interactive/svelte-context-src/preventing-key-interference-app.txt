@@ -1,4 +1,5 @@
 <script>
+	// Import the key from context.js.
 	import contextKey from './context';
 	import { setContext } from 'svelte';
 	import Child from './Child.svelte';

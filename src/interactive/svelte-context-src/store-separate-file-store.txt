@@ -1,0 +1,8 @@
+import { writable } from 'svelte/store';
+
+const store = writable(0);
+
+export default {
+	subscribe: store.subscribe,
+	increment: () => store.update((x) => x + 1),
+}

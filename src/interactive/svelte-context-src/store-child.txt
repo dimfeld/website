@@ -1,14 +1,12 @@
 <script>
-	import { getContext } from 'svelte';
-	const x = getContext('data');
+  import { getContext } from 'svelte';
+  const x = getContext('data');
 </script>
 
 <div>
-    <h2>Child</h2>
-
-    <button on:click={() => $x = $x + 1}>
-	 Increment X
-    </button>
-
-    <p>X value: {$x}</p>
+  <h2>Child</h2>
+  <button on:click="{x.increment}">
+    Increment X
+  </button>
+  <p>X value: {$x}</p>
 </div>

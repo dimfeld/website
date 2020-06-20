@@ -1,0 +1,13 @@
+<script>
+	import x from './store';
+</script>
+
+<div>
+  <h2>Child</h2>
+
+	<button on:click={x.increment}>
+	 Increment X
+  </button>
+
+	<p>X value: {$x}</p>
+</div>
