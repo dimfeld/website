@@ -50,7 +50,7 @@
 
   <hr />
   <p>
-    Thanks for reading! If you have any comments, please
+    Thanks for reading! If you have any questions or comments, please
     {#if devto}
       <a href="https://www.twitter.com/dimfeld">send me a note on Twitter</a>
       or
