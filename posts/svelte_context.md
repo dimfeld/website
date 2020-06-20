@@ -7,7 +7,7 @@ confidence: I've used context a bunch and looked into the internals, and I think
 
 I've been chatting in the [Svelte Discord](https://svelte.dev/chat) for the past few weeks, and it seems like the use of component context is a common misunderstanding among new users. I'm writing this as a reference to fill in the gaps and make some recommendations about when to use it or not.
 
-# What is Context
+# Context Inheritance
 
 Each component created in Svelte has some associated data, and this data is automatically passed down to all of its child components. The `getContext` and `setContext` functions can access data associated with a key on the context.
 
@@ -23,8 +23,6 @@ setContext('data', value + 1)
 // We can also add new keys.
 setContext('other-data', 11);
 ```
-
-# Context Inheritance
 
 Svelte sets up some internal state for each component it creates, and this includes the context for the component. Looking inside the Svelte source at [`src/runtime/internal/Component.ts`](https://github.com/sveltejs/svelte/blob/1644f207b107b01e4fa6b377ba81f392709124b6/src/runtime/internal/Component.ts#L119), we see that it initializes the component's context with a copy of the parent's context:
 
