@@ -2,6 +2,8 @@
 title: When to Use Component Context in Svelte
 date: 2020-06-19
 cardImage:
+summary: Usage patterns and recommendations for Svelte context
+frontPageSummary: usage patterns and recommendations for context data in Svelte
 confidence: I've used context a bunch and looked into the internals, and I think I have a good understanding of it. If you disagree about when it's proper to use context I'd love to hear your thoughts.
 ---
 
