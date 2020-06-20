@@ -19,7 +19,8 @@ Data added via `setContext` is only visible to the current component and its chi
 // Get `data` from the parent's context
 let value = getContext('data');
 
-// Running `getContext('data')` in child components will return value + 1.
+// Running `getContext('data')` in child components will return `value + 1`.
+// Without this statement, child components would see `value`, as set in the parent.
 setContext('data', value + 1)
 
 // We can also add new keys.
@@ -67,6 +68,8 @@ setContext('data', x);
 let x = getContext('data');
 $: value = $x + 1;
 ```
+
+In the example below, `X` is a store set in the context of the top-level component, and the `Child` component sets its own store `Y` which is shared between it and its `Grandchild` component.
 
 <div data-component="PostReplSvelteContext" data-prop-preset="store_in_context"></div>
 

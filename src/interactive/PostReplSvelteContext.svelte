@@ -3,6 +3,7 @@
 
   import storeApp from './svelte-context-src/store-app.txt';
   import storeChild from './svelte-context-src/store-child.txt';
+  import storeGrandchild from './svelte-context-src/store-grandchild.txt';
 
   import contextAfterInitApp from './svelte-context-src/context-after-init-app.txt';
   import contextAfterInitChild from './svelte-context-src/context-after-init-child.txt';
@@ -65,6 +66,11 @@
           type: 'svelte',
           name: 'Child',
           source: storeChild,
+        },
+        {
+          type: 'svelte',
+          name: 'Grandchild',
+          source: storeGrandchild,
         },
       ],
     },

@@ -1,12 +1,21 @@
 <script>
-  import { getContext } from 'svelte';
-  const x = getContext('data');
+	import Grandchild from './Grandchild.svelte';
+	import { getContext, setContext } from 'svelte';
+	import { writable } from 'svelte/store';
+	const x = getContext('data');
+
+	// Set a new store in this child
+	const y = writable(0);
+	setContext('y', y);
 </script>
 
 <div>
-  <h2>Child</h2>
-  <button on:click="{x.increment}">
-    Increment X
-  </button>
-  <p>X value: {$x}</p>
+	<h2>Child</h2>
+	<button on:click={x.increment}>
+	  Increment X
+	</button>
+	<p>X value: {$x}</p>
+	<p>This child y: {$y}</p>
 </div>
+
+<Grandchild />
