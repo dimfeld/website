@@ -80,16 +80,18 @@ export default function renderer() {
     let { url: base, host } = env;
 
     let lastSlash = base.lastIndexOf('/');
-    base = base.slice(0, lastSlash + 1);
+    let sameDir = base.slice(0, lastSlash + 1);
 
     // Convert links to absolute for RSS.
     r.normalizeLink = (url) => {
       if (!url.includes('//')) {
-        if (!url.startsWith('/')) {
+        if (url[0] === '#') {
+          url = `${base}${url}`;
+        } else if (!url.startsWith('/')) {
           if (/\.(svg|png|jpg|gif)$/.test(url)) {
             url = `/images/${url}`;
           } else {
-            url = `${base}${url}`;
+            url = `${sameDir}${url}`;
           }
         }
 
