@@ -63,6 +63,10 @@
     @apply bg-gray-200 text-teal-900 px-1 text-base;
   }
 
+  a code {
+    @apply underline;
+  }
+
   pre > code {
     @apply block border-cool-gray-300 bg-cool-gray-200 text-black px-4 py-2 my-4 whitespace-pre-wrap overflow-x-auto shadow-lg;
   }
