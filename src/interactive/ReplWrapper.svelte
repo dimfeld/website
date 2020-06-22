@@ -1,49 +1,10 @@
-<script context="module">
-  import clone from 'just-clone';
-
-  let currentSet;
-  let queuedSets = [];
-
-  // Ensure that only one bundle happens at a time since they interfere with
-  // each other.
-  async function setRepl(repl, data, title) {
-    if (currentSet) {
-      console.log('queueing repl', title);
-      queuedSets.push({ repl, data, title });
-      return;
-    }
-
-    console.log('Setting repl', title);
-
-    currentSet = repl.set(data);
-    try {
-      await currentSet;
-      console.log(title, 'done');
-    } catch (e) {
-      console.error(e);
-    }
-
-    if (queuedSets.length) {
-      setTimeout(() => {
-        currentSet = null;
-        let next = queuedSets.shift();
-        setRepl(next.repl, next.data, next.title);
-      });
-    } else {
-      currentSet = null;
-    }
-  }
-
-  function clearSets(repl) {
-    queuedSets = queuedSets.filter((item) => item.repl === repl);
-  }
-</script>
-
 <script>
+  import clone from 'just-clone';
   import { onMount, onDestroy, tick } from 'svelte';
 
   export let height = '800px';
   export let data;
+  export let id = undefined;
   export let expandedWidth = true;
 
   let container;
@@ -54,6 +15,7 @@
     repl = new Repl({
       target: container,
       props: {
+        id,
         workersUrl: 'workers',
         orientation: windowWidth > 600 ? 'columns' : 'rows',
       },
@@ -62,7 +24,7 @@
 
   onDestroy(() => {
     if (repl) {
-      clearSets(repl);
+      repl.$destroy();
     }
   });
 
@@ -74,7 +36,7 @@
   }
 
   $: ({ title, ...replData } = data);
-  $: repl && setRepl(repl, clone(replData), title);
+  $: repl && repl.set(clone(replData));
   $: repl && updateOrientation(windowWidth);
 
   function reset() {

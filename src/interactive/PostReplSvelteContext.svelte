@@ -97,4 +97,4 @@
   };
 </script>
 
-<Repl data={presets[preset]} expandedWidth={false} height="600px" />
+<Repl data={presets[preset]} id={preset} expandedWidth={false} height="600px" />

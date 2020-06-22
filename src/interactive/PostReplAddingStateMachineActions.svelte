@@ -8,4 +8,4 @@
   };
 </script>
 
-<Repl {data} />
+<Repl {data} id="state_machine_actions" />
