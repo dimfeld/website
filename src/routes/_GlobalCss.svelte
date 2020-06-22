@@ -65,7 +65,7 @@
     }
 
     code {
-      @apply bg-gray-200 text-teal-900 px-1 text-base;
+      @apply bg-cool-gray-200 text-teal-900 px-1 text-base;
     }
 
     a code {
