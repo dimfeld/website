@@ -46,6 +46,29 @@ In reality, context is best used when you want to share some state only with a s
 
 For example, a top-level chart component may use context to share information specific to that chart with its various subcomponents. Each instance of the chart throughout the application would have its own context. The Svelte [Layer Cake](https://layercake.graphics/) chart package uses this approach.
 
+Let's take a look at how the example code on the Layer Cake home page would look using properties instead of context.
+
+```html
+<LayerCake x='x' y='y' {data}
+  let:chartInfo>
+    <Svg {chartInfo}>
+        <AxisX {chartInfo}/>
+        <AxisY {chartInfo}/>
+        <Line  {chartInfo} color="#f0c"/>
+    </Svg>
+
+    <Canvas {chartInfo}>
+        <Scatter {chartInfo} color="#0fc"/>
+    </Canvas>
+
+    <Html {chartInfo}>
+        <Labels {chartInfo}/>
+    </Html>
+</LayerCake>
+```
+
+While the actual `LayerCake` component exposes the chart information via context, in this example the information is exposed at a property on the slot instead, and then manually passed into every component nested under the chart. Clearly, this is messier than just using context.
+
 So, if your needs don't fit into this scenario, why not use context anyway? Well, it does have downsides:
 
 - Risk of unrelated components trying to use the same context key and overwriting each other's data. There are ways around this though.
