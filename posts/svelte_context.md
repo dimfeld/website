@@ -67,7 +67,7 @@ Let's take a look at how the example code on the Layer Cake home page would look
 </LayerCake>
 ```
 
-While the actual `LayerCake` component exposes the chart information via context, in this example the information is exposed at a property on the slot instead, and then manually passed into every component nested under the chart. Clearly, this is messier than just using context.
+While the actual `LayerCake` component exposes the chart information via context, in this example the information is exposed as a property on the slot instead, and then manually passed into every component nested under the chart. Clearly, this is messier than just using context.
 
 So, if your needs don't fit into this scenario, why not use context anyway? Well, it does have downsides:
 
