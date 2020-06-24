@@ -47,7 +47,5 @@
 </svelte:head>
 
 <div class="sm:mx-16">
-  <Article {...post}>
-    {@html post.content}
-  </Article>
+  <Article {...post} />
 </div>

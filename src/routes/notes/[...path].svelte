@@ -42,7 +42,5 @@
 </svelte:head>
 
 <div class="sm:mr-16">
-  <Article {...note}>
-    {@html note.content}
-  </Article>
+  <Article {...note} />
 </div>

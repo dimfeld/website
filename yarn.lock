@@ -927,7 +927,7 @@
 
 "@sveltejs/svelte-repl@github:dimfeld/svelte-repl":
   version "0.1.19"
-  resolved "https://codeload.github.com/dimfeld/svelte-repl/tar.gz/1de1c554152e67cd3675e983fe411cb9c01afcec"
+  resolved "https://codeload.github.com/dimfeld/svelte-repl/tar.gz/1846841fe590a547c50e2ac4db6a7aba97085b48"
   dependencies:
     codemirror "^5.49.2"
     estree-walker "^0.9.0"

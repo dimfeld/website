@@ -52,7 +52,11 @@ export default async function instantiateComponents() {
 
   return () => {
     for (let component of components) {
-      component.$destroy();
+      try {
+        component.$destroy();
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 }

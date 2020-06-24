@@ -4,22 +4,41 @@
   export let updated = undefined;
   export let confidence = undefined;
   export let devto = undefined;
+  export let content;
 
   import * as labels from '../../postMeta.ts';
-  import { getContext, onMount, onDestroy } from 'svelte';
+  import { tick, getContext, onMount } from 'svelte';
   import instantiateComponents from '../../dynamicComponents';
   getContext('title').set(title);
 
   let destroyComponents;
-  onMount(async () => {
-    destroyComponents = await instantiateComponents();
+  let mounted = false;
+  onMount(() => {
+    mounted = true;
+    remountDynamicComponents();
+    return unmountDynamicComponents;
   });
 
-  onDestroy(() => {
+  function unmountDynamicComponents() {
     if (destroyComponents) {
-      destroyComponents();
+      let d = destroyComponents;
+      destroyComponents = null;
+      return d.then((f) => f());
     }
-  });
+  }
+
+  async function remountDynamicComponents() {
+    if (!mounted) {
+      return;
+    }
+
+    await unmountDynamicComponents();
+    // Wait for DOM to update with new content
+    await tick();
+    destroyComponents = instantiateComponents();
+  }
+
+  $: content, remountDynamicComponents();
 </script>
 
 <article class="font-serif my-4 px-4 sm:px-0">
@@ -45,7 +64,7 @@
   </div>
 
   <div>
-    <slot />
+    {@html content}
   </div>
 
   <hr />
