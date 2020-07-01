@@ -19,7 +19,7 @@ Using a single-element array and a keyed `#each` statement, we can force Svelte 
 {/each}
 ```
 
-Now any time the value of `key` changes, `SomeComponent` will be completely torn down and reconstructed. With there are occasional good reasons to do this, I prefer to avoid it as much as possible, and instead just make components react to changes in their properties.
+Now any time the value of `key` changes, `SomeComponent` will be completely torn down and reconstructed. While there are occasional good reasons to do this, I prefer to avoid it as much as possible, and instead just make components react to changes in their properties.
 
 # Suppressing Transitions
 
