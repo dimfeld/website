@@ -1,11 +1,13 @@
 import markdownIt from 'markdown-it';
 import * as highlight from 'highlight.js';
-import 'highlightjs-svelte';
+import hljsSvelte from 'highlightjs-svelte';
 import * as footnote from 'markdown-it-footnote';
 import * as abbr from 'markdown-it-abbr';
 import * as toc from 'markdown-it-toc-done-right';
 import * as anchor from 'markdown-it-anchor';
 import StateCore from 'markdown-it/lib/rules_core/state_core';
+
+hljsSvelte(highlight);
 
 export default function renderer() {
   let r = markdownIt({
