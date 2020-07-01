@@ -1,0 +1,87 @@
+<script>
+	import { flip } from 'svelte/animate';
+	import { fade } from 'svelte/transition';
+
+	let allPeople = [ 'Jerry', 'Elaine', 'George', 'Kramer', 'Rick', 'Jerry', 'Beth', 'Morty', 'Summer', 'Abed', 'Troy', 'Jeff', 'Britta', 'Annie', 'Shirley', 'Pierce'].map((name) => ({ name }));
+
+	let oneValues = {
+		id: 'seinfeld',
+		people:  [ { name: 'Jerry' }, { name: 'Elaine' }, { name: 'George' }, { name: 'Kramer' } ]
+	};
+
+	let twoValues = {
+		id: 'rick-and-morty',
+		people: [ { name: 'Rick' }, { name: 'Jerry' }, { name: 'Beth' }, { name: 'Morty' }, { name: 'Summer' } ]
+	};
+
+	let toggle = false;
+	$: values = toggle ? oneValues : twoValues;
+
+	$: currentPeople = new Set(values.people.map((p) => p.name));
+
+	function addOne() {
+		let newItem = allPeople.find((p) => !currentPeople.has(p.name))
+		if(!newItem) { return; }
+		let index = Math.floor(Math.random() * values.people.length);
+
+		values.people = [
+			...values.people.slice(0, index),
+			newItem,
+			...values.people.slice(index),
+		];
+	}
+
+	function removeOne() {
+		let index = Math.floor(Math.random() * values.people.length);
+		values.people = [
+			...values.people.slice(0, index),
+			...values.people.slice(index + 1)
+		]
+	}
+</script>
+
+<style>
+	.container {
+		display: flex;
+	}
+
+	.header {
+		margin-bottom: 0.5rem;
+		font-weight: 500;
+		color: #444;
+	}
+</style>
+
+<p>
+	Click <span style="font-weight:500">Switch Lists</span> to see the undesired transition behavior in the non-wrapped case.
+</p>
+
+<button on:click={() => toggle = !toggle}>Switch Lists</button>
+<button on:click={addOne}>Add a Name</button>
+<button on:click={removeOne}>Remove a Name</button>
+
+<div class="container">
+
+	<div>
+		<div class="header">Wrapped in<br/>single-element #each</div>
+		{#each [values] as v (v.id)}
+		<div>
+			{#each values.people as person (person.name) }
+				<div animate:flip={{duration: 500}} transition:fade|local={{duration: 500}}>
+					{person.name}
+				</div>
+			{/each}
+		</div>
+		{/each}
+	</div>
+
+	<div style="margin-left:2rem">
+		<div class="header">Not wrapped in<br/>single-element #each</div>
+		{#each values.people as person (person.name) }
+			<div animate:flip={{duration: 500}} transition:fade|local={{duration: 500}}>
+				{person.name}
+			</div>
+		{/each}
+	</div>
+
+</div>

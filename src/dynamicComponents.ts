@@ -8,6 +8,8 @@ const components = {
     import('./interactive/PostReplSvelteContext.svelte'),
   PostReplAddingStateMachineActions: () =>
     import('./interactive/PostReplAddingStateMachineActions.svelte'),
+  PostReplSingleElementEach: () =>
+    import('./interactive/PostReplSingleElementEach.svelte'),
 };
 
 async function instantiateComponent(element: Element) {
