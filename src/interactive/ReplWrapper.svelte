@@ -1,17 +1,23 @@
 <script>
   import clone from 'just-clone';
   import { onMount, onDestroy, tick } from 'svelte';
+  import LazyLoad from '@dimfeld/svelte-lazyload';
 
   export let height = '800px';
   export let data;
   export let id = undefined;
   export let expandedWidth = true;
+  export let lazy = true;
 
   let container;
   let repl;
   let windowWidth;
-  onMount(async () => {
+  let loading = true;
+
+  async function createRepl() {
     let Repl = (await import('@sveltejs/svelte-repl')).default;
+    loading = false;
+
     repl = new Repl({
       target: container,
       props: {
@@ -20,7 +26,7 @@
         orientation: windowWidth > 600 ? 'columns' : 'rows',
       },
     });
-  });
+  }
 
   onDestroy(() => {
     if (repl) {
@@ -57,6 +63,7 @@
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
+
 <div class:w-expanded-95={expandedWidth}>
   <div
     class="flex flex-col font-sans border border-gray-100 shadow-md rounded-lg">
@@ -79,6 +86,11 @@
         </button>
       </span>
     </div>
-    <div class="svelte-repl" style="height:{height};" bind:this={container} />
+    <LazyLoad {height} visible={!lazy} on:visible={createRepl}>
+      {#if loading}
+        <div>Loading REPL...</div>
+      {/if}
+      <div class="svelte-repl" style="height:{height};" bind:this={container} />
+    </LazyLoad>
   </div>
 </div>

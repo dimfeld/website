@@ -20,6 +20,7 @@
     "repl-srcdoc": "yarn run repl-srcdoc:update && cd node_modules/@sveltejs/svelte-repl && node scripts/build-srcdoc.js"
   },
   "dependencies": {
+    "@dimfeld/svelte-lazyload": "^0.0.1",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@polka/send-type": "^0.5.2",
     "compression": "^1.7.4",
