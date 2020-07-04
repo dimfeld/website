@@ -1,4 +1,5 @@
 <script>
+  import ky from 'ky';
   import clone from 'just-clone';
   import { onMount, onDestroy, tick } from 'svelte';
   import LazyLoad from '@dimfeld/svelte-lazyload';
@@ -9,13 +10,47 @@
   export let expandedWidth = true;
   export let lazy = true;
 
+  if (typeof expandedWidth === 'string') {
+    expandedWidth = expandedWidth === 'true';
+  }
+
   let container;
   let repl;
   let windowWidth;
   let loading = true;
 
+  async function downloadReplData() {
+    console.log({ id, data });
+    if (id && !data) {
+      let result = await ky(`/api/repl/${id}`).json();
+      let files = result.files.map((file) => {
+        let filenameComponents = file.name.split('.');
+        let name = filenameComponents.slice(0, -1);
+        let type = filenameComponents[filenameComponents.length - 1];
+
+        return {
+          name,
+          type,
+          source: file.source,
+        };
+      });
+
+      return {
+        title: result.name,
+        components: files,
+      };
+    }
+  }
+
   async function createRepl() {
-    let Repl = (await import('@sveltejs/svelte-repl')).default;
+    let [Repl, replData] = await Promise.all([
+      import('@sveltejs/svelte-repl').then((m) => m.default),
+      downloadReplData(),
+    ]);
+
+    if (replData) {
+      data = replData;
+    }
     loading = false;
 
     repl = new Repl({
@@ -41,7 +76,7 @@
     repl.$set({ orientation: w > 600 ? 'columns' : 'rows' });
   }
 
-  $: ({ title, ...replData } = data);
+  $: ({ title, ...replData } = data || {});
   $: repl && repl.set(clone(replData));
   $: repl && updateOrientation(windowWidth);
 

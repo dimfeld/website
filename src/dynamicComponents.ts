@@ -5,6 +5,7 @@ const components = {
   ReadingSince: () => import('./interactive/ReadingSince.svelte'),
   Slider: () => import('./interactive/Slider.svelte'),
   Roller: () => import('./interactive/Roller.svelte'),
+  Repl: () => import('./interactive/ReplWrapper.svelte'),
   PostReplSvelteContext: () =>
     import('./interactive/PostReplSvelteContext.svelte'),
   PostReplAddingStateMachineActions: () =>
