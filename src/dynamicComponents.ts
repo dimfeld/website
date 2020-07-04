@@ -1,4 +1,5 @@
 import { SvelteComponent } from 'svelte';
+import DynamicComponentWrapper from './DynamicComponentWrapper.svelte';
 
 const components = {
   ReadingSince: () => import('./interactive/ReadingSince.svelte'),
@@ -38,10 +39,15 @@ async function instantiateComponent(element: Element) {
     return;
   }
 
-  let instance = new component({
+  let instance = new DynamicComponentWrapper({
     target: element,
-    props,
+    props: {
+      component,
+      componentProps: props,
+    },
   });
+
+  element.classList.add('has-component');
 
   return instance;
 }

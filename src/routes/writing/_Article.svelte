@@ -41,6 +41,12 @@
   $: content, remountDynamicComponents();
 </script>
 
+<style global>
+  article .has-component > *:not(:last-child) {
+    display: none;
+  }
+</style>
+
 <article class="font-serif my-4 px-4 sm:px-0">
   <div class="mb-4 leading-tight">
     <h1 class="font-serif">{title}</h1>

@@ -1,4 +1,5 @@
 import renderFactory from '../../markdown';
+import cheerio from 'cheerio';
 import * as labels from '../../postMeta';
 import orderBy from 'lodash/orderBy';
 import RSS from 'rss';
@@ -80,23 +81,16 @@ export async function get(req, res, next) {
         desc = post.summary || '';
       }
 
-      let componentRe = /data-component=/g;
-      let m;
-      while ((m = componentRe.exec(desc))) {
-        let nextIndex = desc.indexOf('>', m.index);
-        if (nextIndex > -1) {
-          desc = `${desc.slice(
-            0,
-            nextIndex + 1
-          )}<p><a href="${fullUrl}">View this post on the website</a> for an interactive example.</p>${desc.slice(
-            nextIndex + 1
-          )}`;
-        }
-      }
-      desc = desc.replace(
-        /(<div data-component >)/g,
-        '$1View this post on the website to see an interactive example here'
-      );
+      let $ = cheerio.load(desc);
+      $('div[data-component]')
+        .not('[data-no-fallback]')
+        .filter((i, el) => {
+          return $(el).text().trim().length === 0;
+        })
+        .append(
+          `<p><a href="${fullUrl}">View this post on the website</a> for an interactive example.</p>`
+        );
+      desc = $.html();
 
       feed.item({
         date: post.date,
