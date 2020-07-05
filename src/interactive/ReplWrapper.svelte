@@ -20,7 +20,6 @@
   let loading = true;
 
   async function downloadReplData() {
-    console.log({ id, data });
     if (id && !data) {
       let result = await ky(`/api/repl/${id}`).json();
       let files = result.files.map((file) => {
