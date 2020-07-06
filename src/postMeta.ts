@@ -1,3 +1,5 @@
+import { Post } from './staticApi/readPosts';
+
 export const statuses = [
   {
     id: 'speculative',
@@ -15,3 +17,19 @@ export const statuses = [
     long: 'I believe everything here to be correct',
   },
 ];
+
+export function cardImageUrl(post: Post, absolute: boolean) {
+  let imageUrl = post.cardImage;
+  if (!imageUrl) {
+    return;
+  }
+
+  if (!imageUrl.startsWith('http')) {
+    imageUrl = '/images/' + imageUrl;
+    if (absolute) {
+      imageUrl = 'https://imfeld.dev' + imageUrl;
+    }
+  }
+
+  return imageUrl;
+}

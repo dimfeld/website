@@ -1,4 +1,6 @@
 <script>
+  import { cardImageUrl } from '../postMeta';
+
   import capitalize from 'just-capitalize';
   import { flip } from 'svelte/animate';
   export let posts;
@@ -8,17 +10,63 @@
   function tagLabels(tags) {
     return (tags || []).map((t) => capitalize(t.replace(/_/g, ' '))).join(', ');
   }
+
+  function backgroundImage(post) {
+    if (post.cardImage) {
+      return `background-color:white;background-image:url(${cardImageUrl(
+        post,
+        false
+      )})`;
+    }
+  }
 </script>
 
+<style lang="postcss">
+  .post-bg {
+    @apply absolute left-0 top-0 block w-full h-full;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-size: 100%;
+    opacity: 0.2;
+    filter: saturate(200%) brightness(155%);
+  }
+
+  @screen sm {
+    .post-list {
+      grid-template-columns: repeat(2, 275px);
+      @apply justify-center;
+    }
+  }
+
+  @screen lg {
+    .post-list {
+      grid-template-columns: repeat(3, 275px);
+    }
+  }
+
+  @screen xl {
+    .post-list {
+      grid-template-columns: repeat(3, 325px);
+    }
+  }
+</style>
+
 <div
-  class="w-full flex flex-col items-stretch sm:grid sm:gap-8 sm:mt-4"
-  style="grid-template-columns: repeat(auto-fit, 400px);">
+  class="post-list w-full flex flex-col items-stretch sm:grid sm:gap-8
+  xl:col-gap-12 sm:mt-4"
+  style=";">
   {#each posts as post (post.id)}
     <div
       animate:flip={{ duration: 300 }}
       class="sm:rounded-sm border-b sm:border border-teal-100 sm:border-teal-100
       p-2 sm:shadow-md flex-1 flex flex-col">
-      <a rel="prefetch" href="{base}/{post.id}" class="text-lg">{post.title}</a>
+      {#if post.cardImage}
+        <div class="post-bg" style={backgroundImage(post)} />
+      {/if}
+      <a rel="prefetch" href="{base}/{post.id}" class="text-lg text-teal-900">
+        {post.title}
+      </a>
       <a
         class="hover:no-underline text-gray-800 font-medium text-sm"
         rel="prefetch"

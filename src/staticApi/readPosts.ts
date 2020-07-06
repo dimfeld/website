@@ -22,6 +22,7 @@ interface PostAttributes {
   updated?: string;
   summary?: string;
   frontPageSummary?: string;
+  cardImage?: string;
   content: string;
   confidence?: string;
   status_code?: string;
@@ -38,6 +39,7 @@ export interface Post {
   updated?: string;
   summary?: string;
   frontPageSummary?: string;
+  cardImage?: string;
   content: string;
   confidence?: string;
   status_code?: string;

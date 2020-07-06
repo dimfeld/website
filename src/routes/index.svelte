@@ -37,15 +37,11 @@
   <p>
     My latest post is
     {#if latestPost.frontPageSummary}
-      <a use:annotate={annotationOptions} href="writing/{latestPost.id}">
-        {latestPost.title}
-      </a>
-      , about {latestPost.frontPageSummary}.
+      <a use:annotate={annotationOptions} href="writing/{latestPost.id}">{latestPost.title}</a>, about {latestPost.frontPageSummary}.
     {:else}
       <a use:annotate={annotationOptions} href="writing/{latestPost.id}">
         {latestPost.title}
-      </a>
-      .
+      </a>.
     {/if}
   </p>
 

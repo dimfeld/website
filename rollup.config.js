@@ -56,7 +56,7 @@ const babelClientConfig = {
     [
       '@babel/preset-env',
       {
-        targets: dev ? { chrome: 78 } : { esmodules: true },
+        targets: dev ? { chrome: 83 } : { esmodules: true },
       },
     ],
     '@babel/preset-typescript',
