@@ -1,8 +1,8 @@
 <script context="module">
   export async function preload() {
-    let { post, note, lastCreatedNote } = await this.fetch('/api/latest').then(
-      (r) => r.json()
-    );
+    let { post, note, lastCreatedNote } = await this.fetch(
+      '/api/latest'
+    ).then((r) => r.json());
     return { latestPost: post, latestNote: note, lastCreatedNote };
   }
 </script>
@@ -12,7 +12,15 @@
   export let latestNote;
   export let lastCreatedNote;
   import { getContext } from 'svelte';
+  import { annotate } from 'svelte-rough-notation';
   getContext('title').set('');
+
+  const annotationOptions = {
+    type: 'underline',
+    delay: 1000,
+    color: '#014451',
+    visible: true,
+  };
 </script>
 
 <article class="m-4 self-center font-serif">
@@ -29,9 +37,15 @@
   <p>
     My latest post is
     {#if latestPost.frontPageSummary}
-      <a href="writing/{latestPost.id}">{latestPost.title}</a>, about {latestPost.frontPageSummary}.
+      <a use:annotate={annotationOptions} href="writing/{latestPost.id}">
+        {latestPost.title}
+      </a>
+      , about {latestPost.frontPageSummary}.
     {:else}
-      <a href="writing/{latestPost.id}">{latestPost.title}</a>.
+      <a use:annotate={annotationOptions} href="writing/{latestPost.id}">
+        {latestPost.title}
+      </a>
+      .
     {/if}
   </p>
 
@@ -47,7 +61,8 @@
       was updated most recently.
     {:else}
       The newest note is
-      <a href="notes/{latestNote.id}">{latestNote.title}</a>.
+      <a href="notes/{latestNote.id}">{latestNote.title}</a>
+      .
     {/if}
   </p>
 </article>
