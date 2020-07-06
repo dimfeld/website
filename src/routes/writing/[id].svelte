@@ -1,6 +1,6 @@
 <script context="module">
   export async function preload({ params }) {
-    let post = await this.fetch(`/api/posts/${params.id}`).then(async (r) => {
+    let post = await this.fetch(`/data/posts/${params.id}`).then(async (r) => {
       if (r.ok) {
         return r.json();
       } else {

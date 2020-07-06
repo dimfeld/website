@@ -5,8 +5,8 @@
 
   export async function preload() {
     let [notes, tags] = await Promise.all([
-      this.fetch('/api/allNotes').then((r) => r.json()),
-      this.fetch('/api/allTags').then((r) => r.json()),
+      this.fetch('/data/allNotes').then((r) => r.json()),
+      this.fetch('/data/allTags').then((r) => r.json()),
     ]);
 
     return { notes, tags };

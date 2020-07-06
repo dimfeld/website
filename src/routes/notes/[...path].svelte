@@ -1,6 +1,6 @@
 <script context="module">
   export async function preload({ params: { path } }) {
-    let note = await this.fetch(`/api/notes/${path.join('/')}`).then((r) =>
+    let note = await this.fetch(`/data/notes/${path.join('/')}`).then((r) =>
       r.json()
     );
     return { note };
