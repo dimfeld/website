@@ -1,10 +1,14 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import got from 'got';
 
+const prod = process.env.NODE_ENV === 'production';
+
 export default async function (request: NowRequest, response: NowResponse) {
   try {
     let data = await got(`https://svelte.dev/repl/${request.query.id}.json`);
-    response.setHeader('Cache-Control', 'max-age=300, s-maxage=2592000');
+    if (prod) {
+      response.setHeader('Cache-Control', 'max-age=300, s-maxage=2592000');
+    }
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
     response.send(data.body);
   } catch (e) {
