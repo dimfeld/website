@@ -931,8 +931,8 @@
   integrity sha512-/aPsuoj/1Dw/kzhkgz+ES6TxG0zfTMGLwuK2ZG00k/iJzYHTLCE8mVU8EPqEOp/lmxPoq1C1C9RYToRKb2KEfg==
 
 "@sveltejs/svelte-repl@github:dimfeld/svelte-repl":
-  version "0.1.19"
-  resolved "https://codeload.github.com/dimfeld/svelte-repl/tar.gz/1846841fe590a547c50e2ac4db6a7aba97085b48"
+  version "0.2.0"
+  resolved "https://codeload.github.com/dimfeld/svelte-repl/tar.gz/a67f83d6cfbb26d8c6d0901da61566f0ad940b17"
   dependencies:
     codemirror "^5.49.2"
     estree-walker "^0.9.0"
@@ -3403,6 +3403,11 @@ jsonfile@^4.0.0:
   integrity sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=
   optionalDependencies:
     graceful-fs "^4.1.6"
+
+just-camel-case@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/just-camel-case/-/just-camel-case-4.0.2.tgz#dc1e9e19e4200bb91f482716726135c35e901ac3"
+  integrity sha512-df6QI/EIq+6uHe/wtaa9Qq7/pp4wr4pJC/r1+7XhVL6m5j03G6h9u9/rIZr8rDASX7CxwDPQnZjffCo2e6PRLw==
 
 just-capitalize@^1.0.0:
   version "1.0.0"

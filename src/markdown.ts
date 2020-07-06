@@ -13,6 +13,7 @@ export default function renderer() {
   let r = markdownIt({
     html: true,
     linkify: true,
+    typographer: true,
     highlight: function (str, lang) {
       if (lang && highlight.getLanguage(lang)) {
         try {

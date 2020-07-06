@@ -1,5 +1,6 @@
 import { SvelteComponent } from 'svelte';
 import DynamicComponentWrapper from './DynamicComponentWrapper.svelte';
+import camelCase from 'just-camel-case';
 
 const components = {
   ReadingSince: () => import('./interactive/ReadingSince.svelte'),
@@ -32,7 +33,8 @@ async function instantiateComponent(element: Element) {
       }
     } else if (attr.startsWith('data-prop-')) {
       let propName = attr.slice('data-prop-'.length);
-      props[propName] = value;
+
+      props[camelCase(propName)] = value;
     }
   }
 

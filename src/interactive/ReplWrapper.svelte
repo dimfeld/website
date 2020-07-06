@@ -5,7 +5,7 @@
   import LazyLoad from '@dimfeld/svelte-lazyload';
 
   export let height = '800px';
-  export let data;
+  export let data = undefined;
   export let id = undefined;
   export let expandedWidth = true;
   export let lazy = true;
