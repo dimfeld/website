@@ -23,7 +23,7 @@
   };
 
   onMount(() => {
-    setTimeout(() => (annotationOptions.visible = true), 1000);
+    setTimeout(() => (annotationOptions.visible = true), 1500);
   });
 </script>
 
