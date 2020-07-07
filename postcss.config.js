@@ -33,12 +33,14 @@ module.exports = {
           return matchedTokens;
         },
         whitelistPatterns: [
+          /^has-component$/,
           /hljs/,
           /^bg-indigo-/,
           /^CodeMirror-/,
           /^responsive-svg$/,
           /^w-expanded/,
         ],
+
       }),
     production && require('cssnano'),
   ].filter(Boolean),
