@@ -13,10 +13,16 @@
 
   function backgroundImage(post) {
     if (post.cardImage) {
-      return `background-color:white;background-image:url(${cardImageUrl(
+      let image = `background-color:white;background-image:url(${cardImageUrl(
         post,
         false
-      )})`;
+      )});`;
+
+      let vars = post.cardImageFilter
+        ? `--post-bg-filter:${post.cardImageFilter};`
+        : '';
+
+      return image + vars;
     }
   }
 </script>
@@ -29,7 +35,7 @@
     background-position-y: center;
     background-size: 100%;
     opacity: 0.2;
-    filter: saturate(200%) brightness(155%);
+    filter: var(--post-bg-filter, brightness(155%) saturate(200%));
   }
 
   @screen sm {

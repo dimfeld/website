@@ -2,6 +2,7 @@
 title: "Suppressing Svelte transitions with the #each hack"
 date: 2020-06-30
 cardImage: svelte-single-element-each-2.png
+cardImageFilter: opacity(80%) brightness(155%)
 ---
 
 A common question I've seen in the [Svelte Discord](https://svelte.dev/chat) is how to force a component to recreate itself when some of its input data changes. I think this is usually an anti-pattern, but the technique to make it work does have some other interesting uses.

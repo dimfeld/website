@@ -17,6 +17,7 @@
 
   const annotationOptions = {
     type: 'underline',
+    multiline: true,
     color: '#014451',
     iterations: 3,
     visible: false,
