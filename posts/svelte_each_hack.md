@@ -1,5 +1,5 @@
 ---
-title: "Suppressing Svelte transitions with the #each hack"
+title: "Suppress Svelte transitions with the #each hack"
 date: 2020-06-30
 cardImage: svelte-single-element-each-2.png
 cardImageFilter: opacity(80%) brightness(155%)

@@ -1,6 +1,6 @@
 ---
 title: Digital Garden
-summary: Details on how and why I write here
+summary: How and why I write here
 frontPageSummary: how and why I write here
 date: 2020-02-26
 # updated: 2020-02-27
