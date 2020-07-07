@@ -138,7 +138,9 @@ the CSS variables in child elements does not apply unless we reapply the note cl
 As established, we can't use Svelte to modify the rules inside a `<style>` tag, but we can generate element attributes in the template. And so this gives us the ability to set CSS variables using Svelte template syntax, e.g. `<span style="--note-color:{noteColor}">`.
 
 <div data-component="Repl" data-prop-id="8123d474edb04f198c3b83363716a709" data-prop-expanded-width="false">
-<p>This [Svelte REPL example](https://svelte.dev/repl/8123d474edb04f198c3b83363716a709?version=3.23.2) sets variables dynamically.</p>
+
+This [Svelte REPL example](https://svelte.dev/repl/8123d474edb04f198c3b83363716a709?version=3.23.2) sets variables dynamically.
+
 </div>
 
 
