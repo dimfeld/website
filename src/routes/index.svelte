@@ -58,8 +58,7 @@
       was updated most recently.
     {:else}
       The newest note is
-      <a href="notes/{latestNote.id}">{latestNote.title}</a>
-      .
+      <a href="notes/{latestNote.id}">{latestNote.title}</a>.
     {/if}
   </p>
 
@@ -71,14 +70,12 @@
     I'm a co-founder of
     <a href="https://www.carevoyance.com">Carevoyance</a>, a sales acceleration
     tool that enables healthcare sellers to zero in on their best prospects and
-    then generate custom reports specific to each one with just a few clicks.
+    generate custom reports and insights with just a few clicks.
   </p>
 
   <p>
-    I spend most of my time there adding new data analyses, updating and
-    maintaining the backend API and database systems, and developing tooling to
-    research data anomalies and automate repetitive tasks. Now and then I get to
-    touch the front-end too, and most recently have been spearheading a
+    I spend most of my time there creating new data analyses, working on the backend API and database systems, and developing tooling to
+    research data anomalies and automate repetitive tasks. Recently I've been active on the front-end too, and have been spearheading a
     transition from AngularJS (1.x) to Svelte.
   </p>
 
