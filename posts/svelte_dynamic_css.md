@@ -163,13 +163,15 @@ Newer browsers will parse both rules, but the second one will take precedence. N
 
 Sometimes CSS variables need to be globally scoped. The easiest solution is to have a top-level `div` in your application that contains all the CSS variables, and use the techniques above to set the variables on that `div`.
 
-If for some reason this is not possible, you can set your variables directly on the `<body>` element with syntax like this: `$: document.body.style.cssText = styles`.
+If for some reason this is not possible, you can set your variables directly on the `<html>` element with syntax like this: `$: document.documentElement.style.cssText = styles`.
+
+> The original example used the `<body>` element. Thanks to [Kevv](https://twitter.com/vmkevv) on Twitter for asking about this since it works with the `:root` selector as well.
 
 When you have multiple places that need to write CSS variables in this way, they should be written using a global manager instead so that all the variable settings will be combined properly.
 
 <div data-component="Repl" data-prop-id="25f0c3653b89434888292a1f92717e2a" data-prop-expanded-width="false">
 
-A simple manager like this can combine style settings from multiple sources. Here's a full example: [Svelte REPL Body Styles](https://svelte.dev/repl/25f0c3653b89434888292a1f92717e2a?version=3.23.2).
+A simple manager like this can combine style settings from multiple sources. Here's a full example: [Svelte REPL Document Styles](https://svelte.dev/repl/25f0c3653b89434888292a1f92717e2a?version=3.23.2).
 
 ```js
 const cssVars = new Map();
@@ -179,7 +181,7 @@ function refresh() {
   for(let [key, value] of cssVars) {
     values.push(`--${key}:${value}`);
   }
-  document.body.style.cssText = values.join(';');
+  document.documentElement.style.cssText = values.join(';');
 }
 
 export function set(name, value) {
