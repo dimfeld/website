@@ -9,6 +9,8 @@ Leaflet is a popular Javascript library for interactive maps. Its API has a lot 
 
 This isn't intended to be a full tutorial on Leaflet, just a set of techniques for using it better with Svelte. The [Leaflet Tutorials](https://leafletjs.com/examples.html) have a lot of other useful things you can do.
 
+![Interactive popups in Leaflet](leaflet-popups.gif)
+
 I've also put together a [Svelte REPL example](https://svelte.dev/repl/62271e8fda854e828f26d75625286bc3?version=3.24.0) where you can see these techniques in action, or you can scroll to the bottom of the page to see it if you're on the website.
 
 # Creating the Map
@@ -176,7 +178,7 @@ function mapAction(container) {
       map.remove();
     }
   };
-});
+}
 ```
 
 ## Syncing local state to the map through reactive statements
