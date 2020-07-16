@@ -7,7 +7,9 @@ cardImageFilter: saturate(200%)
 
 Leaflet is a popular Javascript library for interactive maps. Its API has a lot of features for making nice-looking and useful maps, but with some smart patterns in Svelte you can add extra interactivity to your maps without needing to step outside Svelte’s component model.
 
-I've put together a [Svelte REPL example](https://svelte.dev/repl/62271e8fda854e828f26d75625286bc3?version=3.24.0) where you can see these techniques in action.
+This isn't intended to be a full tutorial on Leaflet, just a set of techniques for using it better with Svelte. The [Leaflet Tutorials](https://leafletjs.com/examples.html) have a lot of other useful things you can do.
+
+I've also put together a [Svelte REPL example](https://svelte.dev/repl/62271e8fda854e828f26d75625286bc3?version=3.24.0) where you can see these techniques in action, or you can scroll to the bottom of the page to see it if you're on the website.
 
 # Creating the Map
 
@@ -16,6 +18,9 @@ Nothing too special here. Just create the map in `onMount` or a `use:` action wi
 ```svelte
 <script>
   import * as L from 'leaflet';
+  // If you're playing with this in the Svelte REPL, import the CSS using the
+  // syntax in svelte:head instead. For normal development, this is better.
+  import 'leaflet/dist/leaflet.css';
   let map;
 
   function createMap(container) {
@@ -42,6 +47,7 @@ Nothing too special here. Just create the map in `onMount` or a `use:` action wi
     };
   }
 </script>
+
 <svelte:head>
    <!-- In the REPL you need to do this. In a normal Svelte app, use a CSS Rollup plugin and import it from the leaflet package. -->
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -111,18 +117,17 @@ bindPopup(marker, (container) => {
 
   // Handle events from the popup
   c.$on('button-click', handleTheEvent);
-
   return c;
 });
 ```
 
-You can do something very similar with Leaflet’s `DivIcon` layer type to make markers that render via Svelte components. Just use `L.DomUtil.create` to make a `div` element, put the Svelte component inside it, and then pass the `div` via `L.divIcon({ html: div })`. I don't usually find this very useful to do though.
+You can do something very similar with Leaflet’s `DivIcon` layer type to make icons that render via Svelte components. Just use `L.DomUtil.create` to make a `div` element, put the Svelte component inside it, and then pass the `div` to `L.divIcon({ html: div })`. I don't usually find this very useful to do though.
 
 ## Map Controls
 
-Leaflet provides a few built-in controls that sit on top of the map, but sometimes you may want a custom control such as a toolbar. Again, this is straightforward using the Svelte component API.
+Leaflet provides some built-in controls that sit on top of the map, but sometimes you may want a custom control such as a toolbar. Again, this is straightforward using the Svelte component API.
 
-Leaflet’s `L.control` function returns a generic Leaflet control layer, which handles the positioning for you but has no other functionality built-in. You just implement its `onAdd` and `onRemove` functions to set up the content and whatever functionality to interact with the toolbar.
+Leaflet’s `L.control` function returns a generic Leaflet control layer set up to handles the positioning for you. You then implement its `onAdd` and `onRemove` functions to set up the content and whatever functionality to interact with the toolbar.
 
 This looks similar to the popup case, but control components are usually just created once, so I don’t bother to make a generic function for it like `bindPopup` above.
 
@@ -152,7 +157,7 @@ toolbar.onRemove = () => {
   }
 };
 
-// Sync some settings to the toolbar as they change.
+// If you want, sync some state to the toolbar as it changes.
 $: if(toolbarComponent) {
   toolbarComponent.$set({
     somePropToSetInTheToolbar
@@ -232,7 +237,7 @@ $: if(map) {
 
  If you have enough markers on your map to require a technique like this, you may also want to look at something like [Leaflet marker clustering](https://github.com/Leaflet/Leaflet.markercluster).
 
-I’ve just focused on Svelte-specific tips here, but there’s a lot more you can do with Leaflet. The [Leaflet Tutorials](https://leafletjs.com/examples.html) page is a great place to start!
+I’ve just focused on a few specific things here, but there’s a lot more you can do with Leaflet. The [Leaflet Tutorials](https://leafletjs.com/examples.html) page is a great place to start!
 
 <div data-component="Repl" data-prop-id="62271e8fda854e828f26d75625286bc3">
 
