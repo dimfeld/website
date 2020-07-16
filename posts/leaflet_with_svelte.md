@@ -127,7 +127,7 @@ You can do something very similar with Leaflet’s `DivIcon` layer type to make 
 
 Leaflet provides some built-in controls that sit on top of the map, but sometimes you may want a custom control such as a toolbar. Again, this is straightforward using the Svelte component API.
 
-Leaflet’s `L.control` function returns a generic Leaflet control layer set up to handles the positioning for you. You then implement its `onAdd` and `onRemove` functions to set up the content and whatever functionality to interact with the toolbar.
+The `L.control` function returns a generic Leaflet control layer set up to handles the positioning for you. You then implement its `onAdd` and `onRemove` functions to set up the content and whatever functionality to interact with the toolbar.
 
 This looks similar to the popup case, but control components are usually just created once, so I don’t bother to make a generic function for it like `bindPopup` above.
 
