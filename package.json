@@ -40,7 +40,7 @@
     "just-unique": "^3.2.0",
     "ky": "^0.20.0",
     "linkify-it": "^2.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "markdown-it": "^10.0.0",
     "markdown-it-abbr": "^1.0.4",
     "markdown-it-anchor": "^5.2.5",
