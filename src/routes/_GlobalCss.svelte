@@ -36,6 +36,13 @@
       @apply list-inside list-disc;
     }
 
+    article li ul,
+    article li ol {
+      margin-left: 2rem;
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+
     article p > img:only-child {
       @apply mx-auto;
     }
