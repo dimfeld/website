@@ -1,11 +1,11 @@
 ---
 title: SWR-Style Fetching with XState State Machines
-date: 2020-07-20
-draft: true
-cardImage:
+date: 2020-07-21
+cardImage: swr_with_xstate_card.png
 summary: Using state machines to intelligently refresh your data
 frontPageSummary: using state machines to intelligently refresh your data
 confidence: I’ve been using a variation of the code described here for a while in my company’s web application.
+cardImageFilter: saturate(300%)
 ---
 
 In this blog post, we'll use the [XState](https://xstate.js.org) library to create a state machine that implements a stale-while-revalidate data fetcher with automatic refresh when the data becomes stale.
@@ -16,7 +16,7 @@ Check it out at the [example website](https://swr-xstate.imfeld.dev).
 
 </div>
 
-> The code for this post is in [this Github repository](https://www.github.com/dimfeld/swr-xstate). If you’re already familiar with the concept of SWR, feel free to skip down to the [design section](#overview-of-the-design). And if you just want to get to the state machine part, go to [the Implementation](#implementation). Otherwise keep reading!
+> The code for this post is on [Github](https://www.github.com/dimfeld/swr-xstate). If you’re already familiar with the concept of SWR, feel free to skip down to the [design section](#overview-of-the-design). And if you just want to get to the state machine part, go to [the implementation](#implementation). Otherwise keep reading!
 
 # What is SWR and Why is It Useful?
 
@@ -438,9 +438,39 @@ delays: {
 }
 ```
 
-# All done!
+# Using it in an Application
 
-And that’s that. What could have been a complex piece of code with a bunch of fiddly bits and conditions is quite straightforward and easy to understand when implemented as a state machine.
+You can use this fetcher directly in a component and have the `receive` callback update the relevant component state. For data shared between components, I usually wrap the fetcher with a Svelte store, which looks roughly like this example:
+
+```js
+import { writable } from 'svelte/store';
+
+export function autoFetchStore({url, interval, initialDataFn}) {
+  var store = writable({},  () => {
+    // When we get our first subscriber, enable the store.
+    f.setEnabled(true);
+    // Then disable it when we go back to zero subscribers.
+    return () => f.setEnabled(false);
+  });
+
+  var f = fetcher({
+    key: url,
+    autoRefreshPeriod: interval,
+    fetcher: () => fetch(url).then((r) => r.json()),
+    receive: store.set,
+    initialData: initialDataFn,
+    initialEnabled: false,
+  });
+
+  return {
+    subscribe: store.subscribe,
+    destroy: f.destroy,
+    refresh: f.refresh,
+  };
+}
+```
+
+And that’s that! What could have been a complex piece of code with a bunch of fiddly bits and conditions is quite straightforward and easy to understand when implemented as a state machine.
 
 You can find the full version of the code here at [this Github repository](https://www.github.com/dimfeld/swr-xstate).
 
