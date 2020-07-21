@@ -51,7 +51,7 @@
     "rss": "^1.2.2",
     "sirv": "^0.4.2",
     "source-map-support": "^0.5.16",
-    "swr-xstate": "^1.0.0"
+    "swr-xstate": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.0",

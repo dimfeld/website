@@ -10,9 +10,7 @@ confidence: I’ve been using a variation of the code described here for a while
 
 In this blog post, we'll use the [XState](https://xstate.js.org) library to create a state machine that implements a stale-while-revalidate data fetcher with automatic refresh when the data becomes stale.
 
-Here's a really simple example of this fetcher that refreshes the data every five seconds with a new image from Unsplash.
-
-<div class="border bg-gray-100 p-4 shadow-lg" data-component="SwrXstateExample">
+<div class="my-2 border bg-gray-100 p-4 shadow-lg" data-component="SwrXstateExample">
 
 Check it out at the [example website](https://swr-xstate.imfeld.dev).
 
