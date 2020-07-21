@@ -6,9 +6,6 @@ module.exports = {
   preprocess: [
     sveltePreprocess({
       postcss: require('./postcss.config'),
-      typescript: {
-        transpileOnly: true,
-      },
       aliases: [['ts', 'typescript']],
     }),
   ],

@@ -5598,10 +5598,10 @@ svelte-preprocess-postcss@^1.1.1:
   dependencies:
     postcss-load-config "^1.2.0"
 
-svelte-preprocess@^3.2.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/svelte-preprocess/-/svelte-preprocess-3.4.0.tgz#bd21f2a26113b53a7d1ef5f1939a2d5b2e74a4af"
-  integrity sha512-XujaaZP777ivvlE+Oy8CnDySJRSWtWO2Okqa+gt93Xq92SLR0KwE9hLDPe0UzTwWEuMfIUi7xqAj9hAoub01tQ==
+svelte-preprocess@^4:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/svelte-preprocess/-/svelte-preprocess-4.0.8.tgz#d283218cd078b91419d7e11371d5f79060d07196"
+  integrity sha512-RNSwuk8chC9g1MZAkHPM+/LRc2jndBPph26GN3eWNkAVkGwwt6HNskcRkUn30ZW71my1vlhMhk2D5ajVcz8RmA==
   dependencies:
     "@types/pug" "^2.0.4"
     "@types/sass" "^1.16.0"
@@ -5638,6 +5638,13 @@ svgo@^1.0.0:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
+
+swr-xstate@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/swr-xstate/-/swr-xstate-1.0.0.tgz#daae5264879c79bcf4a580abef7856c45c667a9e"
+  integrity sha512-IsWoE/XyVn/kQWr/Yh9LeCdv2sArV0ZZFQ3Lp/a+fGNoyLHTecknZ1LED8T5c2FUIj2LnYRqktSdO2wmQO+CQQ==
+  dependencies:
+    xstate "^4.11.0"
 
 table@^5.2.3:
   version "5.4.6"
@@ -6024,6 +6031,11 @@ xml@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
   integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
+
+xstate@^4.11.0:
+  version "4.11.0"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.11.0.tgz#dc0bd31079fe22918c2c27c118d6310bef3dcd9e"
+  integrity sha512-v+S3jF2YrM2tFOit8o7+4N3FuFd9IIGcIKHyfHeeNjMlmNmwuiv/IbY9uw7ECifx7H/A9aGLcxPSr0jdjTGDww==
 
 xtend@^4.0.2, xtend@~4.0.1:
   version "4.0.2"

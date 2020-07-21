@@ -50,7 +50,8 @@
     "polka": "^0.5.2",
     "rss": "^1.2.2",
     "sirv": "^0.4.2",
-    "source-map-support": "^0.5.16"
+    "source-map-support": "^0.5.16",
+    "swr-xstate": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.0",
@@ -104,7 +105,7 @@
     "sapper": "^0.27.16",
     "svelte": "^3.24.0",
     "svelte-awesome": "^2.2.1",
-    "svelte-preprocess": "^3.2.0",
+    "svelte-preprocess": "^4",
     "svelte-preprocess-postcss": "^1.1.1",
     "svelte-rough-notation": "^0.1.4",
     "tailwindcss": "^1.4.0",

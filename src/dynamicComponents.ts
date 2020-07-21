@@ -13,6 +13,7 @@ const components = {
     import('./interactive/PostReplAddingStateMachineActions.svelte'),
   PostReplSingleElementEach: () =>
     import('./interactive/PostReplSingleElementEach.svelte'),
+  SwrXstateExample: () => import('./interactive/SwrXstate.svelte'),
 };
 
 async function instantiateComponent(element: Element) {
@@ -30,6 +31,8 @@ async function instantiateComponent(element: Element) {
       let componentImporter = components[value];
       if (componentImporter) {
         component = (await componentImporter()).default;
+      } else {
+        console.error(`Unknown dynamic component ${value}`);
       }
     } else if (attr.startsWith('data-prop-')) {
       let propName = attr.slice('data-prop-'.length);
