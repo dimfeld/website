@@ -182,7 +182,7 @@ The `always` key tells XState to run these transitions immediately, without wait
 
 ### XState Guards
 
-These transitions use the `cond` keyword, which indicates a condition that must be true for the transition to run. XState calls rhese conditions _guards_, and they look like this on our state machine configuration.
+These transitions use the `cond` keyword, which indicates a condition that must be true for the transition to run. XState calls these conditions _guards_, and they look like this on our state machine configuration.
 
 ```js
 guards: {
