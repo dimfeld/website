@@ -69,4 +69,24 @@
       </div>
     </div>
   {/each}
+
+  <h2>Other Minor Projects</h2>
+  <ul>
+    <li>
+      <a href="https://www.npmjs.com/package/sorters">Sorters</a>
+      is a compact package for generating Javascript array sort comparators that
+      handle things like null values, descending sort, and multi-level
+      comparisons. I wrote this as I've been moving away from heavyweight
+      utility packages.
+    </li>
+    <li>
+      <a href="https://swr-xstate.imfeld.dev/">SWR XState</a>
+      is a stale-while-revalidate data fetcher built with the
+      <a href="https://xstate.js.org">XState</a>
+      state machine library. Originally developed for internal use at my
+      company, it provides automatic periodic refreshes with browser focus
+      tracking, exponential backoff, and other nice features. I also wrote an
+      <a href="/writing/swr_with_xstate">article about the implementation.</a>
+    </li>
+  </ul>
 </article>
