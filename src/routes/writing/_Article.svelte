@@ -9,7 +9,8 @@
   import * as labels from '../../postMeta.ts';
   import { tick, getContext, onMount } from 'svelte';
   import instantiateComponents from '../../dynamicComponents';
-  getContext('title').set(title);
+  let titleStore = getContext('title');
+  $titleStore = title;
 
   let destroyComponents;
   let mounted = false;
