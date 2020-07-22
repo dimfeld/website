@@ -35,14 +35,14 @@ CSS has native support for defining values at runtime. Finalized in 2015, CSS va
 ```html
 <style>
   .note {
-    color: var(--note-color, --note-other-color, tomato);
+    color: var(--note-color, var(--note-other-color, tomato));
     background-color: var(--note-bg-color, lightgray);
   }
 </style>
 <p class="note">This is important!</p>
 ```
 
-CSS variables always start with `--`. The `var` function gets the value of a variable, and examines each argument in turn until it finds a variable that has a value. The final argument can be a constant value, which will be used if none of the other values have a value.
+CSS variables always start with `--`. The `var` function gets the value of a variable, and falls back to the second argument (the value after the comma) if the variable is not set. This fallback value can also be a variable reference.
 
 In this example an element with the class `note` will use the variables `--note-color` and `--note-bg-color` if they are set. The `color` attribute will fall back to `--note-other-color` if `--note-color` is not set, and finally fall back to the color `tomato`, while the `background-color` will use `lightgray` if `--note-bg-color` is not set.
 
