@@ -1,5 +1,7 @@
 ---
 title: Zoom-Independent Shapes in Leaflet
+summary: Making shapes that retain their size even when zooming in and out
+frontPageSummary: making shapes that retain their size even when zooming in and out
 date: 2020-07-30
 cardImage: leaflet-map-arrows.png
 cardImageFilter: saturate(200%)
