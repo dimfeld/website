@@ -23,6 +23,7 @@
 </script>
 
 <svelte:head>
+  <link rel="canonical" href="https://imfeld.dev/notes/{note.id}" />
   <meta
     name="Description"
     content={[`${note.title} by Daniel Imfeld`, note.summary]
