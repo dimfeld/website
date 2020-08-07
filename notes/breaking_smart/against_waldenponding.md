@@ -1,4 +1,4 @@
---- 
+---
 title: Against Waldenponding
 date: 2020-08-06
 ---
