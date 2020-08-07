@@ -3,7 +3,9 @@ title: Against Waldenponding
 date: 2020-08-06
 ---
 
-This term is a reference to Thoreau’s _Walden_, in which he experimented with complete self-reliance and removal from society. The modern version is similar, but more specifically an attempt to remove the pernicious influence of social media on one’s mind. Social media is seen as nothing more than a device to cause FOMO and shorten your attention spans so that you will click on ads as your mental state deteriorates. 
+[_Against Waldenponding_](https://breakingsmart.substack.com/p/against-waldenponding) is an issue of Venkatesh Rao's _Breaking Smart_ newsletter from 2018.
+
+The term "waldenponding" is a reference to Thoreau’s _Walden_, in which he experimented with complete self-reliance and removal from society. The modern version is similar, but more specifically an attempt to remove the pernicious influence of social media on one’s mind. Social media is seen as nothing more than a device to cause FOMO and shorten your attention spans so that you will click on ads as your mental state deteriorates. 
 
 Notably, those who Waldenpond do it not just as a periodic “device fast” or retreat, but as a fundamental aspect of their lives.
 
