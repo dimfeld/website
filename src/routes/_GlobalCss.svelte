@@ -16,7 +16,7 @@
     }
 
     article {
-      max-width: 95ch;
+      max-width: 65ch;
       @apply leading-relaxed ml-auto mr-auto;
     }
 
