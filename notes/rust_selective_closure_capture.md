@@ -1,5 +1,6 @@
 ---
-title: Rust Selective Closure Capture
+title: Selective Closure Capture in Rust
+summary: Move some values into a closure, and borrow others.
 date: 2020-08-10
 tags: rust
 ---
