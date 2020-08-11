@@ -12,7 +12,7 @@ You can solve this problem by creating new bindings for the by-reference values,
 let threads = vec![("referrers", "s"), ("referrals", "o")];
 
 crossbeam::thread::scope(|s| {
-    for &(description, field) in &threads {
+    for (description, field) in threads {
         // Get variables that we want to borrow explicitly as references so
         // that the closure moves only the references.
         let input_path = &input_path;
