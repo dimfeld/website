@@ -1,5 +1,5 @@
 ---
-title:  Integrate Vanilla JS libraries with state managers without going crazy
+title:  Clean integration of state managers with Vanilla JS libraries
 summary: Updating Imperative APIs from Declarative State
 frontPageSummary: updating imperative APIs from declarative state
 date: 2020-08-28
@@ -8,9 +8,9 @@ cardImage: imperative-apis-and-declarative-state.png
 
 ![Header image](/images/imperative-apis-and-declarative-state.png)
 
-Declarative and derived state management techniques are great for creating robust applications. Instead of a lot of error-prone updating and checking logic, they let you use much simpler code that always recreates the state from its component parts.
+Declarative and derived state management techniques make it a lot easier to create robust applications. Instead of a lot of error-prone updating and checking logic, each component just recreates its state each time something changes.
 
-Yet sometimes you need to interface with libraries that work imperatively. These libraries want to know specifically what to add and remove, which can be frustrating when you don't have an exact indication of what changed between the previous and current iterations of the state.
+But sometimes you need to interface with imperatively-controlled libraries, such as Leaflet maps. These libraries want to know specifically what to add and remove, which can be frustrating when you don't have an exact indication of what changed between the previous and current iterations of the state.
 
 Nearly every library that renders in the browser is doing things imperatively at some level. If the code uses a modern component framework, the framework itself may be managing that behavior. For example, Svelte's `#each` template handles changes in an array (the declarative state) by checking for changes and updating only the modified DOM elements (the imperative API).
 
@@ -20,7 +20,7 @@ It can feel unnatural and become messy to convert our declarative state into imp
 
 # Don't recreate the state every time
 
-The easiest way is to clear the imperative API's state and then add everything from the new state on every update. Many imperative APIs have a `clear` function that makes it easy to do.
+The easiest way is to take inspiration from the declarative style of state management. Just clear the imperative API's state and then add everything from the new state on every update. Many imperative APIs have a `clear` function that makes it easy to do.
 
 ```javascript
 api.clear();
@@ -34,13 +34,13 @@ This sort of works, and in some situations may even be acceptable. But it has do
 - Removing and adding objects that haven't changed may cause them to flash annoyingly.
 - The imperative API loses any internal state about objects.
 - It's inefficient when you have a lot of objects and only a few need to actually change.
-- It just feels wrong to do.
 
-Still, this can be acceptable when you're in the experimental "just get it working" phase but I usually wouldn't recommend shipping code that does this.
+I do this sometimes in the experimental "just get it working" phase but I usually wouldn't recommend shipping code that works this way.
 
 # Only update what changed
 
 We can't avoid leaking imperative calls into our code somewhere, but we can make it reasonable to deal with.
+
 The trick is to isolate the interaction with the imperative API to a single place, which runs whenever any of the declarative state has changed. This function either keeps its own record of what currently exists, or queries the imperative API if possible, and then reconciles the existing state with the new state.
 
 ```javascript
@@ -72,11 +72,12 @@ function update(newData) {
 }
 
 // In Svelte, something like this.
-$: activeItems = filteredItems(filters);
-$: update(activeItems);
+$: update(filteredItems(filters));
 ```
 
 The possible downside of this technique is that whenever anything changes, you need to iterate over every item in the old and new data collections. Realistically, this is rarely an issue, but with many thousands of items in the state you may need to manage it in a more bespoke fashion if you encounter performance problems.
+
+As always, if you suspect that the reconciliation is causing performance issues, a quick visit to the DevTools profiler should make it pretty clear.
 
 # Make it Reusable
 
@@ -122,7 +123,7 @@ let updateItems = updater({
   remove: (key) => api.remove(key),
   // These are optional
   update: (key,data) => api.update(key, data),
-  isEqual: (a, b) => a.data.localeCompare(b.data),
+  isEqual: (a, b) => a.data == b.data,
 });
 
 $: activeItems = filteredItems(filters);
