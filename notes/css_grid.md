@@ -1,6 +1,7 @@
 ---
 title: CSS Grid
 date: 2020-08-30
+tags: CSS, cheat_sheet
 ---
 
 This is a compressed version of the overview at https://scotch.io/tutorials/deep-dive-into-css-grid-2.
