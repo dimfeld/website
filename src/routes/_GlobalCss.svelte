@@ -36,9 +36,9 @@
       @apply list-inside list-disc;
     }
 
-    article li ul,
-    article li ol {
-      margin-left: 2rem;
+    article ul li,
+    article ol li {
+      margin-left: 0.5rem;
       margin-top: 0px;
       margin-bottom: 0px;
     }
@@ -49,20 +49,6 @@
 
     blockquote {
       @apply border-l-4 border-teal-600 -ml-2 pl-3 pr-4 my-4 italic;
-    }
-
-    @screen sm {
-      article ul > li {
-        @apply list-outside;
-      }
-
-      article ol > li {
-        @apply list-outside;
-      }
-
-      blockquote {
-        @apply -ml-5 pl-7 pr-0;
-      }
     }
 
     code,
@@ -197,6 +183,19 @@
       right: 50%;
       margin-left: -47.5vw;
       margin-right: -47.5vw;
+    }
+  }
+
+  @screen sm {
+    html {
+      article ul li,
+      article ol li {
+        margin-left: 0rem;
+      }
+
+      blockquote {
+        @apply -ml-4 pl-6 pr-0;
+      }
     }
   }
 </style>
