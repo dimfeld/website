@@ -1,4 +1,4 @@
-import 'source-map-support';
+import 'source-map-support/register';
 import path from 'path';
 import sirv from 'sirv';
 import polka from 'polka';

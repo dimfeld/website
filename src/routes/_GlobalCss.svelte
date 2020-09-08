@@ -190,7 +190,7 @@
     html {
       article ul li,
       article ol li {
-        margin-left: 0rem;
+        @apply list-outside ml-0;
       }
 
       blockquote {

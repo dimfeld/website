@@ -22,6 +22,7 @@ const onwarn = (warning, onwarn) => {
   }
 
   return (
+    (warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
     (warning.code === 'CIRCULAR_DEPENDENCY' &&
       /(?:[/\\]@sapper|node_modules)[/\\]/.test(warning.message)) ||
     onwarn(warning)

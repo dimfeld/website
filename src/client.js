@@ -1,5 +1,4 @@
 import * as sapper from '@sapper/app';
-import 'whatwg-fetch';
 
 sapper
   .start({

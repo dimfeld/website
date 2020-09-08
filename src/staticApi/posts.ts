@@ -30,16 +30,22 @@ function stripContent(p: Post) {
 
 export var postCache: PostCache;
 
-export async function initPostCache() {
+function readDevTo() {
   let devtoApiKey = process.env.DEVTO_API_KEY;
+  if (devtoApiKey) {
+    return got('https://dev.to/api/articles/me/published', {
+      headers: { api_key: devtoApiKey },
+    }).json<DevToArticle[]>();
+  } else {
+    return [];
+  }
+}
+
+export async function initPostCache() {
   let [postList, noteList, devtoArticleList] = await Promise.all([
     readMdFiles(postsDir, 'post'),
     readMdFiles(notesDir, 'note'),
-    devtoApiKey
-      ? got('https://dev.to/api/articles/me/published', {
-          headers: { api_key: devtoApiKey },
-        }).json<DevToArticle[]>()
-      : [],
+    readDevTo(),
   ]);
 
   let devtoArticles: _.Dictionary<DevToArticle> = {};
