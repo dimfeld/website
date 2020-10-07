@@ -34,6 +34,9 @@
     content={[`${post.title} by Daniel Imfeld`, post.summary]
       .filter(Boolean)
       .join(' - ')} />
+  {#if post.tags}
+    <meta name="keywords" content={post.tags.join(', ')} />
+  {/if}
   <meta property="og:title" content={post.title} />
   <meta name="twitter:title" content={post.title} />
   <meta name="twitter:creator" content="@dimfeld" />
