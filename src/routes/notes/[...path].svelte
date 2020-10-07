@@ -29,6 +29,9 @@
     content={[`${note.title} by Daniel Imfeld`, note.summary]
       .filter(Boolean)
       .join(' - ')} />
+  {#if note.tags}
+    <meta name="keywords" content={note.tags.join(', ')} />
+  {/if}
   <meta property="og:title" content={note.title} />
   <meta name="twitter:title" content={note.title} />
   <meta name="twitter:creator" content="@dimfeld" />

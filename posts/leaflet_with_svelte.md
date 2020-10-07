@@ -1,6 +1,7 @@
 ---
 title: Interactive Maps with Leaflet and Svelte
 date: 2020-07-16
+tags: Svelte
 cardImage: leaflet_with_svelte_card.png
 cardImageFilter: saturate(200%)
 ---

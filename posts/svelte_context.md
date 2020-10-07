@@ -1,6 +1,7 @@
 ---
 title: How and When to Use Component Context in Svelte
 date: 2020-06-19
+tags: Svelte
 cardImage:
 summary: Usage patterns and recommendations for Svelte context
 frontPageSummary: usage patterns and recommendations for context data in Svelte

@@ -1,6 +1,7 @@
 ---
 title: Dynamic CSS Classes in Svelte
 date: 2020-07-06
+tags: Svelte
 cardImage: svelte_dynamic_css_card.jpg
 cardImageFilter: saturate(100%)
 summary: A primer on CSS variables and using them from Svelte.

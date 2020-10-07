@@ -1,6 +1,7 @@
 ---
 title: Embedding Svelte Components
 date: 2020-05-27
+tags: Svelte
 summary: Using the Svelte JS API to embed components
 frontPageSummary: using the Svelte JS API to embed components
 cardImage: roll-my-own.png
