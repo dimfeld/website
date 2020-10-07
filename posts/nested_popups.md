@@ -6,11 +6,11 @@ cardImage: nested-popups.png
 cardImageFilter: opacity(80%) brightness(155%) saturation(200%)
 ---
 
-As I have written and designed more frontend code, I've become fond of using small popups instead of modal dialogs when there are only a few controls to show. This design tactic places the new interactions near the same place that the user is currently looking at, and interrupts the flow less than popping up an entire dialog when the interaction might just be one or two clicks.
+As I have written more frontend code, I've become fond of using small popups instead of modal dialogs when there are only a few controls to show. This design tactic places the new interactions near the same place that the user is currently looking at, and interrupts the flow less than popping up an entire dialog when the interaction might just be one or two clicks.
 
 ![](nested-popups.png)
 
-One thing that we want for these popups is that they should close when the user clicks anywhere outside the popup. This behavior, commonly referred to as "close on click outside," is usually simple to implement, but it can become tricky  when certain requirements intersect. I've developed a relatively easy method for handling the tricky behavior, so let's have a look!
+This kind of popup should close whenever the user clicks outside it. This behavior, commonly referred to as "close on click outside," is usually simple to implement, but it can be tricky when certain requirements intersect. I've developed a relatively easy method for handling the tricky behavior, so let's have a look!
 
 # Basic Close On Click Outside Implementation
 
