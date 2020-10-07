@@ -1,12 +1,28 @@
 ---
 title: "Suppress Svelte transitions with the #each hack"
 date: 2020-06-30
+updated: 2020-10-06
+tags: Svelte
 cardImage: svelte-single-element-each-2.png
 cardImageFilter: opacity(80%) brightness(155%)
 ---
 
 A common question I've seen in the [Svelte Discord](https://svelte.dev/chat) is how to force a component to recreate itself when some of its input data changes. I think this is usually an anti-pattern, but the technique to make it work does have some other interesting uses.
 
+
+# Update!
+
+As of Svelte 3.28, this sort of syntax is officially supported with the `{#key}` syntax:
+
+```svelte
+{#key expression}
+  <SomeComponent />
+{/key}
+```
+
+With this syntax, `SomeComponent` will be torn down and recreated every time the expression changes. Just like the single-element `#each` below, but simpler to understand.
+
+I've left the rest of the article below unchanged for now. The underlying techniques are the same, but the syntax is a lot nicer.
 
 # Single-element keyed #each
 
