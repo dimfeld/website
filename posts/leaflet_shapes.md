@@ -39,13 +39,13 @@ function lineCoordinates(map, from, to) {
   let fromPointOrig = map.latLngToLayerPoint(from);
   let toPointOrig = map.latLngToLayerPoint(to);
   let lineAngle = Math.atan2(
-	toPointOrig.y - fromPointOrig.y,
+    toPointOrig.y - fromPointOrig.y,
     toPointOrig.x - fromPointOrig.x
-  );
+  ) + Math.PI;
 
   return function calculatePoints() {
     return {
-	  line: [ from, to ],
+      line: [ from, to ],
       arrow: ... // TBD
     };
   };
@@ -85,10 +85,10 @@ return function calculatePoints() {
   let rightPoint = ...;
 
   return {
-	line: [ from, to ],
+    line: [ from, to ],
     arrow: [
-	  [ leftPoint, arrowTip, rightPoint ]
-	],
+      [ leftPoint, arrowTip, rightPoint ]
+    ],
   };
 };
 ```
@@ -123,20 +123,20 @@ For each line, we add it initially, and then also listen to `zoom` events from t
 let lines = [];
 
 function createLine(from, to) {
-	let calcLine = lineCoordinates(map, from, to);
-    let paths = calcLine();
-    let arrow = L.polyline(paths.arrow, { ...other options });
-    let line = L.polyline(paths.line, { ... other options });
+  let calcLine = lineCoordinates(map, from, to);
+  let paths = calcLine();
+  let arrow = L.polyline(paths.arrow, { ...other options });
+  let line = L.polyline(paths.line, { ... other options });
 
-	arrow.addTo(map);
-	line.addTo(map);
+  arrow.addTo(map);
+  line.addTo(map);
 
-	lines.push({ line, arrow, calcLine });
+  lines.push({ line, arrow, calcLine });
 }
 
 map.addEventListener('zoom', () => {
   for(let { arrow, calcLine } of lines) {
-	arrow.setLatLngs(linePath().arrow);
+    arrow.setLatLngs(linePath().arrow);
     arrow.redraw();
   }
 });
@@ -158,7 +158,7 @@ let lineLength = Math.sqrt(
 );
 
 let numArrows = lineLength > omitArrowThreshold ?
- Math.max(Math.floor(lineLength / minArrowSpacing), 1) : 0;
+  Math.max(Math.floor(lineLength / minArrowSpacing), 1) : 0;
 ```
 
 Once we know how many arrows to draw, we space them evenly along the line.
