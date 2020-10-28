@@ -52,7 +52,7 @@ function lineCoordinates(map, from, to) {
 }
 ```
 
-The line coordinates aren’t touched here, but in other applications we may want to alter them slightly so we’ll return then from the function as well.
+The line coordinates aren’t touched here, but other applications may need to alter them slightly so we’ll return them from the function as well.
 
 Let’s start out by making a single arrow and putting it at the center of the line.
 
