@@ -19,9 +19,9 @@ You can take advantage of this through `unique` constraints and also through `se
 
 # Isolation
 
-Transactions work on snapshots and two transactions executing at the same time don't interfere with each other.
+Transactions work on snapshots and two transactions executing at the same time don't interfere with each other, except in well-defined ways.
 
-There are a few different levels of isolation which exhibit different interaction phenomena.
+There are a few different levels of isolation, which exhibit different interaction phenomena.
 
 ## Interactions
 
@@ -67,7 +67,7 @@ In Postgres this is the default.
 
 All of these interactions are possible.
 
-Postgres doesn't actually implement this, so asking for it gives you the "Read Comitted" behavior.
+Postgres doesn't actually implement this, so asking for it gives you the "Read Committed" behavior.
 
 ## Performance
 
