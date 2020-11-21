@@ -27,7 +27,7 @@ There are a few different levels of isolation which exhibit different interactio
 
 #### Dirty Read
 
-In this mode, a read from one transaction can read data written by another ongoing transaction. In Postgres, this never actually happens, but the standard allows it.
+In this case, a read from one transaction can read data written by another ongoing transaction. In Postgres, this never actually happens, but the standard allows it in "read uncommitted" mode.
 
 #### Nonrepeatable Read
 
