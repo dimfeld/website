@@ -8,6 +8,8 @@ cardImage: imperative-apis-and-declarative-state.png
 
 ![Header image](/images/imperative-apis-and-declarative-state.png)
 
+**Update**: I now recommend [using DOMless Components](svelte_domless_components) instead to further encapsulate the imperative APIs and streamline development.
+
 Declarative and derived state management techniques make it a lot easier to create robust applications. Instead of a lot of error-prone updating and checking logic, each component just recreates its state each time something changes.
 
 But sometimes you need to interface with imperatively-controlled libraries, such as Leaflet maps. These libraries want to know specifically what to add and remove, which can be frustrating when you don't have an exact indication of what changed between the previous and current iterations of the state.

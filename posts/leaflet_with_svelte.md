@@ -6,6 +6,8 @@ cardImage: leaflet_with_svelte_card.png
 cardImageFilter: saturate(200%)
 ---
 
+**Update**: While the techniques here are still useful, I now recommend [using DOMless Components](svelte_domless_components) instead to further encapsulate the Leaflet API and streamline development.
+
 Leaflet is a popular Javascript library for interactive maps. Its API has a lot of features for making nice-looking and useful maps, but with some smart patterns in Svelte you can add extra interactivity to your maps without needing to step outside Svelte’s component model.
 
 This isn't intended to be a full tutorial on Leaflet, just a set of techniques for using it better with Svelte. The [Leaflet Tutorials](https://leafletjs.com/examples.html) have a lot of other useful things you can do.

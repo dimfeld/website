@@ -113,21 +113,17 @@
             step="100"
             bind:value={fetchDelay} />
         </div>
-
       </label>
     </div>
 
     <div class="flex-1 mt-2 sm:mt-0">
-
       <div>
         <span class="font-medium text-gray-800">Fetch Result:</span>
         {errorText || imageSrc}
-        {#if receivedStale}
-          <span class="font-bold">(stale)</span>
-        {/if}
+        {#if receivedStale}<span class="font-bold">(stale)</span>{/if}
       </div>
       <div class="border" style="width:200px;height:200px">
-        <img alt="image result" width="200" height="200" src={imageSrc} />
+        <img alt="result" width="200" height="200" src={imageSrc} />
       </div>
       <div class="text-sm font-medium text-gray-800">
         <div>
