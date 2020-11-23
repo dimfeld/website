@@ -35,12 +35,15 @@ function syncLines(linesMap, includedSet) {
 $: if(map) syncLines(lines, enabledIds);
 ```
 
-At the time I realized that this is similar to what Svelte's `#each` loop does to convert the "declarative" state of an array into the imperative "do stuff in the DOM and/or make components" code that the compiler generates, but it was a couple of months ago that I realized I could take advantage of this.
+At the time, I realized that this is similar to what Svelte's `#each` loop does to convert the *declarative* state of an array into the *imperative* "do stuff in the DOM and/or make components" code that the compiler generates.
+
+But it was a couple of months ago that I realized I could take advantage of that. This is much easier:
 
 ```svelte
 <script>
   $: lines = calculateLines(currentCity, activeCities);
 </script>
+
 <Leaflet>
   {#each lines as line}
     <Polyline latLngs={line.latLngs} color={line.color} />
@@ -48,23 +51,27 @@ At the time I realized that this is similar to what Svelte's `#each` loop does t
 </Leaflet>
 ```
 
-In this example, Svelte does most of the hard work of figuring out when to create and destroy Polylines. This is unusual, since Svelte components normally spend most of their time managing state around DOM elements, but a Polyline is created using a function call like `L.polyline(latLngs, { color }).addTo(map)`.
+In this example, Svelte does most of the hard work of figuring out when to create and destroy Leaflet elements like `Polyline`. This is unusual, since Svelte components normally spend most of their time managing DOM elements, while Leaflet's API instead interacts with the Leaflet map instance: `L.polyline(latLngs, { color }).addTo(map)`.
 
-The good news is that there is no actual requirement for the component to create DOM elements at all. Instead, something like this works just fine.
+The good news is that there is no actual requirement for the component to create DOM elements at all. Instead, something like this works just fine to manage a `Polyline` within a Svelte component.
 
 ```svelte
 <script lang="typescript">
 import * as L from 'leaflet';
 import { getContext, setContext, onDestroy } from 'svelte';
 
-// Here 'map' in the context returns the containing map
+// 'map' is set by the parent Leaflet component, and returns the
+// Leaflet map instance.
 const map = getContext('map')();
 
 export let latLngs;
 export let color;
 
+// Create the line when the component instantiates...
 export let line: L.Polyline =
   new L.Polyline(latLngs, { color }).addTo(map);
+
+// And remove the line when the component is torn down
 onDestroy(() => line.remove());
 
 // The real component would have all the relevant properties here.
@@ -72,6 +79,7 @@ $: style = { color };
 // Update the line when styles change.
 $: line.setStyle(style);
 
+// Move the line as needed.
 $: {
   line.setLatLngs(latLngs);
   line.redraw();
