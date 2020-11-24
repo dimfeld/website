@@ -8,6 +8,8 @@ cardImageFilter: saturate(200%)
 
 Previously I’ve written about using [Leaflet with Svelte](leaflet_with_svelte), and also about more generally [translating declarative state to imperative APIs](imperative_apis_and_declarative_state). Today I’m going to introduce another technique that makes this process much easier.
 
+You can find an interactive example of these techniques in [the Svelte REPL](https://svelte.dev/repl/36a84bbe2cf74c899ada6380e6e632d8?version=3.29.7) or embedded at the bottom of the page.
+
 My older attempts at translating this state looked somewhat complex:
 
 ```javascript
@@ -155,3 +157,9 @@ Whatever code we have around this to create lines and regions doesn’t need to 
 This is not only more idiomatic from a Svelte point of view, but makes developing applications and reading the resulting code much easier too. And of course, this sort of technique is not just limited to Leaflet. It can streamline the integration of any complex imperative API.
 
 If you found this interesting, you can see an entire demo application with more mapping components on [Github](https://github.com/dimfeld/svelte-leaflet-demo/) and also watch a [talk I gave](https://www.youtube.com/watch?v=-klB-EocorE&t=770s) about using these techniques to visualize geographic data with Svelte and Leaflet.
+
+<div data-component="Repl" data-prop-id="36a84bbe2cf74c899ada6380e6e632d8">
+
+And you can play around with a bunch of these techniques from this post in this [Svelte REPL example](https://svelte.dev/repl/36a84bbe2cf74c899ada6380e6e632d8?version=3.24.0).
+
+</div>
