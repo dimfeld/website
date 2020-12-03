@@ -1,10 +1,12 @@
 ---
-title: "DOMless Components: The Best Way to use Svelte with Leaflet and Other Imperative APIs"
+title: "Renderless Components: The Best Way to use Svelte with Leaflet and Other Imperative APIs"
 date: 2020-11-20
 tags: Svelte
 cardImage: leaflet_with_svelte_card.png
 cardImageFilter: saturate(200%)
 ---
+
+Update: I originally called these "DOMless" components, but everybody else uses the term "renderless" so I've updated the title to match.
 
 Previously I’ve written about using [Leaflet with Svelte](leaflet_with_svelte), and also about more generally [translating declarative state to imperative APIs](imperative_apis_and_declarative_state). Today I’m going to introduce another technique that makes this process much easier.
 
