@@ -4,10 +4,12 @@ import {
   postsDir,
   notesDir,
   readMdFiles,
+  readHtmlFiles,
   Post,
   DevToArticle,
 } from './readPosts';
 import send from '@polka/send-type';
+import sorter from 'sorters';
 import { Dictionary } from 'lodash';
 import { IncomingMessage, ServerResponse } from 'http';
 import md from '../markdown';
@@ -42,11 +44,22 @@ function readDevTo() {
 }
 
 export async function initPostCache() {
-  let [postList, noteList, devtoArticleList] = await Promise.all([
+  let [
+    mdPosts,
+    htmlPosts,
+    mdNotes,
+    htmlNotes,
+    devtoArticleList,
+  ] = await Promise.all([
     readMdFiles(postsDir, 'post'),
+    readHtmlFiles(postsDir, 'post'),
     readMdFiles(notesDir, 'note'),
+    readHtmlFiles(notesDir, 'note'),
     readDevTo(),
   ]);
+
+  let postList = [...mdPosts, ...htmlPosts];
+  let noteList = [...mdNotes, ...htmlNotes];
 
   let devtoArticles: _.Dictionary<DevToArticle> = {};
   for (let devtoArticle of devtoArticleList) {
@@ -54,11 +67,17 @@ export async function initPostCache() {
     devtoArticles[postId] = devtoArticle;
   }
 
-  postList = orderBy(postList, ['date', 'title'], ['desc', 'asc']);
-  noteList = orderBy(
-    noteList,
-    [(n) => n.updated || n.date, 'title'],
-    ['desc', 'asc']
+  postList.sort(
+    sorter(
+      { value: 'date', descending: true },
+      { value: 'title', descending: false }
+    )
+  );
+  noteList.sort(
+    sorter(
+      { value: (n) => n.updated || n.date, descending: true },
+      { value: 'title', descending: false }
+    )
   );
 
   let tags = new Map<string, Post[]>();
@@ -113,11 +132,15 @@ export function latestPost(req, res) {
 export function getPost(req, res) {
   let post = postCache.posts.get(req.params.id);
   if (post) {
+    let content =
+      post.format === 'md'
+        ? renderer(post.content, {
+            url: `/writing/${post.id}`,
+          })
+        : post.content;
     post = {
       ...post,
-      content: renderer(post.content, {
-        url: `/writing/${post.id}`,
-      }),
+      content,
     };
     send(res, 200, post);
   } else {
@@ -135,9 +158,13 @@ export function getNote(req, res: ServerResponse) {
   let post = postCache.notes.get(id);
 
   if (post) {
+    let content =
+      post.format === 'md'
+        ? renderer(post.content, { url: `/notes/${post.id}` })
+        : post.content;
     post = {
       ...post,
-      content: renderer(post.content, { url: `/notes/${post.id}` }),
+      content,
     };
 
     send(res, 200, post);
