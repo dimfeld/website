@@ -50,6 +50,7 @@
     "polka": "^0.5.2",
     "rss": "^1.2.2",
     "sirv": "^0.4.2",
+    "sorters": "^0.0.4",
     "source-map-support": "^0.5.16",
     "swr-xstate": "^1.0.1"
   },
