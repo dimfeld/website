@@ -4,11 +4,15 @@ import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
-import { terser } from 'rollup-plugin-terser';
-import { string } from 'rollup-plugin-string';
+import {terser} from 'rollup-plugin-terser';
+import {string} from 'rollup-plugin-string';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
+import * as path from 'path';
+import {spawn} from 'child_process';
+import {performance} from 'perf_hooks';
 import * as glob from 'glob';
+import * as colors from 'kleur';
 const svelteConfig = require('./svelte.config');
 
 const mode = process.env.NODE_ENV;
@@ -29,6 +33,94 @@ const onwarn = (warning, onwarn) => {
   );
 };
 
+function globalTailwindCssBuilder({
+  input = 'src/global.pcss',
+  output = 'static/global.css',
+  postcssConfigPath = `${process.cwd()}/postcss.config.js`,
+  sourcemap = false,
+  dev = false,
+}) {
+  let builder;
+  let rebuildNeeded = false;
+
+  const globalCSSWatchFiles = [
+    postcssConfigPath,
+    'tailwind.config.js',
+    input,
+  ].map((p) => path.resolve(p));
+
+  const buildGlobalCSS = () => {
+    if (builder) {
+      rebuildNeeded = true;
+      return;
+    }
+    rebuildNeeded = false;
+    const start = performance.now();
+
+    try {
+      builder = spawn('node', [
+        '--unhandled-rejections=strict',
+        path.join(__dirname, 'build-global-css.mjs'),
+        sourcemap,
+        postcssConfigPath,
+        input,
+        output,
+      ]);
+      builder.stdout.pipe(process.stdout);
+      builder.stderr.pipe(process.stderr);
+
+      builder.on('close', (code) => {
+        if (code === 0) {
+          const elapsed = parseInt(performance.now() - start, 10);
+          console.log(
+            `${colors.bold().green('✔ global css')} (${input} → ${output}${sourcemap === true ? ` + ${output}.map` : ''
+            }) ${colors.gray(`(${elapsed}ms)`)}`
+          );
+        } else if (code !== null) {
+          if (dev) {
+            console.error(`global css builder exited with code ${code}`);
+            console.log(colors.bold().red('✗ global css'));
+          } else {
+            throw new Error(`global css builder exited with code ${code}`);
+          }
+        }
+
+        builder = undefined;
+
+        if (rebuildNeeded) {
+          console.log(
+            `\n${colors
+              .bold()
+              .italic()
+              .cyan('something')} changed. rebuilding...`
+          );
+          buildGlobalCSS();
+        }
+      });
+    } catch (err) {
+      console.log(colors.bold().red('✗ global css'));
+      console.error(err);
+    }
+  };
+
+  let first = true;
+  return {
+    name: 'build-global-css',
+    buildStart() {
+      if (first) {
+        first = false;
+        buildGlobalCSS();
+      }
+      globalCSSWatchFiles.forEach((file) => this.addWatchFile(file));
+    },
+    watchChange(id) {
+      if (globalCSSWatchFiles.includes(id)) {
+        buildGlobalCSS();
+      }
+    },
+  };
+}
+
 const babelServerConfig = {
   babelHelpers: 'bundled',
   extensions: ['.js', '.mjs', '.html', '.svelte', '.ts'],
@@ -37,7 +129,7 @@ const babelServerConfig = {
     [
       '@babel/preset-env',
       {
-        targets: { node: 12 },
+        targets: {node: 12},
       },
     ],
     '@babel/preset-typescript',
@@ -57,7 +149,7 @@ const babelClientConfig = {
     [
       '@babel/preset-env',
       {
-        targets: dev ? { chrome: 83 } : { esmodules: true },
+        targets: dev ? {chrome: 83} : {esmodules: true},
       },
     ],
     '@babel/preset-typescript',
@@ -76,12 +168,12 @@ const babelClientConfig = {
 const watchPlugin = {
   name: 'watch-content',
   buildStart(id) {
-    let files = glob.sync(__dirname + '/posts/**/*.md');
-    for (let file of files) {
-      this.addWatchFile(file);
-    }
+    let files = [
+      ...glob.sync(__dirname + '/posts/**/*.md'),
+      ...glob.sync(__dirname + '/notes/**/*.md'),
+      ...glob.sync(__dirname + '/roam-pages/**/*.html'),
+    ];
 
-    files = glob.sync(__dirname + '/notes/**/*.md');
     for (let file of files) {
       this.addWatchFile(file);
     }
@@ -101,9 +193,10 @@ export default {
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       svelte({
-        dev,
-        hydratable: true,
-        emitCss: true,
+        compilerOptions: {
+          dev,
+          hydratable: true,
+        },
         preprocess: svelteConfig.preprocess,
       }),
       json(),
@@ -123,9 +216,11 @@ export default {
       babel(babelClientConfig),
 
       !dev &&
-        terser({
-          module: true,
-        }),
+      terser({
+        module: true,
+      }),
+
+      globalTailwindCssBuilder({sourcemap: true, dev}),
     ],
 
     onwarn,
@@ -142,8 +237,10 @@ export default {
         'process.env.NODE_ENV': JSON.stringify(mode),
       }),
       svelte({
-        generate: 'ssr',
-        dev,
+        compilerOptions: {
+          generate: 'ssr',
+          dev,
+        },
         preprocess: svelteConfig.preprocess,
       }),
       json(),
@@ -163,7 +260,7 @@ export default {
     ],
     external: Object.keys(pkg.dependencies).concat(
       require('module').builtinModules ||
-        Object.keys(process.binding('natives'))
+      Object.keys(process.binding('natives'))
     ),
 
     onwarn,

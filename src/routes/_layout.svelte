@@ -1,6 +1,4 @@
 <script>
-  import TailwindCss from './_TailwindCss.svelte';
-  import GlobalCss from './_GlobalCss.svelte';
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import Nav from './_Nav.svelte';
@@ -21,4 +19,3 @@
   <slot />
 </div>
 
-<GlobalCss />

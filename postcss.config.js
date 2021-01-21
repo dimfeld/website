@@ -40,7 +40,6 @@ module.exports = {
           /^responsive-svg$/,
           /^w-expanded/,
         ],
-
       }),
     production && require('cssnano'),
   ].filter(Boolean),
