@@ -4,6 +4,7 @@
   export let updated = undefined;
   export let confidence = undefined;
   export let devto = undefined;
+  export let source = undefined;
   export let content;
 
   import * as labels from '../../postMeta.ts';
@@ -46,9 +47,17 @@
   article .has-component > *:not(:last-child) {
     display: none;
   }
+
+  .roam-page ul.list-document {
+    list-style: none; 
+  }
+
+  .roam-page li ul > li {
+    margin-left: 2rem;
+  }
 </style>
 
-<article class="font-serif my-4 px-4 sm:px-0">
+<article class:roam-page={source === 'roam'} class="font-serif my-4 px-4 sm:px-0">
   <div class="mb-4 leading-tight">
     <h1 class="font-serif">{title}</h1>
 

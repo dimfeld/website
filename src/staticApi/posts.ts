@@ -66,6 +66,10 @@ export async function initPostCache() {
     readDevTo(),
   ]);
 
+  for (let page of roamPages) {
+    page.source = 'roam';
+  }
+
   // All roam-exported pages are together, so determine which ones are "posts"
   // by the presence of the Writing tag.
   let [roamPosts, roamNotes] = partition(roamPages, (p) =>
