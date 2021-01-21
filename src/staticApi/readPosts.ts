@@ -33,6 +33,7 @@ export interface Post {
   id: string;
   format: 'md' | 'html';
   type: 'post' | 'note';
+  source?: 'roam';
   title: string;
   tags: string[];
   date: string;
@@ -85,6 +86,7 @@ const glob = promisify(globMod);
 const baseDir = pkgDir.sync(__dirname) || process.cwd();
 export const postsDir = path.join(baseDir, 'posts');
 export const notesDir = path.join(baseDir, 'notes');
+export const roamDir = path.join(baseDir, 'roam-pages');
 
 export async function readMdFiles(
   basePath: string,

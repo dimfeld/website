@@ -10,3 +10,4 @@ static/workers
 
 .vercel
 .env
+*.edn
