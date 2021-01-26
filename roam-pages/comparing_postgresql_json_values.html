@@ -1,0 +1,18 @@
+---
+title: "Comparing PostgreSQL JSON Values"
+tags: SQL
+date: 2020-11-06
+updated: 2020-11-06
+---
+
+
+  <ul class="list-bullet">
+    <li id="Bv2CNvf7L">When comparing a JSON value to a non-JSON value, the easiest way is to use the text operators and coalesce.
+      <ul class="list-bullet">
+        <li id="EgbGQN478"><code>coalesce(a-&gt;&gt;&#39;value&#39;, &#39;0&#39;)::int &gt; 10</code></li>
+        <li id="9yTw5c_bf">This way, if the <code>coalesce</code> works whether the value is <code>null</code> or <code>null::jsonb</code>.</li>
+      </ul>
+    </li>
+  </ul>
+
+

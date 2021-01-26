@@ -1,0 +1,57 @@
+---
+title: "Rust Cheatsheet"
+tags: cheat sheet, Rust
+date: 2020-08-17
+updated: 2021-01-25
+---
+
+
+  <ul class="list-bullet">
+    <li id="s4twS0S3z"><a href="https://github.com/rust-unofficial/patterns">https://github.com/rust-unofficial/patterns</a> has a lot of patterns</li>
+    <li id="dOovSLl_v"><span class="rm-heading-2">Error Handling</span>
+      <ul class="list-bullet">
+        <li id="xMJRreXpD"><code>anyhow</code> is great for just merging random errors together when you don&#39;t really care otherwise and just want to get the error message out and all the various errors to have the same type. (i.e. most CLI utilities)</li>
+        <li id="7FtMhcnGV"><code>thiserror</code> is nice for structured error types where you want to add extra formatting or otherwise handle errors in a more detailed way.
+          <ul class="list-bullet">
+            <li id="KXdYv1TBZ">Can wrap an anyhow inside a thiserror as well</li>
+            <li id="TgLHLZ0ag"><pre><code><span class="hljs-source hljs-js">#<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">derive</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-support hljs-class hljs-error hljs-js">Error</span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">Debug</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span>
+<span class="hljs-variable hljs-other hljs-readwrite hljs-js">pub</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">enum</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">RequestError</span> <span class="hljs-meta hljs-block hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-js">{</span>
+  #<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">error</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-string hljs-quoted hljs-double hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&quot;</span>Invalid query string: {0}<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&quot;</span></span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span>
+  <span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">QueryStringError</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span>#<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-variable hljs-other hljs-readwrite hljs-js">from</span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">serde_qs</span>::<span class="hljs-support hljs-class hljs-error hljs-js">Error</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
+
+  #<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">error</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-variable hljs-other hljs-readwrite hljs-js">transparent</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span>
+  <span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">Other</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span>#<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-variable hljs-other hljs-readwrite hljs-js">from</span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">anyhow</span>::<span class="hljs-support hljs-class hljs-error hljs-js">Error</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
+<span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span></span></code></pre></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li id="84GS6ofUj"><span class="rm-heading-2">Partial Moves</span>
+      <ul class="list-bullet">
+        <li id="xvfCTr9ns">Rust doesn&#39;t allow moving part of a structure out, but there are better ways than just <code>clone</code>.</li>
+        <li id="mwkz7YR99">Use <code>mem::replace</code> to take items out from structures without needing to take ownership of the entire thing. </li>
+        <li id="IfWH4LhgU">Destructuring also helps when you want to eventually move all the items out of the structure.</li>
+      </ul>
+    </li>
+    <li id="nxo3PCTCo"><span class="rm-heading-2">Performance</span>
+      <ul class="list-bullet">
+        <li id="Nvq-IRBQF"><code>fxhash</code> crate is good for fast hashing that doesn&#39;t need to be cryptographically secure.</li>
+        <li id="AvK5PYpWl"><a href="https://nnethercote.github.io/perf-book/">Rust Performance Book</a></li>
+        <li id="i_28WH52k">Enable Link-time Optimization
+          <ul class="list-bullet">
+            <li id="lky8O-CVG"><pre><code><span class="hljs-source hljs-js"><span class="hljs-meta hljs-sequence hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-variable hljs-other hljs-object hljs-js">profile</span><span class="hljs-punctuation hljs-accessor hljs-js">.</span><span class="hljs-meta hljs-property hljs-object hljs-js">release</span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span>
+<span class="hljs-variable hljs-other hljs-readwrite hljs-js">lto</span> <span class="hljs-keyword hljs-operator hljs-assignment hljs-js">=</span> <span class="hljs-constant hljs-language hljs-boolean hljs-true hljs-js">true</span></span></code></pre></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li id="5Bg-u4Qft"><span class="rm-heading-2">Debugging</span>
+      <ul class="list-bullet">
+        <li id="SmN6FuYkl">Use the CodeLLDB extension in VS Code</li>
+        <li id="iYYHPrf7C">For vim, <a href="https://alpha2phi.medium.com/setting-up-neovim-for-rust-debugging-termdebug-and-vimspector-df749e1ba47c">https://alpha2phi.medium.com/setting-up-neovim-for-rust-debugging-termdebug-and-vimspector-df749e1ba47c</a> walks through the process of setting up CodeLLDB with the Vimspector plugin.</li>
+        <li id="3Owr4ddfq">In unit tests use <code>cargo test -- --nocapture</code> to show anything the tests write to stdout</li>
+      </ul>
+    </li>
+  </ul>
+
+

@@ -31,8 +31,9 @@ interface PostAttributes {
 
 export interface Post {
   id: string;
-  format: 'md' | 'svx';
+  format: 'md' | 'html';
   type: 'post' | 'note';
+  source?: 'roam';
   title: string;
   tags: string[];
   date: string;
@@ -85,7 +86,7 @@ const glob = promisify(globMod);
 const baseDir = pkgDir.sync(__dirname) || process.cwd();
 export const postsDir = path.join(baseDir, 'posts');
 export const notesDir = path.join(baseDir, 'notes');
-export const svelteGlob = path.join(baseDir, 'src/routes/writing/*.svx');
+export const roamDir = path.join(baseDir, 'roam-pages');
 
 export async function readMdFiles(
   basePath: string,
@@ -98,18 +99,13 @@ export async function readMdFiles(
   });
 }
 
-// export async function readSvelteFiles() {
-//   let filenames = await glob(svelteGlob);
-//   return Promise.all(
-//     filenames.map(async (f) => {
-//       let data = await fs.readFile(f);
-//       let { attributes } = frontMatter(data.toString());
-//       let id = path.basename(f).slice(0, -4);
-//       return {
-//         id,
-//         format: 'svx',
-//         ...attributes,
-//       };
-//     })
-//   );
-// }
+export async function readHtmlFiles(
+  basePath: string,
+  type: 'post' | 'note'
+): Promise<Post[]> {
+  let filenames = await glob(basePath + '/**/*.html');
+  let mdFiles = await Promise.all(filenames.map((f) => readPost(basePath, f)));
+  return mdFiles.filter(Boolean).map((file) => {
+    return { ...file!, type, format: 'html' };
+  });
+}
