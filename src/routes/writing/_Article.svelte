@@ -55,7 +55,7 @@
         Written
         <time>{date.slice(0, 10)}</time>
       {/if}
-      {#if updated}
+      {#if updated && updated !== date}
         &mdash; Updated
         <time>{updated.slice(0, 10)}</time>
       {/if}
