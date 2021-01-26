@@ -11,8 +11,8 @@ import {
 import partition from 'just-partition';
 import send from '@polka/send-type';
 import sorter from 'sorters';
-import {Dictionary} from 'lodash';
-import {IncomingMessage, ServerResponse} from 'http';
+import { Dictionary } from 'lodash';
+import { IncomingMessage, ServerResponse } from 'http';
 import md from '../markdown';
 import got from 'got';
 
@@ -32,7 +32,7 @@ export interface PostCache {
 }
 
 function stripContent(p: Post) {
-  let {content, ...rest} = p;
+  let { content, ...rest } = p;
   return rest;
 }
 
@@ -42,7 +42,7 @@ function readDevTo() {
   let devtoApiKey = process.env.DEVTO_API_KEY;
   if (devtoApiKey) {
     return got('https://dev.to/api/articles/me/published', {
-      headers: {api_key: devtoApiKey},
+      headers: { api_key: devtoApiKey },
     }).json<DevToArticle[]>();
   } else {
     return [];
@@ -91,14 +91,14 @@ export async function initPostCache() {
 
   postList.sort(
     sorter(
-      {value: 'date', descending: true},
-      {value: 'title', descending: false}
+      { value: 'date', descending: true },
+      { value: 'title', descending: false }
     )
   );
   noteList.sort(
     sorter(
-      {value: (n) => n.updated || n.date, descending: true},
-      {value: 'title', descending: false}
+      { value: (n) => n.updated || n.date, descending: true },
+      { value: 'title', descending: false }
     )
   );
 
@@ -114,6 +114,7 @@ export async function initPostCache() {
   for (let note of noteList) {
     noteOutput.set(note.id, note);
     for (let tag of note.tags) {
+      tag = tag.toLowerCase().replace(/[^a-zA-Z0-9]/g, '-');
       let tagNotes = tags.get(tag);
       if (tagNotes) {
         tagNotes.push(note);
@@ -137,9 +138,9 @@ export function allPosts(_req: Request, res: ServerResponse) {
 }
 
 export function latestPost(_req: Request, res: ServerResponse) {
-  let {content: postContent, ...post} = postCache.postList[0];
-  let {content: noteContent, ...note} = postCache.noteList[0];
-  let {content: _, ...lastCreatedNote} = maxBy(
+  let { content: postContent, ...post } = postCache.postList[0];
+  let { content: noteContent, ...note } = postCache.noteList[0];
+  let { content: _, ...lastCreatedNote } = maxBy(
     postCache.noteList,
     (p) => p.date
   )!;
@@ -157,8 +158,8 @@ export function getPost(req: Request, res: ServerResponse) {
     let content =
       post.format === 'md'
         ? renderer(post.content, {
-          url: `/writing/${post.id}`,
-        })
+            url: `/writing/${post.id}`,
+          })
         : post.content;
     post = {
       ...post,
@@ -182,7 +183,7 @@ export function getNote(req: Request, res: ServerResponse) {
   if (post) {
     let content =
       post.format === 'md'
-        ? renderer(post.content, {url: `/notes/${post.id}`})
+        ? renderer(post.content, { url: `/notes/${post.id}` })
         : post.content;
     post = {
       ...post,
@@ -196,9 +197,9 @@ export function getNote(req: Request, res: ServerResponse) {
 }
 
 export function noteTags(_req: Request, res: ServerResponse) {
-  let output: Dictionary<{posts: string[]}> = {};
+  let output: Dictionary<{ posts: string[] }> = {};
   for (let [tagName, tagPosts] of postCache.tags.entries()) {
-    output[tagName] = {posts: tagPosts.map((p) => p.id)};
+    output[tagName] = { posts: tagPosts.map((p) => p.id) };
   }
 
   send(res, 200, output);
@@ -211,7 +212,7 @@ export function getTag(req: Request, res: ServerResponse) {
   }
 
   let strippedNotes = tagNotes.map((note) => {
-    let {content, ...rest} = note;
+    let { content, ...rest } = note;
     return rest;
   });
 

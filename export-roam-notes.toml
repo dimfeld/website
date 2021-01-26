@@ -1,5 +1,5 @@
 # The Roam graph to open. This can either be an EDN file or a ZIP file containing one.
-file = "roam.zip"
+file = "/home/dimfeld/roam.zip"
 
 # Write the rendered pages into this directory
 output = "roam-pages"
@@ -29,13 +29,14 @@ allow_daily_notes = false
 # Additional tags to indicate that a page should be included. These tags will not be removed
 # from the rendered output.
 also = [
-  "UI",
+    
 ]
 
 # Pages that reference any of these pages will be excluded
 exclude = [
   "Areas",
-  "CV"
+  "CV",
+  "syntax-test"
 ]
 
 
@@ -60,6 +61,12 @@ exclude_tags = [
   "Done",
   "Readwise"
 ]
+
+omit_attributes = [
+  "Progress",
+  "Tags"
+]
+
 
 
 ##### Link Handling #####

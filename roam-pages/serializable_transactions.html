@@ -1,0 +1,17 @@
+---
+title: "Serializable Transactions"
+tags: programming, Database
+date: 2020-11-16
+updated: 2020-11-16
+---
+
+
+  <ul class="list-bullet">
+    <li id="lwVnICtTr"><span><strong class="rm-attr-ref">Author:</strong> Brandur Leach</span></li>
+    <li id="RutetiPfg"><span><strong class="rm-attr-ref">Source:</strong> <a href="https://brandur.org/http-transactions">https://brandur.org/http-transactions</a></span></li>
+    <li id="gveq4CzNp">Serializable transactions can catch all sorts of race conditions that normal transactions might not. They allow concurrent transactions to run as if they are running in serial.</li>
+    <li id="T0uFCDz_z">When transactions interfere, one will fail, so you need to have some retry logic or other handling for this.</li>
+    <li id="4Y7lznk4E">SQL: <code>Start transaction isolation level serializable</code></li>
+  </ul>
+
+

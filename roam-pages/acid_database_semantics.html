@@ -1,0 +1,103 @@
+---
+title: "ACID Database Semantics"
+tags: Database
+date: 2020-11-19
+updated: 2020-11-23
+---
+
+
+  <ul class="list-bullet">
+    <li id="miNov9NOQ"><span class="rm-heading-2">Atomicity</span>
+      <ul class="list-bullet">
+        <li id="oN0iAcBfR">Changes within a transaction are all-or-nothing.</li>
+        <li id="w6wUcJXOh">This lets you make multiple changes without having to handle failure at each point.</li>
+        <li id="AQfFL5QfN">Postgres implements this by tracking, for each tuple, what are the first and last transactions that should be able to see it. 
+          <ul class="list-bullet">
+            <li id="z-GfZEe7p">When there are multiple versions of a tuple active at once, for ongoing transactions, it tracks each one and then as transactions commit these tuples become inactive and are later emptied out during vacuuming.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li id="7PaALlpss"><span class="rm-heading-2">Consistency</span>
+      <ul class="list-bullet">
+        <li id="KSIeCKBDK">Each transaction leaves the database in a valid state.</li>
+        <li id="j19b5_rk-">There&#39;s no way to violate a <code>unique</code> constraint, for example.</li>
+        <li id="qMraqDrIM">You can take advantage of this through <code>unique</code> constraints and also through <code>serializable</code> isolation level transaction.</li>
+      </ul>
+    </li>
+    <li id="Q8XVLaBIb"><span class="rm-heading-2">Isolation</span>
+      <ul class="list-bullet">
+        <li id="H3r9FY0ZK">Transactions work on snapshots and two transactions executing at the same time don&#39;t interfere with each other.</li>
+        <li id="4l9iJ7QMr">There are a few different levels of isolation which exhibit different interaction phenomena.</li>
+        <li id="AY6BJZx6G">Interactions
+          <ul class="list-bullet">
+            <li id="n0qGIqOCV">Dirty Read
+              <ul class="list-bullet">
+                <li id="ZlUfkjDV7">In this case, a read from one transaction can read data written by another ongoing transaction. In Postgres, this never actually happens, but the standard allows it in &quot;read uncommitted&quot; mode.</li>
+              </ul>
+            </li>
+            <li id="svb3eRPog">Nonrepeatable Read
+              <ul class="list-bullet">
+                <li id="Yjn62LRVm">When a transaction commits, other transactions then start to see that data. So a transaction may read the same data twice with different results if another transaction commits while it&#39;s running.</li>
+              </ul>
+            </li>
+            <li id="C3ZUVsDY1">Phantom Read
+              <ul class="list-bullet">
+                <li id="Xgn4_Parq">Similar to nonrepeatable read, but affecting the set of rows returned by a query instead of just the data in those rows.</li>
+              </ul>
+            </li>
+            <li id="A_7AT0EKz">Serialization Anomaly
+              <ul class="list-bullet">
+                <li id="q9r7SAKAq">A successful group of transactions may leave the database in a state different from if they ran serially.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="UL_5ENURA">Isolation Levels
+          <ul class="list-bullet">
+            <li id="gfucpQlqS">Serializable
+              <ul class="list-bullet">
+                <li id="OGLtd5Ltm">None of the interactions will occur. The result is the same as if all the transactions ran one at a time.</li>
+                <li id="snpG7P-Hg">As with Repeatable Read, the client should be prepared to retry the transaction.</li>
+              </ul>
+            </li>
+            <li id="zRqUTYCjp">Repeatable Read
+              <ul class="list-bullet">
+                <li id="s5r1a2K3h">By the standard, this allows Phantom Read and Serialization Anomaly interactions to occur. </li>
+                <li id="WKUk9SAPE">In Postgres, only only Serialization Anomaly will actually occur.</li>
+                <li id="bDgL8EMxX">Realistically, this is implemented by cancelling transactions that would otherwise violate this. The client can then retry the transaction.</li>
+              </ul>
+            </li>
+            <li id="EfNi3z7es">Read Committted
+              <ul class="list-bullet">
+                <li id="G27Gl1T-u">Nonrepeatable Read, Phantom Read, and Serialization Anomaly can occur.</li>
+                <li id="YJ1oAUFZs">In Postgres this is the default.</li>
+              </ul>
+            </li>
+            <li id="Le8Q7Ee3J">Read Uncommitted
+              <ul class="list-bullet">
+                <li id="8c9oMQs0E">All of these interactions are possible. </li>
+                <li id="jetuz5VrM">In Postgres, Dirty Read never happens so this is actually the same as &quot;Read Committed&quot;.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="LfSSWunEV">There are performance implications to higher isolation levels, of course, but there are some ways to help here.
+          <ul class="list-bullet">
+            <li id="MomWRbYze">Transactions can be declared as read only, which simplifies the tracking.</li>
+            <li id="8enMX0s5d">Limit the number of connections.</li>
+            <li id="-foaHC7_4">Transactions should not be long-running.</li>
+            <li id="TzDdWSp-v">Don&#39;t use <code>SELECT FOR UPDATE</code> and similar locking techniques, inside serializable transactions because the transaction semantics already provide similar protections.</li>
+            <li id="enN8YE3hF">Sequential scans greatly increase the risk of serialization failures, so queries should use index scans whenever possible.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li id="UJZH3vAaL"><span class="rm-heading-2">Durability</span>
+      <ul class="list-bullet">
+        <li id="sgRmcJ5bc">Committed transactions can not be lost. Instead of fsyncing all the time, this is often implemented using a WAL which is faster to write to, and that allows recovery of any committed data in the canonical data store that was lost in a crash or unexpected reboot.</li>
+      </ul>
+    </li>
+  </ul>
+
+

@@ -1,0 +1,83 @@
+---
+title: "Roam EDN Structure"
+tags: Roam
+date: 2021-01-25
+updated: 2021-01-25
+---
+
+
+  <ul class="list-bullet">
+    <li id="_5CfTzgHW"><code>:block/children</code> - One entry for each block on a page</li>
+    <li id="A3vUv_OKB"><code>:log/id</code> - This appears on daily notes, and you can use the timestamp to determine which day the note is for.
+      <ul class="list-bullet">
+        <li id="qDV7gH1wZ"><pre><code><span class="hljs-source hljs-clojure">[82511 :block/uid &quot;01-14-2021&quot; 536905548]
+[82511 :create/email &quot;daniel@danielmfeld.com&quot; 536905548]
+[82511 :create/time 1610620052622 536905548]
+[82511 :edit/email &quot;daniel@danielmfeld.com&quot; 536905548]
+[82511 :edit/time 1610620066797 536905565]
+[82511 :log/id 1610620052621 536905548] <span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The timestamp
+</span>[82511 :node/title &quot;January 14th, 2021&quot; 536905548]</span></code></pre></li>
+      </ul>
+    </li>
+    <li id="JzA6Q0T3U"><code>:block/refs</code> - A list of UIDs referenced by a block, by links, hashtags, attributes, etc. Here we see the block reference in string format, as well as a &quot;refs&quot; value that indicates the actual block id.
+      <ul class="list-bullet">
+        <li id="fNecZ5foO"><pre><code><span class="hljs-source hljs-clojure"> [82509 :block/children 82528 536905570]
+ [82509 :block/open true 536905536]
+ [82509 :block/order 0 536905536]
+ [82509 :block/page 82508 536905537]
+ [82509 :block/parents 82508 536905537]
+ [82509 :block/refs 80137 536905571] <span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The page with UID mniPrpzKa
+</span> [82509 :block/string &quot;<span class="hljs-meta hljs-sexpr hljs-clojure">(<span class="hljs-meta hljs-sexpr hljs-clojure">(<span class="hljs-source hljs-symbol hljs-clojure">mniPrpzKa</span>)</span>)</span>&quot; 536905570]
+ [82509 :block/uid &quot;u_EGyfOOI&quot; 536905536]
+ [82509 :create/email &quot;daniel@danielmfeld.com&quot; 536905536]
+ [82509 :create/time 1610571818743 536905536]
+ [82509 :edit/email &quot;daniel@danielmfeld.com&quot; 536905536]
+ [82509 :edit/time 1610571818743 536905536]
+</span></code></pre></li>
+      </ul>
+    </li>
+    <li id="X0MspXO6B"><code>:entity/attrs</code> - A set of all attributes and values referenced in a page.
+      <ul class="list-bullet">
+        <li id="R6TfgmEMY">Each item in the set is a list of three maps.</li>
+        <li id="UuREYU42E">The <code>:value</code> of the second item is the attribute&#39;s UID.</li>
+        <li id="k1Ca46Fts">The <code>:value</code> of the third is the attribute&#39;s value, either a string or a UID. The rest all seem to be the page&#39;s UID.</li>
+        <li id="Ps2fdQG1o">If an attribute has multiple values (i.e. multiple hashtags) there will be one entry for each value of the attribute.</li>
+        <li id="RzLYWsC4l"><pre><code><span class="hljs-source hljs-clojure">[6367 :entity/attrs
+ @
+    <span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The current page
+</span>   [{:source [:block/uid &quot;BwqNL2PQq&quot;], :value [:block/uid &quot;BwqNL2PQq&quot;]}
+    <span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The UID of the attribute
+</span>   {:source [:block/uid &quot;4NH7hu_Ow&quot;], :value [:block/uid &quot;hcB3qiqqa&quot;]}
+    <span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The UID of the attribute&#39;s value (when it&#39;s a link/hashtag)
+</span>   {:source [:block/uid &quot;4NH7hu_Ow&quot;], :value [:block/uid &quot;x_lDM2Klh&quot;]}]
+ 
+   <span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The current page
+</span>  [{:source [:block/uid &quot;BwqNL2PQq&quot;], :value [:block/uid &quot;BwqNL2PQq&quot;]}
+   <span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The UID of the attribute
+</span>   {:source [:block/uid &quot;Hg3Z0L4ap&quot;], :value [:block/uid &quot;gNlp2UsOV&quot;]}
+   <span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The string value of the attribute
+</span>   {:source [:block/uid &quot;Hg3Z0L4ap&quot;], :value &quot; The Problems With Deliberate Practice&quot;]}}
+
+</span></code></pre></li>
+      </ul>
+    </li>
+    <li id="K2tZb57CH"><code>:attrs/lookup</code> - I haven&#39;t looked into this much yet, but it appears to link to blocks in the page that reference attributes, and also to the attributes themselves.
+      <ul class="list-bullet">
+        <li id="TaezENd3T"><pre><code><span class="hljs-source hljs-clojure"><span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The current page
+</span>[8718 :attrs/lookup 8718 536880551]
+<span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> A block in this page that references an attribute
+</span>[8718 :attrs/lookup 8766 536880551]
+<span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The id of an attribute referenced inside this page
+</span>[8718 :attrs/lookup 8946 536880551]
+[8718 :entity/attrs 
+ @
+   [{:source [:block/uid &quot;wWln_ysjZ&quot;], :value [:block/uid &quot;wWln_ysjZ&quot;]}
+    {:source [:block/uid &quot;RBlQZRu5V&quot;], :value [:block/uid &quot;uZNZalyHW&quot;]}
+    {:source [:block/uid &quot;RBlQZRu5V&quot;], :value &quot; https://scch.io/tutorials/deep-dive-into-css-grid-2&quot;}]
+  } 536880551]
+</span></code></pre></li>
+      </ul>
+    </li>
+  </ul>
+
+

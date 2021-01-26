@@ -46,7 +46,7 @@
   setContext('tags', tags);
 
   let tagData = map(tags, (val, key) => {
-    let label = capitalize(key.replace(/_/g, ' '));
+    let label = capitalize(key.replace(/-/g, ' '));
     return { id: key, label, ...val };
   });
   let tagList = orderBy(tagData, 'id');
