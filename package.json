@@ -30,7 +30,7 @@
     "front-matter": "^3.1.0",
     "glob": "^7.1.6",
     "got": "~11.5",
-    "highlight.js": "^10.1.1",
+    "highlight.js": "^10.4.1",
     "highlightjs-svelte": "^1.0.5",
     "just-camel-case": "^4.0.2",
     "just-capitalize": "^1.0.0",
