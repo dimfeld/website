@@ -29,7 +29,11 @@ allow_daily_notes = false
 # Additional tags to indicate that a page should be included. These tags will not be removed
 # from the rendered output.
 also = [
-    
+  "learning",
+  "svelte",
+  "SQL",
+  "database",
+  "Mental Models"
 ]
 
 # Pages that reference any of these pages will be excluded
@@ -39,6 +43,8 @@ exclude = [
   "syntax-test"
 ]
 
+# Include page embeds of pages that don't otherwise qualify for inclusion.
+include_all_page_embeds = true
 
 ##### Tags Output ####
 
@@ -59,7 +65,8 @@ exclude_tags = [
   "Inbox",
   "In Progress",
   "Done",
-  "Readwise"
+  "Readwise",
+  "Deliberate Practice"
 ]
 
 omit_attributes = [
@@ -87,6 +94,3 @@ base_url = "/notes"
 # When false (the default), it will be
 # written to books_notes_a_book.
 namespace_dirs = false
-
-# Include page embeds of pages that don't otherwise qualify for inclusion.
-include_all_page_embeds = false
