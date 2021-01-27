@@ -1,0 +1,44 @@
+---
+title: "Svelte Transitions"
+tags: svelte
+date: 2021-01-27
+updated: 2021-01-27
+---
+
+
+  <ul class="list-bullet">
+    <li id="h-takybRo"><span class="rm-heading-1">Useful Transitions</span>
+      <ul class="list-bullet">
+        <li id="6wfrEUg3M"><span class="rm-heading-2">Slide in from the side</span>
+          <ul class="list-bullet">
+            <li id="5TfmwHpEM"><pre><code><span class="hljs-source hljs-js"><span class="hljs-meta hljs-function hljs-declaration hljs-js"><span class="hljs-storage hljs-type hljs-function hljs-js">function</span> <span class="hljs-entity hljs-name hljs-function hljs-js">horzSlideTransition</span><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-js">(</span><span class="hljs-variable hljs-parameter hljs-function hljs-js">node</span><span class="hljs-punctuation hljs-separator hljs-parameter hljs-function hljs-js">,</span> <span class="hljs-meta hljs-block hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-js">{</span> <span class="hljs-variable hljs-parameter hljs-function hljs-js">duration</span> <span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-js">}</span></span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-js">)</span><span class="hljs-meta hljs-function hljs-declaration hljs-js"> </span></span><span class="hljs-meta hljs-block hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-js">{</span>
+  <span class="hljs-keyword hljs-control hljs-flow hljs-js">return</span> <span class="hljs-meta hljs-object-literal hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-js">{</span>
+    <span class="hljs-variable hljs-other hljs-readwrite hljs-js">duration</span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
+    <span class="hljs-meta hljs-function hljs-declaration hljs-js"><span class="hljs-meta hljs-object-literal hljs-key hljs-js"><span class="hljs-entity hljs-name hljs-function hljs-js">css</span></span><span class="hljs-punctuation hljs-separator hljs-key-value hljs-js">:</span> </span><span class="hljs-meta hljs-function hljs-declaration hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-js">(</span><span class="hljs-variable hljs-parameter hljs-function hljs-js">t</span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-js">)</span><span class="hljs-meta hljs-function hljs-declaration hljs-js"> </span><span class="hljs-storage hljs-type hljs-function hljs-arrow hljs-js">=&gt;</span></span> <span class="hljs-meta hljs-block hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-js">{</span>
+      <span class="hljs-comment hljs-line hljs-double-slash hljs-js"><span class="hljs-punctuation hljs-definition hljs-comment hljs-js">//</span> This always slides in from the right.
+</span>      <span class="hljs-storage hljs-type hljs-js">const</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">eased</span> <span class="hljs-keyword hljs-operator hljs-assignment hljs-js">=</span> <span class="hljs-constant hljs-numeric hljs-js">1</span> <span class="hljs-keyword hljs-operator hljs-arithmetic hljs-js">-</span> <span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">cubicOut</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-variable hljs-other hljs-readwrite hljs-js">t</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+      <span class="hljs-keyword hljs-control hljs-flow hljs-js">return</span> <span class="hljs-string hljs-template hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-template hljs-begin hljs-js">`</span>transform: translateX(</span><span class="hljs-meta hljs-template hljs-expression hljs-js"><span class="hljs-punctuation hljs-definition hljs-template-expression hljs-begin hljs-js">${</span></span><span class="hljs-meta hljs-template hljs-expression hljs-js"><span class="hljs-source hljs-js hljs-embedded hljs-expression"><span class="hljs-variable hljs-other hljs-readwrite hljs-js">eased</span> <span class="hljs-keyword hljs-operator hljs-arithmetic hljs-js">*</span> <span class="hljs-constant hljs-numeric hljs-js">100</span></span><span class="hljs-punctuation hljs-definition hljs-template-expression hljs-end hljs-js">}</span></span><span class="hljs-string hljs-template hljs-js">%)<span class="hljs-punctuation hljs-definition hljs-string hljs-template hljs-end hljs-js">`</span></span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+    <span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
+  <span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+<span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span>
+</span></code></pre></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li id="aUqJOS7fh"><span class="rm-heading-1">Deferred Transitions</span>
+      <ul class="list-bullet">
+        <li id="tEEY5UM3l">These can be useful for more advanced cases. </li>
+        <li id="1hLjWi8mB">They feel complicated, but basically your transition function does some initialization and then returns another function. 
+          <ul class="list-bullet">
+            <li id="MZdZ5WcYC">Svelte will call that function only once all other elements starting a transition at the same time have run their initialization.</li>
+            <li id="fOFP1U4Ut">This lets you set up some shared state between multiple transitioning elements.</li>
+          </ul>
+        </li>
+        <li id="ohTlEZPTc"><code>crossfade</code> is the deferred transition that comes with the Svelte library.</li>
+        <li id="F_lIXiDom"><a href="https://github.com/dimfeld/svelte-zoomable">svelte-zoomable</a> uses these extensively to coordinate multiple elements.</li>
+      </ul>
+    </li>
+  </ul>
+
+
