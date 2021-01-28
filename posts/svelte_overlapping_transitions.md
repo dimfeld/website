@@ -39,7 +39,7 @@ Then you just set up the transitions on your elements, and you're ready to go!
 </div>
 ```
 
-<div data-component="Repl" data-prop-id="92647d0aa8d94aae84e70e374405233d" data-prop-expanded-width="false">
+<div data-component="Repl" data-prop-id="92647d0aa8d94aae84e70e374405233d"> 
 </div>
 
 # Route Transitions
@@ -97,7 +97,7 @@ This same technique can be used to facilitate transitions between routes in a si
 </div>
 ```
 
-<div data-component="Repl" data-prop-id="c701f43b27ce4da1a189b08a8a250255" data-prop-expanded-width="false"></div>
+<div data-component="Repl" data-prop-id="c701f43b27ce4da1a189b08a8a250255"></div>
 
 
 I'll cover more advanced transition techniques in future posts. Thanks for reading!
