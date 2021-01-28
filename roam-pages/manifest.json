@@ -19,13 +19,17 @@
     "title": "Position:sticky for table headers",
     "uid": "o0778wUNh"
   },
+  "hiring_a_job_to_be_done": {
+    "title": "Hiring a Job to Be Done",
+    "uid": "pPgylZPHL"
+  },
   "the_feynman_technique_the_best_way_to_learn_anything": {
     "title": "The Feynman Technique: The Best Way to Learn Anything",
     "uid": "BDj6zKdWT"
   },
-  "glowing_text": {
-    "title": "Glowing Text",
-    "uid": "iVytkDshA"
+  "onboarding_design_for_switching": {
+    "title": "Onboarding Design for Switching",
+    "uid": "Ca_mB4wA4"
   },
   "git_cheatsheet": {
     "title": "Git Cheatsheet",
@@ -43,6 +47,10 @@
     "title": "Selective Closure Capture in Rust",
     "uid": "DywOZfFl5"
   },
+  "glowing_text": {
+    "title": "Glowing Text",
+    "uid": "iVytkDshA"
+  },
   "svg_dashes_around_the_edge_of_a_circle": {
     "title": "SVG Dashes around the edge of a Circle",
     "uid": "-UnEj3ZgC"
@@ -55,9 +63,9 @@
     "title": "The Problems With Deliberate Practice",
     "uid": "BwqNL2PQq"
   },
-  "web_scrapers": {
-    "title": "Web Scrapers",
-    "uid": "Q9iGjnPv8"
+  "linkedin_on_jobs_to_be_done": {
+    "title": "LinkedIn on Jobs to Be Done",
+    "uid": "pLNMqblvz"
   },
   "proximate_vs_root_causes": {
     "title": "Proximate vs. Root Causes",
@@ -71,13 +79,13 @@
     "title": "George Orwell - What is Fascism?",
     "uid": "-JABhCJ2F"
   },
+  "web_scrapers": {
+    "title": "Web Scrapers",
+    "uid": "Q9iGjnPv8"
+  },
   "overlapping_elements_with_css_grid": {
     "title": "Overlapping Elements with CSS Grid",
     "uid": "kNtKVi-oJ"
-  },
-  "database": {
-    "title": "database",
-    "uid": "7kOWYO_A0"
   },
   "sandbox_method": {
     "title": "Self-Education: Teach Yourself Anything with the Sandbox Method",
@@ -86,6 +94,10 @@
   "perceptual_exposure": {
     "title": "Perceptual Exposure",
     "uid": "FN_GXb-HA"
+  },
+  "jobs_to_be_done": {
+    "title": "Jobs to be Done",
+    "uid": "4RACPH2md"
   },
   "roam_edn_structure": {
     "title": "Roam EDN Structure",
@@ -110,6 +122,10 @@
   "hybrid_logical_clock": {
     "title": "Hybrid Logical Clock",
     "uid": "rdzniKz6K"
+  },
+  "mistakes_to_avoid_when_learning_jobs_to_be_done": {
+    "title": "Mistakes to Avoid when Learning Jobs to be Done",
+    "uid": "lpkKbEXkN"
   },
   "github_actions": {
     "title": "Github Actions",

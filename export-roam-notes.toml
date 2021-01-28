@@ -33,7 +33,8 @@ also = [
   "svelte",
   "SQL",
   "database",
-  "Mental Models"
+  "Mental Models",
+  "JTBD"
 ]
 
 # Pages that reference any of these pages will be excluded

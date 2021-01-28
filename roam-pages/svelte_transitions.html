@@ -32,7 +32,11 @@ updated: 2021-01-27
         <li id="1hLjWi8mB">They feel complicated, but basically your transition function does some initialization and then returns another function. 
           <ul class="list-bullet">
             <li id="MZdZ5WcYC">Svelte will call that function only once all other elements starting a transition at the same time have run their initialization.</li>
-            <li id="fOFP1U4Ut">This lets you set up some shared state between multiple transitioning elements.</li>
+            <li id="fOFP1U4Ut">This lets you set up some shared state between multiple transitioning elements.
+              <ul class="list-bullet">
+                <li id="wtiXqFE1V"><strong class="rm-bold">Important caveat</strong>: Elements that are transitioning but not in the same component may not always transition on the same tick.</li>
+              </ul>
+            </li>
           </ul>
         </li>
         <li id="ohTlEZPTc"><code>crossfade</code> is the deferred transition that comes with the Svelte library.</li>
