@@ -75,16 +75,22 @@
 
   <div class="flex flex-col sm:flex-row font-sans mt-4">
     <div class="flex flex-col sm:px-4">
-      <label class="text-sm font-medium text-gray-800 mt-2 flex items-center">
-        <Switch bind:value={enabled} />
+      <label
+        for="swr-enabled"
+        class="text-sm font-medium text-gray-800 mt-2 flex items-center">
+        <Switch id="swr-enabled" bind:value={enabled} />
         <span class="ml-1">Enable Fetcher</span>
       </label>
-      <label class="text-sm font-medium text-gray-800 mt-2 flex items-center">
-        <Switch bind:value={permitted} />
+      <label
+        for="swr-permitted"
+        class="text-sm font-medium text-gray-800 mt-2 flex items-center">
+        <Switch id="swr-permitted" bind:value={permitted} />
         <span class="ml-1">Permit Fetching</span>
       </label>
-      <label class="text-sm font-medium text-gray-800 mt-2 flex items-center">
-        <Switch bind:value={fetchSuccess} />
+      <label
+        for="swr-success"
+        class="text-sm font-medium text-gray-800 mt-2 flex items-center">
+        <Switch id="swr-success" bind:value={fetchSuccess} />
         <span class="ml-1">Fetch Succeeds</span>
       </label>
       <span class="inline-flex rounded-md shadow-sm mt-2">
@@ -95,23 +101,25 @@
           hover:text-gray-500 focus:outline-none focus:border-blue-300
           focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50
           transition ease-in-out duration-150 font-sans"
-          on:click={() => fetcher.refresh()}>
-          Force Refresh
-        </button>
+          on:click={() => fetcher.refresh()}> Force Refresh </button>
       </span>
-      <label class="text-sm mt-2 items-start flex flex-col space-y-1">
+      <label
+        for="swr-delay"
+        class="text-sm mt-2 items-start flex flex-col space-y-1">
         <div>
           <span class="font-medium text-gray-800">Fetch Delay</span>
           {fetchDelay}ms
         </div>
         <div>
           <input
+            id="swr-delay"
             class="text-teal-600"
             type="range"
             min="0"
             max="10000"
             step="100"
-            bind:value={fetchDelay} />
+            bind:value={fetchDelay}
+          />
         </div>
       </label>
     </div>
