@@ -21,6 +21,7 @@
   "dependencies": {
     "@dimfeld/svelte-lazyload": "^0.0.1",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@gerhobbelt/markdown-it-container": "^3.0.0-6",
     "@polka/send-type": "^0.5.2",
     "cheerio": "^1.0.0-rc.3",
     "compression": "^1.7.4",
