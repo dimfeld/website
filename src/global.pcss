@@ -185,7 +185,12 @@ html {
 
   .side-by-side {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    /* Mobile. See below for desktop layout */
+    grid-template-columns: 1fr;
+
+    place-items: stretch;
+    @apply my-4;
   }
 }
 
@@ -198,6 +203,28 @@ html {
 
     blockquote {
       @apply -ml-4 pl-6 pr-0;
+    }
+
+    .side-by-side {
+      grid-template-columns: minmax(30%, 60ch) minmax(70%, 1fr);
+      width: 95vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -47.5vw;
+      margin-right: -47.5vw;
+
+      .left {
+        @apply pr-2 mb-4;
+      }
+
+      pre {
+        @apply h-full w-full;
+      }
+
+      pre > code {
+        @apply h-full w-full my-0 block bg-cool-gray-200 text-black px-4 py-0 mt-0 mb-4 whitespace-pre-wrap overflow-x-auto shadow-none;
+      }
     }
   }
 }

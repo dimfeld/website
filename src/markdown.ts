@@ -82,7 +82,6 @@ export default function renderer() {
   };
 
   function renderSideBySide(tokens, idx, options, env, slf) {
-    console.dir(tokens[idx], { depth: null });
     let token = tokens[idx];
     let markup = token.markup;
     let markupTokens = r.parse(markup, env);
@@ -99,8 +98,11 @@ export default function renderer() {
     };
 
     for (token of markupTokens) {
-      console.dir(token, { depth: null });
       if (token.type === 'fence') {
+        if (!currentBlock.length) {
+          // If we get two fences in a row, add an empty block to go on the left.
+          currentBlock.push('');
+        }
         finishBlock();
         contentBlocks.push(
           `<div class="right">${slf.render([token], options, env)}</div>`
@@ -113,7 +115,6 @@ export default function renderer() {
     finishBlock();
 
     let final = contentBlocks.join('\n');
-    console.log(final);
     return final;
   }
 
