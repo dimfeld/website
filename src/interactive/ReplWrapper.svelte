@@ -10,6 +10,8 @@
   export let expandedWidth = true;
   export let lazy = true;
 
+  $: hasExternalLink = /^[a-z0-9]{32}$/.test(id);
+
   if (typeof expandedWidth === 'string') {
     expandedWidth = expandedWidth === 'true';
   }
@@ -84,6 +86,58 @@
   }
 </script>
 
+<svelte:window bind:innerWidth={windowWidth} />
+
+<div class:w-expanded-95={expandedWidth}>
+  <div
+    class="flex flex-col font-sans border border-gray-100 shadow-md rounded-lg"
+  >
+    <div
+      class="flex px-4 py-2 text-teal-800 border-b border-gray-200 items-start
+      sm:items-stretch"
+    >
+      {#if title}
+        <span>{title}</span>
+      {/if}
+      <div class="ml-auto flex space-x-2">
+        {#if hasExternalLink}
+          <a
+            class="inline-flex rounded-md shadow-sm hover:no-underline"
+            href="https://svelte.dev/repl/{id}"
+            target="_blank"
+            rel="noopener">
+            <button
+              type="button"
+              class="inline-flex items-center px-2.5 py-1.5 border border-gray-300
+          text-xs leading-4 font-medium rounded text-gray-700 bg-white
+          hover:text-gray-500 focus:outline-none focus:border-blue-300
+          focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50
+          transition ease-in-out duration-150">
+              Fork this REPL
+            </button>
+          </a>
+        {/if}
+        <span class="ml-2 inline-flex rounded-md shadow-sm">
+          <button
+            type="button"
+            class="inline-flex items-center px-2.5 py-1.5 border border-gray-300
+          text-xs leading-4 font-medium rounded text-gray-700 bg-white
+          hover:text-gray-500 focus:outline-none focus:border-blue-300
+          focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50
+          transition ease-in-out duration-150"
+            on:click={reset}> Reset </button>
+        </span>
+      </div>
+    </div>
+    <LazyLoad {height} visible={!lazy} on:visible={createRepl}>
+      {#if loading}
+        <div>Loading REPL...</div>
+      {/if}
+      <div class="svelte-repl" style="height:{height};" bind:this={container} />
+    </LazyLoad>
+  </div>
+</div>
+
 <style>
   .svelte-repl {
     @apply bg-white leading-snug;
@@ -95,36 +149,3 @@
       'Courier New', monospace;
   }
 </style>
-
-<svelte:window bind:innerWidth={windowWidth} />
-
-<div class:w-expanded-95={expandedWidth}>
-  <div
-    class="flex flex-col font-sans border border-gray-100 shadow-md rounded-lg">
-    <div
-      class="flex px-4 py-2 text-teal-800 border-b border-gray-200 items-start
-      sm:items-stretch">
-      {#if title}
-        <span>{title}</span>
-      {/if}
-      <span class="ml-auto inline-flex rounded-md shadow-sm">
-        <button
-          type="button"
-          class="inline-flex items-center px-2.5 py-1.5 border border-gray-300
-          text-xs leading-4 font-medium rounded text-gray-700 bg-white
-          hover:text-gray-500 focus:outline-none focus:border-blue-300
-          focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50
-          transition ease-in-out duration-150"
-          on:click={reset}>
-          Reset
-        </button>
-      </span>
-    </div>
-    <LazyLoad {height} visible={!lazy} on:visible={createRepl}>
-      {#if loading}
-        <div>Loading REPL...</div>
-      {/if}
-      <div class="svelte-repl" style="height:{height};" bind:this={container} />
-    </LazyLoad>
-  </div>
-</div>
