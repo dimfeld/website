@@ -14,4 +14,4 @@
   };
 </script>
 
-<Repl {data} id="single_element_each" expandedWidth={false} />
+<Repl {data} id="single_element_each" expandedWidth={true} />
