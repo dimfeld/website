@@ -900,6 +900,11 @@
     postcss "7.0.32"
     purgecss "^2.3.0"
 
+"@gerhobbelt/markdown-it-container@^3.0.0-6":
+  version "3.0.0-6"
+  resolved "https://registry.yarnpkg.com/@gerhobbelt/markdown-it-container/-/markdown-it-container-3.0.0-6.tgz#ff4fee658c20aec3bf1d2d6ea50f4d249d61bfb6"
+  integrity sha512-hIi5CsrpyIcBIz2r4+4rPt71S/z4Db49HzaMuV6ai2Y8kMz3SVFUDrINJm1xhq1+mgyWdMTm3LX0Wf1UbkkNhg==
+
 "@jest/types@^24.9.0":
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/@jest/types/-/types-24.9.0.tgz#63cb26cb7500d069e5a389441a7c6ab5e909fc59"

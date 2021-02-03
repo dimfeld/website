@@ -5,6 +5,7 @@ import footnote from 'markdown-it-footnote';
 import abbr from 'markdown-it-abbr';
 import toc from 'markdown-it-toc-done-right';
 import anchor from 'markdown-it-anchor';
+import container from '@gerhobbelt/markdown-it-container';
 import StateCore from 'markdown-it/lib/rules_core/state_core';
 
 hljsSvelte(highlight);
@@ -32,6 +33,9 @@ export default function renderer() {
       permalinkSymbol: '🔗',
       permalinkHref: (slug: string, state: StateCore) =>
         `${state.env.host}${state.env.url}#${slug}`,
+    })
+    .use(container, 'side-by-side', {
+      content: renderSideBySide,
     });
 
   r.renderer.rules.footnote_ref = function render_footnote_ref(
@@ -76,6 +80,43 @@ export default function renderer() {
     /* ↩ with escape code to prevent display as Apple Emoji on iOS */
     return `<a href="${env.url}#fnref${id}" class="footnote-backref">\u21a9\uFE0E</a>`;
   };
+
+  function renderSideBySide(tokens, idx, options, env, slf) {
+    let token = tokens[idx];
+    let markup = token.markup;
+    let markupTokens = r.parse(markup, env);
+    let contentBlocks: string[] = [];
+    let currentBlock: string[] = [];
+
+    const finishBlock = () => {
+      if (currentBlock.length) {
+        contentBlocks.push(
+          `<div class="left">${currentBlock.join('\n')}</div>`
+        );
+        currentBlock = [];
+      }
+    };
+
+    for (token of markupTokens) {
+      if (token.type === 'fence') {
+        if (!currentBlock.length) {
+          // If we get two fences in a row, add an empty block to go on the left.
+          currentBlock.push('');
+        }
+        finishBlock();
+        contentBlocks.push(
+          `<div class="right">${slf.render([token], options, env)}</div>`
+        );
+      } else {
+        currentBlock.push(slf.render([token], options, env));
+      }
+    }
+
+    finishBlock();
+
+    let final = contentBlocks.join('\n');
+    return final;
+  }
 
   let defaultNormalize = r.normalizeLink;
 
