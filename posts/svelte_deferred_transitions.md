@@ -1,7 +1,9 @@
 ---
-
 title: Coordinating Multiple Elements with Svelte Deferred Transitions
 date: 2021-01-31
+tags: Svelte
+cardImage: svelte_deferred_transitions_card.png
+cardImageFilter: opacity(80%) brightness(155%) saturation(200%)
 ---
 
 In this blog series I’m going to talk about how I implemented some complex transitions for the [svelte-zoomable](https://github.com/dimfeld/svelte-zoomable) experiment.
