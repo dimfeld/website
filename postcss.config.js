@@ -39,6 +39,7 @@ module.exports = {
           /^CodeMirror-/,
           /^responsive-svg$/,
           /^w-expanded/,
+          /side-by-side|left|right/,
         ],
       }),
     production && require('cssnano'),
