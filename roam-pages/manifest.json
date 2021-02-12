@@ -11,6 +11,10 @@
     "title": "Rust Cheatsheet",
     "uid": "-rX6CNtUC"
   },
+  "vanishing_gradient_problem": {
+    "title": "Vanishing Gradient Problem",
+    "uid": "Y4MUnhES0"
+  },
   "article_the_four_theories_of_truth_as_a_method_for_critical_thinking": {
     "title": "Article/The Four Theories of Truth as a Method for Critical Thinking",
     "uid": "N6d25J-5y"
@@ -51,17 +55,21 @@
     "title": "How to Read a Book: The Ultimate Guide by Mortimer Adler",
     "uid": "w8bMLKxLb"
   },
+  "activation_functions": {
+    "title": "Activation Functions",
+    "uid": "VWc_WoCXd"
+  },
   "selective_closure_capture_in_rust": {
     "title": "Selective Closure Capture in Rust",
     "uid": "DywOZfFl5"
   },
-  "onboarding_design_for_switching": {
-    "title": "Onboarding Design for Switching",
-    "uid": "Ca_mB4wA4"
-  },
   "svg_dashes_around_the_edge_of_a_circle": {
     "title": "SVG Dashes around the edge of a Circle",
     "uid": "-UnEj3ZgC"
+  },
+  "onboarding_design_for_switching": {
+    "title": "Onboarding Design for Switching",
+    "uid": "Ca_mB4wA4"
   },
   "glowing_text": {
     "title": "Glowing Text",
