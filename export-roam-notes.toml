@@ -67,7 +67,8 @@ exclude_tags = [
   "In Progress",
   "Done",
   "Readwise",
-  "Deliberate Practice"
+  "Deliberate Practice",
+  "Video"
 ]
 
 omit_attributes = [
