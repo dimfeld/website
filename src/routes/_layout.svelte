@@ -229,6 +229,11 @@
 
         .left {
           @apply pr-2 mb-4;
+
+          ul > li,
+          ol > li {
+            @apply list-inside;
+          }
         }
 
         pre {
@@ -236,7 +241,7 @@
         }
 
         pre > code {
-          @apply h-full w-full my-0 block bg-cool-gray-200 text-black px-4 py-0 mt-0 mb-4 whitespace-pre-wrap overflow-x-auto shadow-none;
+          @apply h-full w-full my-0 block bg-cool-gray-200 text-black px-4 py-0 whitespace-pre-wrap overflow-x-auto shadow-none;
         }
       }
     }
