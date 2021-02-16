@@ -192,17 +192,18 @@ Each of the above functions can be passed into our new version of `mutationOptio
 ```typescript
 export interface MutationOptions<
   DATA extends HasId,
-  VARIABLES = T,
+  VARIABLES = DATA,
   CONTEXT extends { previousData?: PreviousData } = {
     previousData?: PreviousData;
   }
 > {
   /** Invalidate and refetch these query keys after the mutation is done. */
-  invalidate?: QueryKey[];
+  invalidate?: (item: VARIABLES) => QueryKey[];
   /** A function that uses one or more of the optimisitic update functions above. */
   optimisticUpdates?: (
     client: QueryClient,
-    item: VARIABLES
+    item: VARIABLES,
+    isUpdating: boolean
   ) => Promise<PreviousData>;
 ```
 
@@ -210,13 +211,13 @@ We still want to allow mutations to have their own hooks, so we have `onMutate` 
 
 ```typescript
   onMutate?: UseMutationOptions<
-    T,
+    DATA,
     HTTPError,
     VARIABLES,
     Omit<CONTEXT, 'previousData'>
   >['onMutate'];
 
-  onSettled?: UseMutationOptions<T, HTTPError, VARIABLES, CONTEXT>['onSettled'];
+  onSettled?: UseMutationOptions<DATA, HTTPError, VARIABLES, CONTEXT>['onSettled'];
 }
 ```
 
@@ -224,22 +225,21 @@ And finally, our function. Aside from the extra Typescript syntax, this doesn't 
 
 ```typescript
 export function mutationOptions<
-  T extends HasId,
-  VARIABLES = T,
+  DATA extends HasId,
   CONTEXT extends { previousData?: PreviousData } = {
     previousData?: PreviousData;
   }
 >(
-  options: MutationOptions<T, VARIABLES, CONTEXT>
-): Partial<UseMutationOptions<T, HTTPError, VARIABLES, CONTEXT>> {
+  options: MutationOptions<DATA, DATA, CONTEXT>
+): Partial<UseMutationOptions<DATA, HTTPError, DATA, CONTEXT>> {
   let queryClient = useQueryClient();
 
   return {
-    async onMutate(data: VARIABLES) {
+    async onMutate(data: DATA) {
       let previousData: PreviousData | undefined;
 ```
 
-Perform the optimistic update. We pass `true` to the function to indicate the the update is happening. The functions above use this to set the `isUpdating` flag on the object.
+Perform the optimistic update. We pass `true` to the function to indicate tht the update is happening. The functions above use this to set the `isUpdating` flag on the object.
 
 ```typescript
       if (options.optimisticUpdates) {
@@ -273,8 +273,10 @@ If it worked, then call the optimistic update functions again, but this time wit
         await options.optimisticUpdates(queryClient, data, false);
       }
 
-      for (let key of options.invalidate ?? []) {
-        queryClient.invalidateQueries(key);
+      if(options.invalidate) {
+        for (let key of options.invalidate(variables)) {
+          queryClient.invalidateQueries(key);
+        }
       }
 
       return options.onSettled?.(data, error, variables, context);
@@ -290,25 +292,28 @@ With all this in place, it's relatively simple to create a mutation with optimis
 ```typescript
 export function updateTodoMutation() {
   return useMutation(
-    (todo: Todo) => ky.put(`api/todos/${todo.id}`, { json: todo }).json<Todo>(),
+    (todo: Todo) =>
+      ky.put(`api/todos/${todo.id}`, { json: todo }).json<Todo>(),
     mutationOptions({
-      notifications,
-      optimisticUpdates: (queryClient: QueryClient, todo: Todo) =>
-        Promise.all([
-          optimisticUpdateCollectionMember(queryClient, 'todos', todo),
-          optimisticUpdateSingleton(queryClient, ['todos', todo.id], todo),
-        ]),
+      optimisticUpdates:
+        (queryClient: QueryClient, todo: Todo, isUpdating: boolean) =>
+          Promise.all([
+            optimisticUpdateCollectionMember(queryClient, 'todos',
+              todo, isUpdating),
+            optimisticUpdateSingleton(queryClient, ['todos', todo.id],
+              todo, isUpdating),
+          ]),
+      invalidate: (todo: Todo) => ['todos', ['todos', todo.id] ],
     })
   );
 }
 ```
 
-Here the `optimisticUpdates` function just calls both `optimisticUpdateSingleton` and `optimisticUpdateCollectionMember` with the necessary parameters, and then that's it. Nice and easy.
+Here the `optimisticUpdates` function just calls both `optimisticUpdateSingleton` and `optimisticUpdateCollectionMember` with the necessary parameters. There's still a bit of boilerplate, but doing it this way makes it easy
+to add some custom behavior for a special case.
 
 Deleting an item works similarly. We make a mutation in much the same way, but call `optimisticDeleteCollectionMember` instead.
 
 An alternative version of the deletion function might add an `isDeleting` flag to the item, and then only actually remove it once the server confirms the deletion. This allows the application to look responsive , but prevents things from jumping around too much if a deletion fails.
 
 Both approaches are valid; it mostly depends on how likely it is for the server to reject a deletion in your particular application.
-
-
