@@ -3,21 +3,21 @@ title: Make Optimistic Updates Easy with svelte-query
 date: 2021-02-15
 ---
 
-I’ll use svelte-query for this article, but the techniques apply with little change to react-query as well.
 
-Most web applications allow the user to update or change data in some way.
+I've been playing around with the [svelte-query](https://sveltequery.vercel.app/) library lately and I've enjoyed its approach to caching and integrating mutations with queries. I've especially liked how it makes **optimistic updates** easy to do. (Note that this article should also apply to react-query with little change.)
 
-When a web application mutates a record or adds a new one, traditionally it will send the mutation, wait for the server to respond, and if it succeeds, then update the UI to reflect the change.
+Traditionally, a web application implements mutations by sending a request to the server, waiting for the result, and then updating the UI appropriately.
 
-This works fine, but the rise of client-side rendering allows for some nice tricks to increase the apparent responsiveness of the application. The “optimistic update” technique anticipates that a mutation will succeed, since in almost all systems this is very likely, and updates the UI immediately to reflect the anticipated state, even before the server has responded with the confirmation.
+This works fine, but the rise of client-side rendering allows for some nice tricks to increase the apparent responsiveness. The optimistic update technique anticipates that a mutation will succeed, since in almost all systems this is likely, and updates the interface immediately to reflect the anticipated state, even before the server has responded with the confirmation.
 
-This makes for a snappy UI, but it requires extra care when handling errors. With the traditional method of waiting for the server to respond, we just show an error and then don’t have anything more to do since the UI doesn’t yet reflect the rejected change. With optimistic updates, we not only need to tell the user that the server rejected the change, but also undo the optimistic update so that the UI accurately reflects the state once again.
+This makes for a snappy UI, but it requires extra care when handling errors. With the traditional method of waiting for the server to respond, we just show an error and then don’t have anything more to do. With optimistic updates, we not only need to show an error, but also undo the optimistic update so that the display accurately reflects the state once again.
 
-The svelte-query documentation describes just how simple it is to implement optimistic updates with the library. This block of code is taken directly from [the example](https://sveltequery.vercel.app/guides/optimistic-updates).
+The svelte-query documentation describes just how simple it is to implement optimistic updates with the library. This block of code is taken from [the example](https://sveltequery.vercel.app/guides/optimistic-updates).
 
 ```javascript
+import { useQueryClient, useMutation } from '@sveltestack/svelte-query';
 const queryClient = useQueryClient();
-useMutation(updateTodo, {
+useMutation(updateTodoFn, {
   // When mutate is called:
   onMutate: async (newTodo) => {
     // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
@@ -63,9 +63,6 @@ function mutationOptions({ key }) {
       return { previousData };
     },
     onSettled: (data, error, variables, context) => {
-      // Fetch the data again if
-      queryClient.invalidateQueries(key);
-
       if(error) {
         queryClient.setQueryData(key, context.previousData);
         // And also notify the user somehow.
@@ -85,13 +82,19 @@ Here we also have updated the function to set an `isUpdating` flag on an item, s
 
 # Multiple Updates
 
-Sometimes a piece of data may reside in multiple places. This mostly comes up when we have a query for a collection of items as well as a query for each individual item. In this case, the optimistic update should update the item in both places.
+Sometimes a piece of data may reside in multiple queries. This mostly comes up when we have a query for a collection of items as well as a query for each individual item. In this case, the optimistic update should update the item in both places.
 
 The really nice thing about handling it this way is that we also automatically handle updating the data for real in both places, so there’s no risk of them getting out of sync.
 
 Since we probably don’t have to handle this case in both places in every type of data, we can build another small abstraction in our `mutationOptions` function that will let us update one or both types, as needed.
 
-Here we'll also make it work with Typescript.
+Here's a Svelte REPL example demoing the concept.
+
+<div data-component="Repl" data-prop-id="8b7315b62b874c3f8079d2b1d4bedc07">
+
+</div>
+
+And now for a detailed walkthrough of the code.
 
 ::: side-by-side
 
@@ -105,9 +108,10 @@ import {
   useQueryClient,
 } from '@sveltestack/svelte-query';
 import { HTTPError } from 'ky-universal';
+
 ```
 
-I'll assume that any object used by this system has an `id` key, and that all the collections are objects where the key is the `id` of the object.
+We'll assume that any object used by this system has an `id` key, and that all the collections are objects where the key is the `id` of the object.
 
 Other systems may use arrays for this, so you would need to change the code a bit in that case.
 
@@ -115,15 +119,17 @@ Other systems may use arrays for this, so you would need to change the code a bi
 export interface HasId {
   id: string | number;
 }
+
 ```
 
-Our abstraction allows the use of one or more optimistic update functions. Each one returns a `[QueryKey, any]` to indicate the data to restore and which query key to restore it to in case of an error.
+Our abstraction allows the use of one or more optimistic update functions. Each one returns a `DataRestorer`, a function that will restore the original data in case of an error.
 
 ```typescript
-export type PreviousData = [QueryKey, any][];
+export type DataRestorer = () => void;
+
 ```
 
-This function is for updating single objects, where an example QueryKey might be `['todos', 5]`. Since the entire data for the query is just the object, there isn't much to do here.
+This function is for updating single objects, where an example `QueryKey` might be `['todos', 5]`. Since the entire data for the query is just the object, there isn't much to do here.
 
 ```typescript
 export async function optimisticUpdateSingleton<T extends HasId>(
@@ -131,13 +137,13 @@ export async function optimisticUpdateSingleton<T extends HasId>(
   key: QueryKey,
   data: T,
   isUpdating: boolean
-): Promise<[QueryKey, T | undefined]> {
+): Promise<DataRestorer> {
   await client.cancelQueries(key);
-  let thisOne = client.getQueryData<T>(key);
+  let original = client.getQueryData(key);
   client.setQueryData(key, { ...data, isUpdating });
-
-  return [key, thisOne];
+  return () => client.setQueryData(key, original);
 }
+
 ```
 
 This one is for the case we saw earlier where we are updating a single object in a collection of objects.
@@ -148,22 +154,42 @@ export async function optimisticUpdateCollectionMember<T extends HasId>(
   key: QueryKey,
   data: T,
   isUpdating: boolean
-): Promise<[QueryKey, Record<string, T> | undefined]> {
+): Promise<DataRestorer> {
   await client.cancelQueries(key);
-  let overall = client.getQueryData<Record<string, T>>(key);
+  let overall = client.getQueryData(key) || {};
+  let originalItem = overall[data.id];
+
   client.setQueryData(key, {
-    ...(overall || {}),
+    ...overall,
     [data.id]: {
       ...data,
       isUpdating,
     },
   });
 
-  return [key, overall];
-}
 ```
 
-And finally, a function that can be used for deletion mutations. This one optimistically deletes the object from the collection, and returns the old version of the collection for restoration, as needed.
+The restorer function here puts the original item back into the data collection, or
+removes the key completely if the item was not present before the mutation.
+
+```typescript
+  return () => client.setQueryData(key, (overall) => {
+    if(originalItem) {
+      return {
+        ...overall,
+        [data.id]: originalItem,
+      };
+    } else {
+      // The item was absent in the original data, so just delete it.
+      let { [data.id]: _, ...rest } = overall;
+      return rest;
+    }
+  });
+}
+
+```
+
+And finally, a function that can be used for deletion mutations. This one optimistically deletes the object from the collection, and the restore function puts it back.
 
 ```typescript
 export async function optimisticDeleteCollectionMember<T extends HasId>(
@@ -171,16 +197,23 @@ export async function optimisticDeleteCollectionMember<T extends HasId>(
   key: QueryKey,
   id: string,
   _isDeleting: boolean
-): Promise<[QueryKey, Record<string, T> | undefined]> {
-  await client.cancelQueries(key);
-  let overall = client.getQueryData<Record<string, T>>(key);
-  let { [id]: _, ...rest } = overall ?? {};
+): Promise<DataRestorer> {
+
+await client.cancelQueries(key);
+  let overall = client.getQueryData(key);
+  let { [id]: originalItem, ...rest } = overall ?? {};
   client.setQueryData(key, rest);
-  return [key, overall];
+
+  // The restore function puts the item back.
+  return () => client.setQueryData((overall) => ({
+    ...overall,
+    [id]: originalItem,
+  }));
 }
+
 ```
 
-Each of the above functions can be passed into our new version of `mutationOptions`. Here we describe the parameters that it takes.
+Each of the above functions can be used with our new version of `mutationOptions`. Here we describe the parameters that it takes.
 
 `svelte-query` uses four generic types:
 
@@ -193,8 +226,8 @@ Each of the above functions can be passed into our new version of `mutationOptio
 export interface MutationOptions<
   DATA extends HasId,
   VARIABLES = DATA,
-  CONTEXT extends { previousData?: PreviousData } = {
-    previousData?: PreviousData;
+  CONTEXT extends { previousData?: DataRestorer[] } = {
+    previousData?: DataRestorer[];
   }
 > {
   /** Invalidate and refetch these query keys after the mutation is done. */
@@ -204,7 +237,8 @@ export interface MutationOptions<
     client: QueryClient,
     item: VARIABLES,
     isUpdating: boolean
-  ) => Promise<PreviousData>;
+  ) => Promise<DataRestorer[]>;
+
 ```
 
 We still want to allow mutations to have their own hooks, so we have `onMutate` and `onSettled` options here. The hooks inside `mutationOptions` will call these as well, if they are provided.
@@ -219,6 +253,7 @@ We still want to allow mutations to have their own hooks, so we have `onMutate` 
 
   onSettled?: UseMutationOptions<DATA, HTTPError, VARIABLES, CONTEXT>['onSettled'];
 }
+
 ```
 
 And finally, our function. Aside from the extra Typescript syntax, this doesn't look too different from what we had above.
@@ -226,8 +261,8 @@ And finally, our function. Aside from the extra Typescript syntax, this doesn't 
 ```typescript
 export function mutationOptions<
   DATA extends HasId,
-  CONTEXT extends { previousData?: PreviousData } = {
-    previousData?: PreviousData;
+  CONTEXT extends { previousData?: DataRestorer[] } = {
+    previousData?: DataRestorer[];
   }
 >(
   options: MutationOptions<DATA, DATA, CONTEXT>
@@ -236,7 +271,7 @@ export function mutationOptions<
 
   return {
     async onMutate(data: DATA) {
-      let previousData: PreviousData | undefined;
+      let previousData: DataRestorer[] | undefined;
 ```
 
 Perform the optimistic update. We pass `true` to the function to indicate tht the update is happening. The functions above use this to set the `isUpdating` flag on the object.
@@ -261,8 +296,8 @@ In case of an error, iterate through our `previousData` and set each one back to
 ```typescript
       if(error && context?.previousData) {
         // Undo the optimistic update
-        for (let [key, data] of context.previousData) {
-          queryClient.setQueryData(key, data);
+        for (let restorer of context.previousData) {
+            restorer();
         }
 ```
 
@@ -272,7 +307,12 @@ If it worked, then call the optimistic update functions again, but this time wit
       } else if(options.optimisticUpdates) {
         await options.optimisticUpdates(queryClient, data, false);
       }
+```
 
+And if there are any other related keys to invalidate, we do that here. In general, I prefer to not invalidate the collection
+being updated, since it can lead to weird UI race conditions when updating multiple items at once.
+
+```typescript
       if(options.invalidate) {
         for (let key of options.invalidate(variables)) {
           queryClient.invalidateQueries(key);
@@ -287,7 +327,7 @@ If it worked, then call the optimistic update functions again, but this time wit
 
 :::
 
-With all this in place, it's relatively simple to create a mutation with optimistic updates.
+With all this in place, it's relatively simple to create a mutation with optimistic updates for all the relevant queries.
 
 ```typescript
 export function updateTodoMutation() {
@@ -303,7 +343,6 @@ export function updateTodoMutation() {
             optimisticUpdateSingleton(queryClient, ['todos', todo.id],
               todo, isUpdating),
           ]),
-      invalidate: (todo: Todo) => ['todos', ['todos', todo.id] ],
     })
   );
 }
@@ -312,8 +351,10 @@ export function updateTodoMutation() {
 Here the `optimisticUpdates` function just calls both `optimisticUpdateSingleton` and `optimisticUpdateCollectionMember` with the necessary parameters. There's still a bit of boilerplate, but doing it this way makes it easy
 to add some custom behavior for a special case.
 
-Deleting an item works similarly. We make a mutation in much the same way, but call `optimisticDeleteCollectionMember` instead.
+Deleting an item works similarly. We make a mutation in much the same way, but use `optimisticDeleteCollectionMember` instead.
 
-An alternative version of the deletion function might add an `isDeleting` flag to the item, and then only actually remove it once the server confirms the deletion. This allows the application to look responsive , but prevents things from jumping around too much if a deletion fails.
+An alternative version of the deletion function might add an `isDeleting` flag to the item, and then only actually remove it once the server confirms the deletion. This allows the application to look responsive, but prevents things from jumping around too much if a deletion fails.
 
 Both approaches are valid; it mostly depends on how likely it is for the server to reject a deletion in your particular application.
+
+So with that, we have a reusable system for building optimistic updates into our queries. With such a system in place, it's easy to then add additional functionality to all mutations, such as notifications or error reporting.
