@@ -1,0 +1,44 @@
+---
+title: "CSS Color Tricks"
+tags: CSS
+date: 2021-02-17
+updated: 2021-02-17
+---
+
+
+  <ul class="list-bullet">
+    <li id="AMJn4GLDP"><span><strong class="rm-attr-ref">Author:</strong> Una Kravetz</span></li>
+    <li id="3CW5AdD0w"><span><strong class="rm-attr-ref">Source:</strong> <a href="https://www.youtube.com/watch?v=VD108ccVDSY">https://www.youtube.com/watch?v=VD108ccVDSY</a></span></li>
+    <li id="nrw24PGmo">You can get a lot of flexibliity in color management by breaking HSL colors into a single CSS variable for each of H, S, and L.</li>
+    <li id="LxMgITPIE"><span class="rm-heading-2">Lightening and Darkening</span>
+      <ul class="list-bullet">
+        <li id="VRTTggflu">Simple effects just use <code>calc</code> to alter one or more attributes.</li>
+        <li id="KQxPdBlOz"><pre><code><span class="hljs-source hljs-css"><span class="hljs-meta hljs-selector hljs-css">hsl(
+  <span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">color-h</span></span>), 
+<span class="hljs-meta hljs-selector hljs-css">  <span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">color-s</span></span>),
+<span class="hljs-meta hljs-selector hljs-css">  calc(<span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">color-l</span></span>) +<span class="hljs-meta hljs-selector hljs-css"> <span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">lighten-factor</span></span>))
+)</span></code></pre></li>
+      </ul>
+    </li>
+    <li id="Xr-tIlwlc"><span class="rm-heading-2">Blending Colors</span>
+      <ul class="list-bullet">
+        <li id="y3GNfy8wB">Create a new color where each of H, S, and L is the average of the attribute from the two colors.</li>
+        <li id="IxtBwimKR"><pre><code><span class="hljs-source hljs-css"><span class="hljs-meta hljs-selector hljs-css">hsl(
+  calc((<span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">color1-h</span></span>) +<span class="hljs-meta hljs-selector hljs-css"> <span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">color2-h</span></span>)) / 2),
+<span class="hljs-meta hljs-selector hljs-css">  calc((<span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">color1-s</span></span>) +<span class="hljs-meta hljs-selector hljs-css"> <span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">color2-s</span></span>)) / 2),
+<span class="hljs-meta hljs-selector hljs-css">  calc((<span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">color1-l</span></span>) +<span class="hljs-meta hljs-selector hljs-css"> <span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">color2-l</span></span>)) / 2),
+)</span></code></pre></li>
+      </ul>
+    </li>
+    <li id="uJ52TXLQ1"><span class="rm-heading-2">Contrasting Text Color</span>
+      <ul class="list-bullet">
+        <li id="xUwQk39l_">This is a relatively simple hack but enough for a lot of cases.</li>
+        <li id="2kgdAbL3O">Take the luminance of the background color and tweak it to get black or white.</li>
+        <li id="GRC2qCemB"><pre><code><span class="hljs-source hljs-css">--<span class="hljs-meta hljs-selector hljs-css">contrastThreshold: 60%;
+--<span class="hljs-entity hljs-name hljs-tag hljs-css">switch</span>: calc((<span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">color-l</span></span>) -<span class="hljs-meta hljs-selector hljs-css"> <span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--contrastThreshold</span>))<span class="hljs-meta hljs-selector hljs-css"> <span class="hljs-entity hljs-name hljs-tag hljs-wildcard hljs-css">*</span> -100</span>);
+<span class="hljs-meta hljs-selector hljs-css">color: hsl(0, 0,<span class="hljs-entity hljs-name hljs-tag hljs-css">var</span>(--<span class="hljs-entity hljs-name hljs-tag hljs-css">switch</span></span>));</span></code></pre></li>
+      </ul>
+    </li>
+  </ul>
+
+
