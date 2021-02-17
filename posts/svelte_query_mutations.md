@@ -1,18 +1,24 @@
 ---
-title: Make Optimistic Updates Easy with svelte-query
+title: Easy Optimistic Updates with svelte-query
 date: 2021-02-15
+tags: Svelte
+cardImage: svelte_query_mutations_card.png
 ---
 
 
-I've been playing around with the [svelte-query](https://sveltequery.vercel.app/) library lately and I've enjoyed its approach to caching and integrating mutations with queries. I've especially liked how it makes **optimistic updates** easy to do. (Note that this article should also apply to react-query with little change.)
+I've been playing around with the [svelte-query](https://sveltequery.vercel.app/) library lately and I've enjoyed its approach to caching and integrating mutations with queries. I've especially liked how its hooks make **optimistic updates** easy. (Note that this article should also apply to react-query with little change.)
+
+# Optimistic Updates
 
 Traditionally, a web application implements mutations by sending a request to the server, waiting for the result, and then updating the UI appropriately.
 
-This works fine, but the rise of client-side rendering allows for some nice tricks to increase the apparent responsiveness. The optimistic update technique anticipates that a mutation will succeed, since in almost all systems this is likely, and updates the interface immediately to reflect the anticipated state, even before the server has responded with the confirmation.
+This works fine, but the rise of client-side rendering allows for some nice tricks to make our applications more responsive. The optimistic update technique anticipates success and updates the interface immediately to reflect the anticipated state, even before the server has responded with the confirmation.
 
-This makes for a snappy UI, but it requires extra care when handling errors. With the traditional method of waiting for the server to respond, we just show an error and then don’t have anything more to do. With optimistic updates, we not only need to show an error, but also undo the optimistic update so that the display accurately reflects the state once again.
+This makes for a snappy UI, but it requires extra care when handling errors. With the traditional method of waiting for the server to respond, we just show an error and then don’t have anything more to do. Here, we not only need to show an error, but also undo the optimistic update so that the display accurately reflects the state once again.
 
-The svelte-query documentation describes just how simple it is to implement optimistic updates with the library. This block of code is taken from [the example](https://sveltequery.vercel.app/guides/optimistic-updates).
+# Base Implementation
+
+The svelte-query documentation describes how to implement optimistic updates. This block of code is taken from [the example](https://sveltequery.vercel.app/guides/optimistic-updates).
 
 ```javascript
 import { useQueryClient, useMutation } from '@sveltestack/svelte-query';
@@ -65,7 +71,7 @@ function mutationOptions({ key }) {
     onSettled: (data, error, variables, context) => {
       if(error) {
         queryClient.setQueryData(key, context.previousData);
-        // And also notify the user somehow.
+        // In real code, also notify the user somehow.
       } else {
         // It succeeded, so just unset isUpdating.
         client.setQueryData((existing) => ({
@@ -80,13 +86,13 @@ function mutationOptions({ key }) {
 
 Here we also have updated the function to set an `isUpdating` flag on an item, so that the UI can mark it specially until the update is complete.
 
-# Multiple Updates
+# Updating Multiple Queries
 
-Sometimes a piece of data may reside in multiple queries. This mostly comes up when we have a query for a collection of items as well as a query for each individual item. In this case, the optimistic update should update the item in both places.
+Sometimes a piece of data may reside in multiple queries. This mostly comes up when we have a query for a collection of items as well as a query for each individual item, and the svelte-query documentation provides an [example of this](https://sveltequery.vercel.app/guides/initial-query-data#initial-data-from-cache). In this case, the optimistic update should update the item in both places.
 
 The really nice thing about handling it this way is that we also automatically handle updating the data for real in both places, so there’s no risk of them getting out of sync.
 
-Since we probably don’t have to handle this case in both places in every type of data, we can build another small abstraction in our `mutationOptions` function that will let us update one or both types, as needed.
+Since not every mutation will need to update multiple queries, we can change `mutationOptions` to take a list of update functions, and also provide functions to handle the common cases.
 
 Here's a Svelte REPL example demoing the concept.
 
