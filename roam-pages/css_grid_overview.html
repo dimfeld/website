@@ -28,81 +28,90 @@ updated: 2020-08-30
       </ul>
     </li>
     <li id="B49GeAK5j"><code>display:grid</code> sets the element to be a container for a grid layout.</li>
-    <li id="xgkpejZ1J"><code>grid-template-columns</code> defines the grid column layout
+    <li id="2oQrNJFF6"><span class="rm-heading-2">Row and Column Sizing</span>
       <ul class="list-bullet">
-        <li id="MS-faRlqq">It takes a variety of values.</li>
-        <li id="h4PiqMMsG"><code>100px 100px 100px</code> defines three columns each of 100px width, for example</li>
-      </ul>
-    </li>
-    <li id="sgYkAvVO6"><code>grid-template-rows</code> works just like <code>grid-template-columns</code> but for rows</li>
-    <li id="VWpkWVf2G">If either rows or columns is omitted, the widest/longest element in the row or column is used for all elements.</li>
-    <li id="A0FslkoR6"><code>grid-template</code> is shorthand for rows, columns, and <code>grid-template-areas</code></li>
-    <li id="Cg5aGeJfA"><code>fr</code> units
-      <ul class="list-bullet">
-        <li id="gVP1NeBDv">These units are new for Grid layout. <code>fr</code> stands for fraction, and <code>1fr</code> represents one unit of space out of the sum of the <code>fr</code> units. </li>
-        <li id="ZHec-SCIm">So <code>3fr 4fr 3fr</code> would be 10 in all with the space allocated proportionally.</li>
-        <li id="1uK7V-j99">When fixed units are used alongside fractions, the fixed units get their space and the rest is allocated proportionally to the fractions. </li>
-      </ul>
-    </li>
-    <li id="2v-YRyust"><code>grid-auto-columns</code> defines the size of columns not explicitly specified in the template. Likewise for <code>grid-auto-rows</code></li>
-    <li id="KH-t1p2FG"><code>grid-auto-flow</code> defines how grid cells are added into the grid. <code>row</code> is the default which means that they go horizontally filling a row first. <code>column</code> can also be used to go vertically.</li>
-    <li id="RHbEktc1S">Grid items can use <code>grid-row-start</code> and <code>grid-row-end</code> to define starting and ending grid indexes to span multiple grid spaces.</li>
-    <li id="dc9kTJJ6g"><code>grid-row</code> and <code>grid-column</code> are shorthand for the start and end properties
-      <ul class="list-bullet">
-        <li id="NBh16DjeA"><code>grid-column: 3 / 5</code> would start at column 3 and end at column 5</li>
-        <li id="_jAs6jFJO"><code>grid-area: rowstart / columnstart / rowend / columnend</code> can also be used</li>
-        <li id="iIx8W7H9d">You can use negative numbers to indicate offsets from the end: <code>1 / -1</code> would span the entire row or column.</li>
-        <li id="NFEt4uSIt">Instead of absolute widths you can use <code>span</code> to indicate widths.
+        <li id="Cg5aGeJfA"><code>fr</code> units
           <ul class="list-bullet">
-            <li id="Is_fYduCQ"><code>3 / span 2</code> to start at 3 with a width of 2, or <code>span 2/ 5</code> to end at 5 and go back 2 from there.</li>
+            <li id="gVP1NeBDv">These units are new for Grid layout. <code>fr</code> stands for fraction, and <code>1fr</code> represents one unit of space out of the sum of the <code>fr</code> units. </li>
+            <li id="ZHec-SCIm">So <code>3fr 4fr 3fr</code> would be 10 in all with the space allocated proportionally.</li>
+            <li id="1uK7V-j99">When fixed units are used alongside fractions, the fixed units get their space and the rest is allocated proportionally to the fractions. </li>
           </ul>
         </li>
+        <li id="91xxiDrCH"><code>minmax(min, max)</code> sets flexible sizing, with the size clamped to the values given.</li>
+        <li id="h55cNUbNi"><code>width: auto</code> tells the item to use as much space as possible given the constraints of the other items. As a minimum, it is similar to <code>width:min-content</code>.</li>
+        <li id="AKVoPuyvy"><code>width: fitcontent(200px)</code> works like <code>auto</code> but with a maximum size</li>
+        <li id="zhm2X6O0C">If a CSS grid column does not have an explicit width then its min-width ends up similar to <code>auto</code>. This can sometimes cause undesired issues, like with large images or <code>&lt;pre&gt;</code> tags, and so using something like <code>minmax(0px, 1fr)</code> can help here. </li>
       </ul>
     </li>
-    <li id="b3qwcVNxD"><code>grid-template-area</code>
+    <li id="LESKAaSEw"><span class="rm-heading-1">Grid Layout</span>
       <ul class="list-bullet">
-        <li id="feCLX4nNc">This allows you to name different areas of the grid</li>
-        <li id="ZwQ1g-Jxw"><pre><code><span class="hljs-source hljs-css"><span class="hljs-meta hljs-selector hljs-css"><span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">grid-template-areas</span>:
+        <li id="xgkpejZ1J"><code>grid-template-columns</code> defines the grid column layout
+          <ul class="list-bullet">
+            <li id="MS-faRlqq">It takes a variety of values.</li>
+            <li id="h4PiqMMsG"><code>100px 100px 100px</code> defines three columns each of 100px width, for example</li>
+          </ul>
+        </li>
+        <li id="sgYkAvVO6"><code>grid-template-rows</code> works just like <code>grid-template-columns</code> but for rows</li>
+        <li id="VWpkWVf2G">If either rows or columns is omitted, the widest/longest element in the row or column is used for all elements.</li>
+        <li id="A0FslkoR6"><code>grid-template</code> is shorthand for rows, columns, and <code>grid-template-areas</code></li>
+        <li id="2v-YRyust"><code>grid-auto-columns</code> defines the size of columns not explicitly specified in the template. Likewise for <code>grid-auto-rows</code></li>
+        <li id="KH-t1p2FG"><code>grid-auto-flow</code> defines how grid cells are added into the grid. <code>row</code> is the default which means that they go horizontally filling a row first. <code>column</code> can also be used to go vertically.</li>
+        <li id="RHbEktc1S">Grid items can use <code>grid-row-start</code> and <code>grid-row-end</code> to define starting and ending grid indexes to span multiple grid spaces.</li>
+        <li id="dc9kTJJ6g"><code>grid-row</code> and <code>grid-column</code> are shorthand for the start and end properties
+          <ul class="list-bullet">
+            <li id="NBh16DjeA"><code>grid-column: 3 / 5</code> would start at column 3 and end at column 5</li>
+            <li id="_jAs6jFJO"><code>grid-area: rowstart / columnstart / rowend / columnend</code> can also be used</li>
+            <li id="iIx8W7H9d">You can use negative numbers to indicate offsets from the end: <code>1 / -1</code> would span the entire row or column.</li>
+            <li id="NFEt4uSIt">Instead of absolute widths you can use <code>span</code> to indicate widths.
+              <ul class="list-bullet">
+                <li id="Is_fYduCQ"><code>3 / span 2</code> to start at 3 with a width of 2, or <code>span 2/ 5</code> to end at 5 and go back 2 from there.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="b3qwcVNxD"><code>grid-template-area</code>
+          <ul class="list-bullet">
+            <li id="feCLX4nNc">This allows you to name different areas of the grid</li>
+            <li id="ZwQ1g-Jxw"><pre><code><span class="hljs-source hljs-css"><span class="hljs-meta hljs-selector hljs-css"><span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">grid-template-areas</span>:
   &quot;<span class="hljs-entity hljs-name hljs-tag hljs-css">header</span>     <span class="hljs-entity hljs-name hljs-tag hljs-css">header</span>   <span class="hljs-entity hljs-name hljs-tag hljs-css">header</span>&quot;
   &quot;<span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">sidebar-1</span>  <span class="hljs-entity hljs-name hljs-tag hljs-css">content</span>  <span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">sidebar-2</span>&quot;
   &quot;<span class="hljs-entity hljs-name hljs-tag hljs-css">footer</span>     <span class="hljs-entity hljs-name hljs-tag hljs-css">footer</span>   <span class="hljs-entity hljs-name hljs-tag hljs-css">footer</span>&quot;;
 </span></span></code></pre></li>
-        <li id="37io77nkj">When cells have the same name, CSS combines them into a single area that spans multiple cells.</li>
-        <li id="bQHZXkEs2">You can then use <code>grid-area: header</code> to indicate that an element should go in a particular grid spot.</li>
-        <li id="FtbKh5jVy">A <code>.</code> can indicate that a cell should be empty.</li>
-        <li id="JLVbfoSS8"><code>grid-template</code> combines the areas with the sizes</li>
-        <li id="bsq7bHKRO"><pre><code><span class="hljs-source hljs-css"><span class="hljs-meta hljs-selector hljs-css"><span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">grid-template</span>:
+            <li id="37io77nkj">When cells have the same name, CSS combines them into a single area that spans multiple cells.</li>
+            <li id="bQHZXkEs2">You can then use <code>grid-area: header</code> to indicate that an element should go in a particular grid spot.</li>
+            <li id="FtbKh5jVy">A <code>.</code> can indicate that a cell should be empty.</li>
+            <li id="JLVbfoSS8"><code>grid-template</code> combines the areas with the sizes</li>
+            <li id="bsq7bHKRO"><pre><code><span class="hljs-source hljs-css"><span class="hljs-meta hljs-selector hljs-css"><span class="hljs-entity hljs-name hljs-tag hljs-custom hljs-css">grid-template</span>:
   &quot;<span class="hljs-entity hljs-name hljs-tag hljs-css">header</span> <span class="hljs-entity hljs-name hljs-tag hljs-css">header</span> <span class="hljs-entity hljs-name hljs-tag hljs-css">header</span>&quot; 80px
   &quot;<span class="hljs-entity hljs-name hljs-tag hljs-css">nav</span> <span class="hljs-entity hljs-name hljs-tag hljs-css">article</span> <span class="hljs-entity hljs-name hljs-tag hljs-css">article</span>&quot; 200px
    </span>/ 100<span class="hljs-meta hljs-selector hljs-css">px auto</span></span></code></pre></li>
-        <li id="KV2AKfrXY">The size at each line is the height of the row, and then the sizes after the slash at the end are the column widths.</li>
-        <li id="FHoXluLQm">You can also define the rows and columns separately
-          <ul class="list-bullet">
-            <li id="1CnWFOa0g"><pre><code><span class="hljs-source hljs-css"><span class="hljs-meta hljs-selector hljs-css"><span class="hljs-entity hljs-other hljs-attribute-name hljs-class hljs-css"><span class="hljs-punctuation hljs-definition hljs-entity hljs-css">.</span>grid</span> </span><span class="hljs-meta hljs-property-list hljs-css"><span class="hljs-punctuation hljs-section hljs-property-list hljs-css">{</span>
+            <li id="KV2AKfrXY">The size at each line is the height of the row, and then the sizes after the slash at the end are the column widths.</li>
+            <li id="FHoXluLQm">You can also define the rows and columns separately
+              <ul class="list-bullet">
+                <li id="1CnWFOa0g"><pre><code><span class="hljs-source hljs-css"><span class="hljs-meta hljs-selector hljs-css"><span class="hljs-entity hljs-other hljs-attribute-name hljs-class hljs-css"><span class="hljs-punctuation hljs-definition hljs-entity hljs-css">.</span>grid</span> </span><span class="hljs-meta hljs-property-list hljs-css"><span class="hljs-punctuation hljs-section hljs-property-list hljs-css">{</span>
   <span class="hljs-meta hljs-property-name hljs-css"><span class="hljs-support hljs-type hljs-property-name hljs-css">display</span></span><span class="hljs-punctuation hljs-separator hljs-key-value hljs-css">:</span><span class="hljs-meta hljs-property-value hljs-css"> </span><span class="hljs-meta hljs-property-value hljs-css"><span class="hljs-support hljs-constant hljs-property-value hljs-css">grid</span></span><span class="hljs-punctuation hljs-terminator hljs-rule hljs-css">;</span>
   <span class="hljs-meta hljs-property-name hljs-css"><span class="hljs-support hljs-type hljs-property-name hljs-css">grid-template-columns</span></span><span class="hljs-punctuation hljs-separator hljs-key-value hljs-css">:</span><span class="hljs-meta hljs-property-value hljs-css"> </span><span class="hljs-meta hljs-property-value hljs-css"><span class="hljs-constant hljs-numeric hljs-css">20<span class="hljs-keyword hljs-other hljs-unit hljs-css">px</span></span> <span class="hljs-constant hljs-numeric hljs-css">100<span class="hljs-keyword hljs-other hljs-unit hljs-css">px</span></span> [main-<span class="hljs-support hljs-constant hljs-property-value hljs-css">start</span>] <span class="hljs-constant hljs-numeric hljs-css">1<span class="hljs-keyword hljs-other hljs-unit hljs-css">fr</span></span> [main-<span class="hljs-support hljs-constant hljs-property-value hljs-css">end</span>] <span class="hljs-constant hljs-numeric hljs-css">100<span class="hljs-keyword hljs-other hljs-unit hljs-css">px</span></span> <span class="hljs-constant hljs-numeric hljs-css">20<span class="hljs-keyword hljs-other hljs-unit hljs-css">px</span></span></span><span class="hljs-punctuation hljs-terminator hljs-rule hljs-css">;</span>
   <span class="hljs-meta hljs-property-name hljs-css"><span class="hljs-support hljs-type hljs-property-name hljs-css">grid-template-rows</span></span><span class="hljs-punctuation hljs-separator hljs-key-value hljs-css">:</span><span class="hljs-meta hljs-property-value hljs-css"> </span><span class="hljs-meta hljs-property-value hljs-css"><span class="hljs-constant hljs-numeric hljs-css">100<span class="hljs-keyword hljs-other hljs-unit hljs-css">px</span></span> [main-<span class="hljs-support hljs-constant hljs-property-value hljs-css">start</span>] <span class="hljs-constant hljs-numeric hljs-css">100<span class="hljs-keyword hljs-other hljs-unit hljs-css">px</span></span> [main-<span class="hljs-support hljs-constant hljs-property-value hljs-css">end</span>] <span class="hljs-constant hljs-numeric hljs-css">100<span class="hljs-keyword hljs-other hljs-unit hljs-css">px</span></span></span><span class="hljs-punctuation hljs-terminator hljs-rule hljs-css">;</span>
 </span><span class="hljs-punctuation hljs-section hljs-property-list hljs-css">}</span></span></code></pre></li>
-            <li id="Xt6ra2a1F">So in this case the <code>main</code> area is named and the <code>[main-start]</code> and <code>[main-end]</code> delimiters specify its location and size.</li>
+                <li id="Xt6ra2a1F">So in this case the <code>main</code> area is named and the <code>[main-start]</code> and <code>[main-end]</code> delimiters specify its location and size.</li>
+              </ul>
+            </li>
           </ul>
         </li>
+        <li id="DFw0ree5B"><code>repeat</code> just repeats some layout some number of times.
+          <ul class="list-bullet">
+            <li id="_utjJed3z"><code>repeat(3, 1fr 2fr)</code>  expands to <code>1fr 2fr 1fr 2fr 1fr 2fr</code></li>
+            <li id="i1wYm_Cyi"><code>repeat</code> can be interspersed with other values too</li>
+            <li id="bbkQ6qsgB"><code>repeat(auto-fill, values)</code> repeats the values as much as possible without overflowing.</li>
+            <li id="cmdEaQ-QU"><code>auto-fit</code> works like <code>auto-fill</code> but empty tracks are collapsed.</li>
+            <li id="s4h6CoJQs"><code>grid-template-columns: repeat(auto-fill, minmax(50px, 1fr))</code> is a commonly-used technique to fit as many equally-spaced columns as possible, keeping a minimum width too.</li>
+          </ul>
+        </li>
+        <li id="2d_OyfZpK"><code>grid-row-gap</code> and <code>grid-column-gap</code> define spacing between cells</li>
+        <li id="q8g_iaJ4u"><code>order</code> sets the order in which cells appear if you want to do so explicitly.</li>
+        <li id="v31tQJ9bc"><code>grid-auto-flow: dense</code> can allow the grid system to place cells in the first empty grid spot, even if it’s before other items in the logical order.</li>
       </ul>
     </li>
-    <li id="DFw0ree5B"><code>repeat</code> just repeats some layout some number of times.
-      <ul class="list-bullet">
-        <li id="_utjJed3z"><code>repeat(3, 1fr 2fr)</code>  expands to <code>1fr 2fr 1fr 2fr 1fr 2fr</code></li>
-        <li id="i1wYm_Cyi"><code>repeat</code> can be interspersed with other values too</li>
-        <li id="bbkQ6qsgB"><code>repeat(auto-fill, values)</code> repeats the values as much as possible without overflowing.</li>
-        <li id="cmdEaQ-QU"><code>auto-fit</code> works like <code>auto-fill</code> but empty tracks are collapsed.</li>
-        <li id="s4h6CoJQs"><code>grid-template-columns: repeat(auto-fill, minmax(50px, 1fr))</code> is a commonly-used technique to fit as many equally-spaced columns as possible, keeping a minimum width too.</li>
-      </ul>
-    </li>
-    <li id="2d_OyfZpK"><code>grid-row-gap</code> and <code>grid-column-gap</code> define spacing between cells</li>
-    <li id="q8g_iaJ4u"><code>order</code> sets the order in which cells appear if you want to do so explicitly.</li>
-    <li id="91xxiDrCH"><code>minmax(min, max)</code> sets flexible sizing, with the size clamped to the values given</li>
-    <li id="h55cNUbNi"><code>width: auto</code> tells the item to use as much space as possible given the constraints of the other items.</li>
-    <li id="AKVoPuyvy"><code>width: fitcontent(200px)</code> works like <code>auto</code> but with a maximum size</li>
-    <li id="v31tQJ9bc"><code>grid-auto-flow: dense</code> can allow the grid system to place cells in the first empty grid spot, even if it’s before other items in the logical order.</li>
   </ul>
 
 

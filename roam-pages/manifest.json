@@ -7,10 +7,6 @@
     "title": "First Row per Group in PostgreSQL",
     "uid": "bNmahJYPU"
   },
-  "rust_cheatsheet": {
-    "title": "Rust Cheatsheet",
-    "uid": "-rX6CNtUC"
-  },
   "vanishing_gradient_problem": {
     "title": "Vanishing Gradient Problem",
     "uid": "Y4MUnhES0"
@@ -131,6 +127,10 @@
     "title": "Rust Resources",
     "uid": "ErnQ4lz9M"
   },
+  "github_actions": {
+    "title": "Github Actions",
+    "uid": "wJQjbB9QD"
+  },
   "svelte_transitions": {
     "title": "Svelte Transitions",
     "uid": "C4GrpQ_OO"
@@ -139,13 +139,13 @@
     "title": "Tacit Knowledge",
     "uid": "9GX4ib6aC"
   },
-  "transactionally_staged_job_drain_queues": {
-    "title": "Transactionally Staged Job Drain Queues",
-    "uid": "DItKGLQtt"
-  },
   "hybrid_logical_clock": {
     "title": "Hybrid Logical Clock",
     "uid": "rdzniKz6K"
+  },
+  "transactionally_staged_job_drain_queues": {
+    "title": "Transactionally Staged Job Drain Queues",
+    "uid": "DItKGLQtt"
   },
   "deliberate_practice": {
     "title": "Deliberate Practice",
@@ -155,25 +155,29 @@
     "title": "Adam Wathan on Nailing your First Launch",
     "uid": "bHuds3INc"
   },
-  "lateral_joins": {
-    "title": "Lateral Joins",
-    "uid": "sS_6NXul9"
-  },
   "ntp_sync": {
     "title": "NTP Sync",
     "uid": "OntAcAVJ3"
   },
-  "mistakes_to_avoid_when_learning_jobs_to_be_done": {
-    "title": "Mistakes to Avoid when Learning Jobs to be Done",
-    "uid": "lpkKbEXkN"
+  "new_directions_in_cloud_programming": {
+    "title": "New Directions in Cloud Programming",
+    "uid": "rPSDRtbXI"
+  },
+  "lateral_joins": {
+    "title": "Lateral Joins",
+    "uid": "sS_6NXul9"
   },
   "ui": {
     "title": "UI",
     "uid": "LYHZvk0vm"
   },
-  "github_actions": {
-    "title": "Github Actions",
-    "uid": "wJQjbB9QD"
+  "mistakes_to_avoid_when_learning_jobs_to_be_done": {
+    "title": "Mistakes to Avoid when Learning Jobs to be Done",
+    "uid": "lpkKbEXkN"
+  },
+  "nodejs_performance": {
+    "title": "Node.js Performance",
+    "uid": "JEEwJ0O3z"
   },
   "variable_neighborhood_search": {
     "title": "Variable Neighborhood Search",
@@ -187,10 +191,6 @@
     "title": "CSS Grid Overview",
     "uid": "wWln_ysjZ"
   },
-  "node_profiling": {
-    "title": "Node Profiling",
-    "uid": "JEEwJ0O3z"
-  },
   "circle_of_competence": {
     "title": "Circle of Competence",
     "uid": "hiEROjKm5"
@@ -202,5 +202,9 @@
   "elasticsearch_cheat_sheet": {
     "title": "Elasticsearch Cheat Sheet",
     "uid": "q84zD1JxZ"
+  },
+  "rust_cheatsheet": {
+    "title": "Rust Cheatsheet",
+    "uid": "-rX6CNtUC"
   }
 }
