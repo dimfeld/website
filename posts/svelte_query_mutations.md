@@ -3,6 +3,7 @@ title: Easy Optimistic Updates with svelte-query
 date: 2021-02-15
 tags: Svelte
 cardImage: svelte_query_mutations_card.png
+cardImageFilter: opacity(60%) brightness(150%)
 ---
 
 
