@@ -8,6 +8,7 @@
 </script>
 
 <script>
+  import NewsletterSignup from '../components/NewsletterSignup.svelte';
   export let latestPost;
   export let latestNote;
   export let lastCreatedNote;
@@ -32,26 +33,29 @@
   <p>
     Welcome! This site is inspired by the
     <a href="writing/digital_garden">Digital Garden</a>
-    concept, which essentially means that I'm writing not just to share
-    information, but also to encourage discussion and mutual learning. If you have some thoughts about anything here, please feel free to reach out on
+    concept, which essentially means that I'm writing not just to share information,
+    but also to encourage discussion and mutual learning. If you have some thoughts
+    about anything here, please feel free to reach out on
     <a href="https://www.twitter.com/dimfeld">Twitter</a>.
   </p>
 
   <p>
-    My latest post is
-    {#if latestPost.frontPageSummary}
-      <a use:annotate={annotationOptions} href="writing/{latestPost.id}">{latestPost.title}</a>, about {latestPost.frontPageSummary}.
+    My latest post is {#if latestPost.frontPageSummary}
+      <a use:annotate={annotationOptions} href="writing/{latestPost.id}"
+        >{latestPost.title}</a
+      >, about {latestPost.frontPageSummary}.
     {:else}
-      <a use:annotate={annotationOptions} href="writing/{latestPost.id}">{latestPost.title}</a>.
+      <a use:annotate={annotationOptions} href="writing/{latestPost.id}"
+        >{latestPost.title}</a
+      >.
     {/if}
   </p>
 
   <p>
-    I also post my
+    I also host my
     <a rel="prefetch" href="notes">notes</a>
-    publicly, in hopes that some readers will be educated and others can help
-    fill in the gaps.
-    {#if lastCreatedNote.id !== latestNote.id}
+    here publicly, in hopes that some readers will be educated and others can help
+    fill in the gaps. {#if lastCreatedNote.id !== latestNote.id}
       <a href="notes/{lastCreatedNote.id}">{lastCreatedNote.title}</a>
       is the newest note and
       <a href="notes/{latestNote.id}">{latestNote.title}</a>
@@ -61,6 +65,13 @@
       <a href="notes/{latestNote.id}">{latestNote.title}</a>.
     {/if}
   </p>
+
+  <p>
+    And finally, I have a newsletter where I send out interesting things I've
+    come across over the past week and the occasional nature photo.
+  </p>
+
+  <NewsletterSignup />
 
   <h1>About Me</h1>
 
@@ -74,13 +85,19 @@
   </p>
 
   <p>
-    I spend most of my time there creating new data analyses, working on the backend API and database systems, and developing tooling to
-    research data anomalies and automate repetitive tasks. Recently I've been active on the front-end too, and have been spearheading a
-    transition from AngularJS (1.x) to Svelte.
+    I spend most of my time there creating new data analyses, working on the
+    backend API and database systems, and developing tooling to research data
+    anomalies and automate repetitive tasks. Recently I've been active on the
+    front-end too, and have been spearheading a transition from AngularJS (1.x)
+    to Svelte.
   </p>
 
-
-  <p>In the past I worked almost exclusively in C++ and various assembly languages. Now that I'm more in the web ecosystem, I'm mostly writing Javascript, but I also enjoy using Go and Rust for more heavy-duty backend work.</p>
+  <p>
+    In the past I worked almost exclusively in C++ and various assembly
+    languages. Now that I'm more in the web ecosystem, I'm mostly writing
+    Javascript, but I also enjoy using Go and Rust for more heavy-duty backend
+    work.
+  </p>
 
   <p>
     Before starting my own venture, I interfaced with advanced network switching
@@ -96,8 +113,9 @@
   <p>
     Sometimes I wish I could code all day and night, but when not hacking on
     something or spending time with my family, I enjoy good coffee, nature
-    photography, reading nonfiction and sci-fi, and improving my nascent design and UX skills. I'm
-    also active in my church and run the sound board there every few weeks.
+    photography, reading nonfiction and sci-fi, and improving my nascent design
+    and UX skills. I'm also active in my church and run the sound board there
+    every few weeks.
   </p>
 
   <h2>Where to find me</h2>
@@ -107,10 +125,8 @@
   </p>
   <p>
     I'm fairly active on
-    <a href="https:///www.github.com/dimfeld">Github</a> as well, where my
-    biggest project is a
-    <a href="https://github.com/dimfeld/httptreemux">Go HTTP router</a> I wrote
-    in 2014 but never advertised :)
+    <a href="https:///www.github.com/dimfeld">Github</a> as well, and send out
+    the <a href="https://buttondown.email/dimfeld">newsletter</a> mentioned above.
   </p>
 
   <h2>About this site</h2>
@@ -123,6 +139,13 @@
     <a href="https://iconmonstr.com/">iconmonstr</a>.
   </p>
 
-  <p>The prose content on this site is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
-     The code can be viewed on <a href="https://github.com/dimfeld/website">Github</a>. The underlying code as well as all code examples are licensed under the <a href="https://choosealicense.com/licenses/mit/">MIT license</a>.</p>
+  <p>
+    The prose content on this site is licensed under a
+    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"
+      >Creative Commons Attribution 4.0 International License</a
+    >. The code can be viewed on
+    <a href="https://github.com/dimfeld/website">Github</a>. The underlying code
+    as well as all code examples are licensed under the
+    <a href="https://choosealicense.com/licenses/mit/">MIT license</a>.
+  </p>
 </article>
