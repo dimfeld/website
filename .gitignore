@@ -11,3 +11,4 @@ static/workers
 .vercel
 .env
 *.edn
+/api/post-titles.json

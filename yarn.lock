@@ -867,6 +867,11 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@dimfeld/create-social-card-wasm@~0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@dimfeld/create-social-card-wasm/-/create-social-card-wasm-0.1.0.tgz#bbb02ef59140e8787d6a3d29ac28ca9a7f833158"
+  integrity sha512-aCSbnNUuoIyI5sw49VVgvXv79bLrxMo49mcqIJv3hM3n9NTeYb2nrH0fQ1D2gJ/WwocK3qmvuj99BRRUdK5rSQ==
+
 "@dimfeld/svelte-lazyload@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@dimfeld/svelte-lazyload/-/svelte-lazyload-0.0.1.tgz#ed4c50fb82b554d80a88d8469c58ed213235a80c"
@@ -1953,6 +1958,11 @@ cosmiconfig@^5.0.0:
     is-directory "^0.3.1"
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
+
+create-require@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
+  integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
 cross-fetch@^2.2.2:
   version "2.2.3"
@@ -5835,6 +5845,18 @@ ts-node@8.9.1:
   integrity sha512-yrq6ODsxEFTLz0R3BX2myf0WBCSQh9A+py8PBo1dCzWIOcvisbyH6akNKqDHMgXePF2kir5mm5JXJTH3OUJYOQ==
   dependencies:
     arg "^4.1.0"
+    diff "^4.0.1"
+    make-error "^1.1.1"
+    source-map-support "^0.5.17"
+    yn "3.1.1"
+
+ts-node@^9.1.1:
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-9.1.1.tgz#51a9a450a3e959401bda5f004a72d54b936d376d"
+  integrity sha512-hPlt7ZACERQGf03M253ytLY3dHbGNGrAq9qIHWUY9XHYl1z7wYngSr3OQ5xmui8o2AaxsONxIzjafLUiWBo1Fg==
+  dependencies:
+    arg "^4.1.0"
+    create-require "^1.1.0"
     diff "^4.0.1"
     make-error "^1.1.1"
     source-map-support "^0.5.17"

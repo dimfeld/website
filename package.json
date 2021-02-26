@@ -7,6 +7,7 @@
     "dev": "NODE_ENV=development yarn run sapper:dev",
     "build": "NODE_ENV=production run-s sapper:export",
     "build-local": "NODE_ENV=production run-s sapper:build",
+    "vercel-build": "ts-node -P tsconfig-scripts.json build-api-data.ts",
     "sapper:dev": "sapper dev",
     "sapper:export": "sapper export",
     "sapper:build": "sapper build",
@@ -19,6 +20,7 @@
     "postinstall": "run-s build-repl"
   },
   "dependencies": {
+    "@dimfeld/create-social-card-wasm": "~0.1.0",
     "@dimfeld/svelte-lazyload": "^0.0.1",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@gerhobbelt/markdown-it-container": "^3.0.0-6",
@@ -116,6 +118,7 @@
     "svelte-preprocess": "^4.6.1",
     "svelte-rough-notation": "^0.1.4",
     "tailwindcss": "^1.8.0",
+    "ts-node": "^9.1.1",
     "tslint": "^5.20.0",
     "typescript": "^4.1"
   }
