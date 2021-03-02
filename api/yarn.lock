@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@dimfeld/create-social-card-wasm/-/create-social-card-wasm-0.2.0.tgz#f18d30704905ee46e96fe2c5f34d34fd090f881d"
   integrity sha512-pXsvs6SyTJkLl/7wzPJ0sgzrS9uh5sHIQeh1c3i96SCoWLdpmpJWmAmYIsV6D8WYLbRIhIiRn9n8m7uXT42ucg==
 
+"@types/node@^14":
+  version "14.14.31"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.31.tgz#72286bd33d137aa0d152d47ec7c1762563d34055"
+  integrity sha512-vFHy/ezP5qI0rFgJ7aQnjDXwAMrG0KqqIH7tQG5PPv3BWBayOPIQNBjVc/P6hhdZfMx51REc6tfDNXHUio893g==
+
 arg@^4.1.0:
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/arg/-/arg-4.1.3.tgz#269fc7ad5b8e42cb63c896d5666017261c144089"
