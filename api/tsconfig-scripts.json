@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2019",
     "sourceMap": true,
     "noImplicitThis": false,
-    "preserveConstEnums": true,
     "strict": true,
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
     "esModuleInterop": true,
     "noEmit": true,
     "allowJs": true,
-    "resolveJsonModule": true,
-    "module": "ES2020",
+    "module": "commonjs",
     "moduleResolution": "node"
   },
-  "include": ["src/**/*.ts"]
+  "include": ["**/*.ts"]
 }

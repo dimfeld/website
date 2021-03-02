@@ -32,7 +32,7 @@ function formatPostHeader(post: Post) {
 export async function get(req, res, next) {
   try {
     let type = req.params.type;
-    let host = `https://imfeld.dev`;
+    let host = `process.env.SITE_DOMAIN`;
 
     let title = `Daniel Imfeld's blog`;
     let url = `${host}/rss/${type}.xml`;

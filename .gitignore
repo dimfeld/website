@@ -1,5 +1,5 @@
 .DS_Store
-/node_modules/
+node_modules
 /src/node_modules/@sapper/
 yarn-error.log
 /cypress/screenshots/
@@ -11,3 +11,4 @@ static/workers
 .vercel
 .env
 *.edn
+/api/post-titles.json

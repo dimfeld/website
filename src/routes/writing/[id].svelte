@@ -18,13 +18,12 @@
 
   let imageUrl = post.cardImage;
   if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = 'https://imfeld.dev/images/' + imageUrl;
+    imageUrl = 'process.env.SITE_DOMAIN/images/' + imageUrl;
+  } else {
+    imageUrl = `process.env.SITE_DOMAIN/api/og-image/post_${post.id}`;
   }
 
-  let cardType = post.cardType;
-  if (!cardType) {
-    cardType = post.cardImage ? 'summary_large_image' : 'summary';
-  }
+  let cardType = post.cardType || 'summary_large_image';
 </script>
 
 <svelte:head>
