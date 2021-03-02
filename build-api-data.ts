@@ -3,9 +3,11 @@ import { Post } from './src/staticApi/readPosts';
 import * as fs from 'fs';
 
 function postMeta(p: Post) {
+  let date = new Date(p.updated ?? p.date);
   return {
     title: p.title,
-    date: p.updated ?? p.date,
+    // YYYY-MM-DD
+    date: date.toISOString().slice(0, 10),
   };
 }
 

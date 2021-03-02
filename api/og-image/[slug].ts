@@ -6,7 +6,12 @@ const postTitles = require('../post-titles.json');
 const prod = process.env.NODE_ENV === 'production';
 
 const bgImage = Uint8Array.from(fs.readFileSync('./api/card-bg.png'));
-const fontData = Uint8Array.from(fs.readFileSync('./api/Inter.ttf'));
+const inconsolataMedium = Uint8Array.from(
+  fs.readFileSync('./api/Inconsolata-Medium.ttf')
+);
+const inconsolataSemiBold = Uint8Array.from(
+  fs.readFileSync('./api/Inconsolata-SemiBold.ttf')
+);
 
 export default async function (request: NowRequest, response: NowResponse) {
   try {
@@ -21,24 +26,51 @@ export default async function (request: NowRequest, response: NowResponse) {
     }
 
     let config = {
-      text: postTitle.title,
-      min_size: 8,
-      max_size: 200,
-      color: 'D03030',
-      text_rect: {
-        top: 25,
-        bottom: 250,
-        left: 225,
-        right: 575,
+      fonts: {
+        normal: inconsolataMedium,
+        bold: inconsolataSemiBold,
       },
-      shadow: {
-        x: 2,
-        y: 2,
-        blur: 2,
-      },
+      background: bgImage,
+      blocks: [
+        {
+          wrap: true,
+          min_size: 8,
+          max_size: 80,
+          color: '62b3b2',
+          h_align: 'left',
+          v_align: 'center',
+          rect: {
+            top: 0,
+            left: 0,
+            right: 800,
+            bottom: 418,
+          },
+          padding: {
+            top: 20,
+            bottom: 20,
+            left: 20,
+            right: 20,
+          },
+          text: [
+            { font: 'normal', text: 'let post = Post {\n' },
+            { font: 'normal', text: '  title: ' },
+            { font: 'bold', text: `"${postTitle.title}"`, color: '99c794' },
+            { font: 'normal', text: ',\n' },
+            { font: 'normal', text: '  author: ' },
+            { font: 'bold', text: `"Daniel Imfeld"`, color: '99c794' },
+            { font: 'normal', text: ',\n' },
+            { font: 'normal', text: '  date: ' },
+            { font: 'bold', text: `"${postTitle.date}"`, color: '99c794' },
+            {
+              font: 'normal',
+              text: '\n};\n\nbuildPost(post)\n  .and_then(renderContent)',
+            },
+          ],
+        },
+      ],
     };
 
-    let imageData = create_card(bgImage, fontData, config);
+    let imageData = create_card(config);
     let result = Buffer.from(imageData);
 
     response.setHeader('Content-Type', 'image/png');
