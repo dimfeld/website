@@ -65,7 +65,7 @@ export default async function (request: NowRequest, response: NowResponse) {
             { font: 'bold', text: `"${postTitle.date}"`, color: '99c794' },
             {
               font: 'normal',
-              text: '\n};\n\nbuildPost(post)\n  .and_then(renderContent)',
+              text: '\n};\n\nbuild_post(post)\n  .and_then(renderContent)',
             },
           ],
         },
