@@ -27,7 +27,7 @@
 </script>
 
 <svelte:head>
-  <link rel="canonical" href="process.env.SITE_DOMAIN/writing/{post.id}" />
+  <link rel="canonical" href="https://imfeld.dev/writing/{post.id}" />
   <meta
     name="Description"
     content={[`${post.title} by Daniel Imfeld`, post.summary]
