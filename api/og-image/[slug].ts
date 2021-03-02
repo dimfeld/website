@@ -1,17 +1,17 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import fs from 'fs';
+import path from 'path';
 import { create_card } from '@dimfeld/create-social-card-wasm';
 
 const postTitles = require('../post-titles.json');
 const prod = process.env.NODE_ENV === 'production';
 
-const bgImage = Uint8Array.from(fs.readFileSync('./api/card-bg.png'));
-const inconsolataMedium = Uint8Array.from(
-  fs.readFileSync('./api/Inconsolata-Medium.ttf')
-);
-const inconsolataSemiBold = Uint8Array.from(
-  fs.readFileSync('./api/Inconsolata-SemiBold.ttf')
-);
+function read(file) {
+  return Uint8Array.from(fs.readFileSync(path.join(__dirname, '..', file)));
+}
+const bgImage = read('card-bg.png');
+const inconsolataMedium = read('Inconsolata-Medium.ttf');
+const inconsolataSemiBold = read('Inconsolata-SemiBold.ttf');
 
 export default async function (request: NowRequest, response: NowResponse) {
   try {
