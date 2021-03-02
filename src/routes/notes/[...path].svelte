@@ -13,17 +13,19 @@
 
   let imageUrl = note.cardImage;
   if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = 'https://imfeld.dev/images/' + imageUrl;
+    imageUrl = 'process.env.SITE_DOMAIN/images/' + imageUrl;
+  } else {
+    imageUrl = `process.env.SITE_DOMAIN/api/og-image/note_${note.id.replace(
+      /\//g,
+      '_'
+    )}`;
   }
 
-  let cardType = note.cardType;
-  if (!cardType) {
-    cardType = note.cardImage ? 'summary_large_image' : 'summary';
-  }
+  let cardType = note.cardType || 'summary_large_image';
 </script>
 
 <svelte:head>
-  <link rel="canonical" href="https://imfeld.dev/notes/{note.id}" />
+  <link rel="canonical" href="process.env.SITE_DOMAIN/notes/{note.id}" />
   <meta
     name="Description"
     content={[`${note.title} by Daniel Imfeld`, note.summary]

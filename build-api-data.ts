@@ -16,11 +16,13 @@ async function main() {
 
   let output: Record<string, ReturnType<typeof postMeta>> = {};
   for (let post of postCache.postList) {
-    output['post_' + post.id] = postMeta(post);
+    let id = post.id.replace(/\//g, '_');
+    output['post_' + id] = postMeta(post);
   }
 
   for (let note of postCache.noteList) {
-    output['note_' + note.id] = postMeta(note);
+    let id = note.id.replace(/\//g, '_');
+    output['note_' + id] = postMeta(note);
   }
 
   fs.writeFileSync('api/post-titles.json', JSON.stringify(output));

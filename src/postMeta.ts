@@ -27,7 +27,7 @@ export function cardImageUrl(post: Post, absolute: boolean) {
   if (!imageUrl.startsWith('http')) {
     imageUrl = '/images/' + imageUrl;
     if (absolute) {
-      imageUrl = 'https://imfeld.dev' + imageUrl;
+      imageUrl = `process.env.SITE_DOMAIN${imageUrl}`;
     }
   }
 

@@ -4,13 +4,13 @@ import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
-import {terser} from 'rollup-plugin-terser';
-import {string} from 'rollup-plugin-string';
+import { terser } from 'rollup-plugin-terser';
+import { string } from 'rollup-plugin-string';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 import * as path from 'path';
-import {spawn} from 'child_process';
-import {performance} from 'perf_hooks';
+import { spawn } from 'child_process';
+import { performance } from 'perf_hooks';
 import * as glob from 'glob';
 import * as colors from 'kleur';
 const svelteConfig = require('./svelte.config');
@@ -73,7 +73,8 @@ function globalTailwindCssBuilder({
         if (code === 0) {
           const elapsed = parseInt(performance.now() - start, 10);
           console.log(
-            `${colors.bold().green('✔ global css')} (${input} → ${output}${sourcemap === true ? ` + ${output}.map` : ''
+            `${colors.bold().green('✔ global css')} (${input} → ${output}${
+              sourcemap === true ? ` + ${output}.map` : ''
             }) ${colors.gray(`(${elapsed}ms)`)}`
           );
         } else if (code !== null) {
@@ -129,7 +130,7 @@ const babelServerConfig = {
     [
       '@babel/preset-env',
       {
-        targets: {node: 12},
+        targets: { node: 12 },
       },
     ],
     '@babel/preset-typescript',
@@ -149,7 +150,7 @@ const babelClientConfig = {
     [
       '@babel/preset-env',
       {
-        targets: dev ? {chrome: 83} : {esmodules: true},
+        targets: dev ? { chrome: 83 } : { esmodules: true },
       },
     ],
     '@babel/preset-typescript',
@@ -182,6 +183,12 @@ const watchPlugin = {
   },
 };
 
+let domain = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : `http://${require('os').hostname()}:${
+      process.env.DEV_PORT || process.env.PORT || 3000
+    }`;
+
 export default {
   client: {
     input: config.client.input(),
@@ -191,6 +198,7 @@ export default {
       replace({
         'process.browser': true,
         'process.env.NODE_ENV': JSON.stringify(mode),
+        'process.env.SITE_DOMAIN': domain,
       }),
       svelte({
         compilerOptions: {
@@ -216,11 +224,11 @@ export default {
       babel(babelClientConfig),
 
       !dev &&
-      terser({
-        module: true,
-      }),
+        terser({
+          module: true,
+        }),
 
-      globalTailwindCssBuilder({sourcemap: true, dev}),
+      globalTailwindCssBuilder({ sourcemap: true, dev }),
     ],
 
     onwarn,
@@ -235,6 +243,7 @@ export default {
       replace({
         'process.browser': false,
         'process.env.NODE_ENV': JSON.stringify(mode),
+        'process.env.SITE_DOMAIN': domain,
       }),
       svelte({
         compilerOptions: {
@@ -260,7 +269,7 @@ export default {
     ],
     external: Object.keys(pkg.dependencies).concat(
       require('module').builtinModules ||
-      Object.keys(process.binding('natives'))
+        Object.keys(process.binding('natives'))
     ),
 
     onwarn,
