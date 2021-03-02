@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "vercel-build": "ts-node -P ./tsconfig-scripts.json ./build-api-data.ts"
+  }
+}

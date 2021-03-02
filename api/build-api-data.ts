@@ -1,5 +1,5 @@
-import { initPostCache, postCache } from './src/staticApi/posts';
-import { Post } from './src/staticApi/readPosts';
+import { initPostCache, postCache } from '../src/staticApi/posts';
+import { Post } from '../src/staticApi/readPosts';
 import * as fs from 'fs';
 
 function postMeta(p: Post) {
@@ -25,7 +25,7 @@ async function main() {
     output['note_' + id] = postMeta(note);
   }
 
-  fs.writeFileSync('api/post-titles.json', JSON.stringify(output));
+  fs.writeFileSync('post-titles.json', JSON.stringify(output));
 }
 
 main().catch((e) => {
