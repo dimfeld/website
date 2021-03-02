@@ -867,11 +867,6 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@dimfeld/create-social-card-wasm@~0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@dimfeld/create-social-card-wasm/-/create-social-card-wasm-0.2.0.tgz#f18d30704905ee46e96fe2c5f34d34fd090f881d"
-  integrity sha512-pXsvs6SyTJkLl/7wzPJ0sgzrS9uh5sHIQeh1c3i96SCoWLdpmpJWmAmYIsV6D8WYLbRIhIiRn9n8m7uXT42ucg==
-
 "@dimfeld/svelte-lazyload@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@dimfeld/svelte-lazyload/-/svelte-lazyload-0.0.1.tgz#ed4c50fb82b554d80a88d8469c58ed213235a80c"
