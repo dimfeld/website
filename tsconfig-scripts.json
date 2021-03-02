@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "es2019",
     "sourceMap": true,
     "noImplicitThis": false,
     "strict": true,
@@ -12,7 +12,5 @@
     "module": "commonjs",
     "moduleResolution": "node"
   },
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["**/*.ts"]
 }

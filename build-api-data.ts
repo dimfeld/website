@@ -3,7 +3,7 @@ import { Post } from './src/staticApi/readPosts';
 import * as fs from 'fs';
 
 function postMeta(p: Post) {
-  let date = new Date(p.updated ?? p.date);
+  let date = new Date(p.updated || p.date);
   return {
     title: p.title,
     // YYYY-MM-DD
