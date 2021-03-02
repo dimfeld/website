@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/og-image/[slug].ts": {
+      "includeFiles": "_card-files/**"
+    }
+  }
+}

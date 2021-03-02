@@ -6,8 +6,10 @@ import { create_card } from '@dimfeld/create-social-card-wasm';
 const postTitles = require('../post-titles.json');
 const prod = process.env.NODE_ENV === 'production';
 
-function read(file) {
-  return Uint8Array.from(fs.readFileSync(path.join(__dirname, '..', file)));
+function read(file: string) {
+  return Uint8Array.from(
+    fs.readFileSync(path.join(__dirname, '../_card-files', file))
+  );
 }
 const bgImage = read('card-bg.png');
 const inconsolataMedium = read('Inconsolata-Medium.ttf');
