@@ -73,8 +73,10 @@ export default async function (request: NowRequest, response: NowResponse) {
     let imageData = create_card(config);
     let result = Buffer.from(imageData);
 
+    if (prod) {
+      response.setHeader('Cache-Control', 'max-age=300, s-maxage=2592000');
+    }
     response.setHeader('Content-Type', 'image/png');
-    response.setHeader('Content-Length', result.length);
     response.send(result);
   } catch (e) {
     console.error(e);
