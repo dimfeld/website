@@ -18,7 +18,7 @@ We start with a `zoomTransition` function that returns a `send` and `receive` pa
 export const [send, receive] = zoomTransition({});
 ```
 
-Each box has a group id and an element-specific id. [In the code](https://github.com/dimfeld/svelte-zoomable/blob/9347d8f1a55034bef167d073767d822b17aaa999/src/Zoomable.svelte#L82), the zoomed out boxes are called "overviews" and then the zoomed-in box is a "detail" box. Whenever an overview box is clicked, all of the overviews disappear and the detail corresponding to the clicked overview appears on the screen.
+Each box has a unique ID and also a group ID that it shares with all its siblings. [In the code](https://github.com/dimfeld/svelte-zoomable/blob/9347d8f1a55034bef167d073767d822b17aaa999/src/Zoomable.svelte#L82), the zoomed out boxes are called *overviews* and each overview has a corresponding *detail* which is the "zoomed in" view for the overview.  Clicking an overview box causes the corresponding detail box to replace it, while all of the other overviews are removed.
 
 ```svelte
 <script>
@@ -26,13 +26,13 @@ Each box has a group id and an element-specific id. [In the code](https://github
   import { send, receive } from './transition';
   export let elementId;
   export let groupId;
+  export let zoomed = false;
 </script>
 
-<!-- This is the detail box, and the overview looks similar -->
+{#if zoomed}
 <div
-    class="zoomed {detailClass}"
-    id={elementId.join('-') + '-zoomed'}
-    use:style={detailStyle}
+    class="zoomed"
+    id={elementId + '-zoomed'}
     in:receive|local={{
       key: elementId,
       parent: groupId,
@@ -42,8 +42,27 @@ Each box has a group id and an element-specific id. [In the code](https://github
       key: elementId,
       parent: groupId,
       isDetail: true,
+    }}>
+  <slot name="detail" />
+</div>
+{:else}
+<div
+    class="overview"
+    id={elementId + '-zoomed'}
+    in:receive|local={{
+      key: elementId,
+      parent: groupId,
+      isDetail: false,
     }}
-  ><slot name="detail" ></div>
+    out:send|local={{
+      key: elementId,
+      parent: groupId,
+      isDetail: false,
+    }}>
+  <slot name="overview" />
+</div>
+
+{/if}
 ```
 
 As before, we track the sending and receiving elements, and we also have a map for tracking all the transitioning elements together. This Map, called `siblingData`, is keyed by the group id of the transitioning elements. It tracks the transitioning elements and facilitate communication between elements in the same group.
@@ -93,7 +112,7 @@ export function zoomTransition({
 } = {}) {
 ```
 
-Here we have the two maps from the original deferred transition and also the new `siblingData` Map.
+Here we have the `sending` and `receiving` Maps from the original deferred transition and also the new `siblingData` Map.
 
 ```javascript
   let sending = new Map();
@@ -110,7 +129,7 @@ Here we have the two maps from the original deferred transition and also the new
     return (node, params) => {
 ```
 
-The transition manager is configurable with [different presets](https://github.com/dimfeld/svelte-zoomable/blob/9347d8f1a55034bef167d073767d822b17aaa999/src/transition.js#L4), which control the timing and type of styles applied during the transition. I'll talk about how this works in the next post in this series.
+The transition manager is configurable with [different presets](https://github.com/dimfeld/svelte-zoomable/blob/9347d8f1a55034bef167d073767d822b17aaa999/src/transition.js#L4), which control the timing and CSS applied during the transition. I'll talk about how this works in the next post in this series.
 
 ```javascript
       let preset = params.preset ?? presets.fade;
@@ -147,7 +166,7 @@ Get the correct entry from `siblingData`, or create it if it doesn't exist yet. 
         d.refCount++;
 ```
 
-Here we enter the information for this element in the appropriate place: either the detail key or as an entry in the overviews map.
+Each entry in `siblingData` is shared by all the elements with the same parent, so we enter the information for this element in the appropriate place: either the detail key or as an entry in the overviews map.
 
 ```javascript
         if (params.isDetail) {
@@ -163,7 +182,7 @@ Here we enter the information for this element in the appropriate place: either 
 
 ```
 
-Finally we return the function that will run the transition after all the elements have put their information into `siblingData`.
+Finally we return the transition function. By the rules of Svelte deferred transitions, this function will run after all the other transitioning elements have initialized and put their information into `siblingData`.
 
 ```javascript
       return () => {
@@ -186,7 +205,7 @@ Finally we return the function that will run the transition after all the elemen
           if (d) {
 ```
 
-The schedule tells this element's transition when to start and end. Again, this will be covered in more detail in the next post, or you can [see it here](https://github.com/dimfeld/svelte-zoomable/blob/master/src/transition_schedulers.js). The default preset tells the "other" overview elements to run in the first half of the transition, and then the selected overview and its detail element to transition in the second half.
+The schedule tells this element's transition when to start and end in relation to the other transitioning elements. Again, this will be covered in more detail in the next post, or you can [see it here](https://github.com/dimfeld/svelte-zoomable/blob/master/src/transition_schedulers.js). The default preset tells the "other" overview transitions to run in the first half of the transition, and then the selected overview and its detail element to transition in the second half.
 
 ```javascript
             let schedule = preset.schedule({
@@ -204,6 +223,8 @@ If there is a detail object transitioning, but the `rect` in the `counterparts` 
 one of the overview elements that was not clicked.
 
 With this in mind, we look up the rectangles for the incoming detail element to get the proper ID, and then look up the clicked overview rectangle as `zoomingOverviewRect`. In the default preset, `preset.otherOverviews` returns a Svelte transition `css` function that fades out this overview box and moves it to overlap with `zoomingOverviewRect`.
+
+If for some reason we don't have a `zoomingOverviewRect`, we degrade gracefully by having the element just disappear with a transition that does nothing.
 
 ```javascript
             if (d.detail && !rect) {
@@ -238,7 +259,7 @@ Finally, the memory management. We decrement the reference count, and delete the
 
 ```
 
-If we don't have transition styles yet, then this is either the clicked overview element or its corresponding detail element. As with the code above, we gather the information to generate the transition and then call either `preset.detail` or `preset.selectedOverview` to generate the styles.
+The code above sets the transition style for the unselected overview boxes, so if we don't have one yet, then this is either the clicked overview element or its corresponding detail element. As with the code above, we gather the information to generate the transition and then call either `preset.detail` or `preset.selectedOverview` to generate the styles.
 
 ```javascript
         if (!style) {
@@ -285,3 +306,6 @@ export const [send, receive] = zoomTransition({});
 
 :::
 
+The beauty of Svelte transitions here is that nothing in any of this code care about the direction the transition is running. We just write everything assuming that the transition is running forward and that the user clicked an overview to zoom into its detail. When the user zooms out or goes up a level, Svelte reverses the transition for us and it all just works, even in a complex example like this.
+
+And that's it. A bit complicated, but not too bad to understand I hope. Please reach out and let me know if anything remains unclear!
