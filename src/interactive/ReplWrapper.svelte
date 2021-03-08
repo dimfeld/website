@@ -58,6 +58,7 @@
       target: container,
       props: {
         id,
+        svelteUrl: 'https://unpkg.com/svelte@3.35',
         workersUrl: 'workers',
         orientation: windowWidth > 600 ? 'columns' : 'rows',
       },
@@ -90,12 +91,10 @@
 
 <div class:w-expanded-95={expandedWidth}>
   <div
-    class="flex flex-col font-sans border border-gray-100 shadow-md rounded-lg"
-  >
+    class="flex flex-col font-sans border border-gray-100 shadow-md rounded-lg">
     <div
       class="flex px-4 py-2 text-teal-800 border-b border-gray-200 items-start
-      sm:items-stretch"
-    >
+      sm:items-stretch">
       {#if title}
         <span>{title}</span>
       {/if}
@@ -125,7 +124,9 @@
           hover:text-gray-500 focus:outline-none focus:border-blue-300
           focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50
           transition ease-in-out duration-150"
-            on:click={reset}> Reset </button>
+            on:click={reset}>
+            Reset
+          </button>
         </span>
       </div>
     </div>
