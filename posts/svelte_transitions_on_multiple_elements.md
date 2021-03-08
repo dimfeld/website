@@ -8,7 +8,7 @@ cardImageFilter: opacity(80%) brightness(155%) saturation(200%)
 
 In the [last post](svelte_deferred_transitions), we looked at how Svelte deferred transitions work and implemented our own version of Svelte’s `crossfade` transition.
 
-This is nice for many cases, but we can use some techniques to create even more complex transitions that involves three or more elements. In this sample application for [svelte-zoomable](https://github.com/dimfeld/svelte-zoomable), there are multiple groups of boxes on the screen at once. When a box is clicked, the other boxes in the group will merge into the clicked box, which then expands to fill the whole area.
+This is nice for many cases, but with some extra coordination we can create even more complex transitions that involve three or more elements. In this sample application for [svelte-zoomable](https://github.com/dimfeld/svelte-zoomable), there are multiple groups of boxes on the screen at once. When a box is clicked, the other boxes in the group will merge into the clicked box, which then expands to fill the whole area.
 
 <div data-component="Repl" data-prop-id="32bf500c4b8b4b718daee1fae74b6a51"></div> 
 
@@ -65,40 +65,38 @@ Each box has a unique ID and also a group ID that it shares with all its sibling
 {/if}
 ```
 
-As before, we track the sending and receiving elements, and we also have a map for tracking all the transitioning elements together. This Map, called `siblingData`, is keyed by the group id of the transitioning elements. It tracks the transitioning elements and facilitate communication between elements in the same group.
+As before, the transition tracks the sending and receiving elements, and there is also a Map for tracking all the transitioning elements together. This Map, called `siblingData`, allows elements with the same group ID to coordinate their transitions.
 
 
 # Different transitions for each element
 
 In this case, there are three different animations to play:
 
-1. The incoming detail element transitions in and appears to zoom in from the element it's replacing.
+1. The overview elements that were not clicked slide to overlap with the clicked overview.
 2. The clicked overview element does a crossfade with the incoming detail that is replacing it.
-3. The other overview elements move into the clicked overview.
+3. Likewise, the incoming detail element crossfades with the overview element it's replacing.
 
-When zooming out (that is, contracting a detail element back to its overview), these animations just run in reverse.
+When zooming out (that is, switching from a detail element back to its overview), these animations just run in reverse.
 
-Much of this implementation is very specific to the particular animation that is being run, but the coordination techniques generalize well, and hopefully this can give you some ideas for your own implementation.
+Much of this implementation is specific to the particular layout that is being run, with the overview and detail elements, but the coordination techniques generalize well, and hopefully this can give you some ideas for your own implementation.
 
 The main challenge is that when each element initializes its animation, it has no knowledge of which other elements may be transitioning in or out. So the data structure needs to hold all of the information that could possibly be required, even if some of it might not be used.
 
-In this case, all the transitioning elements need to know the bounding rectangle of the box element which is being replaced, so they can know where to zoom toward. But since we don't know which one will be transitioning right away, we solve the problem by storing **every** overview element's bounding rectangle.
+In this case, all the transitioning elements need to know the bounding rectangle of the box element which is being replaced, so they can know where to zoom toward. But we don't know which one will be transitioning right away, and so we store **every** overview element's bounding rectangle, then figure out which one is relevant later.
 
-There's always exactly one detail element in this animation, so that makes things easier. When the detail element initializes its animation, it ts own id to the `detail` field in the Map entry. This way, when an overview element starts to transition, it just needs to check if its id matches the detail element's id. If it has the same id, then it knows that it's the element being replaced. Otherwise, it's one of the "other" overview elements.
+There's never more than one detail element in this animation, and its data goes in the Map entry's `detail` field. This way, when an overview element transitions, it just checks if its element ID matches the detail element's ID. If they do, then this is the element being replaced. Otherwise, it's one of the "other" overview elements, which was not clicked and is just transitioning out with no replacement.
 
 # Not leaking memory
 
-It's easy to know when an element should put its data into `siblingData`, but we also have to know when its ok to remove the item so that it doesn't sit around forever. With just two elements, it was easy for each element to delete the data for its corresponding element, since nothing else would ever need to consume that data.
+It's easy to know when an element should add an entry into `siblingData`, but once the transition starts running, we also have to know when it's OK to remove the entry from `siblingData` so that it doesn't sit around forever. In the crossfade example from the previous post, we had just two elements, so there were two Maps, one for incoming elements and the other for outgoing elements, and each element deleted the entry in the other's Map after reading it.
 
-But with three or more transitioning elements, we need to take more care to retain the data until everything that may need it has done so.
+But with three or more transitioning elements, we need to take more care to retain the data until all the elements have read it. There isn't a good way for our transition creation code to know when all the transitions have finished, and so the easiest way is to use a decentralized memory management method.
 
-There's no centralized "transition manager" here that knows when all the transitions have finished, and so the easiest way is to use a decentralized memory management method.
-
-A reference count works well for this purpose. They don't appear often in garbage-collected languages like JavaScript, but they're relatively simple to use. Each entry in the Map has a reference count which starts at 0. When an element adds its data to the Map, it increments the reference count, and it decrements the count when the transition runs and it reads the finished data. When the reference count hits zero, whichever element did the decrement also deletes it from the map.
+A reference count works well here. They don't appear often in garbage-collected languages like JavaScript, but they're relatively simple to use. Each entry in the Map has a reference count which starts at 0. When an element adds its data to the Map, it increments the reference count, and it decrements the count when the transition runs and it reads the finished data. When the reference count hits zero, whichever element did the decrement also deletes it from the map.
 
 The main issue that comes up with manual reference counting like this is that we need to always remember to increment or decrement the reference count at the appropriate time. Otherwise the data will be removed too early or it will sit around forever as leaked memory.
 
-To reduce the chance of bugs, we ensure that every element uses the same code paths to put data into the Map and consume it, regardless of its actual role in the resulting transition.
+To reduce the chance of bugs, every element uses the same code path to put data into the Map and consume it, regardless of its actual role in the resulting transition.
 
 Now, let's look at the actual transition code.
 
