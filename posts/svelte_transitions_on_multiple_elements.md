@@ -10,7 +10,7 @@ In the [last post](svelte_deferred_transitions), we looked at how Svelte deferre
 
 This is nice for many cases, but we can use some techniques to create even more complex transitions that involves three or more elements. In this sample application for [svelte-zoomable](https://github.com/dimfeld/svelte-zoomable), there are multiple groups of boxes on the screen at once. When a box is clicked, the other boxes in the group will merge into the clicked box, which then expands to fill the whole area.
 
-<!-- <div data-component="Repl" data-prop-id="32bf500c4b8b4b718daee1fae74b6a51"></div> -->
+<div data-component="Repl" data-prop-id="32bf500c4b8b4b718daee1fae74b6a51"></div> 
 
 We start with a `zoomTransition` function that returns a `send` and `receive` pair, just like crossfade.
 
