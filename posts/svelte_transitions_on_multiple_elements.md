@@ -2,7 +2,7 @@
 title: Coordinating Multiple Elements with Svelte Deferred Transitions, Part 2
 date: 2021-03-08
 tags: Svelte
-cardImage: svelte_deferred_transitions_card.png
+cardImage: svelte-zoomable-demo.png
 cardImageFilter: opacity(80%) brightness(155%) saturation(200%)
 ---
 
