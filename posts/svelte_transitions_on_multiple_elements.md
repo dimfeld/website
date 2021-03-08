@@ -205,7 +205,7 @@ Finally we return the transition function. By the rules of Svelte deferred trans
           if (d) {
 ```
 
-The schedule tells this element's transition when to start and end in relation to the other transitioning elements. Again, this will be covered in more detail in the next post, or you can [see it here](https://github.com/dimfeld/svelte-zoomable/blob/master/src/transition_schedulers.js). The default preset tells the "other" overview transitions to run in the first half of the transition, and then the selected overview and its detail element to transition in the second half.
+The schedule tells this element's transition when to start and end in relation to the other transitioning elements. Again, this will be covered in more detail in the next post, or you can [see it here](https://github.com/dimfeld/svelte-zoomable/blob/master/src/transition_schedulers.js). The default preset tells the unselected overview boxes to transition in the first half, and then the selected overview and its detail element will transition in the second half.
 
 ```javascript
             let schedule = preset.schedule({
@@ -219,10 +219,12 @@ The schedule tells this element's transition when to start and end in relation t
 
 ```
 
-If there is a detail object transitioning, but the `rect` in the `counterparts` for this element was missing, then this is
+If there is a transitioning detail object, but there is no item in `counterparts` for this element, then this is
 one of the overview elements that was not clicked.
 
-With this in mind, we look up the rectangles for the incoming detail element to get the proper ID, and then look up the clicked overview rectangle as `zoomingOverviewRect`. In the default preset, `preset.otherOverviews` returns a Svelte transition `css` function that fades out this overview box and moves it to overlap with `zoomingOverviewRect`.
+With this in mind, we look up the rectangles for the incoming detail element to get the proper ID, and then look up the clicked overview rectangle as `zoomingOverviewRect`. 
+
+In the default preset, `otherOverviews` returns a Svelte transition `css` function that fades out this overview box and moves it to overlap with `zoomingOverviewRect`.
 
 If for some reason we don't have a `zoomingOverviewRect`, we degrade gracefully by having the element just disappear with a transition that does nothing.
 
@@ -306,6 +308,6 @@ export const [send, receive] = zoomTransition({});
 
 :::
 
-The beauty of Svelte transitions here is that nothing in any of this code care about the direction the transition is running. We just write everything assuming that the transition is running forward and that the user clicked an overview to zoom into its detail. When the user zooms out or goes up a level, Svelte reverses the transition for us and it all just works, even in a complex example like this.
+The beauty of Svelte transitions here is that nothing in any of this code cares about the direction the transition is running. We can write everything assuming that the transition is running forward and that the user clicked an overview to zoom in. When the user zooms out or goes up a level, Svelte reverses the transition for us and it all just works, even in a complex example like this.
 
 And that's it. A bit complicated, but not too bad to understand I hope. Please reach out and let me know if anything remains unclear!
