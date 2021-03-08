@@ -6,7 +6,8 @@
   class="embeddable-buttondown-form w-full">
   <div>
     You can check out
-    <a href="https://buttondown.email/dimfeld/archive/starting-out/"
+    <a
+      href="https://buttondown.email/dimfeld/archive/retrospectives-and-new-svelte-feature/"
       >a recent issue</a
     >, or enter your email below to subscribe.
   </div>

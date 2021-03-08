@@ -235,4 +235,4 @@ Check out this code running in the [Svelte REPL](https://svelte.dev/repl/9708a37
 
 </div>
 
-So this forms the basis of how to coordinate multiple elements with deferred transitions. In the next part of the series, we’ll look at additional techniques to coordinate more than two items together, and then finally we’ll dive into multi-part transitions.
+So this forms the basis of how to coordinate multiple elements with deferred transitions. In the [next part of the series](svelte_transitions_on_multiple_elements), we’ll look at additional techniques to coordinate more than two items together, and then finally we’ll dive into multi-part transitions.
