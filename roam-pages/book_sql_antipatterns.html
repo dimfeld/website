@@ -1,0 +1,92 @@
+---
+title: "Book - SQL Antipatterns"
+tags: Books
+date: 2021-03-09
+updated: 2021-03-09
+---
+
+
+  <ul class="list-bullet">
+    <li id="6kKcgNgAG"><span><strong class="rm-attr-ref">Author:</strong> Bill Karwin</span></li>
+    <li id="pRLJ38IV1"><span class="rm-heading-1">Logical Database Design Antipatterns</span>
+      <ul class="list-bullet">
+        <li id="fV80GXaMP"><span class="rm-heading-1">Formatting Lists as Comma-Separated Strings</span>
+          <ul class="list-bullet">
+            <li id="L_xQEnp4S">I think this happens in databases that don&#39;t support array types.  Apparently it comes up most often when changing an existing one-to-one relation into a many-to-one relationship as a way to avoid altering the database schema. I guess this is for DBMS that don&#39;t support array types?</li>
+            <li id="SrluagexQ">The obvious problems with this are that querying and updating the data becomes a hassle, and foreign key constraints and indexes don&#39;t work correctly.</li>
+            <li id="wKxldID23">An array field works better, but it shares a lot of the downsides with the comma-separated string method: complicated indexes, harder to query and join against.</li>
+            <li id="VI0kGUaM6">The best way is to use an intersection table
+              <ul class="list-bullet">
+                <li id="BL9WMyKOu"><pre><code><span class="hljs-source hljs-sql"><span class="hljs-meta hljs-create hljs-sql"><span class="hljs-keyword hljs-other hljs-create hljs-sql">CREATE</span> <span class="hljs-keyword hljs-other hljs-sql">TABLE</span> <span class="hljs-entity hljs-name hljs-function hljs-sql">PaperAuthors</span></span> (
+  paper_id BIGITN <span class="hljs-keyword hljs-other hljs-DDL hljs-create hljs-II hljs-sql">NOT NULL</span>,
+  author_id <span class="hljs-storage hljs-type hljs-sql">BIGINT</span> <span class="hljs-keyword hljs-other hljs-DDL hljs-create hljs-II hljs-sql">NOT NULL</span>,
+  <span class="hljs-storage hljs-modifier hljs-sql">PRIMARY KEY</span>(paper_id, author_id),
+  <span class="hljs-storage hljs-modifier hljs-sql">FOREIGN KEY</span>(paper_id) <span class="hljs-storage hljs-modifier hljs-sql">REFERENCES</span> Papers(paper_id),
+  <span class="hljs-storage hljs-modifier hljs-sql">FOREIGN KEY</span>(author_id) <span class="hljs-storage hljs-modifier hljs-sql">REFERENCES</span> Authors(author_id)
+);</span></code></pre></li>
+                <li id="2LG2jK-Z6">This also makes it easy to add metadata on a relationship, such as the date it was created or who added the entry.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="hCQzQpRja"><span class="rm-heading-1">Naive Trees</span>
+          <ul class="list-bullet">
+            <li id="8H7UjoZm6">Representing a tree structure in a SQL database can be tricky. The obvious way is for each row to have a reference to its parent row, called the <em class="rm-italics">Adjacency List</em> method, though this doesn&#39;t scale well as the tree gets deeper.</li>
+            <li id="PwZVTG2ND">Deleting a node from the tree is also tricky as you have to fetch the entire subtree and then delete or reparent the elements in the right order to satisfy the foreign key constraints between each node and its children. <code>ON DELETE CASCADE</code> can help here, so long as you actually want to delete the elements in the subtree and not relocate them.</li>
+            <li id="MigJXWJE-"><span class="rm-heading-2">Signs you have done this wrong</span>
+              <ul class="list-bullet">
+                <li id="Apzo1u0TA">&quot;How many tree levels do we need to support?&quot;</li>
+                <li id="T-dt-7i7N">You hate touching the code that manages the tree. This usually means you haven&#39;t used the worst solution, but you&#39;re not using the best one either.</li>
+                <li id="vuUhEr6Jl">You have to periodically clean up orphaned nodes. Proper tree management should never leave the database in an invalid state like this.</li>
+              </ul>
+            </li>
+            <li id="uBb5Nih4O">That said, for simple applications that don&#39;t need extensive traversal or flexible updates, the Adjacency List can work just fine.</li>
+            <li id="GSlNDQrXN">Recursive CTEs make querying such structures a lot easier as well.</li>
+            <li id="djGxp9IxL"><span class="rm-heading-2">Better Tree Structures</span>
+              <ul class="list-bullet">
+                <li id="FvJyOx7SI">In general, the Adjacency List with recursive queries or the Closure Table seem best, depending on the needs.</li>
+                <li id="TVw4VdZFu"><span class="rm-heading-3">Path Enumeration</span>
+                  <ul class="list-bullet">
+                    <li id="2O5z-4Y1f">Each node stores its entire path. This makes it easy to find all ancestors or all descendents of a node. You do have to know the entire path of the node first, but generally this is readily available.</li>
+                    <li id="Ump9zgizy">Inserting a new node is as simple as adding it with the path of the parent plus the id of the new node.</li>
+                    <li id="d8wpIQ0MN">This is best for trees that don&#39;t get too deep though, since maintaining the entire path for every node becomes costly and requires supporting application logic to keep the path in sync. It also shares problems with the Comma-Separated Lists antipattern.</li>
+                  </ul>
+                </li>
+                <li id="4O25yU3X0"><span class="rm-heading-3">Nested Sets</span>
+                  <ul class="list-bullet">
+                    <li id="0v5aSEdFa">Each node has a number (distinct from the normal node id), and <code>nsleft</code> and <code>nsright</code> fields, which are the bounds of the range of the descendants&#39; node numbers.
+                      <ul class="list-bullet">
+                        <li id="0g_nyBj4K">The numbers can be assigned by traversing the tree depth-first and assigning <code>nsleft</code> as you go down, incrementing as you go, and <code>nsright</code> as you go back up.</li>
+                      </ul>
+                    </li>
+                    <li id="eLgTWVh7L">Deleting nodes becomes really easy. To remove a node, you just remove the node and the parent of it automatically takes ownership.</li>
+                    <li id="apxckrDlX">Querying ancestors or children then just involves looking for nodes where one node&#39;s <code>nsleft</code> is between the <code>nsleft</code> and <code>nsright</code> of the children or parents.</li>
+                    <li id="J67Vpkm7m">Disadvantages
+                      <ul class="list-bullet">
+                        <li id="pzqR0x796"> Fetching immediate parents and children is complex. You need to use some complex outer joins to make it work, which are basically looking for nodes that fit conditions only the direct parent or children would satisfy.</li>
+                        <li id="bJSZBXsKb">Inserting or moving nodes requires updating node numbers, although it doesn&#39;t require recalculating everything.</li>
+                      </ul>
+                    </li>
+                    <li id="QH1rUGc1y">This works best when you want to query against subtrees more than you want to work with individual nodes or update the tree structure.</li>
+                  </ul>
+                </li>
+                <li id="HNpPrZ8-U"><span class="rm-heading-3">Closure Table</span>
+                  <ul class="list-bullet">
+                    <li id="P1ocXtAui">This method involves storing the tree structure not in the same table as the nodes, but in a separate table that does nothing but store paths through the tree.</li>
+                    <li id="H8NLiJlGW">With two fields, <code>ancestor</code> and <code>descendant</code>, the table has one row for each relationship between two nodes, even when there are other nodes in between. Each node also references itself in this model.</li>
+                    <li id="-PBX2GrSP">This makes querying for ancestors or txdescendants of a node trivial.</li>
+                    <li id="jI3SgpEo4">Adding and removing nodes takes <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">\log n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">n</span></span></span></span> rows since it involves adding or removing all ancestor and descendant rows in the table, but the queries to do so are straightforward.</li>
+                    <li id="iHyaFhyas">Separating the tree structure from the nodes themselves also makes it easy to remove a node from the tree without removing the node itself, or to create multiple overlapping trees (in multiple tables) around the same set of nodes.</li>
+                    <li id="8NKTpToLC">To better support querying for immediate children and parents, you can add a column to the table that contains the length of the path between the two nodes. This makes updates more complex though.</li>
+                    <li id="L3HK_MCaG">The main downside is increased use of space since the it requires <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \log{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span></span></span> rows. But overall this seems like the best method when heavy use of trees is required.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+

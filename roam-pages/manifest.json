@@ -11,6 +11,10 @@
     "title": "Vanishing Gradient Problem",
     "uid": "Y4MUnhES0"
   },
+  "rust_with_webassembly": {
+    "title": "Rust with WebAssembly",
+    "uid": "Q-e7HFZXR"
+  },
   "article_the_four_theories_of_truth_as_a_method_for_critical_thinking": {
     "title": "Article/The Four Theories of Truth as a Method for Critical Thinking",
     "uid": "N6d25J-5y"
@@ -95,6 +99,10 @@
     "title": "George Orwell - What is Fascism?",
     "uid": "-JABhCJ2F"
   },
+  "book_sql_antipatterns": {
+    "title": "Book/SQL Antipatterns",
+    "uid": "ELsXTJxWJ"
+  },
   "web_scrapers": {
     "title": "Web Scrapers",
     "uid": "Q9iGjnPv8"
@@ -103,13 +111,17 @@
     "title": "Overlapping Elements with CSS Grid",
     "uid": "kNtKVi-oJ"
   },
+  "sandbox_method": {
+    "title": "Self-Education: Teach Yourself Anything with the Sandbox Method",
+    "uid": "VagagQEUc"
+  },
   "css_color_tricks": {
     "title": "CSS Color Tricks",
     "uid": "xcACrOFWo"
   },
-  "sandbox_method": {
-    "title": "Self-Education: Teach Yourself Anything with the Sandbox Method",
-    "uid": "VagagQEUc"
+  "building_things_to_help_sell_the_things_you_make": {
+    "title": "Building Things to Help Sell the Things You Make",
+    "uid": "4FFUiVRdq"
   },
   "perceptual_exposure": {
     "title": "Perceptual Exposure",
@@ -118,10 +130,6 @@
   "tiago_forte_on_writing_book_summaries": {
     "title": "Tiago Forte on Writing Book Summaries",
     "uid": "_aJLdAf0o"
-  },
-  "jobs_to_be_done": {
-    "title": "Jobs to be Done",
-    "uid": "4RACPH2md"
   },
   "roam_edn_structure": {
     "title": "Roam EDN Structure",
@@ -174,6 +182,10 @@
   "ui": {
     "title": "UI",
     "uid": "LYHZvk0vm"
+  },
+  "jobs_to_be_done": {
+    "title": "Jobs to be Done",
+    "uid": "4RACPH2md"
   },
   "mistakes_to_avoid_when_learning_jobs_to_be_done": {
     "title": "Mistakes to Avoid when Learning Jobs to be Done",

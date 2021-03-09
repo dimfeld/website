@@ -1,0 +1,67 @@
+---
+title: "Rust with WebAssembly"
+tags: Rust
+date: 2021-02-24
+updated: 2021-02-24
+---
+
+
+  <ul class="list-bullet">
+    <li id="dWUS6O4q5">Rust WASM umbrella site: <a href="https://rustwasm.github.io/">https://rustwasm.github.io/</a></li>
+    <li id="crpC4u11G">The <code>js_sys</code> crate exposes bindings to a bunch of built-in JS types. </li>
+    <li id="T30wNuFId"><span class="rm-heading-1">Converting Types</span>
+      <ul class="list-bullet">
+        <li id="1xJDtoHKi"><code>wasm_bindgen</code> has a <code>JsValue</code> type that represents an arbitrary JS object.The <code>wasm_bindgen</code> docs on interacting with types are also very useful: <a href="https://rustwasm.github.io/docs/wasm-bindgen/reference/types.htm">https://rustwasm.github.io/docs/wasm-bindgen/reference/types.htm</a></li>
+        <li id="u9W5ycvzD">The <code>wasm_bindgen</code> docs on interacting with types are also very useful: <a href="https://rustwasm.github.io/docs/wasm-bindgen/reference/types.html">https://rustwasm.github.io/docs/wasm-bindgen/reference/types.html</a></li>
+        <li id="X-lW9LVDh"><span class="rm-heading-2">Serde</span>
+          <ul class="list-bullet">
+            <li id="FChOh_xTd"><a href="https://rustwasm.github.io/docs/wasm-bindgen/reference/arbitrary-data-with-serde.html">Docs</a></li>
+            <li id="qYvo81EZq"><code>serde</code> can be made to work with <code>JsValue</code> by enabling the <code>serde-serialize</code> feature of <code>wasm-bindgen</code>.
+              <ul class="list-bullet">
+                <li id="IVQMf_-sa"><code>wasm-bindgen = { version = &quot;0.2&quot;, features = [&quot;serde-serialize&quot;] }</code></li>
+              </ul>
+            </li>
+            <li id="lrNwf9WX3">Then you can use <code>Serialize</code> and <code>Deserialize</code> traits as normal</li>
+            <li id="_7mOA4eBD"><code>JsValue::from_serde(data)</code> will serialize a Rust type to a <code>JsValue</code>.</li>
+            <li id="XTIqUWCt8"><code>val::into_serde()</code> will deserialize a value from a <code>JsValue</code> into a Rust type.</li>
+            <li id="-1gibWSBE">This does run into issues with things like a <code>Uint8Array</code> inside an object, because it just gets JSON stringified which doesn&#39;t work well.
+              <ul class="list-bullet">
+                <li id="vPDURUfhg">The <a href="https://docs.rs/serde-wasm-bindgen">serde-wasm-bindgen</a> crate works around this by doing a direct serialization instead of an intermediary JSON step.</li>
+                <li id="Zj_YwYnId"><code>serde_wasm_bindgen::to_value(&amp;value)</code> to convert from a Rust type to a <code>JsValue</code></li>
+                <li id="jTI87rOs3"><code>serde_wasm_bindgen::from_value(&amp;js_value)</code> to convert from a <code>JsValue</code> to a Rust type</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li id="uS8RyEK8R">Errors
+      <ul class="list-bullet">
+        <li id="Tzezt_1hY">Javascript Errors can be used with the <code>js_sys::Error</code> type.</li>
+        <li id="QhQopBQnk">You can wrap any error into a JS Error like this
+          <ul class="list-bullet">
+            <li id="EVJ1fEd3t"><pre><code><span class="hljs-source hljs-rust"><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-storage hljs-type hljs-function hljs-rust">fn</span> </span><span class="hljs-entity hljs-name hljs-function hljs-rust">wrap_error</span></span><span class="hljs-meta hljs-generic hljs-rust"><span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>T<span class="hljs-punctuation hljs-separator hljs-rust">:</span> <span class="hljs-meta hljs-path hljs-rust">std<span class="hljs-punctuation hljs-accessor hljs-rust">::</span></span><span class="hljs-meta hljs-path hljs-rust">string<span class="hljs-punctuation hljs-accessor hljs-rust">::</span></span>ToString<span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-begin hljs-rust">(</span><span class="hljs-variable hljs-parameter hljs-rust">e</span><span class="hljs-punctuation hljs-separator hljs-rust">:</span> T</span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-end hljs-rust">)</span></span></span></span><span class="hljs-meta hljs-function hljs-rust"> <span class="hljs-meta hljs-function hljs-return-type hljs-rust"><span class="hljs-punctuation hljs-separator hljs-rust">-&gt;</span> Error</span> </span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
+    <span class="hljs-storage hljs-type hljs-rust">let</span> e <span class="hljs-keyword hljs-operator hljs-rust">=</span> <span class="hljs-meta hljs-path hljs-rust">js_sys<span class="hljs-punctuation hljs-accessor hljs-rust">::</span></span><span class="hljs-meta hljs-path hljs-rust">Error<span class="hljs-punctuation hljs-accessor hljs-rust">::</span></span>new<span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-keyword hljs-operator hljs-rust">&amp;</span>e.<span class="hljs-support hljs-function hljs-rust">to_string</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span><span class="hljs-punctuation hljs-terminator hljs-rust">;</span>
+    e.<span class="hljs-support hljs-function hljs-rust">set_name</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-string hljs-quoted hljs-double hljs-rust"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-rust">&quot;</span>SocialCardError<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-rust">&quot;</span></span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span><span class="hljs-punctuation hljs-terminator hljs-rust">;</span>
+    e
+</span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span></span></code></pre></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li id="ZfD6mnwpq"><span class="rm-heading-1">wasm-pack</span>
+      <ul class="list-bullet">
+        <li id="xRWawBbVW">This is a tool that works with <code>wasm-bindgen</code> to make it easier to publish WASM blobs.</li>
+        <li id="EOFXBSrr6">Docs: <a href="https://rustwasm.github.io/docs/wasm-pack/introduction.html">https://rustwasm.github.io/docs/wasm-pack/introduction.html</a></li>
+        <li id="pDOm5UwSq">Use <code>wasm-pack</code> instead of <code>cargo</code> to build your application.</li>
+        <li id="KGXkYbO-A">Commands
+          <ul class="list-bullet">
+            <li id="6gnA3X-V4"><code>wasm-pack new &lt;PROJECT&gt;</code> - Create a new WASM project with Cargo.toml already set up and a skeleton source file.</li>
+            <li id="c2DjK5f0c"><code>wasm-pack build</code> - Build the library. This will also install the necessary toolchain if you don&#39;t have the WASM target installed yet.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+
