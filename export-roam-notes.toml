@@ -65,6 +65,7 @@ exclude_tags = [
   "Articles",
   "Inbox",
   "In Progress",
+  "Newsletter Item",
   "Done",
   "Readwise",
   "Deliberate Practice",
