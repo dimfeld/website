@@ -32,7 +32,7 @@ function formatPostHeader(post: Post) {
 export async function get(req, res, next) {
   try {
     let type = req.params.type;
-    let host = `process.env.SITE_DOMAIN`;
+    let host = `https://imfeld.dev`;
 
     let title = `Daniel Imfeld's blog`;
     let url = `${host}/rss/${type}.xml`;
@@ -64,7 +64,7 @@ export async function get(req, res, next) {
       description: `Daniel Imfeld's Writing and Notes`,
       feed_url: url,
       site_url: host,
-      copyright: 'Daniel Imfeld 2020',
+      copyright: 'Daniel Imfeld 2021',
       categories: ['technology', 'programming'],
       language: 'English',
     });
