@@ -1,0 +1,123 @@
+---
+title: "Book - Designing Data-Intensive Applications"
+tags: Books
+date: 2021-03-09
+updated: 2021-03-09
+---
+
+
+  <ul class="list-bullet">
+    <li id="E2h_EUeQW"><span><strong class="rm-attr-ref">Author:</strong> Martin Kleppmann</span></li>
+    <li id="l1HUsTQlS"><span class="rm-heading-1">Reliability</span>
+      <ul class="list-bullet">
+        <li id="VzjCaEAtS">Two ways things can go wrong
+          <ul class="list-bullet">
+            <li id="rgHYxxM_W">A <em class="rm-italics">fault</em> is when a component inside the system fails to function properly.</li>
+            <li id="aRbsCsQ-w">A <em class="rm-italics">failure</em> is when the system as a whole breaks, as a result of one or more faults.</li>
+          </ul>
+        </li>
+        <li id="8MZOxUKt8">Prevent faults when you can, but it&#39;s not possible to prevent 100% of faults.</li>
+        <li id="KVHux9tDE">The big idea of reliability is to keep faults from turning into failures.</li>
+        <li id="W9flyP4Gb"><blockquote class="rm-bq">The bugs that cause these kinds of software faults often lie dormant for a long time until they are triggered by an unusual set of circumstances. In those circumstances, it is revealed that the software is making some kind of assumption about its environment — and while that assumption is usually true, it eventually stops being true for some reason</blockquote></li>
+        <li id="oJCxXwWbK">Chaos Monkey style testing helps here. As with backup, you only know if your error handling really works if you are testing it.</li>
+        <li id="ZzEG7F159">Monitoring can help a lot to catch small problems before they balloon into big problems.</li>
+      </ul>
+    </li>
+    <li id="nvFcC8KrE"><span class="rm-heading-1">Scalability</span>
+      <ul class="list-bullet">
+        <li id="nOx13lWJi">To talk about scalability we have to think about what we are scaling and what the load on the system actually comprises. </li>
+        <li id="EI4sjNP-8"><span class="rm-heading-2">Describing Load</span>
+          <ul class="list-bullet">
+            <li id="-PVMUSrnH">Is it read-heavy? Write-heavy? Are there a lot of active simultaneous users?</li>
+            <li id="NFdOKtY_9">What kind of SLAs do we have?
+              <ul class="list-bullet">
+                <li id="fqSr9pcCF">Both internal or external/contractual</li>
+              </ul>
+            </li>
+            <li id="4UYP05xj3">Do we care more about the average case or the tails?</li>
+            <li id="TVVmf3xVi">How do changes that we make affect the different types of load in the system?</li>
+            <li id="dPDZ3IWRz">The nature of the load and what we want to optimize for makes a big difference in the design of the system.</li>
+            <li id="1M5U9KSkP">In extreme caes, a hybrid design may even work best.
+              <ul class="list-bullet">
+                <li id="CW_QOBj2B">Twitter uses an approach in which each user has a timeline cache, and when someone  tweets, it is replicated out to the timeline cache of all their followers at the time that the tweet is made, even if the follower isn&#39;t currently using Twitter.</li>
+                <li id="WS7c6j-AS">But this falls apart at the top where some users may have tens of millions of followers, so for those specific users they use a read-based system, where their tweets are fetched when the follower actually opens Twitter and then merged into the rest of the timeline cache.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="HKcgMe9_E"><span class="rm-heading-2">Describing Performance</span>
+          <ul class="list-bullet">
+            <li id="_nhLnT8kq">When you increase load, how is the performance of the system affected?</li>
+            <li id="vZPDHzfTr">When you increase load, how much do you need to increase the underlying resources (CPU, RAM, etc.) to keep performance the same?</li>
+            <li id="z1dP3nkup">Which performance metric is relevant?
+              <ul class="list-bullet">
+                <li id="X9FC6EINI">Response time</li>
+                <li id="cZtOzKbrX">Latency to start serving a response</li>
+                <li id="Ciz52odc_">Throughput of a stream</li>
+              </ul>
+            </li>
+            <li id="MV-KV5gXH">Of course all these are <strong class="rm-bold">distributions</strong> as well and our thinking needs to encompass that.
+              <ul class="list-bullet">
+                <li id="pcmGYu0ir">Your best users may have the most data or the most complex queries, and thus experience the longest response times. This is an especially good reason to pay attention to the tail of the distribution.</li>
+                <li id="zbTyvV8ai">At some point the tail of the distribution is dominated by random events that you can&#39;t really control. AWS decided that optimizing for the 99.9 percentile to meet their response time SLA was useful, but optimizing the 99.99th percentile (1 in 10,000 requests) was not.</li>
+              </ul>
+            </li>
+            <li id="K8-mjDNSI"><span class="rm-heading-3">Head-of-Line Blocking</span>
+              <ul class="list-bullet">
+                <li id="oIMmCmayr">When multiple slow requests are running and blocking faster requests from running, so those faster requests end up taking a long time as well.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="WLu3KPagY"><span class="rm-heading-2">Dealing with Load</span>
+          <ul class="list-bullet">
+            <li id="oCYjNXPR0">Each factor of 10 increase in load tends to require a change in architecture.</li>
+            <li id="63I2lsPRi">The architecture depends a lot on how the load is distributed, read-heavy vs. write-heavy, OLAP vs OLTP, and so on.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li id="CP8A40daC"><span class="rm-heading-1">Maintainability</span>
+      <ul class="list-bullet">
+        <li id="uKxL3iVAJ">Operability — Keeping things running smoothly shouldn’t be a chore.
+          <ul class="list-bullet">
+            <li id="jHIrcGqlW">Monitoring</li>
+            <li id="TuOYTa1Eb">Tracking down problems</li>
+            <li id="qrsejNOu3">Updating systems software, OS, etc.</li>
+            <li id="6N7BBxF2K">How do systems afffect and depend on each other?</li>
+            <li id="hy4rTfm9T">Anticipating future problems, and having the visibility to do so. (Scaling up servers when load is getting high, but before it becomes a problem.)</li>
+            <li id="4DC7C7vsy">Good practices for deployment, configuration management, etc.</li>
+            <li id="HU1BK93V2">Rearranging how applications are deployed in the system and other complex tasks</li>
+            <li id="xrEHnhdO5">Avoiding dependency on individual machines</li>
+            <li id="A1EedHpzO">Maintaining security as things change</li>
+            <li id="d1qryJxrw">Defining processes for all the above</li>
+            <li id="61dbsTjEb">Writing knowledge down</li>
+          </ul>
+        </li>
+        <li id="KO6p_cAYv">Simplicity — Easy for new engineers to understand the system and its components.
+          <ul class="list-bullet">
+            <li id="3zVIlWyaI">Sources of complexity
+              <ul class="list-bullet">
+                <li id="d7NkVjqqE">Explosion of the state space</li>
+                <li id="1VFS09jHQ">Tightly-coupled modules</li>
+                <li id="S5fcOHVLQ">Tangled dependencies</li>
+                <li id="35B8us_6I">Inconsistent naming</li>
+                <li id="RI6Lh0L6K">Performance problems solved via hacks that never go away</li>
+                <li id="1EFiBhbfR">Special cases to work around issues in other modules</li>
+              </ul>
+            </li>
+            <li id="VQlSUtCdO">Simplicity makes software easier to write and deploy performant, correct software.</li>
+            <li id="q9izM2953">Good abstractions enable simplicity of the layers above. Bad, leaky abstractions can hurt more than they help.</li>
+          </ul>
+        </li>
+        <li id="b2VsmHdij">Evolvability — Easy to make changes in the future and adapt to new requirements.
+          <ul class="list-bullet">
+            <li id="WfYyE9We1">This is closely linked to the simplicity of the system. Simpler systems are easier to change.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li id="5olcnynfe"><pre>[[embed]]: ((((ESTAYVKAO))))</pre></li>
+  </ul>
+
+
