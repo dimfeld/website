@@ -12,7 +12,7 @@ updated: 2020-11-16
     <li id="kIV2a0JT0">If you can pull it off, it&#39;s best to just use single database transactions with <a href="/notes/serializable_transactions">Serializable Transactions</a> if you need it, and design them in an idempotent fashion. But that can&#39;t always be done, especially when you must interact with external services.</li>
     <li id="Jo_ZOWbqg"><span class="rm-heading-2">The Idea of Idempotency Keys</span>
       <ul class="list-bullet">
-        <li id="LrgTmStfO">Operations that can&#39;t be made inherently idempotent can have the client send an accompanying unique id to track the operation. The server can then see if that operation has succeeded, failed, etc. and act appropriately. </li>
+        <li id="LrgTmStfO">Operations such as this can&#39;t be made inherently idempotent, but they can have the client send an accompanying unique ID to track the operation. The server can then see if the operation with that ID (if the ID already exists) has succeeded, failed, etc. and act appropriately.</li>
         <li id="v351cYamz">When a request comes in, the server creates a new record for the idempotency key, and uses this to track the progress of the request.</li>
         <li id="ep4JbbfU4">The response is saved with the idempotency key record, so if the client sends a request for the same key again, the server just returns the same response.</li>
         <li id="3gzmKTkrf">The record has the following data:
@@ -56,7 +56,7 @@ updated: 2020-11-16
     </li>
     <li id="dPaewUxjx"><span class="rm-heading-2">Problems with non-idempotent foreign services</span>
       <ul class="list-bullet">
-        <li id="9cPwRf5K1">When talking to foreign APIs that don&#39;t support idempotency on their own, we can run into issues on some types of failures. For example, on a time out error we may not know if our request actually went through or not. There sin&#39;t really a good way to handle this and you may just have to mark the transaction failed.</li>
+        <li id="9cPwRf5K1">When talking to foreign APIs that don&#39;t support idempotency on their own, we can run into issues on some types of failures. For example, on a time out error we may not know if our request actually went through or not. There isn&#39;t really a good way to handle this and you may just have to mark the transaction failed.</li>
       </ul>
     </li>
     <li id="ZDZD5fGjc"><span class="rm-heading-2">Additional useful processes </span>

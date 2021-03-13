@@ -78,9 +78,77 @@ updated: 2021-03-09
                     <li id="jI3SgpEo4">Adding and removing nodes takes <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">\log n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">n</span></span></span></span> rows since it involves adding or removing all ancestor and descendant rows in the table, but the queries to do so are straightforward.</li>
                     <li id="iHyaFhyas">Separating the tree structure from the nodes themselves also makes it easy to remove a node from the tree without removing the node itself, or to create multiple overlapping trees (in multiple tables) around the same set of nodes.</li>
                     <li id="8NKTpToLC">To better support querying for immediate children and parents, you can add a column to the table that contains the length of the path between the two nodes. This makes updates more complex though.</li>
-                    <li id="L3HK_MCaG">The main downside is increased use of space since the it requires <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \log{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span></span></span> rows. But overall this seems like the best method when heavy use of trees is required.</li>
+                    <li id="L3HK_MCaG">The main downside is increased use of space since it requires <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \log{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span></span></span> rows. But overall this seems like the best method when heavy use of trees is required.</li>
                   </ul>
                 </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="ZmrlQqbes"><span class="rm-heading-2">Bad Primary Keys</span>
+          <ul class="list-bullet">
+            <li id="npdoiaFBm">The primary key should make sense for the table.</li>
+            <li id="Pf_0O8kbr">Types of primary keys
+              <ul class="list-bullet">
+                <li id="YyIryI4CD">Pseudokey is a serial ID column or similar that has no real meaning to the data except to be a unique id for the row.</li>
+                <li id="PwBM3rSq9">A natural key is a column that appears naturally in the data and also happens to uniquely identify a row.
+                  <ul class="list-bullet">
+                    <li id="exXRUGAlY">Be sure that it is <strong class="rm-bold">actually</strong> unique since this can cause trouble down the line if it turns out that duplicates are ok in some cases.</li>
+                  </ul>
+                </li>
+                <li id="kXcEC4KXr">A compound key is two or more natural keys that combine to be unique.</li>
+              </ul>
+            </li>
+            <li id="M0QTjvE7b">In an intersection table, the two columns for the intersection make a great compound primary key and reduce chance of bugs. No need for a separate ID.</li>
+            <li id="RFQtiXJhG">The primary key should have a more descriptive name, not just <code>id</code>.
+              <ul class="list-bullet">
+                <li id="oeBvhGuOo">e.g. <code>account_id</code> in an <code>Account</code> table.</li>
+                <li id="GA8RJkJKg">Less need to rename fields in query results when joining tables. </li>
+                <li id="2sySXL74S">This also allows more queries to use USING in joins.</li>
+              </ul>
+            </li>
+            <li id="MwfYBTRdI">Using an ORM can make it hard to use primary keys optimally, so that’s ok.
+              <ul class="list-bullet">
+                <li id="0MqaKJdid">Some ORMs let you change the primary key from the default.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="BWdCLsTk8"><span class="rm-heading-2">Missing Foreign Keys</span>
+          <ul class="list-bullet">
+            <li id="lXxPJZFrU">Using foreign keys can appear to make some things slightly more difficult at first, but beyond the most simple cases it actually makes some things a lot easier since the database can automatically handle some types of updates, and it also reduces bug potential a lot.</li>
+            <li id="EvLfjbgek">These can be created as part of the column or listed separately:
+              <ul class="list-bullet">
+                <li id="LIJR9xQIn"><code>column text REFERENCES other_table(other_column)</code></li>
+                <li id="r6IWqAC3q"><code>FOREIGN KEY (c1, c2) REFERENCES other_table(a, b)</code></li>
+              </ul>
+            </li>
+            <li id="69F6PDxR5">Foreign keys can also define special behavior when the value in the other table updates.</li>
+            <li id="fkY8CUtvW">A big thing about foreign keys is that they not only prevent deletions of data, but can help with updates too.
+              <ul class="list-bullet">
+                <li id="zUHEEZ4to">These can be set with <code>ON UPDATE &lt;action&gt;</code> and <code>ON DELETE &lt;action&gt;</code></li>
+                <li id="vBasv402r"><code>NO ACTION</code> prevents updates and deletes that would violate the constraint. This check can be deferred until the end of a transaction.</li>
+                <li id="4uHMkvaru"><code>RESTRICT</code> is like <code>NO ACTION</code> except it can&#39;t be deferred.</li>
+                <li id="geeivfjwI"><code>CASCADE</code> deletes any rows that reference a deleted foreign row, or update the values in this table to match an updated foreign row&#39;s key.</li>
+                <li id="HLypxeDhr"><code>SET NULL</code> sets this column to NULL when the reference is broken.</li>
+                <li id="K4FIQLB4y"><code>SET DEFAULT</code> sets it to the default value when the reference is broken. If the default is not null then the default value must exist in the foreign table.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="dYsD4Pk_c"><span class="rm-heading-2">Entity-Attribute-Value</span>
+          <ul class="list-bullet">
+            <li id="K8R9tqoyV">Some graph databases work like this, but it&#39;s not well-suited for SQL databases that don&#39;t natively support it.</li>
+            <li id="NZJn6r3qn">Solutions
+              <ul class="list-bullet">
+                <li id="kWKl0q9LU">Modern SQL databases can use JSON types for flexible schema needs while retaining strong typing, easy joins and relations, and all the other niceties of RDBMS for the basic data.</li>
+                <li id="QMwbgc4Fm">Define one table for each type and union them together.</li>
+                <li id="-_XW5aR2n">You can set up child tables and have each object reference a row in that other table when needed for the subtype fields.
+                  <ul class="list-bullet">
+                    <li id="OrTLfYOFt">Working with this can also be made easier with a view that does the <code>LEFT JOIN</code> on the child tables for you.</li>
+                  </ul>
+                </li>
+                <li id="Tu7wwj1Wx">If you&#39;re stuck with an EAV of schema, your best bet is to just do the reconstruction in the code that reads the database query results.</li>
               </ul>
             </li>
           </ul>
