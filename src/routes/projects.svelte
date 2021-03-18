@@ -1,6 +1,13 @@
 <script>
   const projects = [
     {
+      name: 'Ergo',
+      repo: 'https://www.github.com/dimfeld/ergo',
+      link: 'https://www.github.com/dimfeld/ergo',
+      text: `Ergo is a IFTTT/Zapier style application that I'm building with Rust ana Svelte for my personal use and to experiment with various technologies.`,
+      image: 'ergo-logo-small.png',
+    },
+    {
       name: 'Roam Note Exporter',
       repo: 'https://www.github.com/dimfeld/export-roam-notes',
       link: 'https://www.github.com/dimfeld/export-roam-notes',
@@ -51,54 +58,50 @@
   </p>
 
   {#each projects as project}
-  <div class="flex flex-col space-y-4 mt-4 sm:flex-row sm:space-y-0">
-    <h1 class="block sm:hidden">
-      <a href={project.link}>{project.name}</a>
-      <a href="{project.repo || project.link}">(Source)</a>
-    </h1>
-    <div
-      class="flex-none flex flex-col items-stretch w-full justify-center sm:block sm:w-48"
-    >
-      {#if project.image}
-      <img
-        class="w-full sm:w-48"
-        alt="{project.name} image"
-        src={imageUrl(project.image)}
-      />
-      {/if}
-    </div>
-    <div class="flex flex-col sm:ml-12">
-      <h2 class="hidden sm:block">
+    <div class="flex flex-col space-y-4 mt-4 sm:flex-row sm:space-y-0">
+      <h1 class="block sm:hidden">
         <a href={project.link}>{project.name}</a>
-        <a href="{project.repo || project.link}">(Source)</a>
-      </h2>
-      <p class="mt-0">{@html project.text}</p>
+        <a href={project.repo || project.link}>(Source)</a>
+      </h1>
+      <div
+        class="flex-none flex flex-col items-stretch w-full justify-center sm:block sm:w-48">
+        {#if project.image}
+          <img
+            class="w-full sm:w-48"
+            alt="{project.name} image"
+            src={imageUrl(project.image)} />
+        {/if}
+      </div>
+      <div class="flex flex-col sm:ml-12">
+        <h2 class="hidden sm:block">
+          <a href={project.link}>{project.name}</a>
+          <a href={project.repo || project.link}>(Source)</a>
+        </h2>
+        <p class="mt-0">{@html project.text}</p>
+      </div>
     </div>
-  </div>
   {/each}
 
   <h2>Other Minor Projects</h2>
   <ul>
     <li>
       <a href="https://www.github.com/dimfeld/svelte-zoomable"
-        >Svelte Zoomable</a
-      >
+        >Svelte Zoomable</a>
       is an experiment in zoomable UI and advanced transitions in Svelte.
     </li>
     <li>
       <a href="https://www.npmjs.com/package/sorters">Sorters</a>
       is a compact package for generating Javascript array sort comparators that
-      handle things like null values, descending sort, and multi-level
-      comparisons. I wrote this as I've been moving away from heavyweight
-      utility packages.
+      handle things like null values, descending sort, and multi-level comparisons.
+      I wrote this as I've been moving away from heavyweight utility packages.
     </li>
     <li>
       <a href="https://swr-xstate.imfeld.dev/">SWR XState</a>
       is a stale-while-revalidate data fetcher built with the
       <a href="https://xstate.js.org">XState</a>
-      state machine library. Originally developed for internal use at my
-      company, it provides automatic periodic refreshes with browser focus
-      tracking, exponential backoff, and other nice features. I also wrote an
+      state machine library. Originally developed for internal use at my company,
+      it provides automatic periodic refreshes with browser focus tracking, exponential
+      backoff, and other nice features. I also wrote an
       <a href="/writing/swr_with_xstate">article about the implementation.</a>
     </li>
   </ul>
