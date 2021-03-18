@@ -85,7 +85,7 @@ updated: 2021-03-09
             </li>
           </ul>
         </li>
-        <li id="ZmrlQqbes"><span class="rm-heading-2">Bad Primary Keys</span>
+        <li id="ZmrlQqbes"><span class="rm-heading-1">Bad Primary Keys</span>
           <ul class="list-bullet">
             <li id="npdoiaFBm">The primary key should make sense for the table.</li>
             <li id="Pf_0O8kbr">Types of primary keys
@@ -114,7 +114,7 @@ updated: 2021-03-09
             </li>
           </ul>
         </li>
-        <li id="BWdCLsTk8"><span class="rm-heading-2">Missing Foreign Keys</span>
+        <li id="BWdCLsTk8"><span class="rm-heading-1">Missing Foreign Keys</span>
           <ul class="list-bullet">
             <li id="lXxPJZFrU">Using foreign keys can appear to make some things slightly more difficult at first, but beyond the most simple cases it actually makes some things a lot easier since the database can automatically handle some types of updates, and it also reduces bug potential a lot.</li>
             <li id="EvLfjbgek">These can be created as part of the column or listed separately:
@@ -136,7 +136,7 @@ updated: 2021-03-09
             </li>
           </ul>
         </li>
-        <li id="dYsD4Pk_c"><span class="rm-heading-2">Entity-Attribute-Value</span>
+        <li id="dYsD4Pk_c"><span class="rm-heading-1">Entity-Attribute-Value</span>
           <ul class="list-bullet">
             <li id="K8R9tqoyV">Some graph databases work like this, but it&#39;s not well-suited for SQL databases that don&#39;t natively support it.</li>
             <li id="NZJn6r3qn">Solutions
@@ -148,7 +148,41 @@ updated: 2021-03-09
                     <li id="OrTLfYOFt">Working with this can also be made easier with a view that does the <code>LEFT JOIN</code> on the child tables for you.</li>
                   </ul>
                 </li>
-                <li id="Tu7wwj1Wx">If you&#39;re stuck with an EAV of schema, your best bet is to just do the reconstruction in the code that reads the database query results.</li>
+                <li id="Tu7wwj1Wx">If you&#39;re stuck with an EAV schema, your best bet is to just do the reconstruction in the code that reads the database query results.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="DNnxHTwPo"><span class="rm-heading-1">Polymorphic Associations</span>
+          <ul class="list-bullet">
+            <li id="kxSckCs1S">Sometimes you need a particular object to be linked to two different types of things. A Comment might reference an Issue or a Pull Request, for example.</li>
+            <li id="CAjXA3OSv">A bad solution is to have a single foreign key that can reference either type of object, with another column that indicates which type this prticular one is referencing.
+              <ul class="list-bullet">
+                <li id="tRBvAdXTb">This makes it difficult to write joining queries</li>
+                <li id="obPS5GJqQ">It&#39;s impossible to use foreign key constraints with this model.</li>
+              </ul>
+            </li>
+            <li id="sO6zBbcU_">Better solutions
+              <ul class="list-bullet">
+                <li id="k8oHzShbI">Use an intersection table for each of the tables.
+                  <ul class="list-bullet">
+                    <li id="KmgdR8Nbd">This does have the downside that it&#39;s harder to enforce a one-to-one foreign key setup, and the select queries can be complicated depending on what you really want to do.</li>
+                  </ul>
+                </li>
+                <li id="5fTLsSVlj">Create a common parent table
+                  <ul class="list-bullet">
+                    <li id="E7z3SyegX">This doesn&#39;t work for everything but is nice when it makes sense for the data model.</li>
+                    <li id="plamo_cYg">Use a single ID space shared by all the types of objects that need to be referenced. (e.g. Issues and Pull Requests share the same ID space)</li>
+                    <li id="GsQOqv0-T">Here you have a single parent table that just contains IDs and nothing else. Creating an object involves first adding a row to this table to generate the ID, then creating the actual object that will use the ID.</li>
+                    <li id="W9idocZKx">All of the tables then have foreign key constraints to that parent table. 
+                      <ul class="list-bullet">
+                        <li id="Kwi4HUxZu">Issues and Pull Requests have their primary key reference the parent table.</li>
+                        <li id="FE2eIHitj">Comments have their <code>parent_id</code> reference the parent table.</li>
+                      </ul>
+                    </li>
+                    <li id="3swB4R0Kg">Select queries can be done normally, and don&#39;t even have to reference the master ID table.</li>
+                  </ul>
+                </li>
               </ul>
             </li>
           </ul>
