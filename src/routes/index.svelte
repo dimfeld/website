@@ -95,8 +95,7 @@
   <p>
     In the past I worked almost exclusively in C++ and various assembly
     languages. Now that I'm more in the web ecosystem, I'm mostly writing
-    Javascript, but I also enjoy using Go and Rust for more heavy-duty backend
-    work.
+    Javascript for work, but I'm using Rust more and more as well.
   </p>
 
   <p>
@@ -110,6 +109,11 @@
   </p>
 
   <h2>Life</h2>
+  <p>
+    I usually have some sort of side project going on, and my most recent
+    obsession is <a href="https://github.com/dimfeld/ergo">Ergo</a>, a low-code
+    workflow orchestrator that is still in early stages, but coming along well.
+  </p>
   <p>
     Sometimes I wish I could code all day and night, but when not hacking on
     something or spending time with my family, I enjoy good coffee, nature
