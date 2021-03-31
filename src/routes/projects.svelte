@@ -4,7 +4,7 @@
       name: 'Ergo',
       repo: 'https://www.github.com/dimfeld/ergo',
       link: 'https://www.github.com/dimfeld/ergo',
-      text: `Ergo is a IFTTT/Zapier style application that I'm building with Rust ana Svelte for my personal use and to experiment with various technologies.`,
+      text: `Ergo is a low-code task engine built with Rust and Svelte. Think IFTTT or Zapier, but the task behavior is customizable through Javascript and tasks can contain state machines.`,
       image: 'ergo-logo-small.png',
     },
     {
