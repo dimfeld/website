@@ -35,6 +35,10 @@
     "title": "content-visibility: auto",
     "uid": "hv7y2up37"
   },
+  "rust_pinning": {
+    "title": "Rust Pinning",
+    "uid": "Mk6Y9TyBS"
+  },
   "overlapping_elements_with_css_grid": {
     "title": "Overlapping Elements with CSS Grid",
     "uid": "kNtKVi-oJ"
@@ -175,13 +179,13 @@
     "title": "Tacit Knowledge",
     "uid": "9GX4ib6aC"
   },
+  "sqlx": {
+    "title": "sqlx",
+    "uid": "0tdvTtKQ6"
+  },
   "lateral_joins": {
     "title": "Lateral Joins",
     "uid": "sS_6NXul9"
-  },
-  "github_actions": {
-    "title": "Github Actions",
-    "uid": "wJQjbB9QD"
   },
   "transactionally_staged_job_drain_queues": {
     "title": "Transactionally Staged Job Drain Queues",
@@ -203,6 +207,10 @@
     "title": "New Directions in Cloud Programming",
     "uid": "rPSDRtbXI"
   },
+  "github_actions": {
+    "title": "Github Actions",
+    "uid": "wJQjbB9QD"
+  },
   "ntp_sync": {
     "title": "NTP Sync",
     "uid": "OntAcAVJ3"
@@ -210,6 +218,10 @@
   "ui": {
     "title": "UI",
     "uid": "LYHZvk0vm"
+  },
+  "rust_modules": {
+    "title": "Rust Modules",
+    "uid": "mNi1u_iGm"
   },
   "variable_neighborhood_search": {
     "title": "Variable Neighborhood Search",
