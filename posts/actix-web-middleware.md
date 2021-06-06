@@ -232,7 +232,7 @@ App::new().service(
 
 # Retrieving the User Information
 
-Now that the middleware is installed, we can use it in a route handler, another middleware, or a request extractor,.
+Now that the middleware is installed, we can use it in a route handler, another middleware, or a request extractor.
 
 The first two options involve using the request extensions API to look up the object with the correct type. This uses the same `TypeId` key that we used when adding the information from the middleware, so `req.extensions().get::<AuthenticationInfo>()` will suffice here. 
 
@@ -305,4 +305,4 @@ impl FromRequest for MaybeAuthenticated {
 }
 ```
 
-When writing this code, I found that while understanding the purpose of the boilerplate and what exactly it was doing was the difficult part, and actually writing the interesting parts of the middleware was quite easy in the end. Hopefully this makes things easier to understand. Please let me know if anything remains unclear and I’m happy to help!
+When writing this code, I found that the difficult part was understanding the purpose of the boilerplate and what it was doing, but actually writing the purpose-specific parts of the middleware was quite easy in the end. Hopefully this makes things easier to understand. Please let me know if anything remains unclear and I’m happy to help!
