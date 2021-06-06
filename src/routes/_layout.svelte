@@ -164,6 +164,10 @@
       @apply text-red-600;
     }
 
+    article div.note {
+      @apply px-4 py-4 text-sm bg-teal-100 bg-opacity-75 border-cool-gray-300 border;
+    }
+
     div.responsive-svg {
       @apply my-4 w-full mx-auto;
     }

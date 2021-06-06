@@ -36,7 +36,8 @@ export default function renderer() {
     })
     .use(container, 'side-by-side', {
       content: renderSideBySide,
-    });
+    })
+    .use(container, 'note', {});
 
   r.renderer.rules.footnote_ref = function render_footnote_ref(
     tokens,
