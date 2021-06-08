@@ -72,7 +72,7 @@
     }
 
     pre > code {
-      @apply block border-cool-gray-300 bg-cool-gray-200 text-black px-4 py-2 my-4 whitespace-pre-wrap overflow-x-auto shadow-lg;
+      @apply block border-cool-gray-300 bg-cool-gray-200 text-black px-4 py-2 my-4 whitespace-pre overflow-x-auto shadow-lg;
     }
 
     article h1 + p,
@@ -164,7 +164,7 @@
       @apply text-red-600;
     }
 
-    article div.note {
+    article aside.note {
       @apply px-4 py-4 text-sm bg-teal-100 bg-opacity-75 border-cool-gray-300 border;
     }
 
@@ -214,6 +214,10 @@
 
       blockquote {
         @apply -ml-4 pl-6 pr-0;
+      }
+
+      pre > code {
+        @apply whitespace-pre-wrap;
       }
 
       .side-by-side {

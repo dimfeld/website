@@ -37,7 +37,16 @@ export default function renderer() {
     .use(container, 'side-by-side', {
       content: renderSideBySide,
     })
-    .use(container, 'note', {});
+    .use(container, 'note', {
+      render: function (tokens, idx) {
+        let token = tokens[idx];
+        if (token.nesting === 1) {
+          return `<aside class="note">`;
+        } else {
+          return `</aside>`;
+        }
+      },
+    });
 
   r.renderer.rules.footnote_ref = function render_footnote_ref(
     tokens,
