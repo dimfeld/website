@@ -53,7 +53,7 @@
 
   <p>
     I also host my
-    <a rel="prefetch" href="notes">notes</a>
+    <a sapper:prefetch href="notes">notes</a>
     here publicly, in hopes that some readers will be educated and others can help
     fill in the gaps. {#if lastCreatedNote.id !== latestNote.id}
       <a href="notes/{lastCreatedNote.id}">{lastCreatedNote.title}</a>
