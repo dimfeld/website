@@ -41,7 +41,7 @@ specifiers:
   copyfiles: ^2.3.0
   cssnano: ^4.1.10
   date-fns: ^2.14.0
-  debug: ^4.1.1
+  debug: ^4.3.1
   dotenv: ^8.2.0
   eslint: ^6.8.0
   eslint-config-prettier: ^6.10.0
@@ -76,6 +76,7 @@ specifiers:
   postcss: ^7.0.21
   postcss-cli: ^6.1.3
   postcss-import: ^12.0.1
+  postcss-load-config: ^2
   postcss-nested: ^4.2.1
   postcss-url: ^8.0.0
   prettier: ^2.2.1
@@ -108,7 +109,7 @@ dependencies:
   cheerio: 1.0.0-rc.3
   compression: 1.7.4
   date-fns: 2.16.1
-  debug: 4.1.1
+  debug: 4.3.1
   dotenv: 8.2.0
   front-matter: 3.2.1
   glob: 7.1.6
@@ -133,6 +134,7 @@ dependencies:
   markdown-it-toc-done-right: 4.1.0_7080ccd99293666fa42b57e765900de3
   pkg-dir: 4.2.0
   polka: 0.5.2
+  postcss-load-config: 2.1.2
   rss: 1.2.2
   sirv: 0.4.6
   sorters: 0.0.4
@@ -195,7 +197,7 @@ devDependencies:
   sapper: 0.29.0_svelte@3.32.0
   svelte: 3.32.0
   svelte-awesome: 2.3.0
-  svelte-preprocess: 4.6.1_fdfba67cf8afc19f821897942c96fdc3
+  svelte-preprocess: 4.6.1_a5b3e012a634a753f5f597afc5f79532
   svelte-rough-notation: 0.1.4
   tailwindcss: 1.8.11
   ts-node: 9.1.1_typescript@4.1.5
@@ -1914,19 +1916,16 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       callsites: 2.0.0
-    dev: true
 
   /caller-path/2.0.0:
     resolution: {integrity: sha1-Ro+DBE42mrIBD6xfBs7uFbsssfQ=}
     engines: {node: '>=4'}
     dependencies:
       caller-callsite: 2.0.0
-    dev: true
 
   /callsites/2.0.0:
     resolution: {integrity: sha1-BuuE8A7qQT2oav/vrL/7Ngk7PFA=}
     engines: {node: '>=4'}
-    dev: true
 
   /callsites/3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
@@ -2088,8 +2087,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /codemirror/5.59.4:
-    resolution: {integrity: sha512-achw5JBgx8QPcACDDn+EUUXmCYzx/zxEtOGXyjvLEvYY8GleUrnfm5D+Zb+UjShHggXKDT9AXrbkBZX6a0YSQg==}
+  /codemirror/5.61.1:
+    resolution: {integrity: sha512-+D1NZjAucuzE93vJGbAaXzvoBHwp9nJZWWWF9utjv25+5AZUiah6CIlfb4ikG4MoDsFsCG8niiJH5++OO2LgIQ==}
     dev: true
 
   /collection-visit/1.0.0:
@@ -2223,9 +2222,8 @@ packages:
     dependencies:
       import-fresh: 2.0.0
       is-directory: 0.3.1
-      js-yaml: 3.14.0
+      js-yaml: 3.14.1
       parse-json: 4.0.0
-    dev: true
 
   /create-require/1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
@@ -2412,6 +2410,19 @@ packages:
     deprecated: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
     dependencies:
       ms: 2.1.2
+    dev: true
+
+  /debug/4.3.1:
+    resolution: {integrity: sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.2
+    dev: false
 
   /decamelize/1.2.0:
     resolution: {integrity: sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=}
@@ -2611,7 +2622,6 @@ packages:
     resolution: {integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==}
     dependencies:
       is-arrayish: 0.2.1
-    dev: true
 
   /es-abstract/1.17.6:
     resolution: {integrity: sha512-Fr89bON3WFyUi5EvAeI48QTWX0AyekGgLA8H+c+7fbfCkJwRWRMLd8CQedNEyJuoYYhmtEqY92pgte1FAhBlhw==}
@@ -3318,7 +3328,6 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       import-from: 2.1.0
-    dev: true
 
   /import-fresh/2.0.0:
     resolution: {integrity: sha1-2BNVwVYS04bGH53dOSLUMEgipUY=}
@@ -3326,7 +3335,6 @@ packages:
     dependencies:
       caller-path: 2.0.0
       resolve-from: 3.0.0
-    dev: true
 
   /import-fresh/3.2.1:
     resolution: {integrity: sha512-6e1q1cnWP2RXD9/keSkxHScg508CdXqXWgWBaETNhyuBFz+kUZlKboh+ISK+bU++DmbHimVBrOz/zzPe0sZ3sQ==}
@@ -3341,7 +3349,6 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       resolve-from: 3.0.0
-    dev: true
 
   /imurmurhash/0.1.4:
     resolution: {integrity: sha1-khi5srkoojixPcT7a21XbyMUU+o=}
@@ -3412,7 +3419,6 @@ packages:
 
   /is-arrayish/0.2.1:
     resolution: {integrity: sha1-d8mYQFJ6qOyxqLppe4BkWnqSap0=}
-    dev: true
 
   /is-arrayish/0.3.2:
     resolution: {integrity: sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==}
@@ -3485,7 +3491,6 @@ packages:
   /is-directory/0.3.1:
     resolution: {integrity: sha1-YTObbyR1/Hcv2cnYP1yFddwVSuE=}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /is-extendable/0.1.1:
     resolution: {integrity: sha1-YrEQ4omkcUGOPsNqYX1HLjAd/Ik=}
@@ -3670,6 +3675,13 @@ packages:
       argparse: 1.0.10
       esprima: 4.0.1
 
+  /js-yaml/3.14.1:
+    resolution: {integrity: sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==}
+    hasBin: true
+    dependencies:
+      argparse: 1.0.10
+      esprima: 4.0.1
+
   /jsesc/0.5.0:
     resolution: {integrity: sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=}
     hasBin: true
@@ -3687,7 +3699,6 @@ packages:
 
   /json-parse-better-errors/1.0.2:
     resolution: {integrity: sha512-mrqyZKfX5EhL7hvqcV6WG1yYjnjeuYDzDhhcAAUrq8Po85NBQBJP+ZDUT75qZQ98IkUoBqdkExkukOU7Ts2wrw==}
-    dev: true
 
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
@@ -4479,7 +4490,6 @@ packages:
     dependencies:
       error-ex: 1.3.2
       json-parse-better-errors: 1.0.2
-    dev: true
 
   /parse5/3.0.3:
     resolution: {integrity: sha512-rgO9Zg5LLLkfJF9E6CCmXlSE4UVceloys8JrFqCcHloC3usd/kJCyPDwH2SOlzix2j3xaP9sUX3e8+kvkuleAA==}
@@ -4691,6 +4701,14 @@ packages:
       cosmiconfig: 5.2.1
       import-cwd: 2.1.0
     dev: true
+
+  /postcss-load-config/2.1.2:
+    resolution: {integrity: sha512-/rDeGV6vMUo3mwJZmeHfEDvwnTKKqQ0S7OHUi/kJvvtx3aWtyWG2/0ZWnzCt2keEclwN6Tf0DST2v9kITdOKYw==}
+    engines: {node: '>= 4'}
+    dependencies:
+      cosmiconfig: 5.2.1
+      import-cwd: 2.1.0
+    dev: false
 
   /postcss-merge-longhand/4.0.11:
     resolution: {integrity: sha512-alx/zmoeXvJjp7L4mxEMjh8lxVlDFX1gqWHzaaQewwMZiVhLo42TEClKaeHbRf6J7j82ZOdTJ808RtN0ZOZwvw==}
@@ -5239,7 +5257,6 @@ packages:
   /resolve-from/3.0.0:
     resolution: {integrity: sha1-six699nWiBvItuZTM17rywoYh0g=}
     engines: {node: '>=4'}
-    dev: true
 
   /resolve-from/4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
@@ -5777,7 +5794,7 @@ packages:
     resolution: {integrity: sha512-kTcOVlsldI2neszYNQAfFCt+u62OWWAZgpeoW9RN3hjtJCWI5bkVj0gtljZWUlyEWTfgpmag5L5AHDKg8w8ZmQ==}
     dev: true
 
-  /svelte-preprocess/4.6.1_fdfba67cf8afc19f821897942c96fdc3:
+  /svelte-preprocess/4.6.1_a5b3e012a634a753f5f597afc5f79532:
     resolution: {integrity: sha512-s7KdhR2pOsffyOzZIMEb315f6pfgeDnOWN47m6YKFeSEx3NMf/79Znc3vuG/Ai79SL/vsi86WDrjFPLGRfDesg==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -5823,6 +5840,7 @@ packages:
       '@types/sass': 1.16.0
       detect-indent: 6.0.0
       postcss: 7.0.32
+      postcss-load-config: 2.1.2
       strip-indent: 3.0.0
       svelte: 3.32.0
       typescript: 4.1.5
@@ -6392,7 +6410,7 @@ packages:
     name: '@sveltejs/svelte-repl'
     version: 0.2.1
     dependencies:
-      codemirror: 5.59.4
+      codemirror: 5.61.1
       estree-walker: 0.9.0
       marked: 0.8.2
       sourcemap-codec: 1.4.8
