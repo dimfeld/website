@@ -83,7 +83,7 @@
     "@types/just": "github:dimfeld/just-types",
     "@types/lodash": "^4.14.144",
     "@types/markdown-it": "^0.0.9",
-    "@types/node": "12",
+    "@types/node": "14",
     "@types/rss": "^0.0.28",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",

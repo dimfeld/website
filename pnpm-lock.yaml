@@ -30,7 +30,7 @@ specifiers:
   '@types/just': github:dimfeld/just-types
   '@types/lodash': ^4.14.144
   '@types/markdown-it': ^0.0.9
-  '@types/node': '12'
+  '@types/node': '14'
   '@types/rss': ^0.0.28
   '@typescript-eslint/eslint-plugin': ^2.19.2
   '@typescript-eslint/parser': ^2.19.2
@@ -165,7 +165,7 @@ devDependencies:
   '@types/just': github.com/dimfeld/just-types/fe721d78133afc8e500645d43a9e31f3a672909d
   '@types/lodash': 4.14.161
   '@types/markdown-it': 0.0.9
-  '@types/node': 12.12.56
+  '@types/node': 14.6.4
   '@types/rss': 0.0.28
   '@typescript-eslint/eslint-plugin': 2.34.0_6f91f277978749811e3fd6a98bb2e7c9
   '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.1.5
@@ -1465,10 +1465,6 @@ packages:
 
   /@types/minimatch/3.0.3:
     resolution: {integrity: sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==}
-    dev: true
-
-  /@types/node/12.12.56:
-    resolution: {integrity: sha512-8OdIupOIZtmObR13fvGyTvpcuzKmMugkATeVcfNwCjGtHxhjEKmOvLqXwR8U9VOtNnZ4EXaSfNiLVsPinaCXkQ==}
     dev: true
 
   /@types/node/14.6.4:
