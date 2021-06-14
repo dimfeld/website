@@ -29,15 +29,13 @@
 
 <div
   class="post-list w-full flex flex-col items-stretch sm:grid sm:gap-8
-  xl:col-gap-12 sm:mt-4"
-  style=";"
->
+  xl:gap-x-12 sm:mt-4"
+  style=";">
   {#each posts as post (post.id)}
     <div
       animate:flip={{ duration: 300 }}
       class="sm:rounded-sm border-b sm:border border-teal-100 sm:border-teal-100
-      p-2 sm:shadow-md flex-1 flex flex-col"
-    >
+      p-2 sm:shadow-md flex-1 flex flex-col">
       {#if post.cardImage}
         <div class="post-bg" style={backgroundImage(post)} />
       {/if}

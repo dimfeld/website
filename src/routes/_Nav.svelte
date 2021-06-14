@@ -45,22 +45,19 @@
   id="navbar"
   class="flex flex-row items-stretch inset-x-0 text-lg shadow-sm shadow-inner
   bg-teal-900"
-  style="height:40px"
->
+  style="height:40px">
   <div class="hidden sm:flex flex-row w-full">
     <div
       class="bg-highlight absolute h-full bg-teal-700 duration-1000 ease-out
       transition-transform top-0 left-0"
-      style={backgroundHighlightStyle}
-    />
+      style={backgroundHighlightStyle} />
     <a
       sapper:prefetch
-      class="hover:text-teal-200"
-      class:text-white={!segment}
-      class:text-teal-100={segment}
+      class="hover:text-teal-200 section-link root-link"
+      class:current-link={!segment}
       style="width:{nameWidth}px;padding-left:24px;padding-right:32px"
       href="/">
-      <span class="whitespace-no-wrap">Daniel Imfeld</span>
+      <span class="whitespace-nowrap">Daniel Imfeld</span>
     </a>
     {#each links as { name, icon } (name)}
       <a
@@ -94,8 +91,7 @@
             3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6
             3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548
             2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562
-            2.457-2.549z"
-          />
+            2.457-2.549z" />
         </svg>
       </a>
       <a
@@ -118,8 +114,7 @@
             11.022
             11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046
             19.152 8.594 19.183
-            19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"
-          />
+            19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z" />
         </svg>
       </a>
     </div>
@@ -128,12 +123,10 @@
   <div
     id="vert-navbar"
     class="w-full flex sm:hidden flex-row items-center"
-    on:click={() => (displayNav = false)}
-  >
+    on:click={() => (displayNav = false)}>
     <div
       class="bg-highlight absolute bg-teal-700 h-full top-0"
-      style="left:-8px;width:218px"
-    />
+      style="left:-8px;width:218px" />
     <a
       class="text-white"
       style="padding-left:24px"
@@ -152,8 +145,7 @@
           class="secondary"
           fill-rule="evenodd"
           d="M15.3 10.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1
-          1.4-1.4l3.3 3.29 3.3-3.3z"
-        />
+          1.4-1.4l3.3 3.29 3.3-3.3z" />
       </svg>
     </span>
 
@@ -161,13 +153,11 @@
       <div
         class="absolute inset-x-0 z-40"
         style="top:40px"
-        transition:fade={{ duration: 200 }}
-      >
+        transition:fade={{ duration: 200 }}>
         <div
           on:click|stopPropagation={() => {}}
           class="bg-teal-900 w-full flex flex-row pb-2 border-t border-teal-700
-          shadow-md"
-        >
+          shadow-md">
           <div class="flex flex-col flex-grow">
             <a
               sapper:prefetch
@@ -185,13 +175,11 @@
                     class="primary"
                     d="M9 22H5a1 1 0 0 1-1-1V11l8-8 8 8v10a1 1 0 0 1-1 1h-4a1 1
                     0 0 1-1-1v-4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v4a1 1 0 0 1-1
-                    1zm3-9a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
-                  />
+                    1zm3-9a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
                   <path
                     class="secondary"
                     d="M12.01 4.42l-8.3 8.3a1 1 0 1 1-1.42-1.41l9.02-9.02a1 1 0
-                    0 1 1.41 0l8.99 9.02a1 1 0 0 1-1.42 1.41l-8.28-8.3z"
-                  />
+                    0 1 1.41 0l8.99 9.02a1 1 0 0 1-1.42 1.41l-8.28-8.3z" />
                 </svg>
               </span>
               <span class="ml-2">Home</span>
@@ -234,8 +222,7 @@
                   3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379
                   4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768
                   2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695
-                  1.797-1.562 2.457-2.549z"
-                />
+                  1.797-1.562 2.457-2.549z" />
               </svg>
             </a>
             <a
@@ -258,8 +245,7 @@
                   3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022
                   11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046
                   19.152 8.594 19.183
-                  19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"
-                />
+                  19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z" />
               </svg>
             </a>
           </div>
@@ -269,18 +255,17 @@
         class="fixed inset-x-0 z-30"
         style="top:40px;bottom:0px;background-color:rgba(0, 0, 0, 0.3);"
         on:click={() => (displayNav = false)}
-        transition:fade={{ duration: 200 }}
-      />
+        transition:fade={{ duration: 200 }} />
     {/if}
   </div>
 </div>
 
 <style lang="postcss">
   a {
-    @apply transition-colors duration-500 ease-in-out flex flex-row items-center;
+    @apply transition-colors ease-in-out flex flex-row items-center;
   }
 
-  a.section-link {
+  a.section-link:not(.root-link) {
     @apply font-medium;
   }
 
@@ -289,11 +274,11 @@
   }
 
   a.section-link:not(.current-link) {
-    @apply text-teal-200;
+    @apply text-teal-100;
   }
 
   a.section-link:not(.current-link):hover {
-    @apply text-teal-500;
+    @apply text-teal-200;
   }
 
   a {

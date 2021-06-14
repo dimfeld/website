@@ -92,7 +92,7 @@ export async function readMdFiles(
   basePath: string,
   type: 'post' | 'note'
 ): Promise<Post[]> {
-  let filenames = await glob(basePath + '/**/*.md');
+  let filenames: string[] = await glob(basePath + '/**/*.md');
   let mdFiles = await Promise.all(filenames.map((f) => readPost(basePath, f)));
   return mdFiles.filter(Boolean).map((file) => {
     return { ...file!, type, format: 'md' };
@@ -103,7 +103,7 @@ export async function readHtmlFiles(
   basePath: string,
   type: 'post' | 'note'
 ): Promise<Post[]> {
-  let filenames = await glob(basePath + '/**/*.html');
+  let filenames: string[] = await glob(basePath + '/**/*.html');
   let mdFiles = await Promise.all(filenames.map((f) => readPost(basePath, f)));
   return mdFiles.filter(Boolean).map((file) => {
     return { ...file!, type, format: 'html' };

@@ -2,6 +2,10 @@
   export let text;
 </script>
 
+<div class="h-6 whitespace-nowrap overflow-hidden w-full">
+  <span>{text}</span>
+</div>
+
 <style>
   @keyframes slide {
     from {
@@ -23,7 +27,3 @@
     animation: 15s linear infinite alternate slide;
   }
 </style>
-
-<div class="h-6 whitespace-no-wrap overflow-hidden w-full">
-  <span>{text}</span>
-</div>

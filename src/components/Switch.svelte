@@ -24,7 +24,7 @@
   class:bg-teal-600={value}
   class="relative inline-block flex-shrink-0 h-6 w-11 border-2
   border-transparent rounded-full cursor-pointer transition-colors ease-in-out
-  duration-200 focus:outline-none focus:shadow-outline {classNames}"
+  duration-200 focus:outline-none focus:ring {classNames}"
   role="checkbox"
   tabindex="0"
   on:click={toggle}

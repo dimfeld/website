@@ -116,7 +116,6 @@
   <!-- Small Screen filters -->
   <div class="sm:hidden">
     <div class="m-2 text-lg flex flex-row">
-
       <div class="flex-grow">
         <label for="mobile-search" class="sr-only">Search</label>
         <div class="relative rounded-md shadow-sm">
@@ -137,7 +136,7 @@
         class="ml-2 flex-shrink inline-flex justify-start justify-center
         rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5
         font-medium text-gray-700 hover:text-gray-500 focus:outline-none
-        focus:border-blue-300 shadow-sm focus:shadow-outline-blue
+        focus:border-blue-300 shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
         active:bg-gray-50 active:text-gray-800 transition ease-in-out
         duration-150">
         Tags
@@ -153,7 +152,6 @@
             1.4-1.4l3.3 3.29 3.3-3.3z" />
         </svg>
       </button>
-
     </div>
     <Popup
       visible={activeFilterBox === FILTER_TAGS}
@@ -182,7 +180,6 @@
 
   <!-- Large screen filters -->
   <div class="hidden sm:block m-4 w-48 flex-none">
-
     <label for="large-search" class="sr-only">Search</label>
     <div class="relative rounded-md shadow-sm mb-2" bind:this={largeSearchBox}>
       <input
@@ -213,11 +210,9 @@
     <div class="text-sm text-center">
       <a href="/rss/notes.xml">Notes RSS</a>
     </div>
-
   </div>
 
   <div class="flex-grow sm:ml-4">
     <slot />
   </div>
-
 </div>
