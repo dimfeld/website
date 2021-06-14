@@ -14,13 +14,14 @@
   <div class="flex font-sans">
     <label class="sr-only" for="bd-email">Enter your email</label>
     <input
-      class="form-input flex-grow"
+      class="flex-grow placeholder-gray-500 focus:ring-teal-500 focus:border-teal-500 border-gray-300 rounded-md"
       type="email"
       name="email"
+      autocomplete="email"
       id="bd-email" />
     <input type="hidden" value="1" name="embed" />
     <input
-      class="ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+      class="ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-700  hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
       type="submit"
       value="Subscribe" />
   </div>
