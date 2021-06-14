@@ -103,9 +103,12 @@ export default {
     preserveEntrySignatures: false,
     plugins: [
       replace({
-        'process.browser': true,
-        'process.env.NODE_ENV': JSON.stringify(mode),
-        'process.env.SITE_DOMAIN': domain,
+        preventAssignment: true,
+        values: {
+          'process.browser': true,
+          'process.env.NODE_ENV': JSON.stringify(mode),
+          'process.env.SITE_DOMAIN': domain,
+        },
       }),
       svelte({
         compilerOptions: {
@@ -146,9 +149,12 @@ export default {
     plugins: [
       watchPlugin,
       replace({
-        'process.browser': false,
-        'process.env.NODE_ENV': JSON.stringify(mode),
-        'process.env.SITE_DOMAIN': domain,
+        preventAssignment: true,
+        values: {
+          'process.browser': false,
+          'process.env.NODE_ENV': JSON.stringify(mode),
+          'process.env.SITE_DOMAIN': domain,
+        },
       }),
       svelte({
         compilerOptions: {
