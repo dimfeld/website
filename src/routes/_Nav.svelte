@@ -53,9 +53,8 @@
       style={backgroundHighlightStyle} />
     <a
       sapper:prefetch
-      class="hover:text-teal-200"
-      class:text-white={!segment}
-      class:text-teal-100={segment}
+      class="hover:text-teal-200 section-link root-link"
+      class:current-link={!segment}
       style="width:{nameWidth}px;padding-left:24px;padding-right:32px"
       href="/">
       <span class="whitespace-nowrap">Daniel Imfeld</span>
@@ -263,10 +262,10 @@
 
 <style lang="postcss">
   a {
-    @apply transition-colors duration-500 ease-in-out flex flex-row items-center;
+    @apply transition-colors ease-in-out flex flex-row items-center;
   }
 
-  a.section-link {
+  a.section-link:not(.root-link) {
     @apply font-medium;
   }
 
@@ -275,11 +274,11 @@
   }
 
   a.section-link:not(.current-link) {
-    @apply text-teal-200;
+    @apply text-teal-100;
   }
 
   a.section-link:not(.current-link):hover {
-    @apply text-teal-500;
+    @apply text-teal-200;
   }
 
   a {
