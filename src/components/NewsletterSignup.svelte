@@ -7,7 +7,7 @@
   <div>
     You can check out
     <a
-      href="https://buttondown.email/dimfeld/archive/retrospectives-and-new-svelte-feature/"
+      href="https://buttondown.email/dimfeld/archive/issue-15-approaching-the-problem-from-a-different/"
       >a recent issue</a
     >, or enter your email below to subscribe.
   </div>
@@ -18,6 +18,7 @@
       type="email"
       name="email"
       autocomplete="email"
+      placeholder="Enter your email"
       id="bd-email" />
     <input type="hidden" value="1" name="embed" />
     <input

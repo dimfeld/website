@@ -67,8 +67,8 @@
   </p>
 
   <p>
-    And finally, I have a newsletter where I send out interesting things I've
-    come across over the past week and the occasional nature photo.
+    And finally, I have a newsletter where I write about tech thoughts,
+    interesting things I've read, and project updates each Thursday.
   </p>
 
   <NewsletterSignup />
