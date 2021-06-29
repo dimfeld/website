@@ -6,15 +6,15 @@ tags: Rust
 date: 2021-06-28
 ---
 
-Amazon’s S3 API makes it easy to upload large files, but it gets harder with dynamically generated data since S3 wants to know up front how much data you're going to upload, and you might not know that when you start the request. This might occur when streaming data from some other source or recording live media, for example.
+Amazon’s S3 API makes it easy to upload large files, but it gets harder with dynamically generated data since S3 wants to know up front how much data you're going to upload, and you might not know that until you're done generating it. This might occur when streaming data from some other source or recording live media, for example.
 
 The multipart upload API fixes this somewhat -- you still have to know the size of each part as you upload it, but you can have up to 10,000 parts and you don't have to know in advance how many parts you will upload. The one complication with the multipart API is that each part must be at least 5MB.
 
-Streaming data to the multipart API involves gathering data buffers as they are generated, and then uploading the accumulated data as a new S3 part when it reaches a certain threshold size, while also making sure to honor the minimum part size.
+With this in mind, streaming data to the multipart upload API involves gathering data buffers as they are generated and periodically uploading the accumulated data as a new S3 part when it reaches a certain threshold size, while also making sure to honor the minimum part size.
 
 Let’s look at some scenarios with a threshold size of 50MB. In all these cases, the uploader receives a stream of byte chunks, which it groups into S3 parts of approximately the threshold size.
 
-- The total amount of data is 75MB.  The first 50MB gets uploaded as a part and the last 25MB is uploaded as the second part.
+- The total amount of data is 75MB. The first 50MB gets uploaded as a part and the last 25MB is uploaded as the second part.
 - The total amount of data is 120 MB. Similar, with two 50MB parts and one 20MB part.
 - The total amount of data is 30MB. In this case we don’t hit the threshold, so the easiest thing to do is just skip the multipart upload process and do a single put operation instead.
 - The total amount of data is 3MB. As in the above case, the stream ends and we haven't yet uploaded any parts, so we just do a standard "put object" request, which doesn't have the 5MB minimum size that multipart uploads enforce.
@@ -32,11 +32,14 @@ When the stream ends, you send all the remaining buffers to S3 as another part, 
 
 So in our 122MB example, the first two parts will be the threshold size (50MB) minus 5MB, and the final part will contain the remaining data. This comes out to approximately 45MB, 45MB, and 12MB.
 
-This mostly works, but can still fall apart if an especially large buffer arrives. Say that the stream includes a 52MB buffer. This is enough to trigger an upload, but removing it from the list will leave less than 5MB remaining. The solution is to split the buffer. We send 47MB to S3 while leaving 5MB left in our buffer list to maintain the minimum reserve requirement. Fortunately, the Rust `bytes` crate allows splitting buffers like this with just a reference count, so we don’t have to copy all that data around more than necessary.
+This mostly works, but can still fall apart if an especially large buffer arrives, such as if the stream includes a 52MB buffer. This one buffer is above the threshold size, so it's enough to trigger an upload, but removing it from the list could leave less than 5MB reserved.
+
+The solution is to split the buffer. We send 47MB to S3 while leaving 5MB left in our buffer list to maintain the minimum reserve requirement. Fortunately, the Rust `bytes` crate allows splitting buffers like this via an internally-maintained reference count, so we don’t have to copy all that data around more than necessary.
 
 With the algorithm figured out, let's take a look at the code.
 
 ::: side-by-side
+
 ```rust
 use crate::Error; // An error defined elsewhere with `thiserror`
 use anyhow::anyhow;
@@ -175,7 +178,7 @@ enough data to upload the final part.
 ```
 
 Handle the buffer-splitting case. This happens if the next buffer in the list is large enough that pulling it off would leave
-less than 5MB reserved,  but we also haven't
+less than 5MB reserved, but we also haven't
 read enough data for the current part to be large enough.
 
 ```rust
@@ -376,8 +379,9 @@ pub fn start_upload_task(
     })
 }
 ```
+
 :::
 
 S3 will keep uploaded parts from an unfinished multipart upload around forever if it is not explicitly aborted and the S3 bucket, so it's important to handle that.
 
-Buckets can also have lifecycle rules to purge unfinished uploads after a certain amount of time.  This is also advisable in case the abort request doesn't reach S3 for some reason.
+Buckets can also have lifecycle rules to purge unfinished uploads after a certain amount of time. This is also advisable in case the abort request doesn't reach S3 for some reason.
