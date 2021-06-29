@@ -20,6 +20,15 @@ Let’s look at some scenarios with a threshold size of 50MB. In all these cases
 - The total amount of data is 3MB. As in the above case, the stream ends and we haven't yet uploaded any parts, so we just do a standard "put object" request, which doesn't have the 5MB minimum size that multipart uploads enforce.
 - The total amount of data is 102MB, so we have two 50MB parts and one 2MB part. But parts must be at least 5 MB. Uh oh...
 
+::: note
+A couple readers pointed out that the S3 multipart upload API does allow the *final* part to be less than 5 MB, and [Ian O'Connell](https://twitter.com/0x138) on Twitter was kind
+enough to put together a working example of successfully uploading multipart objects with with a small final part. I suspect my initial attempt at writing this code had
+some other sort of bug that also disappeared when I refactored it to account for small part sizes.
+
+This means that the extra work to check for minimum part size is not needed in this code. I've left the code itself unchanged in case you find the buffer splitting techniques
+useful for some other context.
+:::
+
 We can't predict that the last part will be only 2MB, so we have to maintain some reserve to make sure that we'll always have 5MB of data waiting to upload. The algorithm looks roughly like this:
 
 1. Receive data buffers from the stream and save them into a list.
@@ -34,7 +43,7 @@ So in our 122MB example, the first two parts will be the threshold size (50MB) m
 
 This mostly works, but can still fall apart if an especially large buffer arrives, such as if the stream includes a 52MB buffer. This one buffer is above the threshold size, so it's enough to trigger an upload, but removing it from the list could leave less than 5MB reserved.
 
-The solution is to split the buffer. We send 47MB to S3 while leaving 5MB left in our buffer list to maintain the minimum reserve requirement. Fortunately, the Rust `bytes` crate allows splitting buffers like this via an internally-maintained reference count, so we don’t have to copy all that data around more than necessary.
+The solution is to split the buffer. We send 47MB to S3 while leaving 5MB left in our buffer list to maintain the minimum reserve requirement. Fortunately, the Rust `bytes` crate allows splitting buffers like this via an internally-maintained reference count, so we don’t have to copy all that data around more than necessary. (As noted in the callout above, this turns out to not be necessary.)
 
 With the algorithm figured out, let's take a look at the code.
 
@@ -180,6 +189,9 @@ enough data to upload the final part.
 Handle the buffer-splitting case. This happens if the next buffer in the list is large enough that pulling it off would leave
 less than 5MB reserved, but we also haven't
 read enough data for the current part to be large enough.
+
+As mentioned above, this turns out to not be necessary, but I've left it here
+for reference in case you find the technique useful elsewhere.
 
 ```rust
             if this_part_size < MIN_PART_SIZE {
