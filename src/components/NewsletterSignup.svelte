@@ -7,7 +7,7 @@
   <div>
     You can check out
     <a
-      href="https://buttondown.email/dimfeld/archive/issue-15-approaching-the-problem-from-a-different/"
+      href="https://buttondown.email/dimfeld/archive/issue-16-testing-reading-and-time-to-do-it-all/"
       >a recent issue</a
     >, or enter your email below to subscribe.
   </div>
