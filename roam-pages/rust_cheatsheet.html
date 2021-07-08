@@ -33,6 +33,22 @@ async <span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hlj
 </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span></span></code></pre></li>
           </ul>
         </li>
+        <li id="R2WthZqpn"><span class="rm-heading-2">Dealing with Time</span>
+          <ul class="list-bullet">
+            <li id="2zVG5Fx-e"><span class="rm-heading-3">Periodic Functions</span>
+              <ul class="list-bullet">
+                <li id="GLqiyEEsA">For loops that need to run periodically, normally you would use <code>sleep</code> to wait for the next call.</li>
+                <li id="9UCDpD4wP">But Tokio provides an <code>interval</code> object which accounts for the time that the call actually took. So your 500ms periodic poll will actually run every 500ms, instead of 500ms + some random amount.</li>
+                <li id="Y3ON0R4nV">The first call to <code>interval.tick()</code> will trigger right away. You can use <code>interval_at</code> instead if this is undesirable, but generally it just means you move the wait part of the loop to the top.</li>
+              </ul>
+            </li>
+            <li id="EHlBtUJCE"><span class="rm-heading-3">Timeouts</span>
+              <ul class="list-bullet">
+                <li id="6dR1ogo38"><code>tokio::time::timeout(duration, operation())</code> is an easier way to do a timeout than using <code>select!</code> with a sleep.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li id="hFciNvWve"><span class="rm-heading-1">Inner Arc Pattern</span>

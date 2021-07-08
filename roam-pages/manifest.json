@@ -1,4 +1,8 @@
 {
+  "makefile_cheatsheet": {
+    "title": "Makefile Cheatsheet",
+    "uid": "kYRbu61FN"
+  },
   "article_the_four_theories_of_truth_as_a_method_for_critical_thinking": {
     "title": "Article/The Four Theories of Truth as a Method for Critical Thinking",
     "uid": "N6d25J-5y"
@@ -230,6 +234,10 @@
   "acid_database_semantics": {
     "title": "ACID Database Semantics",
     "uid": "1tZDLeZHe"
+  },
+  "rust_error_handling": {
+    "title": "Rust Error Handling",
+    "uid": "Mzi--OR6c"
   },
   "circle_of_competence": {
     "title": "Circle of Competence",

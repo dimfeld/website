@@ -13,6 +13,12 @@ updated: 2021-02-13
     <li id="JQj8Wna2p"><code>https://docs.rs/CRATE_NAME</code> for docs for any public crate.</li>
     <li id="O7tP7WQac"><span class="rm-heading-1">Crates</span>
       <ul class="list-bullet">
+        <li id="0MgpXe9Fk"><span class="rm-heading-2">Asynchronous Code</span>
+          <ul class="list-bullet">
+            <li id="uqF40nfl-"><code>tokio</code>, <code>async_std</code>, and <code>futures</code> are the base crates. Tokio and Async_std are sort of &quot;competing&quot; and there&#39;s still a lot of similar-but-slightly-different versions of core traits like <code>AsyncRead</code> between them.</li>
+            <li id="OvxiMntkt"><a href="https://docs.rs/tokio-util">tokio-util</a> has a lot of nice adaptors and things that makes it easier to work with streams, readers, writers, etc.</li>
+          </ul>
+        </li>
         <li id="dykznswMv"><span class="rm-heading-2">Performance and Data Processing</span>
           <ul class="list-bullet">
             <li id="1gmJvZ5QP"><a href="https://docs.rs/rayon">rayon</a> for super-easy parallelism</li>
@@ -20,6 +26,7 @@ updated: 2021-02-13
             <li id="zggLJjS2l"><a href="https://docs.rs/fxhash">fxhash</a> is a good default hash replacement if you DO NOT need a cryptographically secure hash. If you&#39;re running a service that stores user-defined input in a hash table then don&#39;t use it.</li>
             <li id="bEk9sqGa7"><a href="https://docs.rs/smallvec">smallvec</a> when you are making a lot of mostly-small vectors and most, but not all of them, will be below a certain size.</li>
             <li id="3e0RsdPLX"><a href="http://docs.rs/arrayvec">arrayvec</a> when you are making a lot of small vectors and know that they will never exceed a certain size</li>
+            <li id="frJQeIxQt"><a href="https://docs.rs/aho-corasick">aho-corasick</a> for performing multiple substring searches at once in a larger string</li>
           </ul>
         </li>
         <li id="dOovSLl_v"><span class="rm-heading-2">Error Handling</span>
@@ -114,6 +121,7 @@ updated: 2021-02-13
               </ul>
             </li>
             <li id="H1X2XaC8x"><a href="https://docs.rs/handlebars">handlebars</a> is one of many templating options</li>
+            <li id="rK9AQGRkG"><a href="https://docs.rs/delegate">delegate</a> for delegating method calls to the same method on an internal field.</li>
           </ul>
         </li>
       </ul>
