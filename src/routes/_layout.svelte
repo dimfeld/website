@@ -194,13 +194,9 @@
       margin-right: -47.5vw;
     }
 
+    /* Mobile styling */
     .side-by-side {
-      display: grid;
-
-      /* Mobile. See below for desktop layout */
-      grid-template-columns: 1fr;
-
-      place-items: stretch;
+      display: block;
       @apply my-4;
     }
   }
@@ -219,8 +215,13 @@
       pre > code {
         @apply whitespace-pre-wrap;
       }
+    }
+  }
 
+  @screen md {
+    html {
       .side-by-side {
+        display: grid;
         grid-template-columns: minmax(30%, 60ch) minmax(70%, 1fr);
         width: 95vw;
         position: relative;
