@@ -1,5 +1,6 @@
 import frontMatter from 'front-matter';
 import uniq from 'just-unique';
+import { extname } from 'path';
 import { DevToArticle } from './devto';
 
 interface PostAttributes {
@@ -38,7 +39,7 @@ export interface Source {
   ext: 'md' | 'html';
   type: 'post' | 'note';
   base: string;
-  content: Record<string, () => Promise<string>>;
+  content: Record<string, () => Promise<{ default: string }>>;
 }
 
 export const postSources: Source[] = [
@@ -97,11 +98,13 @@ export async function lookupContent(
 }
 
 async function processPost(
-  id: string,
-  dataFn: () => Promise<string>
+  name: string,
+  dataFn: () => Promise<{ default: string }>
 ): Promise<Omit<Post, 'format' | 'type'> | null> {
   let data = await dataFn();
-  let { attributes, body } = frontMatter<PostAttributes>(data.toString());
+  let { attributes, body } = frontMatter<PostAttributes>(
+    data.default.toString()
+  );
   if (attributes.draft && process.env.NODE_ENV === 'production') {
     return null;
   }
@@ -111,9 +114,11 @@ async function processPost(
     .map((t) => t.trim())
     .filter(Boolean);
 
-  let pathTags = id.split('/').slice(0, -1);
+  let pathTags = name.split('/').slice(0, -1);
 
   let content = body.trim();
+  let ext = extname(name);
+  let id = ext ? name.slice(0, -ext.length) : name;
   return {
     ...attributes,
     id,

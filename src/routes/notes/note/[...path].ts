@@ -1,9 +1,12 @@
 import { RequestHandler } from '@sveltejs/kit';
-import { noteSources, lookupContent } from '$lib/readPosts.js';
-import md from '$lib/markdown.js';
+import { noteSources, lookupContent } from '$lib/readPosts';
+import md from '$lib/markdown';
 
-export const get: RequestHandler = async function get({ params: { id } }) {
-  let note = await lookupContent(noteSources, id);
+export const get: RequestHandler = async function get({ params: { path } }) {
+  if (path.endsWith('.json')) {
+    path = path.slice(0, -5);
+  }
+  let note = await lookupContent(noteSources, path);
   if (!note) {
     return;
   }
@@ -13,7 +16,7 @@ export const get: RequestHandler = async function get({ params: { id } }) {
   let content =
     note.format === 'md'
       ? renderer(note.content, {
-          url: `/writing/${note.id}`,
+          url: `/notes/${note.id}`,
         })
       : note.content;
   note = {
@@ -22,6 +25,6 @@ export const get: RequestHandler = async function get({ params: { id } }) {
   };
 
   return {
-    body: note as any,
+    body: { note } as any,
   };
 };

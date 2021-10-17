@@ -4,7 +4,7 @@ import {
   readAllSources,
   postSources,
   noteSources,
-} from '$lib/readPosts.js';
+} from '$lib/readPosts';
 import { maxBy } from 'lodash-es';
 
 export const get: RequestHandler = async function get() {

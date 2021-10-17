@@ -4,8 +4,8 @@
   import capitalize from 'just-capitalize';
 
   export async function load({ fetch }) {
-    let [notes, tags] = await Promise.all([
-      fetch('/notes/index.json').then((r) => r.json()),
+    let [{ notes }, tags] = await Promise.all([
+      fetch('/notes/list.json').then((r) => r.json()),
       fetch('/notes/tags.json').then((r) => r.json()),
     ]);
 

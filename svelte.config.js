@@ -1,5 +1,6 @@
 import sveltePreprocess from 'svelte-preprocess';
 import vercelAdapter from '@sveltejs/adapter-vercel';
+import { string } from 'rollup-plugin-string';
 import { hostname } from 'os';
 
 let domain = process.env.VERCEL_URL
@@ -19,8 +20,13 @@ const config = {
     adapter: vercelAdapter(),
     vite: () => ({
       define: {
-        'process.env.SITE_DOMAIN': `'${domain}'`,
+        'process.env.SITE_DOMAIN': `"${domain}"`,
       },
+      plugins: [
+        string({
+          include: ['**/*.html', '**/*.md'],
+        }),
+      ],
     }),
   },
 };

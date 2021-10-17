@@ -1,7 +1,7 @@
 <script>
   import capitalize from 'just-capitalize';
   import { fade } from 'svelte/transition';
-  export let segment;
+  import { page } from '$app/stores';
   const links = [
     {
       name: 'writing',
@@ -18,6 +18,7 @@
     },
   ];
 
+  $: segment = $page.path.split('/')[1];
   $: linkIndex = links.findIndex((l) => l.name === segment);
   $: currentLink = links[linkIndex];
 
@@ -65,7 +66,7 @@
         class:current-link={segment === name}
         class="section-link justify-center"
         style="width:100px"
-        href={name}>
+        href="/{name}">
         {capitalize(name)}
       </a>
     {/each}

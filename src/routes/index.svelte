@@ -1,8 +1,12 @@
 <script context="module">
+  import { loadFetchJson } from '$lib/fetch';
   export async function load({ fetch }) {
-    let { post, note, lastCreatedNote } = await fetch(
-      '/posts/latest.json'
-    ).then((r) => r.json());
+    let r = await loadFetchJson(fetch, '/writing/latest.json');
+    if ('error' in r) {
+      return r;
+    }
+
+    let { post, note, lastCreatedNote } = r.data;
     return { props: { latestPost: post, latestNote: note, lastCreatedNote } };
   }
 </script>

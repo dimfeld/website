@@ -1,10 +1,5 @@
 import { RequestHandler } from '@sveltejs/kit';
-import {
-  stripContent,
-  readAllSources,
-  postSources,
-  noteSources,
-} from '$lib/readPosts.js';
+import { stripContent, readAllSources, postSources } from '$lib/readPosts';
 import sorter from 'sorters';
 
 /**
@@ -20,6 +15,8 @@ export async function get() {
   );
 
   return {
-    body: posts.map(stripContent),
+    body: {
+      posts: posts.map(stripContent),
+    },
   };
 }

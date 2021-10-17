@@ -1,4 +1,4 @@
-import { Post } from '../../staticApi/readPosts';
+import { Post } from '$lib/readPosts';
 
 export function filterText(notes: Post[], searchValue: string) {
   if (searchValue) {

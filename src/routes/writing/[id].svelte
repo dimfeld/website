@@ -1,32 +1,27 @@
 <script context="module" lang="ts">
   import type { Load } from '@sveltejs/kit';
+  import { loadFetchJson } from '$lib/fetch';
 
   export const load: Load = async function load({ fetch, page }) {
-    let post = await fetch(`./${page.params.id}.json`).then(async (r) => {
-      if (r.ok) {
-        return r.json();
-      } else {
-        let body = await r.text();
-        return {
-          status: r.status,
-          error: body,
-        };
-      }
-    });
-    return { props: { post } };
+    let result = await loadFetchJson(fetch, `/writing/${page.params.id}.json`);
+    if ('error' in result) {
+      return result;
+    }
+
+    return { props: result.data };
   };
 </script>
 
 <script lang="ts">
-  import type { Post } from '$lib/readPosts.js';
+  import type { Post } from '$lib/readPosts';
   import Article from './_Article.svelte';
   export let post: Post;
 
   let imageUrl = post.cardImage;
   if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = 'process.env.SITE_DOMAIN/images/' + imageUrl;
+    imageUrl = `${process.env.SITE_DOMAIN}/images/` + imageUrl;
   } else {
-    imageUrl = `process.env.SITE_DOMAIN/api/og-image/post_${post.id}`;
+    imageUrl = `${process.env.SITE_DOMAIN}/api/og-image/post_${post.id}`;
   }
 
   let cardType = post.cardType || 'summary_large_image';

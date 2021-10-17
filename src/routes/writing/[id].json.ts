@@ -1,12 +1,14 @@
 import { RequestHandler } from '@sveltejs/kit';
-import { postSources, lookupContent } from '$lib/readPosts.js';
-import md from '$lib/markdown.js';
+import { postSources, lookupContent } from '$lib/readPosts';
+import md from '$lib/markdown';
 import { readDevTo } from '$lib/devto';
 
 export const get: RequestHandler = async function get({ params: { id } }) {
   let post = await lookupContent(postSources, id);
   if (!post) {
-    return;
+    return {
+      status: 404,
+    };
   }
 
   let devToList = await readDevTo();
@@ -27,6 +29,6 @@ export const get: RequestHandler = async function get({ params: { id } }) {
   };
 
   return {
-    body: post as any,
+    body: { post } as any,
   };
 };

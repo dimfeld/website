@@ -1,5 +1,5 @@
 import { RequestHandler } from '@sveltejs/kit';
-import { noteSources, lookupContent, readAllSources } from '$lib/readPosts.js';
+import { noteSources, lookupContent, readAllSources } from '$lib/readPosts';
 
 export const get: RequestHandler = async function get({ params: { id } }) {
   let notes = await readAllSources(noteSources);
