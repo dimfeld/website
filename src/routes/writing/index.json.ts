@@ -12,7 +12,12 @@ import sorter from 'sorters';
  */
 export async function get() {
   let posts = await readAllSources(postSources);
-  posts.sort(sorter({ field: (p) => p.date, descending: true }));
+  posts.sort(
+    sorter(
+      { value: (p) => p.date, descending: true },
+      { value: (p) => p.title }
+    )
+  );
 
   return {
     body: posts.map(stripContent),

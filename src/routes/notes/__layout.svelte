@@ -1,12 +1,12 @@
 <script context="module">
-  import orderBy from 'lodash/orderBy';
+  import sorter from 'sorters';
   import map from 'just-map-values';
   import capitalize from 'just-capitalize';
 
   export async function load({ fetch }) {
     let [notes, tags] = await Promise.all([
-      fetch('/data/allNotes').then((r) => r.json()),
-      fetch('/data/allTags').then((r) => r.json()),
+      fetch('/notes/index.json').then((r) => r.json()),
+      fetch('/notes/tags.json').then((r) => r.json()),
     ]);
 
     return { props: { notes, tags } };
@@ -43,11 +43,12 @@
   setContext('noteLookup', noteLookup);
   setContext('tags', tags);
 
-  let tagData = map(tags, (val, key) => {
-    let label = capitalize(key.replace(/-/g, ' '));
-    return { id: key, label, ...val };
-  });
-  let tagList = orderBy(tagData, 'id');
+  let tagList = Object.entries(tags)
+    .map(([key, val]) => {
+      let label = capitalize(key.replace(/-/g, ' '));
+      return { id: key, label, ...val };
+    })
+    .sort(sorter('id'));
   setContext('tagList', tagList);
 
   const FILTER_TAGS = 'tags';

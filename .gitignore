@@ -12,3 +12,4 @@ static/workers
 .env
 *.edn
 /api/post-titles.json
+.svelte-kit

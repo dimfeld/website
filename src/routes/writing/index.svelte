@@ -1,6 +1,6 @@
 <script context="module">
   export async function load({ fetch }) {
-    let posts = await fetch('/data/allPosts').then((r) => r.json());
+    let posts = await fetch('/writing/index.json').then((r) => r.json());
     return { posts };
   }
 </script>

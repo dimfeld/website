@@ -5,7 +5,7 @@
       params: { path },
     },
   }) {
-    let note = await fetch(`/data/notes/${path.join('/')}`).then((r) =>
+    let note = await fetch(`/notes/note/${path.join('/')}`).then((r) =>
       r.json()
     );
     return { props: { note } };

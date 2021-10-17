@@ -10,7 +10,10 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "module": "ES2020",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "paths": {
+      "$lib/*": ["./src/lib/*"]
+    }
   },
   "include": ["src/**/*.ts"]
 }

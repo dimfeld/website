@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
   import { fetcher as createFetcher } from 'swr-xstate';
   import type { FetchResult } from 'swr-xstate';
   import Switch from '../components/Switch.svelte';

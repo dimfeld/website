@@ -1,7 +1,7 @@
 <script context="module">
   export async function load({ fetch }) {
     let { post, note, lastCreatedNote } = await fetch(
-      '/data/latest'
+      '/posts/latest.json'
     ).then((r) => r.json());
     return { props: { latestPost: post, latestNote: note, lastCreatedNote } };
   }

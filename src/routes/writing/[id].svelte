@@ -1,20 +1,26 @@
-<script context="module">
-  export async function load({ fetch, page }) {
-    let post = await fetch(`/data/posts/${page.params.id}`).then(async (r) => {
+<script context="module" lang="ts">
+  import type { Load } from '@sveltejs/kit';
+
+  export const load: Load = async function load({ fetch, page }) {
+    let post = await fetch(`./${page.params.id}.json`).then(async (r) => {
       if (r.ok) {
         return r.json();
       } else {
         let body = await r.text();
-        this.error(r.status, body || r.statusText);
+        return {
+          status: r.status,
+          error: body,
+        };
       }
     });
     return { props: { post } };
-  }
+  };
 </script>
 
-<script>
+<script lang="ts">
+  import type { Post } from '$lib/readPosts.js';
   import Article from './_Article.svelte';
-  export let post;
+  export let post: Post;
 
   let imageUrl = post.cardImage;
   if (imageUrl && !imageUrl.startsWith('http')) {

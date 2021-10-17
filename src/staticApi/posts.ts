@@ -1,4 +1,4 @@
-import maxBy from 'lodash/maxBy';
+import { maxBy } from 'lodash-es';
 import {
   postsDir,
   notesDir,
@@ -9,11 +9,9 @@ import {
   DevToArticle,
 } from './readPosts';
 import partition from 'just-partition';
-import send from '@polka/send-type';
 import sorter from 'sorters';
-import { Dictionary } from 'lodash';
 import { IncomingMessage, ServerResponse } from 'http';
-import md from '../markdown';
+import md from '../lib/markdown';
 import got from 'got';
 
 type Request = IncomingMessage & {
@@ -32,17 +30,6 @@ export interface PostCache {
 }
 
 export var postCache: PostCache;
-
-function readDevTo() {
-  let devtoApiKey = process.env.DEVTO_API_KEY;
-  if (devtoApiKey) {
-    return got('https://dev.to/api/articles/me/published', {
-      headers: { api_key: devtoApiKey },
-    }).json<DevToArticle[]>();
-  } else {
-    return [];
-  }
-}
 
 export async function initPostCache() {
   let [

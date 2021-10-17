@@ -1,11 +1,10 @@
 import sveltePreprocess from 'svelte-preprocess';
 import vercelAdapter from '@sveltejs/adapter-vercel';
+import { hostname } from 'os';
 
 let domain = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : `http://${require('os').hostname()}:${
-      process.env.DEV_PORT || process.env.PORT || 3000
-    }`;
+  : `http://${hostname()}:${process.env.DEV_PORT || process.env.PORT || 3000}`;
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -18,9 +17,11 @@ const config = {
   ],
   kit: {
     adapter: vercelAdapter(),
-    define: {
-      'process.env.SITE_DOMAIN': domain,
-    },
+    vite: () => ({
+      define: {
+        'process.env.SITE_DOMAIN': `'${domain}'`,
+      },
+    }),
   },
 };
 
