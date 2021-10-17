@@ -31,11 +31,6 @@ export interface PostCache {
   notes: Map<string, Post>;
 }
 
-function stripContent(p: Post) {
-  let { content, ...rest } = p;
-  return rest;
-}
-
 export var postCache: PostCache;
 
 function readDevTo() {

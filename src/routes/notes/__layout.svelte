@@ -3,13 +3,13 @@
   import map from 'just-map-values';
   import capitalize from 'just-capitalize';
 
-  export async function preload() {
+  export async function load({ fetch }) {
     let [notes, tags] = await Promise.all([
-      this.fetch('/data/allNotes').then((r) => r.json()),
-      this.fetch('/data/allTags').then((r) => r.json()),
+      fetch('/data/allNotes').then((r) => r.json()),
+      fetch('/data/allTags').then((r) => r.json()),
     ]);
 
-    return { notes, tags };
+    return { props: { notes, tags } };
   }
 </script>
 
@@ -17,7 +17,7 @@
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import { fade } from 'svelte/transition';
-  import { stores } from '@sapper/app';
+  import { page } from '$app/stores';
   import TagList from './_TagList.svelte';
   import Popup from '../../Popup.svelte';
   import SearchResultsPopup from './_SearchResultsPopup.svelte';
@@ -31,8 +31,6 @@
   for (let note of notes) {
     noteLookup[note.id] = note;
   }
-
-  const { page } = stores();
 
   $: currentNoteId = $page.path.slice('/notes/'.length);
   $: currentNote = noteLookup[currentNoteId];

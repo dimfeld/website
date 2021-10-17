@@ -1,4 +1,5 @@
 <script>
+  import '../global.pcss';
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import Nav from './_Nav.svelte';

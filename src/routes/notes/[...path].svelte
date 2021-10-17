@@ -1,9 +1,14 @@
 <script context="module">
-  export async function preload({ params: { path } }) {
-    let note = await this.fetch(`/data/notes/${path.join('/')}`).then((r) =>
+  export async function load({
+    fetch,
+    page: {
+      params: { path },
+    },
+  }) {
+    let note = await fetch(`/data/notes/${path.join('/')}`).then((r) =>
       r.json()
     );
-    return { note };
+    return { props: { note } };
   }
 </script>
 

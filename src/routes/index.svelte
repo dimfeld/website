@@ -1,9 +1,9 @@
 <script context="module">
-  export async function preload() {
-    let { post, note, lastCreatedNote } = await this.fetch(
+  export async function load({ fetch }) {
+    let { post, note, lastCreatedNote } = await fetch(
       '/data/latest'
     ).then((r) => r.json());
-    return { latestPost: post, latestNote: note, lastCreatedNote };
+    return { props: { latestPost: post, latestNote: note, lastCreatedNote } };
   }
 </script>
 
@@ -53,7 +53,7 @@
 
   <p>
     I also host my
-    <a sapper:prefetch href="notes">notes</a>
+    <a sveltekit:prefetch href="notes">notes</a>
     here publicly, in hopes that some readers will be educated and others can help
     fill in the gaps. {#if lastCreatedNote.id !== latestNote.id}
       <a href="notes/{lastCreatedNote.id}">{lastCreatedNote.title}</a>

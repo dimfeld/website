@@ -1,6 +1,6 @@
 <script context="module">
-  export async function preload({ params }) {
-    let post = await this.fetch(`/data/posts/${params.id}`).then(async (r) => {
+  export async function load({ fetch, page }) {
+    let post = await fetch(`/data/posts/${page.params.id}`).then(async (r) => {
       if (r.ok) {
         return r.json();
       } else {
@@ -8,7 +8,7 @@
         this.error(r.status, body || r.statusText);
       }
     });
-    return { post };
+    return { props: { post } };
   }
 </script>
 

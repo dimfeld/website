@@ -39,12 +39,12 @@
       {#if post.cardImage}
         <div class="post-bg" style={backgroundImage(post)} />
       {/if}
-      <a sapper:prefetch href="{base}/{post.id}" class="text-lg text-teal-900">
+      <a sveltekit:prefetch href="{base}/{post.id}" class="text-lg text-teal-900">
         {post.title}
       </a>
       <a
         class="hover:no-underline text-gray-800 font-medium text-sm"
-        sapper:prefetch
+        sveltekit:prefetch
         href="{base}/{post.id}">
         <p>{post.summary || ''}</p>
       </a>
