@@ -22,12 +22,9 @@
 
   let imageUrl = note.cardImage;
   if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = `${process.env.SITE_DOMAIN}/images/${imageUrl}`;
+    imageUrl = `/images/${imageUrl}`;
   } else {
-    imageUrl = `${process.env.SITE_DOMAIN}/api/og-image/note_${note.id.replace(
-      /\//g,
-      '_'
-    )}`;
+    imageUrl = `${note.id.replace(/\//g, '_')}.og-image.png`;
   }
 
   let cardType = note.cardType || 'summary_large_image';

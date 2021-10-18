@@ -19,9 +19,9 @@
 
   let imageUrl = post.cardImage;
   if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = `${process.env.SITE_DOMAIN}/images/` + imageUrl;
+    imageUrl = `/images/` + imageUrl;
   } else {
-    imageUrl = `${process.env.SITE_DOMAIN}/api/og-image/post_${post.id}`;
+    imageUrl = `${post.id}.og-image.png`;
   }
 
   let cardType = post.cardType || 'summary_large_image';

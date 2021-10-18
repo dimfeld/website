@@ -13,3 +13,5 @@ static/workers
 *.edn
 /api/post-titles.json
 .svelte-kit
+.pnpm-debug.log
+.vercel_build_output

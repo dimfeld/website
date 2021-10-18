@@ -24,7 +24,7 @@ const config = {
       },
       plugins: [
         string({
-          include: ['**/*.html', '**/*.md'],
+          include: ['**/*.html', '**/*.md', '**/*.txt'],
         }),
       ],
     }),

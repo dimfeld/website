@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@dimfeld/create-social-card-wasm': ~0.2.0
   '@dimfeld/svelte-lazyload': ^0.0.3
   '@fortawesome/free-solid-svg-icons': ^5.11.2
   '@gerhobbelt/markdown-it-container': ^3.0.0-6
@@ -24,7 +25,6 @@ specifiers:
   '@types/rss': ^0.0.28
   '@typescript-eslint/eslint-plugin': ^2.34.0
   '@typescript-eslint/parser': ^2.34.0
-  '@vercel/node': ^1.7.1
   autoprefixer: ^10.2.6
   cheerio: ^1.0.0-rc.3
   copyfiles: ^2.3.0
@@ -85,6 +85,7 @@ specifiers:
   typescript: ^4.4.4
 
 dependencies:
+  '@dimfeld/create-social-card-wasm': 0.2.0
   '@dimfeld/svelte-lazyload': 0.0.3
   '@fortawesome/free-solid-svg-icons': 5.14.0
   '@gerhobbelt/markdown-it-container': 3.0.0-6
@@ -139,7 +140,6 @@ devDependencies:
   '@types/rss': 0.0.28
   '@typescript-eslint/eslint-plugin': 2.34.0_9b5bef248a900d26c417a000ca8d09ca
   '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@4.4.4
-  '@vercel/node': 1.8.2
   autoprefixer: 10.2.6_postcss@8.3.3
   copyfiles: 2.3.0
   cssnano: 5.0.6_postcss@8.3.3
@@ -227,6 +227,10 @@ packages:
       '@babel/helper-validator-identifier': 7.15.7
       to-fast-properties: 2.0.0
     dev: true
+
+  /@dimfeld/create-social-card-wasm/0.2.0:
+    resolution: {integrity: sha512-pXsvs6SyTJkLl/7wzPJ0sgzrS9uh5sHIQeh1c3i96SCoWLdpmpJWmAmYIsV6D8WYLbRIhIiRn9n8m7uXT42ucg==}
+    dev: false
 
   /@dimfeld/svelte-lazyload/0.0.3:
     resolution: {integrity: sha512-tx01gy6bCvoTkMLAG0DSI1IUbCrz2Kihc/ACI/x7I8/hqTbcvNXahb73K+vzTt7zeAnSMeIRTPDAxC9G5Pg40g==}
@@ -644,14 +648,6 @@ packages:
       semver: 7.3.2
       tsutils: 3.17.1_typescript@4.4.4
       typescript: 4.4.4
-    dev: true
-
-  /@vercel/node/1.8.2:
-    resolution: {integrity: sha512-K4SPBQ/UTn9IfAFaMgdJFXCiU/8LsBWHztJPI4aUh24WgYf0pDGyaEDj/RZyiSjfGB+piE1cRUBvHe+mzVHyHQ==}
-    dependencies:
-      '@types/node': 14.6.4
-      ts-node: 8.9.1_typescript@3.9.3
-      typescript: 3.9.3
     dev: true
 
   /acorn-jsx/5.3.1_acorn@7.4.0:
@@ -4346,21 +4342,6 @@ packages:
       yn: 3.1.1
     dev: true
 
-  /ts-node/8.9.1_typescript@3.9.3:
-    resolution: {integrity: sha512-yrq6ODsxEFTLz0R3BX2myf0WBCSQh9A+py8PBo1dCzWIOcvisbyH6akNKqDHMgXePF2kir5mm5JXJTH3OUJYOQ==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-    peerDependencies:
-      typescript: '>=2.7'
-    dependencies:
-      arg: 4.1.3
-      diff: 4.0.2
-      make-error: 1.3.6
-      source-map-support: 0.5.19
-      typescript: 3.9.3
-      yn: 3.1.1
-    dev: true
-
   /tsconfig-paths/3.9.0:
     resolution: {integrity: sha512-dRcuzokWhajtZWkQsDVKbWyY+jgcLC5sqJhg2PSgf4ZkH2aHPvaOY8YWGhmjb68b5qqTfasSsDO9k7RUiEmZAw==}
     dependencies:
@@ -4399,12 +4380,6 @@ packages:
   /type-fest/0.8.1:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
-    dev: true
-
-  /typescript/3.9.3:
-    resolution: {integrity: sha512-D/wqnB2xzNFIcoBG9FG8cXRDjiqSTbG2wd8DMZeQyJlP1vfTkIxH4GKveWaEBYySKIg+USu+E+EDIR47SqnaMQ==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
     dev: true
 
   /typescript/4.4.4:

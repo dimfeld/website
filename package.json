@@ -13,6 +13,7 @@
     "postinstall": "run-s build-repl"
   },
   "dependencies": {
+    "@dimfeld/create-social-card-wasm": "~0.2.0",
     "@dimfeld/svelte-lazyload": "^0.0.3",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@gerhobbelt/markdown-it-container": "^3.0.0-6",
@@ -67,7 +68,6 @@
     "@types/rss": "^0.0.28",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
-    "@vercel/node": "^1.7.1",
     "autoprefixer": "^10.2.6",
     "copyfiles": "^2.3.0",
     "cssnano": "^5.0.6",
