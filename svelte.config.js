@@ -22,6 +22,9 @@ const config = {
       define: {
         'process.env.SITE_DOMAIN': `"${domain}"`,
       },
+      ssr: {
+        noExternal: ['sorters'],
+      },
       plugins: [
         string({
           include: ['**/*.html', '**/*.md', '**/*.txt'],

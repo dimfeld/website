@@ -1,16 +1,18 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
+import { fileURLToPath } from 'url';
 import { create_card } from '@dimfeld/create-social-card-wasm';
 import { Post } from '../readPosts';
 
 const prod = process.env.NODE_ENV === 'production';
 
-function read(file: string) {
-  return Uint8Array.from(fs.readFileSync(file));
+async function read(filename: string) {
+  let path = fileURLToPath(new URL(filename, import.meta.url));
+  return fs.readFile(path).then((buffer) => Uint8Array.from(buffer));
 }
 
-const bgImage = read('src/lib/og-image/card-bg.png');
-const inconsolataMedium = read('src/lib/og-image/Inconsolata-Medium.ttf');
-const inconsolataSemiBold = read('src/lib/og-image/Inconsolata-SemiBold.ttf');
+const bgImage = read('card-bg.png');
+const inconsolataMedium = read('Inconsolata-Medium.ttf');
+const inconsolataSemiBold = read('Inconsolata-SemiBold.ttf');
 
 export async function generateImage(post: Post) {
   let { title, date, updated, type } = post;
@@ -18,12 +20,18 @@ export async function generateImage(post: Post) {
 
   let cardDate = new Date(updated || date).toDateString();
 
+  let [normal, bold, background] = await Promise.all([
+    inconsolataMedium,
+    inconsolataSemiBold,
+    bgImage,
+  ]);
+
   let config = {
     fonts: {
-      normal: inconsolataMedium,
-      bold: inconsolataSemiBold,
+      normal,
+      bold,
     },
-    background: bgImage,
+    background,
     blocks: [
       {
         wrap: true,
