@@ -71,8 +71,8 @@
   </p>
 
   <p>
-    And finally, I have a newsletter where I write about tech thoughts,
-    interesting things I've read, and project updates each Thursday.
+    And finally, I have a newsletter where I sometimes write about tech
+    thoughts, interesting things I've read, and project updates.
   </p>
 
   <NewsletterSignup />
