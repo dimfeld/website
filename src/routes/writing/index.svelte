@@ -1,14 +1,19 @@
 <script context="module">
-  export async function preload() {
-    let posts = await this.fetch('/data/allPosts').then((r) => r.json());
-    return { posts };
+  import { loadFetchJson } from '$lib/fetch';
+  export async function load({ fetch }) {
+    let result = await loadFetchJson(fetch, '/writing/list.json');
+    if ('error' in result) {
+      return result;
+    }
+
+    return {
+      props: result.data,
+    };
   }
 </script>
 
 <script>
   import PostList from '../_PostList.svelte';
-  import { blur } from 'svelte/transition';
-  import { flip } from 'svelte/animate';
   import { getContext } from 'svelte';
   export let posts;
 
@@ -18,15 +23,6 @@
   $: activePosts = posts.filter(
     (p) => !activeTag || (p.tags && p.tags.includes(activeTag))
   );
-
-  let tagsSet = new Set();
-  for (let post of posts) {
-    for (let tag of post.tags || []) {
-      tagsSet.add(tag);
-    }
-  }
-
-  let tags = Array.from(tagsSet).sort();
 </script>
 
 <svelte:head>

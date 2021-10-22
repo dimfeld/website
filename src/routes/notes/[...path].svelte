@@ -1,9 +1,18 @@
 <script context="module">
-  export async function preload({ params: { path } }) {
-    let note = await this.fetch(`/data/notes/${path.join('/')}`).then((r) =>
-      r.json()
-    );
-    return { note };
+  import { loadFetchJson } from '../../lib/fetch';
+
+  export async function load({
+    fetch,
+    page: {
+      params: { path },
+    },
+  }) {
+    let result = await loadFetchJson(fetch, `/notes/note/${path}.json`);
+    if ('error' in result) {
+      return result;
+    }
+
+    return { props: result.data };
   }
 </script>
 
@@ -13,12 +22,12 @@
 
   let imageUrl = note.cardImage;
   if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = 'process.env.SITE_DOMAIN/images/' + imageUrl;
+    imageUrl = `${process.env.SITE_DOMAIN}/images/${imageUrl}`;
   } else {
-    imageUrl = `process.env.SITE_DOMAIN/api/og-image/note_${note.id.replace(
+    imageUrl = `${process.env.SITE_DOMAIN}/notes/${note.id.replace(
       /\//g,
       '_'
-    )}`;
+    )}.og-image.png`;
   }
 
   let cardType = note.cardType || 'summary_large_image';

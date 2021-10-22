@@ -1,8 +1,7 @@
 <script>
   import { getContext, onMount, onDestroy } from 'svelte';
-  import { goto } from '@sapper/app';
+  import { goto } from '$app/navigation';
   getContext('title').set('About');
-
 
   let remaining = 5;
   let timer;
@@ -11,21 +10,19 @@
   });
 
   onDestroy(() => {
-    if(timer) {
+    if (timer) {
       clearInterval(timer);
     }
   });
 
   function doTimer() {
     remaining -= 1;
-    if(!remaining) {
+    if (!remaining) {
       goto('/');
     } else {
       timer = setTimeout(doTimer, 1000);
     }
   }
-
-
 </script>
 
 <article class="font-serif my-2 px-4">

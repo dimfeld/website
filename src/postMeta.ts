@@ -1,4 +1,4 @@
-import { Post } from './staticApi/readPosts';
+import { Post } from '$lib/readPosts';
 
 export const statuses = [
   {
@@ -27,7 +27,7 @@ export function cardImageUrl(post: Post, absolute: boolean) {
   if (!imageUrl.startsWith('http')) {
     imageUrl = '/images/' + imageUrl;
     if (absolute) {
-      imageUrl = `process.env.SITE_DOMAIN${imageUrl}`;
+      imageUrl = process.env.SITE_DOMAIN + imageUrl;
     }
   }
 

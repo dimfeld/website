@@ -1,6 +1,6 @@
 <script>
   import get from 'just-safe-get';
-  import orderBy from 'lodash/orderBy';
+  import sorter from 'sorters';
   import { getContext } from 'svelte';
   import PostList from '../_PostList.svelte';
   import { filterText } from './_filters.ts';
@@ -16,11 +16,9 @@
   $: {
     activeNotes = notes;
     if ($activeTag) {
-      activeNotes = orderBy(
-        get(tags, [$activeTag, 'posts'], []).map((id) => noteLookup[id]),
-        sortField,
-        'desc'
-      );
+      activeNotes = get(tags, [$activeTag, 'posts'], [])
+        .map((id) => noteLookup[id])
+        .sort(sorter({ value: sortField, descending: true }));
     }
 
     activeNotes = filterText(activeNotes, $search);

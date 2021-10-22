@@ -84,8 +84,10 @@
     {:else}
       <a href="https://www.twitter.com/dimfeld">send me a note on Twitter.</a>
     {/if}
-    And if you enjoyed this, I also have a newsletter where I write about tech thoughts,
-    interesting things I've read, and project updates each Thursday.
+
+    And if you enjoyed this, I also have a newsletter where I sometimes write
+    about tech thoughts, interesting things I've read, and project updates.
   </p>
+
   <NewsletterSignup />
 </article>

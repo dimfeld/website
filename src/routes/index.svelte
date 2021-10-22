@@ -1,9 +1,13 @@
 <script context="module">
-  export async function preload() {
-    let { post, note, lastCreatedNote } = await this.fetch(
-      '/data/latest'
-    ).then((r) => r.json());
-    return { latestPost: post, latestNote: note, lastCreatedNote };
+  import { loadFetchJson } from '$lib/fetch';
+  export async function load({ fetch }) {
+    let r = await loadFetchJson(fetch, '/writing/latest.json');
+    if ('error' in r) {
+      return r;
+    }
+
+    let { post, note, lastCreatedNote } = r.data;
+    return { props: { latestPost: post, latestNote: note, lastCreatedNote } };
   }
 </script>
 
@@ -53,7 +57,7 @@
 
   <p>
     I also host my
-    <a sapper:prefetch href="notes">notes</a>
+    <a sveltekit:prefetch href="notes">notes</a>
     here publicly, in hopes that some readers will be educated and others can help
     fill in the gaps. {#if lastCreatedNote.id !== latestNote.id}
       <a href="notes/{lastCreatedNote.id}">{lastCreatedNote.title}</a>
@@ -67,8 +71,8 @@
   </p>
 
   <p>
-    And finally, I have a newsletter where I write about tech thoughts,
-    interesting things I've read, and project updates each Thursday.
+    And finally, I have a newsletter where I sometimes write about tech
+    thoughts, interesting things I've read, and project updates.
   </p>
 
   <NewsletterSignup />

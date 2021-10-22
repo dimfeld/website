@@ -1,26 +1,27 @@
-<script context="module">
-  export async function preload({ params }) {
-    let post = await this.fetch(`/data/posts/${params.id}`).then(async (r) => {
-      if (r.ok) {
-        return r.json();
-      } else {
-        let body = await r.text();
-        this.error(r.status, body || r.statusText);
-      }
-    });
-    return { post };
-  }
+<script context="module" lang="ts">
+  import type { Load } from '@sveltejs/kit';
+  import { loadFetchJson } from '$lib/fetch';
+
+  export const load: Load = async function load({ fetch, page }) {
+    let result = await loadFetchJson(fetch, `/writing/${page.params.id}.json`);
+    if ('error' in result) {
+      return result;
+    }
+
+    return { props: result.data };
+  };
 </script>
 
-<script>
+<script lang="ts">
+  import type { Post } from '$lib/readPosts';
   import Article from './_Article.svelte';
-  export let post;
+  export let post: Post;
 
   let imageUrl = post.cardImage;
   if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = 'process.env.SITE_DOMAIN/images/' + imageUrl;
+    imageUrl = `${process.env.SITE_DOMAIN}/images/${imageUrl}`;
   } else {
-    imageUrl = `process.env.SITE_DOMAIN/api/og-image/post_${post.id}`;
+    imageUrl = `${process.env.SITE_DOMAIN}/writing/${post.id}.og-image.png`;
   }
 
   let cardType = post.cardType || 'summary_large_image';
@@ -43,10 +44,8 @@
   <meta property="og:description" content={post.summary} />
   <meta name="twitter:description" content={post.summary} />
   <meta name="twitter:card" content={cardType} />
-  {#if imageUrl}
-    <meta name="twitter:image" content={imageUrl} />
-    <meta property="og:image" content={imageUrl} />
-  {/if}
+  <meta name="twitter:image" content={imageUrl} />
+  <meta property="og:image" content={imageUrl} />
 </svelte:head>
 
 <div class="sm:mx-16">

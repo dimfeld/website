@@ -60,7 +60,7 @@ In this example, Svelte does most of the hard work of figuring out when to creat
 The good news is that there is no actual requirement for the component to create DOM elements at all. Instead, something like this works just fine to manage a `Polyline` within a Svelte component.
 
 ```svelte
-<script lang="typescript">
+<script lang="ts">
 import * as L from 'leaflet';
 import { getContext, setContext, onDestroy } from 'svelte';
 
@@ -100,7 +100,7 @@ There’s no need to manually track lines anymore or figure out which state chan
 Leaflet elements like popups, tooltips, and map controls are more complex, since they might create some DOM elements which are then placed inside the popup. But with a bit of care they’re also not too bad.
 
 ```svelte
-<script lang="typescript">
+<script lang="ts">
   import * as L from 'leaflet';
   import { getContext } from 'svelte';
   export let popup: L.Popup | undefined = undefined;
