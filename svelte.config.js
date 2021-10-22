@@ -1,11 +1,15 @@
 import sveltePreprocess from 'svelte-preprocess';
 import vercelAdapter from '@sveltejs/adapter-vercel';
+import * as path from 'path';
+import glob from 'glob';
 import { string } from 'rollup-plugin-string';
 import { hostname } from 'os';
+import { fileURLToPath } from 'url';
 
-let domain = process.env.VERCEL_URL
+const domain = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : `http://${hostname()}:${process.env.DEV_PORT || process.env.PORT || 3000}`;
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -51,6 +55,39 @@ const config = {
         string({
           include: ['**/*.html', '**/*.md', '**/*.txt'],
         }),
+        {
+          name: 'watch-content',
+          configureServer(server) {
+            server.watcher.add(path.join(dirname, 'posts'));
+            server.watcher.add(path.join(dirname, 'notes'));
+            server.watcher.add(path.join(dirname, 'roam-pages'));
+          },
+          handleHotUpdate(ctx) {
+            let m = /(notes|posts|roam-pages)\/(.*)\.(md|html)$/.exec(ctx.file);
+            if (m) {
+              let contentType = m[1];
+              let id = m[2];
+              if (contentType === 'roam-pages') {
+                contentType = 'notes';
+              } else if (contentType === 'posts') {
+                contentType = 'writing';
+              }
+
+              ctx.server.ws.send({
+                type: 'custom',
+                event: 'content-update',
+                data: {
+                  type: contentType,
+                  id,
+                },
+              });
+
+              return ctx.modules;
+            }
+
+            return ctx.modules;
+          },
+        },
       ],
     }),
   },
