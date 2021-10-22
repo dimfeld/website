@@ -23,7 +23,7 @@
 
   async function downloadReplData() {
     if (id && !data) {
-      let result = await ky(`/api/repl/${id}`).json();
+      let result = await ky(`/repl/${id}.json`).json();
       let files = result.files.map((file) => {
         let filenameComponents = file.name.split('.');
         let name = filenameComponents.slice(0, -1);
@@ -59,7 +59,7 @@
       props: {
         id,
         svelteUrl: 'https://unpkg.com/svelte@3.35',
-        workersUrl: 'workers',
+        workersUrl: '/workers',
         orientation: windowWidth > 600 ? 'columns' : 'rows',
       },
     });

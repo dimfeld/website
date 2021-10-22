@@ -6,14 +6,13 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "svelte-kit dev --host 0.0.0.0",
-    "build": "run-s build:svelte copy-files",
+    "build": "run-s build-repl build:svelte copy-files",
     "build:svelte": "NODE_ENV=production svelte-kit build",
     "copy-files": "./copy_content_to_build_destination.sh",
     "preview": "NODE_ENV=production svelte-kit preview",
     "start": "node build",
     "check-types": "tsc",
-    "build-repl": "rollup -c rollup-repl-workers.js",
-    "postinstall": "run-s build-repl"
+    "build-repl": "rollup -c rollup-repl-workers.js"
   },
   "dependencies": {
     "@dimfeld/create-social-card-wasm": "~0.2.0",
@@ -21,6 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@gerhobbelt/markdown-it-container": "^3.0.0-6",
     "cheerio": "^1.0.0-rc.3",
+    "codemirror": "^5.49.2",
     "date-fns": "^2.14.0",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",

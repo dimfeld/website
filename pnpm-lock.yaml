@@ -28,6 +28,7 @@ specifiers:
   '@typescript-eslint/parser': ^2.34.0
   autoprefixer: ^10.2.6
   cheerio: ^1.0.0-rc.3
+  codemirror: ^5.49.2
   copyfiles: ^2.3.0
   cssnano: ^5.0.6
   date-fns: ^2.14.0
@@ -92,6 +93,7 @@ dependencies:
   '@fortawesome/free-solid-svg-icons': 5.14.0
   '@gerhobbelt/markdown-it-container': 3.0.0-6
   cheerio: 1.0.0-rc.3
+  codemirror: 5.63.3
   date-fns: 2.16.1
   debug: 4.3.1
   dotenv: 8.2.0
@@ -130,7 +132,7 @@ devDependencies:
   '@rollup/plugin-replace': 2.4.2_rollup@2.58.0
   '@sveltejs/adapter-vercel': 1.0.0-next.31
   '@sveltejs/kit': 1.0.0-next.186_svelte@3.44.0
-  '@sveltejs/svelte-repl': github.com/dimfeld/svelte-repl/94616e1a9a9bac60a0ef9635ca9872d3a478b7bd
+  '@sveltejs/svelte-repl': github.com/dimfeld/svelte-repl/63babd8bb54a41f86ed949057ffecf92da0b27c6
   '@tailwindcss/forms': 0.3.3_tailwindcss@2.2.4
   '@types/cheerio': 0.22.21
   '@types/debug': 4.1.5
@@ -1007,7 +1009,6 @@ packages:
 
   /codemirror/5.63.3:
     resolution: {integrity: sha512-1C+LELr+5grgJYqwZKqxrcbPsHFHapVaVAloBsFBASbpLnQqLw1U8yXJ3gT5D+rhxIiSpo+kTqN+hQ+9ialIXw==}
-    dev: true
 
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
@@ -2621,9 +2622,9 @@ packages:
       uc.micro: 1.0.6
     dev: false
 
-  /marked/0.8.2:
-    resolution: {integrity: sha512-EGwzEeCcLniFX51DhTpmTom+dSA/MG/OBUDjnWtHbEnjAH180VzUeAw+oE4+Zv+CoYBWyRlYOTR0N8SO9R1PVw==}
-    engines: {node: '>= 8.16.2'}
+  /marked/3.0.5:
+    resolution: {integrity: sha512-6sXDj79pTjEiu9HfOH7LcqggjUtLHXEG3wxzhSI3zr0uwxIjyDy2rpRWDDLmIeWvUIHNkpalsIcW5JjPAVikaA==}
+    engines: {node: '>= 12'}
     hasBin: true
     dev: true
 
@@ -4572,14 +4573,14 @@ packages:
     version: 1.0.0
     dev: true
 
-  github.com/dimfeld/svelte-repl/94616e1a9a9bac60a0ef9635ca9872d3a478b7bd:
-    resolution: {tarball: https://codeload.github.com/dimfeld/svelte-repl/tar.gz/94616e1a9a9bac60a0ef9635ca9872d3a478b7bd}
+  github.com/dimfeld/svelte-repl/63babd8bb54a41f86ed949057ffecf92da0b27c6:
+    resolution: {tarball: https://codeload.github.com/dimfeld/svelte-repl/tar.gz/63babd8bb54a41f86ed949057ffecf92da0b27c6}
     name: '@sveltejs/svelte-repl'
-    version: 0.2.1
+    version: 0.3.0
     dependencies:
       codemirror: 5.63.3
       estree-walker: 0.9.0
-      marked: 0.8.2
+      marked: 3.0.5
       sourcemap-codec: 1.4.8
       svelte-json-tree: 0.0.5
       yootils: 0.0.16
