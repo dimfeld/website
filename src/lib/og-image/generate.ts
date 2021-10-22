@@ -69,7 +69,8 @@ export async function generateImage(post: Post) {
           { font: 'bold', text: `"${cardDate}"`, color: '99c794' },
           {
             font: 'normal',
-            text: '\n};\n\nbuild_post(post)\n  .and_then(render_content)',
+            text:
+              '\n};\n\nbuild_post(' + type + ')\n  .and_then(render_content)',
           },
         ],
       },
