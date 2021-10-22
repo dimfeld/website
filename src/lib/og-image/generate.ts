@@ -7,12 +7,13 @@ const prod = process.env.NODE_ENV === 'production';
 
 async function read(filename: string) {
   let path = fileURLToPath(new URL(filename, import.meta.url));
-  return fs.readFile(path).then((buffer) => Uint8Array.from(buffer));
+  let buffer = await fs.readFile(path);
+  return Uint8Array.from(buffer);
 }
 
-const bgImage = read('card-bg.png');
-const inconsolataMedium = read('Inconsolata-Medium.ttf');
-const inconsolataSemiBold = read('Inconsolata-SemiBold.ttf');
+const bgImage = () => read('card-bg.png');
+const inconsolataMedium = () => read('Inconsolata-Medium.ttf');
+const inconsolataSemiBold = () => read('Inconsolata-SemiBold.ttf');
 
 export async function generateImage(post: Post) {
   let { title, date, updated, type } = post;
@@ -21,9 +22,9 @@ export async function generateImage(post: Post) {
   let cardDate = new Date(updated || date).toDateString();
 
   let [normal, bold, background] = await Promise.all([
-    inconsolataMedium,
-    inconsolataSemiBold,
-    bgImage,
+    inconsolataMedium(),
+    inconsolataSemiBold(),
+    bgImage(),
   ]);
 
   let config = {

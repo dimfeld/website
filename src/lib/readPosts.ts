@@ -1,7 +1,12 @@
 import frontMatter from 'front-matter';
 import uniq from 'just-unique';
-import { extname } from 'path';
+import * as path from 'path';
+import globFn from 'glob';
+import { promisify } from 'util';
+import { promises as fs } from 'fs';
 import { DevToArticle } from './devto';
+
+const glob = promisify(globFn);
 
 interface PostAttributes {
   title: string;
@@ -39,21 +44,18 @@ export interface Source {
   ext: 'md' | 'html';
   type: 'post' | 'note';
   base: string;
-  content: Record<string, () => Promise<{ default: string }>>;
 }
 
 export const postSources: Source[] = [
   {
     ext: 'md',
     type: 'post',
-    base: '../../posts/',
-    content: import.meta.glob('../../posts/*.md'),
+    base: 'posts',
   },
   {
     ext: 'html',
     type: 'post',
-    base: '../../posts/',
-    content: import.meta.glob('../../posts/*.html'),
+    base: 'posts',
   },
 ];
 
@@ -61,20 +63,17 @@ export const noteSources: Source[] = [
   {
     ext: 'md',
     type: 'note',
-    base: '../../notes/',
-    content: import.meta.glob('../../notes/**/*.md'),
+    base: 'notes',
   },
   {
     ext: 'html',
     type: 'note',
-    base: '../../notes/',
-    content: import.meta.glob('../../notes/**/*.html'),
+    base: 'notes',
   },
   {
     ext: 'html',
     type: 'note',
-    base: '../../roam-pages/',
-    content: import.meta.glob('../../roam-pages/*.html'),
+    base: 'roam-pages',
   },
 ];
 
@@ -83,28 +82,33 @@ export async function lookupContent(
   name: string
 ): Promise<Post | null> {
   for (let source of sources) {
-    let importFn = source.content[`${source.base}${name}.${source.ext}`];
-    if (importFn) {
-      let result = await processPost(name, importFn);
+    let fullPath = path.join(
+      process.cwd(),
+      source.base,
+      `${name}.${source.ext}`
+    );
+
+    try {
+      let data = await fs.readFile(fullPath);
+      let result = await processPost(name, data.toString());
       if (!result) {
-        return null;
+        continue;
       }
 
       return { format: source.ext, type: source.type, ...result };
+    } catch (e) {
+      continue;
     }
   }
 
   return null;
 }
 
-async function processPost(
+function processPost(
   name: string,
-  dataFn: () => Promise<{ default: string }>
-): Promise<Omit<Post, 'format' | 'type'> | null> {
-  let data = await dataFn();
-  let { attributes, body } = frontMatter<PostAttributes>(
-    data.default.toString()
-  );
+  data: string
+): Omit<Post, 'format' | 'type'> | null {
+  let { attributes, body } = frontMatter<PostAttributes>(data);
   if (attributes.draft && process.env.NODE_ENV === 'production') {
     return null;
   }
@@ -117,11 +121,9 @@ async function processPost(
   let pathTags = name.split('/').slice(0, -1);
 
   let content = body.trim();
-  let ext = extname(name);
-  let id = ext ? name.slice(0, -ext.length) : name;
   return {
     ...attributes,
-    id,
+    id: name,
     content,
     tags: uniq([...metadataTags, ...pathTags]),
   } as Post;
@@ -129,20 +131,29 @@ async function processPost(
 
 export async function readAllSources(sources: Source[]): Promise<Post[]> {
   let posts = await Promise.all(
-    sources.flatMap((source) =>
-      Object.entries(source.content).map(async ([key, importFn]) => {
-        let name = key.slice(source.base.length);
-        let result = await processPost(name, importFn);
-        if (!result) {
-          return null;
-        }
+    sources.map(async (source) => {
+      let files = await glob(`${source.base}/**/*.${source.ext}`);
+      return Promise.all(
+        files.map(async (filename) => {
+          let ext = path.extname(filename);
+          let name = path.basename(filename);
+          if (ext) {
+            name = name.slice(0, -ext.length);
+          }
 
-        return { format: source.ext, type: source.type, ...result };
-      })
-    )
+          let data = await fs.readFile(filename);
+          let result = processPost(name, data.toString());
+          if (!result) {
+            return null;
+          }
+
+          return { format: source.ext, type: source.type, ...result };
+        })
+      );
+    })
   );
 
-  return posts.filter(Boolean) as Post[];
+  return posts.flatMap((s) => s).filter(Boolean) as Post[];
 }
 
 export function stripContent(p: Post) {

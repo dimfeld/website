@@ -7,6 +7,8 @@
   export let base;
   export let useUpdatedDate = false;
 
+  $: console.dir(posts);
+
   function tagLabels(tags) {
     return (tags || []).map((t) => capitalize(t.replace(/_/g, ' '))).join(', ');
   }
@@ -39,7 +41,10 @@
       {#if post.cardImage}
         <div class="post-bg" style={backgroundImage(post)} />
       {/if}
-      <a sveltekit:prefetch href="{base}/{post.id}" class="text-lg text-teal-900">
+      <a
+        sveltekit:prefetch
+        href="{base}/{post.id}"
+        class="text-lg text-teal-900">
         {post.title}
       </a>
       <a
