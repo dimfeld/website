@@ -1,5 +1,5 @@
 @import 'highlight.js/styles/vs.css';
-@import 'katex/dist/katex.min.css';
+@import './katex.css';
 
 @tailwind base;
 @tailwind components;
@@ -20,11 +20,11 @@ html {
     @apply leading-relaxed ml-auto mr-auto;
   }
 
-  article ul {
+  article > ul {
     @apply my-4;
   }
 
-  article ol {
+  article > ol {
     @apply my-4;
   }
 
@@ -38,9 +38,7 @@ html {
 
   article ul li,
   article ol li {
-    margin-left: 0.5rem;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    @apply my-2 ml-4;
   }
 
   article p > img:only-child {
@@ -199,7 +197,12 @@ html {
   html {
     article ul li,
     article ol li {
-      @apply list-outside ml-0;
+      @apply list-outside;
+    }
+
+    article > ul > li,
+    article > ol > li {
+      @apply ml-0;
     }
 
     blockquote {
