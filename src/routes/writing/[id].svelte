@@ -19,9 +19,9 @@
 
   let imageUrl = post.cardImage;
   if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = `/images/` + imageUrl;
+    imageUrl = `${process.env.SITE_DOMAIN}/images/${imageUrl}`;
   } else {
-    imageUrl = `${post.id}.og-image.png`;
+    imageUrl = `${process.env.SITE_DOMAIN}/writing/${post.id}.og-image.png`;
   }
 
   let cardType = post.cardType || 'summary_large_image';
@@ -44,10 +44,8 @@
   <meta property="og:description" content={post.summary} />
   <meta name="twitter:description" content={post.summary} />
   <meta name="twitter:card" content={cardType} />
-  {#if imageUrl}
-    <meta name="twitter:image" content={imageUrl} />
-    <meta property="og:image" content={imageUrl} />
-  {/if}
+  <meta name="twitter:image" content={imageUrl} />
+  <meta property="og:image" content={imageUrl} />
 </svelte:head>
 
 <div class="sm:mx-16">
