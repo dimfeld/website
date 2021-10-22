@@ -7,8 +7,6 @@
   export let base;
   export let useUpdatedDate = false;
 
-  $: console.dir(posts);
-
   function tagLabels(tags) {
     return (tags || []).map((t) => capitalize(t.replace(/_/g, ' '))).join(', ');
   }

@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { promises as fs } from 'fs';
 import { fileURLToPath } from 'url';
 import { create_card } from '@dimfeld/create-social-card-wasm';
@@ -5,9 +6,12 @@ import { Post } from '../readPosts';
 
 const prod = process.env.NODE_ENV === 'production';
 
+// Work in Vercel serverless function or in Vite.
+const dirname = import.meta?.url ? fileURLToPath(import.meta.url) : __dirname;
+
 async function read(filename: string) {
-  let path = fileURLToPath(new URL(filename, import.meta.url));
-  let buffer = await fs.readFile(path);
+  let fullPath = path.join(dirname, filename);
+  let buffer = await fs.readFile(fullPath);
   return Uint8Array.from(buffer);
 }
 
