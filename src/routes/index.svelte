@@ -139,8 +139,8 @@
 
   <h2>About this site</h2>
   <p>
-    The website is written using <a href="https://svelte.dev/">Svelte</a>,
-    <a href="https://sapper.svelte.dev/">Sapper</a>, and
+    The website is written using <a href="https://kit.svelte.dev/">SvelteKit</a
+    >,
     <a href="https://tailwindcss.com/">Tailwind</a>, and hosted on
     <a href="https://vercel.com/">Vercel</a>. Icons sourced from the
     <a href="https://refactoringui.com/">Refactoring UI</a> icon set and
