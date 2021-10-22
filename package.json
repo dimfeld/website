@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@dimfeld/create-social-card-wasm": "~0.2.0",
-    "@dimfeld/svelte-lazyload": "^0.0.3",
+    "@dimfeld/svelte-lazyload": "^0.0.4",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@gerhobbelt/markdown-it-container": "^3.0.0-6",
     "cheerio": "^1.0.0-rc.3",

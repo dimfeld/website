@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@dimfeld/create-social-card-wasm': ~0.2.0
-  '@dimfeld/svelte-lazyload': ^0.0.3
+  '@dimfeld/svelte-lazyload': ^0.0.4
   '@fortawesome/free-solid-svg-icons': ^5.11.2
   '@gerhobbelt/markdown-it-container': ^3.0.0-6
   '@rollup/plugin-babel': ^5.3.0
@@ -89,7 +89,7 @@ specifiers:
 
 dependencies:
   '@dimfeld/create-social-card-wasm': 0.2.0
-  '@dimfeld/svelte-lazyload': 0.0.3
+  '@dimfeld/svelte-lazyload': 0.0.4
   '@fortawesome/free-solid-svg-icons': 5.14.0
   '@gerhobbelt/markdown-it-container': 3.0.0-6
   cheerio: 1.0.0-rc.3
@@ -238,8 +238,8 @@ packages:
     resolution: {integrity: sha512-pXsvs6SyTJkLl/7wzPJ0sgzrS9uh5sHIQeh1c3i96SCoWLdpmpJWmAmYIsV6D8WYLbRIhIiRn9n8m7uXT42ucg==}
     dev: false
 
-  /@dimfeld/svelte-lazyload/0.0.3:
-    resolution: {integrity: sha512-tx01gy6bCvoTkMLAG0DSI1IUbCrz2Kihc/ACI/x7I8/hqTbcvNXahb73K+vzTt7zeAnSMeIRTPDAxC9G5Pg40g==}
+  /@dimfeld/svelte-lazyload/0.0.4:
+    resolution: {integrity: sha512-S5yxQeegZivmBx2SounQT/9mucFKhcUQLGBd7r0vqYf0ohomrbVR6n0o36r3a3sQy9GgLRdd0UarzRBSdslPyA==}
     dev: false
 
   /@fortawesome/fontawesome-common-types/0.2.30:
