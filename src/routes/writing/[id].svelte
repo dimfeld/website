@@ -2,6 +2,7 @@
   import type { Load } from '@sveltejs/kit';
   import { loadFetchJson } from '$lib/fetch';
 
+  export const prerender = true;
   export const load: Load = async function load({ fetch, page }) {
     let result = await loadFetchJson(fetch, `/writing/${page.params.id}.json`);
     if ('error' in result) {

@@ -1,5 +1,6 @@
 <script context="module">
   import { loadFetchJson } from '$lib/fetch';
+  export const prerender = true;
   export async function load({ fetch }) {
     let r = await loadFetchJson(fetch, '/writing/latest.json');
     if ('error' in r) {

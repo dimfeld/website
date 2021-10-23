@@ -1,5 +1,6 @@
 <script context="module">
   import { loadFetchJson } from '$lib/fetch';
+  export const prerender = true;
   export async function load({ fetch }) {
     let result = await loadFetchJson(fetch, '/writing/list.json');
     if ('error' in result) {

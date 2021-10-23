@@ -1,6 +1,7 @@
 <script context="module">
   import { loadFetchJson } from '../../lib/fetch';
 
+  export const prerender = true;
   export async function load({
     fetch,
     page: {

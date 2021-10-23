@@ -131,7 +131,7 @@
     <a
       class="text-white"
       style="padding-left:24px"
-      href={currentLink ? currentLink.name : '/'}>
+      href="/{currentLink?.name || ''}">
       {currentLink ? capitalize(currentLink.name) : 'Daniel Imfeld'}
     </a>
 
@@ -192,7 +192,7 @@
                 class="section-link justify-start font-medium pl-4 py-2 w-full
                 hover:bg-teal-800"
                 on:click={() => (displayNav = false)}
-                href={name}>
+                href="/{name}">
                 <span class="w-8 h-8">
                   {@html icon}
                 </span>

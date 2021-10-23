@@ -136,7 +136,7 @@ export async function readAllSources(sources: Source[]): Promise<Post[]> {
       return Promise.all(
         files.map(async (filename) => {
           let ext = path.extname(filename);
-          let name = path.basename(filename);
+          let name = filename.slice(source.base.length + 1);
           if (ext) {
             name = name.slice(0, -ext.length);
           }
