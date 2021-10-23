@@ -83,17 +83,17 @@
 
   <p>
     I'm a co-founder of
-    <a href="https://www.carevoyance.com">Carevoyance</a>, a sales acceleration
-    tool that enables healthcare sellers to zero in on their best prospects and
-    generate custom reports and insights with just a few clicks.
+    <a href="https://www.carevoyance.com">Carevoyance</a> (acquired by
+    <a href="https://www.h1.co">H1 Insights</a>), a sales acceleration tool that
+    enables healthcare sellers to zero in on their best prospects and generate
+    custom reports and insights with just a few clicks.
   </p>
 
   <p>
     I spend most of my time there creating new data analyses, working on the
     backend API and database systems, and developing tooling to research data
     anomalies and automate repetitive tasks. Recently I've been active on the
-    front-end too, and have been spearheading a transition from AngularJS (1.x)
-    to Svelte.
+    front-end too, and have been enjoying the Svelte framework.
   </p>
 
   <p>
