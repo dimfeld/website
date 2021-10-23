@@ -51,10 +51,10 @@
         href="{base}/{post.id}">
         <p>{post.summary || ''}</p>
       </a>
-      <p class="flex flex-row text-sm mt-auto pt-2">
+      <p class="flex flex-row items-end text-sm mt-auto pt-2">
         <span>{tagLabels(post.tags)}</span>
         {#if post.date}
-          <time class="ml-auto">
+          <time class="ml-auto pl-2 whitespace-nowrap">
             {useUpdatedDate && post.updated
               ? post.updated.slice(0, 10)
               : post.date.slice(0, 10)}
