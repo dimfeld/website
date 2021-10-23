@@ -2,8 +2,8 @@ import renderFactory from '$lib/markdown';
 import cheerio from 'cheerio';
 import * as labels from '../../postMeta';
 import RSS from 'rss';
-import { Post } from '$lib/readPosts.ts';
 import sorter from 'sorters';
+import { Post, noteSources, postSources, readAllSources } from '$lib/readPosts';
 
 let statuses: any = {};
 for (let status of labels.statuses) {
@@ -38,21 +38,25 @@ export async function get({ params }) {
   // Get whichever type of post we want. These are already sorted in descending date order so we
   // only need to sort again if combining them.
   if (type === 'writing') {
-    posts = postCache.postList.slice(0, 10);
+    posts = await readAllSources(postSources);
     title += ' - Writing';
   } else if (type === 'notes') {
-    posts = postCache.noteList.slice(0, 10);
+    posts = await readAllSources(noteSources);
     title += ' - Notes';
   } else if (type === 'all') {
     title += ' - All Content';
-    posts = [...postCache.postList, ...postCache.noteList]
-      .sort(sorter({ value: 'date', descending: true }))
-      .slice(0, 10);
+    let [p, n] = await Promise.all([
+      readAllSources(postSources),
+      readAllSources(noteSources),
+    ]);
+    posts = [...p, ...n];
   } else {
     return {
       status: 404,
     };
   }
+
+  posts = posts.sort(sorter({ value: 'date', descending: true })).slice(0, 10);
 
   let render = renderFactory();
 
