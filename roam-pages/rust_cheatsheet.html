@@ -100,6 +100,13 @@ async <span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hlj
         </li>
       </ul>
     </li>
+    <li id="Lyqp4VTGn"><span class="rm-heading-1">Tracing Level Format</span>
+      <ul class="list-bullet">
+        <li id="rip0scjiU"><code>tracing_subscriber::EnvFilter</code> takes the format <code>target[span{field=value}]=level</code></li>
+        <li id="rWB2syxjh">All except for <code>level</code> are optional.</li>
+        <li id="BIPU2JT-z"><code>value</code>, if present, acts as a regex unless it&#39;s a number or boolean. As a string, it should be surrounded by quotes. If absent, then it just filters on the presence of <code>field</code>.</li>
+      </ul>
+    </li>
   </ul>
 
 

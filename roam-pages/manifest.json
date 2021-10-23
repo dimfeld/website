@@ -7,6 +7,10 @@
     "title": "Article/The Four Theories of Truth as a Method for Critical Thinking",
     "uid": "N6d25J-5y"
   },
+  "programming_courses": {
+    "title": "Programming Courses",
+    "uid": "FUSDixp7V"
+  },
   "the_feynman_technique_the_best_way_to_learn_anything": {
     "title": "The Feynman Technique: The Best Way to Learn Anything",
     "uid": "BDj6zKdWT"
@@ -99,9 +103,17 @@
     "title": "Adam Wathan on Nailing your First Launch",
     "uid": "bHuds3INc"
   },
+  "web_development_links": {
+    "title": "Web Development Links",
+    "uid": "WPt0WmZgp"
+  },
   "book_designing_data_intensive_applications": {
     "title": "Book/Designing Data-Intensive Applications",
     "uid": "0eLn4KZPi"
+  },
+  "rust_macros": {
+    "title": "Rust Macros",
+    "uid": "Dfs0YzE4e"
   },
   "css_grid_overview": {
     "title": "CSS Grid Overview",
@@ -151,9 +163,13 @@
     "title": "SVG Dashes around the edge of a Circle",
     "uid": "-UnEj3ZgC"
   },
-  "the_problems_with_deliberate_practice": {
-    "title": "The Problems With Deliberate Practice",
-    "uid": "BwqNL2PQq"
+  "sql": {
+    "title": "SQL",
+    "uid": "bSNkBgCw0"
+  },
+  "embedding_v8_in_rust": {
+    "title": "Embedding V8 in Rust",
+    "uid": "i7yiiFy3i"
   },
   "web_scrapers": {
     "title": "Web Scrapers",
@@ -162,6 +178,10 @@
   "proximate_vs_root_causes": {
     "title": "Proximate vs. Root Causes",
     "uid": "aWfNSPTu9"
+  },
+  "the_problems_with_deliberate_practice": {
+    "title": "The Problems With Deliberate Practice",
+    "uid": "BwqNL2PQq"
   },
   "sandbox_method": {
     "title": "Self-Education: Teach Yourself Anything with the Sandbox Method",

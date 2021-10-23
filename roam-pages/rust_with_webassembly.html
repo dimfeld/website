@@ -62,6 +62,18 @@ updated: 2021-02-24
         </li>
       </ul>
     </li>
+    <li id="xk9lwGm4Z"><span class="rm-heading-2">Examining output size</span>
+      <ul class="list-bullet">
+        <li id="FjmnEjvFz">Since WASM is often consumed in the browser, output size can be a concern. The <code>twiggy</code> tool can be used to show what is taking up space.</li>
+        <li id="NceN58GYn">It does need the names section present though, and so adding this to your Cargo.toml will prevent wasm-pack from stripping the names when passing the <code>--profiling</code> option.
+          <ul class="list-bullet">
+            <li id="JUj_2asZ-"><pre><code><span class="hljs-text hljs-plain">[package.metadata.wasm-pack.profile.profiling]
+# previously had just [&#39;-O4&#39;]
+wasm-opt = [&#39;-O4&#39;, &#39;-g&#39;]</span></code></pre></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 
 
