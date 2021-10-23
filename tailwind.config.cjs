@@ -3,10 +3,11 @@ const colors = require('tailwindcss/colors');
 
 module.exports = {
   mode: 'jit',
-  purge: ['./src/**/*.{svelte,pcss,css,js,ts}'],
+  purge: ['./src/**/*.{svelte,pcss,css,js,ts}', './posts/*', './notes/*'],
   theme: {
     extend: {
       colors: {
+        indigo: colors.indigo,
         teal: {
           50: '#edfafa',
           100: '#d5f5f6',
