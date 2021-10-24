@@ -1,7 +1,7 @@
 ---
 title: Setting up SvelteKit with Storybook
 summary: All the workarounds in one place
-frontPageSummary: all the workounds needed to get it working properly
+frontPageSummary: all the workarounds needed to get it working properly
 date: 2021-07-19
 tags: Svelte
 ---
