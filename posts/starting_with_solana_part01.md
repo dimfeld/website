@@ -8,8 +8,7 @@ My involvement in the cryptocurrency space has been minimal, aside from mining s
 it feels like a good time to dip my toe in, so here's an exploration of writing applications for the Solana blockchain. The format will be more stream-of-consciousness than my usual articles here,
 just writing things down as I discover them.
 
-This article series will start out following
-[Nader Dabit's introduction](https://discord.com/channels/711240423917486090/899584692947390534/899756487218458654) and we'll see where it goes from there.
+This article series will start out following [Nader Dabit's introduction](https://discord.com/channels/711240423917486090/899584692947390534/899756487218458654) and we'll see where it goes from there.
 
 # Setup
 
@@ -29,12 +28,12 @@ Looks like there are three Solana cluster options:
 - `devnet` which is an actual Solana network, but for testing applications and where can give your wallet as many tokens as you want (devnet tokens aren't real or worth anything)
 - `mainnet beta`, which is the current "real" network where real transactions happen
 
-Once you have the Solana CLI tools installed, you can run `solana-test-validator` to start a single-node `localhost` cluster on your computer.
+  Once you have the Solana CLI tools installed, you can run `solana-test-validator` to start a single-node `localhost` cluster on your computer.
 
-To start out with the testing code you'll need to create a "paper wallet" as well. This isn't really suitable from a security standpoint for real use but is fine for just testing.
-You can run `solana address` to get instructions on how to create that wallet if you don't have it yet.
+  To start out with the testing code you'll need to create a "paper wallet" as well. This isn't really suitable from a security standpoint for real use but is fine for just testing.
+  You can run `solana address` to get instructions on how to create that wallet if you don't have it yet.
 
-Nader's article has a quick overview of other `solana` CLI commands that come in handy at the start. There are about 75 commands overall but it looks like most of them aren't used too often.
+  Nader's article has a quick overview of other `solana` CLI commands that come in handy at the start. There are about 75 commands overall but it looks like most of them aren't used too often.
 
 # The Anchor Project Template
 
@@ -71,7 +70,7 @@ I've been hearing of it used for other stuff here and there so I guess this is o
 
 ## The IDL File
 
-The build command generates the compiled program, a keypair file that can be used as a wallet to deploy the contract on, and an IDL file that describes the instructions exposed by the contract.
+The build command generates the compiled program, a keypair that can be used as a wallet to deploy the contract with, and an IDL file that describes the instructions exposed by the contract.
 
 ```
 ~/projects/solana/p0001 ❯ cat target/idl/p0001.json
