@@ -82,7 +82,7 @@ const config = {
                 },
               });
 
-              return ctx.modules;
+              return [];
             }
 
             return ctx.modules;
