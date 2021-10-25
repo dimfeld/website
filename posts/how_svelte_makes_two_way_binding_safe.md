@@ -69,14 +69,14 @@ Two-way binding works similarly behind the scenes. The syntax is more terse, and
 </div>
 
 With traditional two-way binding, you don't really have a way to know when `value` has been updated, and so it becomes
-difficult to make sure that any state derived from it is actually up to date. Angular has a "digest" and "watchers" that
+difficult to make sure that any state derived from it is actually up to date. AngularJS (aka Angular 1) has a "digest" and "watchers" that
 rerun all template expressions in a component when something might have changed, and yes it does become a performance problem.
 
 But for anything outside a template, you may be out of luck, and these bugs may manifest in weird ways where sometimes your derived
 state ends up with the right value and other times it does not, depending on what else is going on and if one of your code paths that happens
 to update the state gets run.
 
-In Angular you can sometimes use `$scope.watch` to handle this, but you have to explicitly remember to use it
+In AngularJS you can sometimes use `$scope.watch` to handle this, but you have to explicitly remember to use it
 where appropriate, and it can be easy to miss if your state happens to update due to other events half the time.
 
 # How Svelte Makes it Safe
@@ -88,7 +88,7 @@ So any time `value` is updated, whether from a `bind:` directive or from other c
 recalculates `numWords`. Even better, if `numWords` starts to depend on other variables, Svelte picks up on that. You don't have to keep track of which
 variables your expression relies on since the compiler does it for you.
 
-Having experienced two-way-binding hell in Angular, I was also initially wary of it in Svelte. But having using it for over a year now I've found Svelte's promises
+Having experienced two-way-binding hell in AngularJS, I was also initially wary of it in Svelte. But having using it for over a year now I've found Svelte's promises
 here to be true. There are still situations where you may want to use one-way binding, but they are intentional design choices in your code
 rather than a way to avoid consistency bugs.
 
