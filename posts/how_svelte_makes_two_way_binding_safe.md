@@ -88,13 +88,13 @@ So any time `value` is updated, whether from a `bind:` directive or from other c
 recalculates `numWords`. Even better, if `numWords` starts to depend on other variables, Svelte picks up on that. You don't have to keep track of which
 variables your expression relies on since the compiler does it for you.
 
-Having experienced two-way-binding hell in AngularJS, I was also initially wary of it in Svelte. But having using it for over a year now I've found Svelte's promises
+Having experienced two-way-binding hell in AngularJS, I was also initially wary of it in Svelte. But with more than a year of experience now I've found Svelte's promises
 here to be true. There are still situations where you may want to use one-way binding, but they are intentional design choices in your code
 rather than a way to avoid consistency bugs.
 
 The only caveat here is that you do have to remember to use the `$:` operator. This is true, but it's not as big of a deal as it might seem to Svelte outsiders.
 The operator is such a core part of the framework that it becomes second
-nature after short while, and I find myself doing it by default, only putting thought into if I might _not_ want to use it for a particular expression.
+nature after a short while, and I find myself doing it by default, only putting thought into if I might _not_ want to use it for a particular expression.
 
 The exact mechanisms in the Svelte compiler to track dependencies and rerun expressions aren't particularly complex, but they are out of the scope of a quick blog post. Svelte contributor Tan Li Hau has
 covered the topic in great detail, so I recommend his [excellent series on Svelte internals](https://lihautan.com/compile-svelte-in-your-head-part-1/#invalidate)
