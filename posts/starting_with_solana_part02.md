@@ -1,6 +1,6 @@
 ---
 title: Starting with Solana, Part 2
-date: 2021-10-24
+date: 2021-10-26
 tags: Solana, web3, cryptocurrency
 ---
 
