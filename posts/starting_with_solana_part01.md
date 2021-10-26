@@ -135,7 +135,7 @@ pub mod p0001 {
 
 #[derive(Accounts)]
 pub struct Create<'info> {
-    #[account(init, payer=user, space= 16 + 16)]
+    #[account(init, payer=user, space= 8 + 8)]
     pub base_account: Account<'info, BaseAccount>,
     #[account(mut)]
     pub user: Signer<'info>,
@@ -164,3 +164,5 @@ Accounts pay rent in the form of lamports, and if it runs out, then the account 
 to 0.01 SOL per MB of data per day, or 3.65 SOL per MB per year. Since most accounts will hold far less than 1MB of data, the actual cost should usually be quite small.
 
 That's it for now. Next time, more on accounts, digging into the `#[account]` macro and the arguments to the `create` instruction, and actually implementing it.
+
+Check out [part 2](starting_with_solana_part02) now!
