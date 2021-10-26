@@ -113,3 +113,60 @@ where
 ```
 
 # Deriving the `Accounts` trait
+
+Each instruction in an Anchor program has a related structure which defines the format of all the information, and Anchor
+uses the `Accounts` trait to determine how this structure interacts with the various account references passed into the
+program. The derivation macro for this trait does a lot of heavy lifting, so we'll skip the details for now and take
+a higher-level view.
+
+The structure for the `create` instruction in the tutorial looks like this.
+
+```rust
+#[derive(Accounts)]
+pub struct Create<'info> {
+    #[account(init, payer = user, space = 8 + 8)]
+    pub base_account: Account<'info, BaseAccount>,
+    pub user: Signer<'info>,
+    pub system_program: Program <'info, System>,
+}
+```
+
+Anchor's `Accounts` trait requires one function: `try_accounts`.
+
+```rust
+pub trait Accounts<'info>: ToAccountMetas + ToAccountInfos<'info> + Sized {
+    fn try_accounts(
+        program_id: &Pubkey, 
+        accounts: &mut &[AccountInfo<'info>], 
+        ix_data: &[u8]
+    ) -> Result<Self, ProgramError>;
+}
+```
+
+`try_accounts` takes an array of expected `AccountInfo` structures, and expects the implementor (almost always
+automatically done through the macro) to take the expected number of accounts from the front of the list and then
+change the reference to point to the remaining slice of the list. This feels a lot more like C than Rust, but
+everything using Anchor is autogenerating it anyway so the bug risk is fairly low. Both structures such as `Create`
+and the Account structures such as `Account` and `Signer` implement this trait and try_accounts.
+
+In `Create`, `base_account` is the structure we looked at above, which holds the actual counter value. The `Accounts` derive macro
+provides its own version of an `account` macro that can specify information on each field of the structure, and the 
+invocation on `base_account` has three arguments.
+
+- `init` tells Anchor that calling this instruction should create an account corresponding to the `BaseAccount` structure. The account is
+initialized with the 8-byte discriminator and the rest of the buffer is zeroed out.
+- `payer` indicates which account provides the tokens (called lamports) to pay for the newly-created account's rent. Here, it's the `user` account listed
+next in the structure. Anchor will transfer two year's worth of lamports from the payer into the account so that it can be rent-exempt.
+- `space` is the number of bytes required to store the account's data. This is specified when the account is created and can never be changed.
+Again, Anchor needs 8 bytes and then the rest is the space taken up by the . It would be nice if there was a way to automatically calculate this,
+but the macro may not have easy access to the actual `BaseAccount` structure definition here to do so.
+
+Next, the `user` account is a `Signer` type. In Solana, a [Signer](https://docs.solana.com/developing/programming-model/accounts#signers)
+is an account accompanied by a digital signature indicating that the account's owner has authorized the transaction. (As opposed to someone
+else passing that account's address into the program.) Signer's implementation of `try_accounts` verifies that the referenced account
+also signed the transaction.
+
+Finally, there is a reference to the system program. Solana's system program creates accounts, transfers lamports around, and performs
+other functions, so any program can call into the system program as needed.
+
+
