@@ -135,7 +135,7 @@ pub mod p0001 {
 
 #[derive(Accounts)]
 pub struct Create<'info> {
-    #[account(init, payer=user, space= 16 + 16)]
+    #[account(init, payer=user, space= 8 + 8)]
     pub base_account: Account<'info, BaseAccount>,
     #[account(mut)]
     pub user: Signer<'info>,

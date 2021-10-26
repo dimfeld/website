@@ -114,10 +114,20 @@ where
 
 # Deriving the `Accounts` trait
 
-Each instruction in an Anchor program has a related structure which defines the format of all the information, and Anchor
-uses the `Accounts` trait to determine how this structure interacts with the various account references passed into the
-program. The derivation macro for this trait does a lot of heavy lifting, so we'll skip the details for now and take
-a higher-level view.
+A Solana program's input is just a raw buffer of bytes containing account public keys and various information for the program,
+and the [official Solana SDK](https://docs.rs/solana-sdk/1.8.1/solana_sdk/index.html) provides a function to extract [some
+basic information](https://docs.solana.com/developing/on-chain-programs/developing-rust#data-types) from that buffer.
+
+```rust
+pub unsafe fn deserialize<'a>(
+    input: *mut u8
+) -> (&'a Pubkey, Vec<AccountInfo<'a>, Global>, &'a [u8])
+```
+
+Anchor automatically calls this function and then goes a step further. Each instruction in an Anchor program has a related
+structure which defines the format of all the information, and
+the `Accounts` trait determines how this structure can be created from the result of the `deserialize` function. 
+The derivation macro for this trait does a lot of heavy lifting, so we'll skip some of the details for now.
 
 The structure for the `create` instruction in the tutorial looks like this.
 
@@ -146,7 +156,8 @@ pub trait Accounts<'info>: ToAccountMetas + ToAccountInfos<'info> + Sized {
 `try_accounts` takes an array of expected `AccountInfo` structures, and expects the implementor (almost always
 automatically done through the macro) to take the expected number of accounts from the front of the list and then
 change the reference to point to the remaining slice of the list. This feels a lot more like C than Rust, but
-everything using Anchor is autogenerating it anyway so the bug risk is fairly low. Both structures such as `Create`
+given the Solana VM's [strict execution limits](https://docs.solana.com/developing/programming-model/runtime#compute-budget) it makes sense,
+and everything using Anchor is autogenerating it anyway so the bug risk is fairly low. Both structures such as `Create`
 and the Account structures such as `Account` and `Signer` implement this trait and try_accounts.
 
 In `Create`, `base_account` is the structure we looked at above, which holds the actual counter value. The `Accounts` derive macro
@@ -166,7 +177,25 @@ is an account accompanied by a digital signature indicating that the account's o
 else passing that account's address into the program.) Signer's implementation of `try_accounts` verifies that the referenced account
 also signed the transaction.
 
-Finally, there is a reference to the system program. Solana's system program creates accounts, transfers lamports around, and performs
-other functions, so any program can call into the system program as needed.
+Finally, there is a reference to the system program. Solana's system program [provides various services](https://docs.rs/solana-sdk/1.8.1/solana_sdk/system_instruction/enum.SystemInstruction.html)
+such as creating accounts, transferring lamports between accounts, and more.
 
+The `account` macro [has many other useful attributes](https://docs.rs/anchor-lang/0.18.0/anchor_lang/derive.Accounts.html), and some common ones are:
 
+- `#[account(mut)]` tells Anchor that your instruction may alter the account, so it should serialize the account structure
+back to the input buffer, where Solana will update its data if allowed.
+- `#[account(signer)]` verifies that an account is also the signer. The `Signer` structure type we used above
+also does this, but it doesn't actually deserialize the account contents from the buffer, so this can be used
+if you need to use a type other than `Signer`.
+- `#[account(close=target)]` tells the program to close the account when the instruction finishes, and transfer
+its lamports to the account specified by `target`.
+- `#[acccount(has_one=target)]` enforces that the field name inside the account matches the account given with the same name
+in the `Accounts structure`. So in the above example, we could add a `user` field to `BaseAccount`, and then
+`#[account(has_one=user)]` on the `base_account` field would add a check
+that `base_account.user == user`.
+- `#[account(owner=target)]` is similar to `has_one`, but it checks that the account's owner is equal to the account
+given in the field.
+
+There are some more but these seem to be the most useful ones.
+
+That's it for this part. Next up, we'll go back to implementing and testing the tutorial program.
