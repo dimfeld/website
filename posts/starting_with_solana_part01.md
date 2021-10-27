@@ -8,7 +8,7 @@ My involvement in the cryptocurrency space has been minimal, aside from mining s
 it feels like a good time to dip my toe in, so here's an exploration of writing applications for the Solana blockchain. The format will be more stream-of-consciousness than my usual articles here,
 just writing things down as I discover them.
 
-This article series will start out following [Nader Dabit's introduction](https://discord.com/channels/711240423917486090/899584692947390534/899756487218458654) and we'll see where it goes from there.
+This article series will start out following [Nader Dabit's introduction](https://dev.to/dabit3/the-complete-guide-to-full-stack-solana-development-with-react-anchor-rust-and-phantom-3291) and we'll see where it goes from there.
 
 # Setup
 
@@ -125,10 +125,14 @@ The next step in Nader's article is to build a very simple program with just a s
 pub mod p0001 {
     use super::*;
     pub fn create(ctx: Context<Create>) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
+        base_account.count = 0;
         Ok(())
     }
 
     pub fn increment(ctx: Context<Increment>) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
+        base_account.count += 1;
         Ok(())
     }
 }
@@ -156,7 +160,7 @@ pub struct BaseAccount {
 
 # Accounts
 
-Before we implement this, lets look at Accounts a bit more. The [Solana Account documentation](https://discord.com/channels/711240423917486090/899584692947390534/900821369355382834) tells us that an account is not actually a wallet. Instead,
+Before we finish this, lets look at Accounts a bit more. The [Solana Account documentation](https://docs.solana.com/developing/programming-model/accounts) tells us that an account is not actually a wallet. Instead,
 it's a way for the contract to persist data between calls. This includes information such as the count in `BaseAccount`, and also information about permissions on the account.
 It also has some lifetime information "expressed by a number of fractional native tokens called lamports."
 

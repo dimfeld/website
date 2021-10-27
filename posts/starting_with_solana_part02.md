@@ -1,5 +1,7 @@
 ---
 title: Starting with Solana, Part 2
+summary: Anchor's Account macros
+frontPageSummary: Anchor's Account macros
 date: 2021-10-26
 tags: Solana, web3, cryptocurrency
 ---
@@ -9,7 +11,7 @@ tags: Solana, web3, cryptocurrency
 The end of the post started to look into what a Solana "Account" actually is, so we'll continue there with the Anchor framework's
 `#[account]` macro.
 
-There are actually 2 `#[account]` macros in Anchor. One is used on Account structures to facilitate reading and writing Accounts
+There are actually 2 `#[account]` macros in Anchor. One is used on `Account` structures to facilitate reading and writing Accounts
 from their raw data into Rust structures. The other is used in conjunction with the `Accounts` trait derive macro, which is placed
 on structures used for instruction inputs.
 
@@ -126,7 +128,7 @@ pub unsafe fn deserialize<'a>(
 
 Anchor automatically calls this function and then goes a step further. Each instruction in an Anchor program has a related
 structure which defines the format of all the information, and
-the `Accounts` trait determines how this structure can be created from the result of the `deserialize` function. 
+the `Accounts` trait determines how this structure can be created from the result of the `deserialize` function.
 The derivation macro for this trait does a lot of heavy lifting, so we'll skip some of the details for now.
 
 The structure for the `create` instruction in the tutorial looks like this.
@@ -146,8 +148,8 @@ Anchor's `Accounts` trait requires one function: `try_accounts`.
 ```rust
 pub trait Accounts<'info>: ToAccountMetas + ToAccountInfos<'info> + Sized {
     fn try_accounts(
-        program_id: &Pubkey, 
-        accounts: &mut &[AccountInfo<'info>], 
+        program_id: &Pubkey,
+        accounts: &mut &[AccountInfo<'info>],
         ix_data: &[u8]
     ) -> Result<Self, ProgramError>;
 }
@@ -161,16 +163,16 @@ and everything using Anchor is autogenerating it anyway so the bug risk is fairl
 and the Account structures such as `Account` and `Signer` implement this trait and try_accounts.
 
 In `Create`, `base_account` is the structure we looked at above, which holds the actual counter value. The `Accounts` derive macro
-provides its own version of an `account` macro that can specify information on each field of the structure, and the 
+provides its own version of an `account` macro that can specify information on each field of the structure, and the
 invocation on `base_account` has three arguments.
 
 - `init` tells Anchor that calling this instruction should create an account corresponding to the `BaseAccount` structure. The account is
-initialized with the 8-byte discriminator and the rest of the buffer is zeroed out.
+  initialized with the 8-byte discriminator and the rest of the buffer is zeroed out.
 - `payer` indicates which account provides the tokens (called lamports) to pay for the newly-created account's rent. Here, it's the `user` account listed
-next in the structure. Anchor will transfer two year's worth of lamports from the payer into the account so that it can be rent-exempt.
+  next in the structure. Anchor will transfer two year's worth of lamports from the payer into the account so that it can be rent-exempt.
 - `space` is the number of bytes required to store the account's data. This is specified when the account is created and can never be changed.
-Again, Anchor needs 8 bytes and then the rest is the space taken up by the . It would be nice if there was a way to automatically calculate this,
-but the macro may not have easy access to the actual `BaseAccount` structure definition here to do so.
+  Again, Anchor needs 8 bytes and then the rest is the space taken up by the . It would be nice if there was a way to automatically calculate this,
+  but the macro may not have easy access to the actual `BaseAccount` structure definition here to do so.
 
 Next, the `user` account is a `Signer` type. In Solana, a [Signer](https://docs.solana.com/developing/programming-model/accounts#signers)
 is an account accompanied by a digital signature indicating that the account's owner has authorized the transaction. (As opposed to someone
@@ -183,18 +185,18 @@ such as creating accounts, transferring lamports between accounts, and more.
 The `account` macro [has many other useful attributes](https://docs.rs/anchor-lang/0.18.0/anchor_lang/derive.Accounts.html), and some common ones are:
 
 - `#[account(mut)]` tells Anchor that your instruction may alter the account, so it should serialize the account structure
-back to the input buffer, where Solana will update its data if allowed.
+  back to the input buffer, where Solana will update its data if allowed.
 - `#[account(signer)]` verifies that an account is also the signer. The `Signer` structure type we used above
-also does this, but it doesn't actually deserialize the account contents from the buffer, so this can be used
-if you need to use a type other than `Signer`.
+  also does this, but it doesn't actually deserialize the account contents from the buffer, so this can be used
+  if you need to use a type other than `Signer`.
 - `#[account(close=target)]` tells the program to close the account when the instruction finishes, and transfer
-its lamports to the account specified by `target`.
+  its lamports to the account specified by `target`.
 - `#[acccount(has_one=target)]` enforces that the field name inside the account matches the account given with the same name
-in the `Accounts structure`. So in the above example, we could add a `user` field to `BaseAccount`, and then
-`#[account(has_one=user)]` on the `base_account` field would add a check
-that `base_account.user == user`.
+  in the `Accounts structure`. So in the above example, we could add a `user` field to `BaseAccount`, and then
+  `#[account(has_one=user)]` on the `base_account` field would add a check
+  that `base_account.user == user`.
 - `#[account(owner=target)]` is similar to `has_one`, but it checks that the account's owner is equal to the account
-given in the field.
+  given in the field.
 
 There are some more but these seem to be the most useful ones.
 
