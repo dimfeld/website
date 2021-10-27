@@ -10,6 +10,19 @@ import StateCore from 'markdown-it/lib/rules_core/state_core';
 
 hljsSvelte(highlight);
 
+function boxContainer(className: string) {
+  return {
+    render: function (tokens, idx) {
+      let token = tokens[idx];
+      if (token.nesting === 1) {
+        return `<aside class="${className}">`;
+      } else {
+        return `</aside>`;
+      }
+    },
+  };
+}
+
 export default function renderer() {
   let r = markdownIt({
     html: true,
@@ -37,16 +50,8 @@ export default function renderer() {
     .use(container, 'side-by-side', {
       content: renderSideBySide,
     })
-    .use(container, 'note', {
-      render: function (tokens, idx) {
-        let token = tokens[idx];
-        if (token.nesting === 1) {
-          return `<aside class="note">`;
-        } else {
-          return `</aside>`;
-        }
-      },
-    });
+    .use(container, 'note', boxContainer('note'))
+    .use(container, 'warn', boxContainer('warn'));
 
   r.renderer.rules.footnote_ref = function render_footnote_ref(
     tokens,
