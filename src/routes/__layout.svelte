@@ -13,6 +13,7 @@
 
   if (import.meta.hot) {
     import.meta.hot.on('content-update', (data) => {
+      invalidate('/writing/latest.json');
       if (data.type === 'notes') {
         invalidate('/notes/list.json');
         invalidate('/notes/tags.json');
