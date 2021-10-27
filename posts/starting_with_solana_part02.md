@@ -201,3 +201,5 @@ The `account` macro [has many other useful attributes](https://docs.rs/anchor-la
 There are some more but these seem to be the most useful ones.
 
 That's it for this part. Next up, we'll go back to implementing and testing the tutorial program.
+
+[Part 3](starting_with_solana_part03) is up now!

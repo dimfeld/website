@@ -39,7 +39,7 @@ Looks like there are three Solana cluster options:
 
 Ok, so on to creating an Anchor project. `anchor init p0001` is what I used. I initially called it just `0001` which Anchor will do, but Rust doesn't let crate names start with numbers, so don't do that.
 
-So this gives you a scaffolding of a Rust Solana contract, a test file in JavaScript, and some miscellaneous stuff.
+So this gives you a scaffolding of a Rust Solana program, a test file in JavaScript, and some miscellaneous stuff.
 
 ## The Program
 
