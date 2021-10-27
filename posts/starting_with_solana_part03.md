@@ -1,5 +1,7 @@
 ---
 title: Starting with Solana, Part 3
+summary: Testing a Solana Program
+frontPageSummary: testing a Solana program
 date: 2021-10-27
 tags: Solana, web3, cryptocurrency
 ---
