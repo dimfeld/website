@@ -12,6 +12,10 @@ This is great for speeding up developer productivity, and so I wanted to see if 
 and HTML files that make up the content of this site as well. Between Vite's HMR API and some SvelteKit
 features, it was easier than I expected.
 
+:::: note
+Sometimes you may be able to just use Vite's [`import.meta.glob`](https://vitejs.dev/guide/features.html#glob-import) to accomplish this. If this doesn't fit your needs, read on!
+::::
+
 # Vite HMR Plugin
 
 The first step is to add a build plugin into the Vite configuration. With SvelteKit, this configuration goes inside your
