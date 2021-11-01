@@ -18,13 +18,12 @@ Sometimes you may be able to just use Vite's [`import.meta.glob`](https://vitejs
 
 # Vite HMR Plugin
 
-The first step is to add a build plugin into the Vite configuration. With SvelteKit, this configuration goes inside your
-`svelte.config.js`.
+The first step is to add a build plugin into the Vite configuration. With SvelteKit, this configuration goes inside your `svelte.config.js`.
 
 Vite plugins have a similar API to [Rollup](https://rollupjs.org/) plugins, but with some extra methods. The plugins provide
 one or more hooks into the build process, and then Vite calls those hooks at the appropriate time.
 
-First, our plugin provides a `configureServer` hook which tells Vite to watch the content directoies for changes.
+First, our plugin provides a `configureServer` hook which tells Vite to watch the content directories for changes.
 In Rollup this would be done in the `buildStart` hook and call `this.watch` to add the paths, but that doesn't work
 for Vite dev mode. Instead, you call `server.watcher.add(path)`. In the snippet below, you can see I add three directories
 to the watcher.
