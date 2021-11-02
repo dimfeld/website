@@ -1,62 +1,19 @@
 ---
-title: Starting with Solana, Part 4
-summary: A TODO List with Rewards
-frontPageSummary: creating an incentiveized TODO list
+title: Starting with Solana, Part 5
+summary: Using Svelte with Solana
+frontPageSummary: using Svelte with Solana
 date: 2021-10-29
+draft: true
 tags: Solana, Svelte, web3, cryptocurrency
 ---
 
-In [part 3](starting_with_solana_part03) we looked at testing and deploying our Solana program. Here we'll write something a bit more interesting:
-a crowd-sourced todo list where each item is associated with a reward for completion.
+In [part 3](starting_with_solana_part03) we looked at testing and deploying our Solana program.
 
-With this program, each TODO list is a Solana account, and each item in the list is also an account. Anyone can add an item, and the reward will be
-applied to the list owner's account when both the list owner and the item creator mark it finished.
+The final section of [Nader's tutorial](https://dev.to/dabit3/the-complete-guide-to-full-stack-solana-development-with-react-anchor-rust-and-phantom-3291) modifies the Solana program to hold a list of strings in each account and puts together a React app to communicate with the program. Here I'll do something similar, but use [SvelteKit](https://kit.svelte.dev) for the browser side of it.
 
-# The Program
+# Updating the Program
 
-First let's update our program. We're still using Anchor here, but some of the operations will delve into the lower levels. This one will have four operations:
-
-- NewList to make a new TODO list.
-- Add to add an item to a list.
-- Cancel to delete an item, unfinished.
-- Finish to mark an item and reward the bounty.
-
-## NewList
-
-Any user can run the NewList instruction to create a new TODO list. When creating the list, the user can specify how many items it should
-be able to hold.
-
-Here we don't use Anchor's `init` account attribute, so that we can create it ourselves.
-
-```rust
-#[program]
-pub mod todo {
-  pub fn new_list(ctx: Context<NewList>, capacity: u32) -> ProgramResult {
-    Ok(())
-  }
-}
-
-#[derive(Accounts)]
-pub struct NewList<'info> {
-  #[account(mut)]
-  pub list_account: Account<'info, TodoList>,
-  pub user: Signer<'info>,
-  pub system_program: Program<'info, System>,
-}
-```
-
-## Add
-
-Any user can call the Add instruction on anyone's TODO list. The arguments are the item name and the number of tokens for the item bounty. The account's
-pubkey will also be added to the main TODO list account.
-
-## Cancel
-
-Either the TODO list's owner or the creator of an item can cancel the item, in which case the bounty is returned to the item's creator.
-
-## Finish
-
-The Finish instruction awards an item's bounty when both the item creator and the list owner mark it finished.
+First let's update our program to so something a bit more interesting. The new program source looks very similar to the previous one, except it takes a string as an argument and adds it to a `Vec<String>` stored in the account. We also increase the acocunt size to allow up to 128 bytes of string data.
 
 ```rust
 use anchor_lang::prelude::*;
