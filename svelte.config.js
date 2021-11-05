@@ -12,7 +12,7 @@ const domain = process.env.VERCEL_URL
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('@sveltejs/kit').Config} */
-const config = {
+export default {
   // Need an actual preprocess key here to make editor plugins work
   preprocess: [
     sveltePreprocess({
@@ -92,5 +92,3 @@ const config = {
     }),
   },
 };
-
-export default config;
