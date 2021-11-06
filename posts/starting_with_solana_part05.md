@@ -4,7 +4,7 @@ summary: Using Svelte with Solana
 frontPageSummary: using Svelte with Solana
 date: 2021-11-07
 draft: true
-tags: Solana, Svelte, web3, cryptocurrency
+tags: Solana, Svelte, web3
 ---
 
 In [part 3](starting_with_solana_part03) we looked at testing and deploying our Solana program.

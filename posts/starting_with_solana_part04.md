@@ -11,7 +11,7 @@ together an article about using Svelte with Solana for part 4, but that will wai
 making a more interesting Solana program -- a todo list where anyone can add an item and attach a reward for
 completion.
 
-# The Program
+# Program Structure
 
 The program workflow will look something like this:
 

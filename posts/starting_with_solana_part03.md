@@ -3,7 +3,7 @@ title: Starting with Solana, Part 3
 summary: Testing a Solana Program
 frontPageSummary: testing a Solana program
 date: 2021-10-27
-tags: Solana, web3, cryptocurrency
+tags: Solana, web3
 ---
 
 [In part 2](starting_with_solana_part02), we took a look at the account macros that Anchor uses to get data in and out of your Solana program.
@@ -213,4 +213,3 @@ Deploy success
 
 In [part 4](starting_with_solana_part04) we'll take the lessons learned in these first three parts and create a
 todo list application with attached rewards. [Check it out now!](starting_with_solana_part04)
-

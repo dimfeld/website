@@ -1,7 +1,7 @@
 ---
 title: Starting with Solana, Part 1
 date: 2021-10-22
-tags: Solana, web3, cryptocurrency
+tags: Solana, web3
 ---
 
 My involvement in the cryptocurrency space has been minimal, aside from mining some Ethereum back in 2015 and following trends from afar. As "web3" has gained more mindshare in the developer community,

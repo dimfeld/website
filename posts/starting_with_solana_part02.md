@@ -3,7 +3,7 @@ title: Starting with Solana, Part 2
 summary: Anchor's Account macros
 frontPageSummary: Anchor's Account macros
 date: 2021-10-26
-tags: Solana, web3, cryptocurrency
+tags: Solana, web3
 ---
 
 [Last time](starting_with_solana_part01), we set up our Solana and Anchor toolchains, and started to create a simple Solana program, following
