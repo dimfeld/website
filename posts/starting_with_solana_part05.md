@@ -2,7 +2,7 @@
 title: Starting with Solana, Part 5
 summary: Using Svelte with Solana
 frontPageSummary: using Svelte with Solana
-date: 2021-10-29
+date: 2021-11-07
 draft: true
 tags: Solana, Svelte, web3, cryptocurrency
 ---

@@ -211,5 +211,6 @@ Program Id: 6UrdK99AdvoFdM8WrteDfK9XS2ENSLEHFkXDSmMPryk
 Deploy success
 ```
 
-Next time we'll start on a frontend to interact with our application. The big difference from Nader's tutorial is that
-I'll try to figure out how to do it in [Svelte](https://svelte.dev) instead of React.
+In [part 4](starting_with_solana_part04) we'll take the lessons learned in these first three parts and create a
+todo list application with attached rewards. [Check it out now!](starting_with_solana_part04)
+
