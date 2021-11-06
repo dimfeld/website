@@ -171,8 +171,8 @@ invocation on `base_account` has three arguments.
 - `payer` indicates which account provides the tokens (called lamports) to pay for the newly-created account's rent. Here, it's the `user` account listed
   next in the structure. Anchor will transfer two year's worth of lamports from the payer into the account so that it can be rent-exempt.
 - `space` is the number of bytes required to store the account's data. This is specified when the account is created and can never be changed.
-  Again, Anchor needs 8 bytes and then the rest is the space taken up by the . It would be nice if there was a way to automatically calculate this,
-  but the macro may not have easy access to the actual `BaseAccount` structure definition here to do so.
+  Again, Anchor needs 8 bytes and then the rest is the space taken up by the serialized structure. You can omit this and Anchor will automatically
+  calculate the needed space, but if your structure includes dynamically sized values such as Strings or Vecs then this won't work right.
 
 Next, the `user` account is a `Signer` type. In Solana, a [Signer](https://docs.solana.com/developing/programming-model/accounts#signers)
 is an account accompanied by a digital signature indicating that the account's owner has authorized the transaction. (As opposed to someone
