@@ -1,7 +1,5 @@
 ---
-title: Starting with Solana, Part 4
-summary: A Todo List with Rewards
-frontPageSummary: creating an decentralized, incentivized todo list
+title: "Starting with Solana, Part 4 - A Todo List with Rewards"
 date: 2021-11-05
 tags: Solana, web3
 ---

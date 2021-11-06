@@ -1,5 +1,5 @@
 ---
-title: Starting with Solana, Part 3
+title: Starting with Solana, Part 3 - Testing a Solana Program
 summary: Testing a Solana Program
 frontPageSummary: testing a Solana program
 date: 2021-10-27

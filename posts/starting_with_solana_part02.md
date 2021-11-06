@@ -1,7 +1,5 @@
 ---
-title: Starting with Solana, Part 2
-summary: Anchor's Account macros
-frontPageSummary: Anchor's Account macros
+title: Starting with Solana, Part 2 - Anchor's Account Macros
 date: 2021-10-26
 tags: Solana, web3
 ---

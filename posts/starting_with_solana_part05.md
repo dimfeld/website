@@ -1,7 +1,5 @@
 ---
-title: Starting with Solana, Part 5
-summary: Using Svelte with Solana
-frontPageSummary: using Svelte with Solana
+title: Starting with Solana, Part 5 - Svelte and Solana
 date: 2021-11-07
 draft: true
 tags: Solana, Svelte, web3
