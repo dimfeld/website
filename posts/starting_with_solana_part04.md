@@ -66,6 +66,10 @@ it is deterministic — given a program ID and seeds, the same PDA will always b
 address is not a real public key, it’s guaranteed that the program from which the PDA came is the only thing that can
 generate a signed transaction from it.
 
+Programs generate signed transactions for a PDA by attaching the seeds and bump value
+to an invocation that uses it. The Solana runtime can then use this information to verify that the PDA actually
+belongs to the program.
+
 ## Returning Errors
 
 The program may need to return some custom errors when things go wrong. Anchor has an `#[error]` macro
