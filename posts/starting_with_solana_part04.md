@@ -3,7 +3,7 @@ title: Starting with Solana, Part 4
 summary: A Todo List with Rewards
 frontPageSummary: creating an decentralized, incentivized todo list
 date: 2021-11-05
-tags: Solana, Svelte, web3, cryptocurrency
+tags: Solana, web3
 ---
 
 In [part 3](starting_with_solana_part03) we looked at testing and deploying our Solana program. I was going to put
