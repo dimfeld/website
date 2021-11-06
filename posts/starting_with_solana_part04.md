@@ -11,39 +11,15 @@ together an article about using Svelte with Solana for part 4, but that will wai
 making a more interesting Solana program -- a todo list where anyone can add an item and attach a reward for
 completion.
 
-# Program-Derived Accounts
-
-With this program, each todo list is a Solana account, and each item in the list is also an account. Anyone can add an
-item with an attached token balance, and when the list owner and the item creator both mark it finished, the item's balance transfers
-to the list owner's account as a reward.
-
-Normally, to use such a list you would need to know two public keys, one for the list's owner and another for the list
-itself. But Solana lets us use [program derived
-addresses](https://docs.solana.com/developing/programming-model/calling-between-programs#program-derived-addresses)
-(PDAs) as a
-better solution. These addresses are calculated from a hash of the program ID and various "seed" values which can include
-public keys or other strings of bytes, up to 32 bytes each.
-
-::: note
-
-Don't worry if this seems complex right now. PDAs are a big part of Solana, but once we use them below it will make more
-sense.
-
-:::
-
-
-Solana also requires that program derived addresses can not have an associated private key, and it enforces this by
-checking that that they are not valid values on the [ed25519 elliptical curve](https://en.wikipedia.org/wiki/EdDSA) used
-to generate keys. After calculating the hash above, a "bump" value is added to the hash until a value is found that is
-not on the curve. This bump starts at 255 and is decremented until it finds a value not on the curve, and that
-becomes the actual address.
-
-It's not guaranteed that this "check and decrement" bump process will generate a valid PDA, but the chances are very high, and importantly
-it is deterministic -- given a program ID and seeds, the same PDA will always be derived. And since the
-address is not a real public key, it's guaranteed that the program from which the PDA came is the only thing that can
-generate a signed transaction from it.
-
 # The Program
+
+The program workflow will look something like this:
+
+1. Someone creates a list. 
+2. A second person adds an item to the list.
+3. When the task is done, the list owner marks it finished.
+4. The person who added the item also marks it finished.
+5. The token balance on the item is transferred to the list owner. 
 
 Our program will have four instructions to manage a list and its items:
 
@@ -59,6 +35,38 @@ Real programs would want to use something more secure. [paulx's blog](https://pa
 has a thorough explanation of how to do it right.
 
 :::
+
+## Program-Derived Addresses
+
+With this program, each todo list is a Solana account, and each item in the list is also an account. Anyone can add an
+item with an attached token balance, and when the list owner and the item creator both mark it finished, the item’s balance transfers
+to the list owner’s account as a reward.
+
+Normally, to use such a list you would need to know two public keys, one for the list’s owner and another for the list
+itself. But Solana lets us use [program derived
+addresses](https://docs.solana.com/developing/programming-model/calling-between-programs#program-derived-addresses)
+(PDAs) as a
+better solution. These addresses are calculated from a hash of the program ID and various “seed” values which can include
+public keys or other strings of bytes, up to 32 bytes each.
+
+::: note
+
+Don’t worry if this seems complex right now. PDAs are a big part of Solana, but once we use them below it will make more
+sense.
+
+:::
+
+
+Solana also requires that program derived addresses can not have an associated private key, and it enforces this by
+checking that that they are not valid values on the [ed25519 elliptical curve](https://en.wikipedia.org/wiki/EdDSA) used
+to generate keys. After calculating the hash above, a “bump” value is added to the hash until a value is found that is
+not on the curve. This bump starts at 255 and is decremented until it finds a value not on the curve, and that
+becomes the actual address.
+
+It’s not guaranteed that this “check and decrement” bump process will generate a valid PDA, but the chances are very high, and importantly
+it is deterministic — given a program ID and seeds, the same PDA will always be derived. And since the
+address is not a real public key, it’s guaranteed that the program from which the PDA came is the only thing that can
+generate a signed transaction from it.
 
 ## Returning Errors
 
