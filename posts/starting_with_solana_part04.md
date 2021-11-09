@@ -1,5 +1,5 @@
 ---
-title: "Starting with Solana, Part 4 - A Todo List with Rewards"
+title: 'Starting with Solana, Part 4 - A Todo List with Rewards'
 date: 2021-11-05
 tags: Solana, web3
 ---
@@ -13,11 +13,11 @@ completion.
 
 The program workflow will look something like this:
 
-1. Someone creates a list. 
+1. Someone creates a list.
 2. A second person adds an item to the list.
 3. When the task is done, the list owner marks it finished.
 4. The person who added the item also marks it finished.
-5. The token balance on the item is transferred to the list owner. 
+5. The token balance on the item is transferred to the list owner.
 
 Our program will have four instructions to manage a list and its items:
 
@@ -53,7 +53,6 @@ Don’t worry if this seems complex right now. PDAs are a big part of Solana, bu
 sense.
 
 :::
-
 
 Solana also requires that program derived addresses can not have an associated private key, and it enforces this by
 checking that that they are not valid values on the [ed25519 elliptical curve](https://en.wikipedia.org/wiki/EdDSA) used
@@ -129,8 +128,8 @@ async function getAccountBalance(pubkey) {
   return account?.lamports ?? 0;
 }
 
-function expectBalance(actual, expected, message, slack=20000) {
-  expect(actual, message).within(expected - slack, expected + slack)
+function expectBalance(actual, expected, message, slack = 20000) {
+  expect(actual, message).within(expected - slack, expected + slack);
 }
 ```
 
@@ -146,13 +145,11 @@ based on `mainProgram` but with the given user's `Provider`.
 async function createUser(airdropBalance) {
   airdropBalance = airdropBalance ?? 10 * LAMPORTS_PER_SOL;
   let user = anchor.web3.Keypair.generate();
-  let sig = await provider.connection.requestAirdrop(
-    user.publicKey, airdropBalance);
+  let sig = await provider.connection.requestAirdrop(user.publicKey, airdropBalance);
   await provider.connection.confirmTransaction(sig);
 
   let wallet = new anchor.Wallet(user);
-  let userProvider = new anchor.Provider(provider.connection,
-    wallet, provider.opts);
+  let userProvider = new anchor.Provider(provider.connection, wallet, provider.opts);
 
   return {
     key: user,
@@ -163,7 +160,7 @@ async function createUser(airdropBalance) {
 
 function createUsers(numUsers) {
   let promises = [];
-  for(let i = 0; i < numUsers; i++) {
+  for (let i = 0; i < numUsers; i++) {
     promises.push(createUser());
   }
 
@@ -171,8 +168,7 @@ function createUsers(numUsers) {
 }
 
 function programForUser(user) {
-  return new anchor.Program(mainProgram.idl, mainProgram.programId,
-    user.provider);
+  return new anchor.Program(mainProgram.idl, mainProgram.programId, user.provider);
 }
 ```
 
@@ -253,11 +249,11 @@ the rest of the `#[account]` macros here can use their values. Note that Anchor 
 arguments listed in `#[instruction]` actually match the arguments in the implementation function.
 
 - `init` and `payer` are the same as before -- they tell Anchor to create the specified account and who should
-pay for it.
+  pay for it.
 - `space` just calls `TodoList::space`, which we wrote above.
 - `seeds` tells Anchor that this account is a PDA and lists the seed values which are hashed to calculate it. Anchor
-    generates code to rederive the PDA from the seeds and ensure that they match the passed-in value.
-    Each seed value can be no more than 32 bytes, so the `name_seed` function helps with that.
+  generates code to rederive the PDA from the seeds and ensure that they match the passed-in value.
+  Each seed value can be no more than 32 bytes, so the `name_seed` function helps with that.
 - `bump` is also used by Anchor's PDA verification to avoid using a "check and decrement" loop to find the right bump value,
   which can be costly when operating under Solana's strict
   computation budget. In most cases the caller will run the loop to find a proper bump value, since it tends
@@ -297,14 +293,12 @@ The list account is a PDA, so the first step is to calculate its value. We pass 
 returns the calculated PDA and the bump value used to calculate it. From there, we can call `newList`.
 Finally, the function fetches the data from the initialized list and returns it.
 
-
 ```js
-async function createList(owner, name, capacity=16) {
-  const [listAccount, bump] = await anchor.web3.PublicKey.findProgramAddress([
-    "todolist",
-    owner.key.publicKey.toBytes(),
-    name.slice(0, 32)
-  ], mainProgram.programId);
+async function createList(owner, name, capacity = 16) {
+  const [listAccount, bump] = await anchor.web3.PublicKey.findProgramAddress(
+    ['todolist', owner.key.publicKey.toBytes(), name.slice(0, 32)],
+    mainProgram.programId
+  );
 
   let program = programForUser(owner);
   await program.rpc.newList(name, capacity, bump, {
@@ -329,8 +323,7 @@ describe('new list', () => {
     const owner = await createUser();
     let list = await createList(owner, 'A list');
 
-    expect(list.data.listOwner.toString(), 'List owner is set')
-      .equals(owner.key.publicKey.toString());
+    expect(list.data.listOwner.toString(), 'List owner is set').equals(owner.key.publicKey.toString());
     expect(list.data.name, 'List name is set').equals('A list');
     expect(list.data.lines.length, 'List has no items').equals(0);
   });
@@ -374,9 +367,9 @@ account initializes the new list with enough space to hold the name and other da
 Here we also see Anchor's `@` macro syntax. This can be used in a constraint to tell it
 to return a particular error instead of the default error for that constraint type.
 
-Another new thing here is the `UncheckedAccount` type used for `list_owner`. Despite the type name, this really means an
-account that Anchor doesn't try to deserialize into a structure. In this case, we use it because we just need the
-`AccountInfo` for the account to use it in the PDA verification.
+Another new thing here is the way we define the `list_owner` field. Since we don't want to read the data
+from the `list_owner` account, we can just use the `AccountInfo` type directly in the structure. Here
+we just need it to assist in the PDA verification.
 
 ```rust
 #[derive(Accounts)]
@@ -392,7 +385,7 @@ pub struct Add<'info> {
       ],
       bump=list.bump)]
     pub list: Account<'info, TodoList>,
-    pub list_owner: UncheckedAccount<'info>,
+    pub list_owner: AccountInfo<'info>,
     // 8 byte discriminator,
     #[account(init, payer=user, space=ListItem::space(&item_name))]
     pub item: Account<'info, ListItem>,
@@ -452,7 +445,7 @@ pub fn add(
 ```
 
 Anchor initializes an account with enough lamports to mark the account as rent-exempt, so we calculate
-how many more lamports should be transferred to equal the total reward amount, and 
+how many more lamports should be transferred to equal the total reward amount, and
 [`invoke`](https://docs.rs/solana-sdk/1.8.2/solana_sdk/program/fn.invoke.html) the
 [`transfer`](https://docs.rs/solana-sdk/1.8.2/solana_sdk/system_instruction/fn.transfer.html)
 instruction on the system program to actually move the balance onto the item's account.
@@ -464,7 +457,7 @@ we don't bother since the keys are stored in the list account anyway. This `addI
 call the instruction to add the item to the list and then fetch the account data for both the list and the item.
 
 ```js
-async function addItem({list, user, name, bounty}) {
+async function addItem({ list, user, name, bounty }) {
   const itemAccount = anchor.web3.Keypair.generate();
   let program = programForUser(user);
   await program.rpc.add(list.data.name, name, new BN(bounty), {
@@ -475,10 +468,7 @@ async function addItem({list, user, name, bounty}) {
       user: user.key.publicKey,
       systemProgram: SystemProgram.programId,
     },
-    signers: [
-      user.key,
-      itemAccount,
-    ]
+    signers: [user.key, itemAccount],
   });
 
   let [listData, itemData] = await Promise.all([
@@ -494,7 +484,7 @@ async function addItem({list, user, name, bounty}) {
     item: {
       publicKey: itemAccount.publicKey,
       data: itemData,
-    }
+    },
   };
 }
 ```
@@ -512,36 +502,31 @@ describe('add', () => {
       list,
       user: adder,
       name: 'Do something',
-      bounty: 1 * LAMPORTS_PER_SOL
+      bounty: 1 * LAMPORTS_PER_SOL,
     });
 
-    expect(result.list.data.lines,
-      'Item is added').deep.equals([result.item.publicKey]);
-    expect(result.item.data.creator.toString(),
-      'Item marked with creator').equals(adder.key.publicKey.toString());
-    expect(result.item.data.creatorFinished,
-      'creator_finished is false').equals(false);
-    expect(result.item.data.listOwnerFinished,
-      'list_owner_finished is false').equals(false);
-    expect(result.item.data.name,
-      'Name is set').equals('Do something');
-    expect(await getAccountBalance(result.item.publicKey),
-      'List account balance').equals(1 * LAMPORTS_PER_SOL);
+    expect(result.list.data.lines, 'Item is added').deep.equals([result.item.publicKey]);
+    expect(result.item.data.creator.toString(), 'Item marked with creator').equals(adder.key.publicKey.toString());
+    expect(result.item.data.creatorFinished, 'creator_finished is false').equals(false);
+    expect(result.item.data.listOwnerFinished, 'list_owner_finished is false').equals(false);
+    expect(result.item.data.name, 'Name is set').equals('Do something');
+    expect(await getAccountBalance(result.item.publicKey), 'List account balance').equals(1 * LAMPORTS_PER_SOL);
 
     let adderNewBalance = await getAccountBalance(adder.key.publicKey);
-    expectBalance(adderStartingBalance - adderNewBalance, 
+    expectBalance(
+      adderStartingBalance - adderNewBalance,
       LAMPORTS_PER_SOL,
-      'Number of lamports removed from adder is equal to bounty');
+      'Number of lamports removed from adder is equal to bounty'
+    );
 
     // Test that another add works
-    const again = await addItem({ 
+    const again = await addItem({
       list,
       user: adder,
       name: 'Another item',
-      bounty: 1 * LAMPORTS_PER_SOL
+      bounty: 1 * LAMPORTS_PER_SOL,
     });
-    expect(again.list.data.lines, 'Item is added')
-      .deep.equals([result.item.publicKey, again.item.publicKey]);
+    expect(again.list.data.lines, 'Item is added').deep.equals([result.item.publicKey, again.item.publicKey]);
   });
 });
 ```
@@ -556,14 +541,16 @@ it('fails if the list is full', async () => {
   const list = await createList(owner, 'list', MAX_LIST_SIZE);
 
   // Add 4 items, in parallel for speed.
-  await Promise.all(new Array(MAX_LIST_SIZE).fill(0).map((_, i) => {
-    return addItem({
-      list,
-      user: owner,
-      name: `Item ${i}`,
-      bounty: 1 * LAMPORTS_PER_SOL,
-    });
-  }));
+  await Promise.all(
+    new Array(MAX_LIST_SIZE).fill(0).map((_, i) => {
+      return addItem({
+        list,
+        user: owner,
+        name: `Item ${i}`,
+        bounty: 1 * LAMPORTS_PER_SOL,
+      });
+    })
+  );
 
   const adderStartingBalance = await getAccountBalance(owner.key.publicKey);
 
@@ -578,13 +565,12 @@ it('fails if the list is full', async () => {
 
     console.dir(addResult, { depth: null });
     expect.fail('Adding to full list should have failed');
-  } catch(e) {
+  } catch (e) {
     expect(e.toString()).contains('This list is full');
   }
 
   let adderNewBalance = await getAccountBalance(owner.key.publicKey);
-  expect(adderStartingBalance,
-    'Adder balance is unchanged').equals(adderNewBalance);
+  expect(adderStartingBalance, 'Adder balance is unchanged').equals(adderNewBalance);
 });
 ```
 
@@ -619,15 +605,15 @@ identical to the values in the `Add` instruction.
 #[derive(Accounts)]
 #[instruction(list_name: String)]
 pub struct Cancel<'info> {
-    #[account(mut, 
+    #[account(mut,
       has_one=list_owner @ TodoListError::WrongListOwner,
       ... omitted seeds and bump for brevity)]
     pub list: Account<'info, TodoList>,
-    pub list_owner: UncheckedAccount<'info>,
+    pub list_owner: AccountInfo<'info>,
     #[account(mut)]
     pub item: Account<'info, ListItem>,
     #[account(mut, address=item.creator @ TodoListError::WrongItemCreator)]
-    pub item_creator: UncheckedAccount<'info>,
+    pub item_creator: AccountInfo<'info>,
     pub user: Signer<'info>,
 }
 ```
@@ -691,10 +677,8 @@ it('List owner can cancel an item', async () => {
 
   const adderBalanceAfterAdd = await getAccountBalance(adder.key.publicKey);
 
-  expect(result.list.data.lines,
-    'Item is added to list').deep.equals([result.item.publicKey]);
-  expect(adderBalanceAfterAdd,
-    'Bounty is removed from adder').lt(adderStartingBalance);
+  expect(result.list.data.lines, 'Item is added to list').deep.equals([result.item.publicKey]);
+  expect(adderBalanceAfterAdd, 'Bounty is removed from adder').lt(adderStartingBalance);
 
   const cancelResult = await cancelItem({
     list,
@@ -704,11 +688,8 @@ it('List owner can cancel an item', async () => {
   });
 
   const adderBalanceAfterCancel = await getAccountBalance(adder.key.publicKey);
-  expectBalance(adderBalanceAfterCancel,
-    adderBalanceAfterAdd + LAMPORTS_PER_SOL,
-    'Cancel returns bounty to adder');
-  expect(cancelResult.list.data.lines,
-    'Cancel removes item from list').deep.equals([]);
+  expectBalance(adderBalanceAfterCancel, adderBalanceAfterAdd + LAMPORTS_PER_SOL, 'Cancel returns bounty to adder');
+  expect(cancelResult.list.data.lines, 'Cancel removes item from list').deep.equals([]);
 });
 ```
 
@@ -716,10 +697,10 @@ In the actual test file we run the same test but with the list owner cancelling 
 are three error checking tests:
 
 - Other users can not cancel an item -- Similar to the above except we create a third user and try it have it cancel the
-    item.
+  item.
 - The `item_creator` account must match the `creator` field on the item.
 - The item must be in the list -- Here we create two lists, add an item to one of them, but then pass the account of the
-    other list when trying to cancel the item.
+  other list when trying to cancel the item.
 
 # Finishing an Item
 
@@ -739,12 +720,12 @@ Once again, we have the accounts for the list, the list owner, the item, and the
 #[derive(Accounts)]
 #[instruction(list_name: String)]
 pub struct Finish<'info> {
-    #[account(mut, 
+    #[account(mut,
       has_one=list_owner @ TodoListError::WrongListOwner,
       ... omitted seeds and bump for brevity)]
     pub list: Account<'info, TodoList>,
     #[account(mut)]
-    pub list_owner: UncheckedAccount<'info>,
+    pub list_owner: AccountInfo<'info>,
     #[account(mut)]
     pub item: Account<'info, ListItem>,
     pub user: Signer<'info>,
@@ -816,8 +797,7 @@ it('List owner then item creator', async () => {
     name: 'An item',
   });
 
-  expect(await getAccountBalance(item.publicKey),
-    'initialized account has bounty').equals(bounty);
+  expect(await getAccountBalance(item.publicKey), 'initialized account has bounty').equals(bounty);
 
   const firstResult = await finishItem({
     list,
@@ -826,14 +806,12 @@ it('List owner then item creator', async () => {
     listOwner: owner,
   });
 
-  expect(firstResult.list.data.lines,
-    'Item still in list after first finish').deep.equals([item.publicKey]);
-  expect(firstResult.item.data.creatorFinished,
-    'Creator finish is false after owner calls finish').equals(false);
-  expect(firstResult.item.data.listOwnerFinished,
-    'Owner finish flag gets set after owner calls finish').equals(true);
-  expect(await getAccountBalance(firstResult.item.publicKey),
-    'Bounty remains on item after one finish call').equals(bounty);
+  expect(firstResult.list.data.lines, 'Item still in list after first finish').deep.equals([item.publicKey]);
+  expect(firstResult.item.data.creatorFinished, 'Creator finish is false after owner calls finish').equals(false);
+  expect(firstResult.item.data.listOwnerFinished, 'Owner finish flag gets set after owner calls finish').equals(true);
+  expect(await getAccountBalance(firstResult.item.publicKey), 'Bounty remains on item after one finish call').equals(
+    bounty
+  );
 
   const finishResult = await finishItem({
     list,
@@ -843,12 +821,11 @@ it('List owner then item creator', async () => {
     expectAccountClosed: true,
   });
 
-  expect(finishResult.list.data.lines,
-    'Item removed from list after both finish').deep.equals([]);
-  expect(await getAccountBalance(finishResult.item.publicKey),
-    'Bounty remains on item after one finish call').equals(0);
-  expectBalance(await getAccountBalance(owner.key.publicKey),
-    ownerInitial + bounty, 'Bounty transferred to owner');
+  expect(finishResult.list.data.lines, 'Item removed from list after both finish').deep.equals([]);
+  expect(await getAccountBalance(finishResult.item.publicKey), 'Bounty remains on item after one finish call').equals(
+    0
+  );
+  expectBalance(await getAccountBalance(owner.key.publicKey), ownerInitial + bounty, 'Bounty transferred to owner');
 });
 ```
 
