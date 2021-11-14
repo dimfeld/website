@@ -11,7 +11,7 @@ specifiers:
   '@rollup/plugin-node-resolve': ^13.0.0
   '@rollup/plugin-replace': ^2.4.2
   '@sveltejs/adapter-vercel': ~1.0.0-next.31
-  '@sveltejs/kit': ~1.0.0-next.194
+  '@sveltejs/kit': ~1.0.0-next.196
   '@sveltejs/svelte-repl': github:dimfeld/svelte-repl
   '@tailwindcss/forms': ^0.3.4
   '@types/cheerio': ^0.22.18
@@ -131,7 +131,7 @@ devDependencies:
   '@rollup/plugin-node-resolve': 13.0.5_rollup@2.58.0
   '@rollup/plugin-replace': 2.4.2_rollup@2.58.0
   '@sveltejs/adapter-vercel': 1.0.0-next.31
-  '@sveltejs/kit': 1.0.0-next.194_svelte@3.44.1
+  '@sveltejs/kit': 1.0.0-next.196_svelte@3.44.1
   '@sveltejs/svelte-repl': github.com/dimfeld/svelte-repl/63babd8bb54a41f86ed949057ffecf92da0b27c6
   '@tailwindcss/forms': 0.3.4_tailwindcss@2.2.4
   '@types/cheerio': 0.22.21
@@ -402,8 +402,8 @@ packages:
       esbuild: 0.13.7
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.194_svelte@3.44.1:
-    resolution: {integrity: sha512-xM6BKLZkfYUEy0JXwglhCqBF58S8K4Lt7K7TdLMirrO4gtnZlhg8yhMsG+dYM257Fq0ucS7d/72QgXJfnfURZA==}
+  /@sveltejs/kit/1.0.0-next.196_svelte@3.44.1:
+    resolution: {integrity: sha512-z7sA/2/3Il5biibjPXCYXJC11TyFhgCvMaJvvbtMnu2l3EmOmJBMS+r2djGptzfFsugSVNwGQFn8+ldWQWq3jA==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:
