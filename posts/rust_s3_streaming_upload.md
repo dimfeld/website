@@ -367,7 +367,7 @@ pub fn start_upload_task(
         client: rusoto_s3::Client,
         bucket: String,
         key: String,
-        stream: impl Stream<Item=Result<Bytes, std::io::Error>>
+        source: impl Stream<Item=Result<Bytes, std::io::Error>>
     ) -> JoinHandle<anyhow::Result<()>> {
 
     tokio::task::spawn(async move {
@@ -377,7 +377,7 @@ pub fn start_upload_task(
             Err((upload_id, e)) => {
                 if let Some(upload_id) = upload_id {
                     let cancel_request = rusoto_s3::AbortMultipartUploadRequest {
-                        bucket: bucketclone(),
+                        bucket: bucket.clone(),
                         key: key.clone(),
                         upload_id,
                         ..Default::default()
