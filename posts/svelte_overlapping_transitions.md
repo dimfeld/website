@@ -20,8 +20,8 @@ Then you just set up the transitions on your elements, and you're ready to go!
 <style>
   .transition-container {
     display: grid;
-    grid-template-rows: 1;
-    grid-template-columns: 1;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
   }
 
   .transition-container > * {
@@ -70,8 +70,8 @@ This same technique can be used to facilitate transitions between routes in a si
   main {
     grid-area: main;
     display: grid;
-    grid-template-rows: 1;
-    grid-template-columns: 1;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
   }
 
   /* use :global since the Route element may be in another component */
