@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import ky from 'ky';
   import clone from 'just-clone';
   import { onMount, onDestroy, tick } from 'svelte';
@@ -21,24 +21,23 @@
   let windowWidth;
   let loading = true;
 
+  interface ReplResult {
+    components: {
+      name: string;
+      type: string;
+      source: string;
+    }[];
+    id: string;
+    name: string;
+  }
+
   async function downloadReplData() {
     if (id && !data) {
-      let result = await ky(`/repl/${id}.json`).json();
-      let files = result.files.map((file) => {
-        let filenameComponents = file.name.split('.');
-        let name = filenameComponents.slice(0, -1);
-        let type = filenameComponents[filenameComponents.length - 1];
-
-        return {
-          name,
-          type,
-          source: file.source,
-        };
-      });
+      let result = await ky(`/repl/${id}.json`).json<ReplResult>();
 
       return {
         title: result.name,
-        components: files,
+        components: result.components,
       };
     }
   }
@@ -90,8 +89,7 @@
 <svelte:window bind:innerWidth={windowWidth} />
 
 <div class:w-expanded-95={expandedWidth}>
-  <div
-    class="flex flex-col font-sans border border-gray-100 shadow-md rounded-lg">
+  <div class="flex flex-col font-sans border border-gray-100 shadow-md rounded-lg">
     <div
       class="flex px-4 py-2 text-teal-800 border-b border-gray-200 items-start
       sm:items-stretch">
@@ -146,7 +144,6 @@
     --prime: rgb(3, 102, 114);
     --second: #676778;
     --back-light: #f6fafd;
-    --font-mono: 'Inconsolata', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
-      'Courier New', monospace;
+    --font-mono: 'Inconsolata', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
   }
 </style>
