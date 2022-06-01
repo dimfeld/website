@@ -7,7 +7,6 @@
   export let type;
   export let content;
 
-  import NewsletterSignup from '../../components/NewsletterSignup.svelte';
   import * as labels from '../../postMeta.ts';
   import { tick, getContext, onMount } from 'svelte';
   import instantiateComponents from '../../dynamicComponents';
@@ -74,10 +73,5 @@
   <p>
     Thanks for reading! If you have any questions or comments, please
     <a href="https://www.twitter.com/dimfeld">send me a note on Twitter.</a>
-
-    And if you enjoyed this, I also have a newsletter where I sometimes write about tech thoughts, interesting things
-    I've read, and project updates.
   </p>
-
-  <NewsletterSignup />
 </article>
