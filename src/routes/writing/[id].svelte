@@ -3,8 +3,8 @@
   import { loadFetchJson } from '$lib/fetch';
 
   export const prerender = true;
-  export const load: Load = async function load({ fetch, page }) {
-    let result = await loadFetchJson(fetch, `/writing/${page.params.id}.json`);
+  export const load: Load = async function load({ fetch, params }) {
+    let result = await loadFetchJson(fetch, `/writing/${params.id}.json`);
     if ('error' in result) {
       return result;
     }
@@ -30,11 +30,7 @@
 
 <svelte:head>
   <link rel="canonical" href="https://imfeld.dev/writing/{post.id}" />
-  <meta
-    name="Description"
-    content={[`${post.title} by Daniel Imfeld`, post.summary]
-      .filter(Boolean)
-      .join(' - ')} />
+  <meta name="Description" content={[`${post.title} by Daniel Imfeld`, post.summary].filter(Boolean).join(' - ')} />
   {#if post.tags}
     <meta name="keywords" content={post.tags.join(', ')} />
   {/if}

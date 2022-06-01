@@ -13,12 +13,11 @@
     },
     {
       name: 'projects',
-      icon:
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-puzzle"><path class="primary" d="M6 11V8c0-1.1.9-2 2-2h3a1 1 0 0 0 1-1V4a2 2 0 1 1 4 0v1a1 1 0 0 0 1 1h3a2 2 0 0 1 2 2v3a1 1 0 0 1-1 1h-1a2 2 0 1 0 0 4h1a1 1 0 0 1 1 1v3a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-1a2 2 0 1 0-4 0v1a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2v-3a1 1 0 0 0-1-1H4a2 2 0 1 1 0-4h1a1 1 0 0 0 1-1z"/><path class="secondary" d="M22 17v3a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-1a2 2 0 1 0-4 0v1a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2v-3a1 1 0 0 0-1-1H4a2 2 0 1 1 0-4h1a1 1 0 0 0 1-1v-.6c.54-.24 1.18-.4 1.97-.4 4 0 4 4 8.02 4 .84 0 1.5-.18 2.06-.45A2 2 0 0 0 20 16h1a1 1 0 0 1 1 1z"/></svg>',
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-puzzle"><path class="primary" d="M6 11V8c0-1.1.9-2 2-2h3a1 1 0 0 0 1-1V4a2 2 0 1 1 4 0v1a1 1 0 0 0 1 1h3a2 2 0 0 1 2 2v3a1 1 0 0 1-1 1h-1a2 2 0 1 0 0 4h1a1 1 0 0 1 1 1v3a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-1a2 2 0 1 0-4 0v1a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2v-3a1 1 0 0 0-1-1H4a2 2 0 1 1 0-4h1a1 1 0 0 0 1-1z"/><path class="secondary" d="M22 17v3a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-1a2 2 0 1 0-4 0v1a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2v-3a1 1 0 0 0-1-1H4a2 2 0 1 1 0-4h1a1 1 0 0 0 1-1v-.6c.54-.24 1.18-.4 1.97-.4 4 0 4 4 8.02 4 .84 0 1.5-.18 2.06-.45A2 2 0 0 0 20 16h1a1 1 0 0 1 1 1z"/></svg>',
     },
   ];
 
-  $: segment = $page.path.split('/')[1];
+  $: segment = $page.url.pathname.split('/')[1];
   $: linkIndex = links.findIndex((l) => l.name === segment);
   $: currentLink = links[linkIndex];
 
@@ -77,11 +76,7 @@
         href="https://www.twitter.com/dimfeld"
         aria-label="My Twitter Feed"
         title="Twitter">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
           <path
             class="primary"
             d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574
@@ -102,11 +97,7 @@
         title="RSS Feed"
         type="application/rss+xml"
         href="/rss/all.xml">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
           <path
             class="primary"
             d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796
@@ -121,27 +112,14 @@
     </div>
   </div>
 
-  <div
-    id="vert-navbar"
-    class="w-full flex sm:hidden flex-row items-center"
-    on:click={() => (displayNav = false)}>
-    <div
-      class="bg-highlight absolute bg-teal-700 h-full top-0"
-      style="left:-8px;width:218px" />
-    <a
-      class="text-white"
-      style="padding-left:24px"
-      href="/{currentLink?.name || ''}">
+  <div id="vert-navbar" class="w-full flex sm:hidden flex-row items-center" on:click={() => (displayNav = false)}>
+    <div class="bg-highlight absolute bg-teal-700 h-full top-0" style="left:-8px;width:218px" />
+    <a class="text-white" style="padding-left:24px" href="/{currentLink?.name || ''}">
       {currentLink ? capitalize(currentLink.name) : 'Daniel Imfeld'}
     </a>
 
-    <span
-      class="ml-auto mr-2 cursor-pointer w-12 h-12"
-      on:click|stopPropagation={() => (displayNav = !displayNav)}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        class="icon-cheveron-down">
+    <span class="ml-auto mr-2 cursor-pointer w-12 h-12" on:click|stopPropagation={() => (displayNav = !displayNav)}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-cheveron-down">
         <path
           class="secondary"
           fill-rule="evenodd"
@@ -151,10 +129,7 @@
     </span>
 
     {#if displayNav}
-      <div
-        class="absolute inset-x-0 z-40"
-        style="top:40px"
-        transition:fade={{ duration: 200 }}>
+      <div class="absolute inset-x-0 z-40" style="top:40px" transition:fade={{ duration: 200 }}>
         <div
           on:click|stopPropagation={() => {}}
           class="bg-teal-900 w-full flex flex-row pb-2 border-t border-teal-700
@@ -168,10 +143,7 @@
               on:click={() => (displayNav = false)}
               href="/">
               <span class="w-8 h-8">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  class="icon-home">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-home">
                   <path
                     class="primary"
                     d="M9 22H5a1 1 0 0 1-1-1V11l8-8 8 8v10a1 1 0 0 1-1 1h-4a1 1
@@ -207,11 +179,7 @@
               title="Twitter Feed"
               class="flex-none p-2 hover:bg-teal-800"
               href="https://www.twitter.com/dimfeld">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <path
                   class="primary"
                   d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609
@@ -233,11 +201,7 @@
               title="RSS Feed"
               type="application/rss+xml"
               href="/rss/all.xml">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                 <path
                   class="primary"
                   d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796

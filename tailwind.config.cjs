@@ -2,8 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.{svelte,pcss,css,js,ts}', './posts/*', './notes/*'],
+  content: ['./src/**/*.{svelte,pcss,css,js,ts}', './posts/*', './notes/*'],
   theme: {
     extend: {
       colors: {
@@ -20,7 +19,7 @@ module.exports = {
           800: '#05505c',
           900: '#014451',
         },
-        'cool-gray': colors.coolGray,
+        gray: colors.gray,
       },
       fontFamily: {
         serif: ['Merriweather', ...defaultTheme.fontFamily.serif],
