@@ -1,13 +1,5 @@
 import { maxBy } from 'lodash-es';
-import {
-  postsDir,
-  notesDir,
-  roamDir,
-  readMdFiles,
-  readHtmlFiles,
-  Post,
-  DevToArticle,
-} from './readPosts';
+import { postsDir, notesDir, roamDir, readMdFiles, readHtmlFiles, Post } from './readPosts';
 import partition from 'just-partition';
 import sorter from 'sorters';
 import { IncomingMessage, ServerResponse } from 'http';
@@ -32,20 +24,12 @@ export interface PostCache {
 export var postCache: PostCache;
 
 export async function initPostCache() {
-  let [
-    mdPosts,
-    htmlPosts,
-    mdNotes,
-    htmlNotes,
-    roamPages,
-    devtoArticleList,
-  ] = await Promise.all([
+  let [mdPosts, htmlPosts, mdNotes, htmlNotes, roamPages] = await Promise.all([
     readMdFiles(postsDir, 'post'),
     readHtmlFiles(postsDir, 'post'),
     readMdFiles(notesDir, 'note'),
     readHtmlFiles(notesDir, 'note'),
     readHtmlFiles(roamDir, 'note'),
-    readDevTo(),
   ]);
 
   for (let page of roamPages) {
@@ -54,9 +38,7 @@ export async function initPostCache() {
 
   // All roam-exported pages are together, so determine which ones are "posts"
   // by the presence of the Writing tag.
-  let [roamPosts, roamNotes] = partition(roamPages, (p) =>
-    p.tags.includes('Writing')
-  );
+  let [roamPosts, roamNotes] = partition(roamPages, (p) => p.tags.includes('Writing'));
 
   for (let p of roamPosts) {
     p.type = 'post';
@@ -65,31 +47,14 @@ export async function initPostCache() {
   let postList = [...mdPosts, ...htmlPosts, ...roamPosts];
   let noteList = [...mdNotes, ...htmlNotes, ...roamNotes];
 
-  let devtoArticles: _.Dictionary<DevToArticle> = {};
-  for (let devtoArticle of devtoArticleList) {
-    let postId = devtoArticle.canonical_url.split('/').slice(-1)[0];
-    devtoArticles[postId] = devtoArticle;
-  }
-
-  postList.sort(
-    sorter(
-      { value: 'date', descending: true },
-      { value: 'title', descending: false }
-    )
-  );
-  noteList.sort(
-    sorter(
-      { value: (n) => n.updated || n.date, descending: true },
-      { value: 'title', descending: false }
-    )
-  );
+  postList.sort(sorter({ value: 'date', descending: true }, { value: 'title', descending: false }));
+  noteList.sort(sorter({ value: (n) => n.updated || n.date, descending: true }, { value: 'title', descending: false }));
 
   let tags = new Map<string, Post[]>();
   let postOutput = new Map<string, Post>();
   let noteOutput = new Map<string, Post>();
 
   for (let post of postList) {
-    post.devto = devtoArticles[post.id];
     postOutput.set(post.id, post);
   }
 
@@ -122,10 +87,7 @@ export function allPosts(_req: Request, res: ServerResponse) {
 export function latestPost(_req: Request, res: ServerResponse) {
   let { content: postContent, ...post } = postCache.postList[0];
   let { content: noteContent, ...note } = postCache.noteList[0];
-  let { content: _, ...lastCreatedNote } = maxBy(
-    postCache.noteList,
-    (p) => p.date
-  )!;
+  let { content: _, ...lastCreatedNote } = maxBy(postCache.noteList, (p) => p.date)!;
 
   send(res, 200, {
     post,
@@ -163,10 +125,7 @@ export function getNote(req: Request, res: ServerResponse) {
   let post = postCache.notes.get(id);
 
   if (post) {
-    let content =
-      post.format === 'md'
-        ? renderer(post.content, { url: `/notes/${post.id}` })
-        : post.content;
+    let content = post.format === 'md' ? renderer(post.content, { url: `/notes/${post.id}` }) : post.content;
     post = {
       ...post,
       content,

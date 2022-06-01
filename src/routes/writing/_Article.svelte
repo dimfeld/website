@@ -3,7 +3,6 @@
   export let date = undefined;
   export let updated = undefined;
   export let confidence = undefined;
-  export let devto = undefined;
   export let source = undefined;
   export let type;
   export let content;
@@ -45,10 +44,7 @@
   $: content, remountDynamicComponents();
 </script>
 
-<article
-  class:roam-page={source === 'roam'}
-  class:font-serif={type === 'post'}
-  class="my-4 px-4 sm:px-0">
+<article class:roam-page={source === 'roam'} class:font-serif={type === 'post'} class="my-4 px-4 sm:px-0">
   <div class="mb-4 leading-tight">
     <h1 class="font-serif">{title}</h1>
 
@@ -64,7 +60,7 @@
     </div>
 
     {#if confidence}
-      <p class="p-4 bg-gray-100 border-gray-300 border">
+      <p class="border border-gray-300 bg-gray-100 p-4">
         Confidence: {confidence}
       </p>
     {/if}
@@ -77,16 +73,10 @@
   <hr />
   <p>
     Thanks for reading! If you have any questions or comments, please
-    {#if devto}
-      <a href="https://www.twitter.com/dimfeld">send me a note on Twitter</a>
-      or
-      <a href="{devto.url}#comments">comment on dev.to.</a>
-    {:else}
-      <a href="https://www.twitter.com/dimfeld">send me a note on Twitter.</a>
-    {/if}
+    <a href="https://www.twitter.com/dimfeld">send me a note on Twitter.</a>
 
-    And if you enjoyed this, I also have a newsletter where I sometimes write
-    about tech thoughts, interesting things I've read, and project updates.
+    And if you enjoyed this, I also have a newsletter where I sometimes write about tech thoughts, interesting things
+    I've read, and project updates.
   </p>
 
   <NewsletterSignup />
