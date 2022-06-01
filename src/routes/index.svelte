@@ -109,12 +109,7 @@
   <h2>Where to find me</h2>
   <p>
     <a href="https:///www.twitter.com/dimfeld">Twitter</a> is probably the best way to contact me, or you can email me
-    at <em>daniel</em> at this domain.
-  </p>
-  <p>
-    I'm fairly active on
-    <a href="https:///www.github.com/dimfeld">Github</a> as well, and send out the
-    <a href="https://buttondown.email/dimfeld">newsletter</a> mentioned above.
+    at <em>daniel</em> at this domain. I'm fairly active on <a href="https:///www.github.com/dimfeld">Github</a> as well.
   </p>
 
   <h2>About this site</h2>
