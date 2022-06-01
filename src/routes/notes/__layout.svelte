@@ -22,6 +22,7 @@
   import Popup from '../../Popup.svelte';
   import SearchResultsPopup from './_SearchResultsPopup.svelte';
   import { filterText } from './_filters.ts';
+  import { browser } from '$app/env';
 
   export let segment;
   export let tags;
@@ -32,10 +33,10 @@
     noteLookup[note.id] = note;
   }
 
-  $: currentNoteId = $page.path.slice('/notes/'.length);
+  $: currentNoteId = $page.url.pathname.slice('/notes/'.length);
   $: currentNote = noteLookup[currentNoteId];
 
-  let activeTag = writable($page.query.tag);
+  let activeTag = writable(browser ? $page.url.searchParams.get('tag') : '');
   let searchStore = writable('');
   setContext('activeTag', activeTag);
   setContext('search', searchStore);
@@ -139,11 +140,7 @@
         active:bg-gray-50 active:text-gray-800 transition ease-in-out
         duration-150">
         Tags
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="16"
-          viewBox="0 0 24 24"
-          class="-mr-1 ml-1 h-5 w-5">
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" class="-mr-1 ml-1 h-5 w-5">
           <path
             class="secondary"
             fill-rule="evenodd"
@@ -170,10 +167,7 @@
       containerClass="w-full px-2"
       style="max-height:60vh"
       class="overflow-y-auto">
-      <SearchResultsPopup
-        on:click={closeSearchPopup}
-        base="notes"
-        posts={searchPopupNotes} />
+      <SearchResultsPopup on:click={closeSearchPopup} base="notes" posts={searchPopupNotes} />
     </Popup>
   </div>
 
@@ -197,10 +191,7 @@
         style="max-height:75vh;width:400px"
         containerClass="top-0 left-48 ml-2"
         class="overflow-y-auto">
-        <SearchResultsPopup
-          on:click={closeSearchPopup}
-          base="notes"
-          posts={searchPopupNotes} />
+        <SearchResultsPopup on:click={closeSearchPopup} base="notes" posts={searchPopupNotes} />
       </Popup>
     </div>
 

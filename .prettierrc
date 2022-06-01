@@ -4,5 +4,5 @@
   "arrowParens": "always",
   "svelteBracketNewLine": false,
   "svelteSortOrder": "options-scripts-markup-styles",
-  "plugins": ["prettier-plugin-svelte"]
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

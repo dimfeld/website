@@ -12,7 +12,7 @@
 </script>
 
 <aside
-  class="bg-cool-gray-200 shadow-lg overflow-hidden px-2"
+  class="bg-gray-200 shadow-lg overflow-hidden px-2"
   style="height: 10rem">
   <div class="border-b border-gray-800">
     <h1>Layout jumps without forced overlap</h1>
