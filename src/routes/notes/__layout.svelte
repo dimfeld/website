@@ -46,7 +46,7 @@
 
   let tagList = Object.entries(tags)
     .map(([key, val]) => {
-      let label = capitalize(key.replace(/-/g, ' '));
+      let label = key.replace(/-/g, ' ');
       return { id: key, label, ...val };
     })
     .sort(sorter('id'));

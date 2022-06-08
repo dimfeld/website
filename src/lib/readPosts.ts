@@ -4,6 +4,7 @@ import * as path from 'path';
 import globFn from 'glob';
 import { promisify } from 'util';
 import { promises as fs } from 'fs';
+import capitalize from 'just-capitalize';
 
 const glob = promisify(globFn);
 
@@ -71,7 +72,7 @@ export const noteSources: Source[] = [
   {
     ext: 'html',
     type: 'note',
-    base: 'roam-pages',
+    base: 'pkm-pages',
   },
 ];
 
@@ -106,7 +107,9 @@ function processPost(name: string, data: string): Omit<Post, 'format' | 'type'> 
     .map((t) => t.trim())
     .filter(Boolean);
 
-  let pathTags = name.split('/').slice(0, -1);
+  let pathTags = name.split('/').slice(0, -1).map((tag) => {
+    return tag.replace(/_/g, ' ');
+  });
 
   let content = body.trim();
   return {
