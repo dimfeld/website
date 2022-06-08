@@ -60,14 +60,14 @@ export default {
           configureServer(server) {
             server.watcher.add(path.join(dirname, 'posts'));
             server.watcher.add(path.join(dirname, 'notes'));
-            server.watcher.add(path.join(dirname, 'roam-pages'));
+            server.watcher.add(path.join(dirname, 'pkm-pages'));
           },
           handleHotUpdate(ctx) {
-            let m = /(notes|posts|roam-pages)\/(.*)\.(md|html)$/.exec(ctx.file);
+            let m = /(notes|posts|pkm-pages)\/(.*)\.(md|html)$/.exec(ctx.file);
             if (m) {
               let contentType = m[1];
               let id = m[2];
-              if (contentType === 'roam-pages') {
+              if (contentType === 'pkm-pages') {
                 contentType = 'notes';
               } else if (contentType === 'posts') {
                 contentType = 'writing';
