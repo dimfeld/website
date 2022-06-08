@@ -8,7 +8,14 @@
   export let useUpdatedDate = false;
 
   function tagLabels(tags) {
-    return (tags || []).map((t) => capitalize(t.replace(/_/g, ' '))).join(', ');
+    return (tags || []).map((t) => {
+      return t.split(' ').map((word) => {
+        if(word !== word.toUpperCase()) {
+          word = capitalize(word);
+        }
+        return word;
+      }).join(' ');
+    }).join(', ');
   }
 
   function backgroundImage(post) {
