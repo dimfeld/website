@@ -7,36 +7,36 @@ updated: 2021-03-22
 
 
   <ul class="list-bullet">
-    <li id="185BOMBBL"><span><strong class="rm-attr-ref">Source:</strong> <a href="https://doc.rust-lang.org/rust-by-example/mod.html">https://doc.rust-lang.org/rust-by-example/mod.html</a></span></li>
-    <li id="q1U6UI6lo">Each file and directory is a module by default.</li>
-    <li id="Zyi-j2fDI">In a directory, <code>mod.rs</code> is the &quot;main&quot; file for the module and the other files are nested modules under that module. Other files must be referenced with <code>mod FILENAME</code> to be included.</li>
-    <li id="R-2wuSEzu">You can also define nested modules within the same file.</li>
-    <li id="R9s81NgOf"><span class="rm-heading-1">Visibility</span>
+    <li><span><span class="font-medium text-gray-800">Source:</span> <span><a href="https://doc.rust-lang.org/rust-by-example/mod.html">https://doc.rust-lang.org/rust-by-example/mod.html</a></span></span></li>
+    <li>Each file and directory is a module by default.</li>
+    <li>In a directory, <code>mod.rs</code> is the &quot;main&quot; file for the module and the other files are nested modules under that module. Other files must be referenced with <code>mod FILENAME</code> to be included.</li>
+    <li>You can also define nested modules within the same file.</li>
+    <li>Visibility
       <ul class="list-bullet">
-        <li id="VlwC-0Mpq">Items in modules are private by default</li>
-        <li id="7Qk3ii-b0"><code>pub</code> makes them visible outside the module.</li>
-        <li id="_IfULk1YB">Nested modules within a file can be declared with <code>pub mod</code> to make them public.</li>
-        <li id="2t-ac3cnv"><code>pub(in path)</code> lets you define specific paths where the item should be importable.
+        <li>Items in modules are private by default</li>
+        <li><code>pub</code> makes them visible outside the module.</li>
+        <li>Nested modules within a file can be declared with <code>pub mod</code> to make them public.</li>
+        <li><code>pub(in path)</code> lets you define specific paths where the item should be importable.
           <ul class="list-bullet">
-            <li id="v4ual9qgv">e.g. <code>pub(in crate::other_module)</code></li>
+            <li>e.g. <code>pub(in crate::other_module)</code></li>
           </ul>
         </li>
-        <li id="jCmdODo_v"><code>pub(self)</code> is public only within the current module, which is effectively the same as the default private visibility.</li>
-        <li id="46LnD0x1V"><code>pub(super)</code> makes it visible to the parent module.</li>
-        <li id="eBPjOdBdL"><code>pub(crate)</code> makes it visible within the whole crate.</li>
-        <li id="BjiIB-iOZ">Notably, access to any item msut be allowed to the importer along the whole chain. Declaring a function <code>pub</code> in a module that isn&#39;t visible outside the crate doesn&#39;t actually expose that field to external importers. The module itself must be exposed in some way too.</li>
-        <li id="WKFAT_XrR">In structures, fields and functions are also private by default even if the structure itself is public. All the <code>pub</code> modifiers above apply when you do want to expose them.</li>
+        <li><code>pub(self)</code> is public only within the current module, which is effectively the same as the default private visibility.</li>
+        <li><code>pub(super)</code> makes it visible to the parent module.</li>
+        <li><code>pub(crate)</code> makes it visible within the whole crate.</li>
+        <li>Notably, access to any item msut be allowed to the importer along the whole chain. Declaring a function <code>pub</code> in a module that isn&#39;t visible outside the crate doesn&#39;t actually expose that field to external importers. The module itself must be exposed in some way too.</li>
+        <li>In structures, fields and functions are also private by default even if the structure itself is public. All the <code>pub</code> modifiers above apply when you do want to expose them.</li>
       </ul>
     </li>
-    <li id="h2fn-qBSc"><span class="rm-heading-1"><code>use</code> syntax</span>
+    <li><code>use</code> syntax
       <ul class="list-bullet">
-        <li id="uy5XjlKP9">You can access anything visible with the entire full path to the item, but <code>use</code> makes it simpler.</li>
-        <li id="hMQ3cDRuT"><code>use crate::a::b::{ fn1, fn2 }</code> will expose <code>fn1</code> and <code>fn2</code> in the module&#39;s scope.</li>
-        <li id="jj2XB03E3"><code>use X as Y</code> will rename the function too.</li>
-        <li id="Mhn0_A55y"><code>pub use</code> reexports an imported module or other item.</li>
+        <li>You can access anything visible with the entire full path to the item, but <code>use</code> makes it simpler.</li>
+        <li><code>use crate::a::b::{ fn1, fn2 }</code> will expose <code>fn1</code> and <code>fn2</code> in the module&#39;s scope.</li>
+        <li><code>use X as Y</code> will rename the function too.</li>
+        <li><code>pub use</code> reexports an imported module or other item.</li>
       </ul>
     </li>
-    <li id="Ak-oVM4Xa"><code>super::other_module::X</code> and <code>self::X</code> can help for relative references and to remove ambiguity.</li>
+    <li><code>super::other_module::X</code> and <code>self::X</code> can help for relative references and to remove ambiguity.</li>
   </ul>
 
 

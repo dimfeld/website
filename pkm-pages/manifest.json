@@ -1,278 +1,290 @@
 {
   "makefile_cheatsheet": {
     "title": "Makefile Cheatsheet",
-    "uid": "kYRbu61FN"
+    "uid": ""
   },
   "article_the_four_theories_of_truth_as_a_method_for_critical_thinking": {
     "title": "Article/The Four Theories of Truth as a Method for Critical Thinking",
-    "uid": "N6d25J-5y"
+    "uid": ""
   },
   "programming_courses": {
     "title": "Programming Courses",
-    "uid": "FUSDixp7V"
+    "uid": ""
   },
   "the_feynman_technique_the_best_way_to_learn_anything": {
     "title": "The Feynman Technique: The Best Way to Learn Anything",
-    "uid": "BDj6zKdWT"
+    "uid": ""
   },
   "hiring_a_job_to_be_done": {
     "title": "Hiring a Job to Be Done",
-    "uid": "pPgylZPHL"
+    "uid": ""
   },
   "glowing_text": {
     "title": "Glowing Text",
-    "uid": "iVytkDshA"
+    "uid": ""
   },
   "git_cheatsheet": {
     "title": "Git Cheatsheet",
-    "uid": "VXt1Uzevu"
+    "uid": ""
   },
   "selective_closure_capture_in_rust": {
     "title": "Selective Closure Capture in Rust",
-    "uid": "DywOZfFl5"
+    "uid": ""
   },
   "activation_functions": {
     "title": "Activation Functions",
-    "uid": "VWc_WoCXd"
+    "uid": ""
   },
   "how_to_read_a_book_the_ultimate_guide_by_mortimer_adler": {
     "title": "How to Read a Book: The Ultimate Guide by Mortimer Adler",
-    "uid": "w8bMLKxLb"
+    "uid": ""
   },
   "content_visibility_auto": {
     "title": "content-visibility: auto",
-    "uid": "hv7y2up37"
+    "uid": ""
   },
   "rust_pinning": {
     "title": "Rust Pinning",
-    "uid": "Mk6Y9TyBS"
+    "uid": ""
   },
   "overlapping_elements_with_css_grid": {
     "title": "Overlapping Elements with CSS Grid",
-    "uid": "kNtKVi-oJ"
+    "uid": ""
   },
   "linkedin_on_jobs_to_be_done": {
     "title": "LinkedIn on Jobs to Be Done",
-    "uid": "pLNMqblvz"
+    "uid": ""
   },
   "prose_page_formatting": {
     "title": "Prose Page Formatting",
-    "uid": "zo18LAGo6"
+    "uid": ""
   },
   "george_orwell_what_is_fascism": {
     "title": "George Orwell - What is Fascism?",
-    "uid": "-JABhCJ2F"
+    "uid": ""
   },
   "book_sql_antipatterns": {
     "title": "Book/SQL Antipatterns",
-    "uid": "ELsXTJxWJ"
+    "uid": ""
   },
   "css_color_tricks": {
     "title": "CSS Color Tricks",
-    "uid": "xcACrOFWo"
+    "uid": ""
   },
   "patrick_mckenzie_on_leveling_up": {
     "title": "Patrick McKenzie on Leveling Up",
-    "uid": "NuTSsmL0Q"
+    "uid": ""
   },
   "tiago_forte_on_writing_book_summaries": {
     "title": "Tiago Forte on Writing Book Summaries",
-    "uid": "_aJLdAf0o"
+    "uid": ""
   },
   "nodejs_performance": {
     "title": "Node.js Performance",
-    "uid": "JEEwJ0O3z"
+    "uid": ""
   },
   "roam_edn_structure": {
     "title": "Roam EDN Structure",
-    "uid": "dsE4XKojc"
+    "uid": ""
   },
   "rust_resources": {
     "title": "Rust Resources",
-    "uid": "ErnQ4lz9M"
+    "uid": ""
   },
   "svelte_transitions": {
     "title": "Svelte Transitions",
-    "uid": "C4GrpQ_OO"
+    "uid": ""
   },
   "mistakes_to_avoid_when_learning_jobs_to_be_done": {
     "title": "Mistakes to Avoid when Learning Jobs to be Done",
-    "uid": "lpkKbEXkN"
+    "uid": ""
   },
   "adam_wathan_on_nailing_your_first_launch": {
     "title": "Adam Wathan on Nailing your First Launch",
-    "uid": "bHuds3INc"
+    "uid": ""
   },
   "web_development_links": {
     "title": "Web Development Links",
-    "uid": "WPt0WmZgp"
+    "uid": ""
   },
   "book_designing_data_intensive_applications": {
     "title": "Book/Designing Data-Intensive Applications",
-    "uid": "0eLn4KZPi"
+    "uid": ""
   },
   "rust_macros": {
     "title": "Rust Macros",
-    "uid": "Dfs0YzE4e"
+    "uid": ""
   },
-  "css_grid_overview": {
-    "title": "CSS Grid Overview",
-    "uid": "wWln_ysjZ"
+  "tracksome": {
+    "title": "Tracksome",
+    "uid": ""
   },
   "rust_cheatsheet": {
     "title": "Rust Cheatsheet",
-    "uid": "-rX6CNtUC"
+    "uid": ""
+  },
+  "css_grid_overview": {
+    "title": "CSS Grid Overview",
+    "uid": ""
   },
   "comparing_postgresql_json_values": {
     "title": "Comparing PostgreSQL JSON Values",
-    "uid": "FALXOTzFc"
+    "uid": ""
   },
   "first_row_per_group_in_postgresql": {
     "title": "First Row per Group in PostgreSQL",
-    "uid": "bNmahJYPU"
+    "uid": ""
   },
   "vanishing_gradient_problem": {
     "title": "Vanishing Gradient Problem",
-    "uid": "Y4MUnhES0"
+    "uid": ""
   },
   "rust_with_webassembly": {
     "title": "Rust with WebAssembly",
-    "uid": "Q-e7HFZXR"
+    "uid": ""
   },
   "position_sticky_for_table_headers": {
     "title": "Position:sticky for table headers",
-    "uid": "o0778wUNh"
+    "uid": ""
   },
   "theory_of_constraints": {
     "title": "Theory of Constraints",
-    "uid": "XcI8xGvAe"
+    "uid": ""
   },
   "onboarding_design_for_switching": {
     "title": "Onboarding Design for Switching",
-    "uid": "Ca_mB4wA4"
+    "uid": ""
   },
   "serializable_transactions": {
     "title": "Serializable Transactions",
-    "uid": "4luyCea5d"
+    "uid": ""
+  },
+  "implementing_oauth2": {
+    "title": "Implementing OAuth2",
+    "uid": ""
   },
   "useful_svelte_components": {
     "title": "Useful Svelte Components",
-    "uid": "YUyPkyjzd"
+    "uid": ""
   },
   "svg_dashes_around_the_edge_of_a_circle": {
     "title": "SVG Dashes around the edge of a Circle",
-    "uid": "-UnEj3ZgC"
+    "uid": ""
   },
   "sql": {
     "title": "SQL",
-    "uid": "bSNkBgCw0"
+    "uid": ""
   },
   "embedding_v8_in_rust": {
     "title": "Embedding V8 in Rust",
-    "uid": "i7yiiFy3i"
+    "uid": ""
   },
   "web_scrapers": {
     "title": "Web Scrapers",
-    "uid": "Q9iGjnPv8"
+    "uid": ""
   },
   "proximate_vs_root_causes": {
     "title": "Proximate vs. Root Causes",
-    "uid": "aWfNSPTu9"
+    "uid": ""
+  },
+  "hytradboi_conference": {
+    "title": "HYTRADBOI Conference",
+    "uid": ""
   },
   "the_problems_with_deliberate_practice": {
     "title": "The Problems With Deliberate Practice",
-    "uid": "BwqNL2PQq"
+    "uid": ""
   },
   "sandbox_method": {
     "title": "Self-Education: Teach Yourself Anything with the Sandbox Method",
-    "uid": "VagagQEUc"
+    "uid": ""
   },
   "building_things_to_help_sell_the_things_you_make": {
     "title": "Building Things to Help Sell the Things You Make",
-    "uid": "4FFUiVRdq"
+    "uid": ""
   },
   "jobs_to_be_done": {
     "title": "Jobs to be Done",
-    "uid": "4RACPH2md"
+    "uid": ""
   },
   "perceptual_exposure": {
     "title": "Perceptual Exposure",
-    "uid": "FN_GXb-HA"
+    "uid": ""
   },
   "tacit_knowledge": {
     "title": "Tacit Knowledge",
-    "uid": "9GX4ib6aC"
+    "uid": ""
   },
   "sqlx": {
     "title": "sqlx",
-    "uid": "0tdvTtKQ6"
+    "uid": ""
   },
   "lateral_joins": {
     "title": "Lateral Joins",
-    "uid": "sS_6NXul9"
+    "uid": ""
   },
   "transactionally_staged_job_drain_queues": {
     "title": "Transactionally Staged Job Drain Queues",
-    "uid": "DItKGLQtt"
+    "uid": ""
   },
   "deliberate_practice": {
     "title": "Deliberate Practice",
-    "uid": "5gS9Vucsz"
+    "uid": ""
   },
   "book_shape_up": {
     "title": "Book/Shape Up",
-    "uid": "hZ9cmPjbn"
+    "uid": ""
   },
   "hybrid_logical_clock": {
     "title": "Hybrid Logical Clock",
-    "uid": "rdzniKz6K"
+    "uid": ""
   },
   "new_directions_in_cloud_programming": {
     "title": "New Directions in Cloud Programming",
-    "uid": "rPSDRtbXI"
+    "uid": ""
   },
   "github_actions": {
     "title": "Github Actions",
-    "uid": "wJQjbB9QD"
+    "uid": ""
   },
   "ntp_sync": {
     "title": "NTP Sync",
-    "uid": "OntAcAVJ3"
+    "uid": ""
   },
   "ui": {
     "title": "UI",
-    "uid": "LYHZvk0vm"
+    "uid": ""
   },
   "rust_modules": {
     "title": "Rust Modules",
-    "uid": "mNi1u_iGm"
+    "uid": ""
   },
   "variable_neighborhood_search": {
     "title": "Variable Neighborhood Search",
-    "uid": "KADr1rxsx"
+    "uid": ""
   },
   "acid_database_semantics": {
     "title": "ACID Database Semantics",
-    "uid": "1tZDLeZHe"
+    "uid": ""
   },
   "rust_error_handling": {
     "title": "Rust Error Handling",
-    "uid": "Mzi--OR6c"
+    "uid": ""
   },
   "circle_of_competence": {
     "title": "Circle of Competence",
-    "uid": "hiEROjKm5"
+    "uid": ""
   },
   "retryable_idempotent_operations": {
     "title": "Retryable Idempotent Operations",
-    "uid": "4DFO3GSNL"
+    "uid": ""
   },
   "elasticsearch_cheat_sheet": {
     "title": "Elasticsearch Cheat Sheet",
-    "uid": "q84zD1JxZ"
+    "uid": ""
   },
   "the_elements_of_ui_engineering": {
     "title": "The Elements of UI Engineering",
-    "uid": "ADis3wJiv"
+    "uid": ""
   }
 }

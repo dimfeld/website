@@ -7,74 +7,77 @@ updated: 2021-04-20
 
 
   <ul class="list-bullet">
-    <li id="jkmQz7Py-">References
+    <li>References
       <ul class="list-bullet">
-        <li id="Z0-1R2qKu">An example that will do what you want 90% of the time: <a href="https://ddrscott.github.io/blog/2021/i-heart-make/">https://ddrscott.github.io/blog/2021/i-heart-make/</a></li>
-        <li id="vh-ND_O_r">More in-depth tutorial: <a href="https://makefiletutorial.com/">https://makefiletutorial.com/</a></li>
+        <li>An example that will do what you want 90% of the time: <a href="https://ddrscott.github.io/blog/2021/i-heart-make/">https://ddrscott.github.io/blog/2021/i-heart-make/</a></li>
+        <li>More in-depth tutorial: <a href="https://makefiletutorial.com/">https://makefiletutorial.com/</a></li>
       </ul>
     </li>
-    <li id="4qyU0rsK1">Targets
+    <li>Targets
       <ul class="list-bullet">
-        <li id="4Jaune5AP"><code>target_name: dependencies</code></li>
-        <li id="BrLnxU31R">A target name can be a filename, multiple filenames (space separated), or just a word.</li>
-        <li id="cU_1ojC5-">Dependencies work the same way.</li>
-        <li id="CSVBYYD-O">The indented lines after a target are the commands to run.</li>
-        <li id="Ueyw_q0TE"><pre><code><span class="hljs-text hljs-plain">all: $(wildcard *.json)
-  convert_json $@</span></code></pre></li>
-        <li id="pNnp48rKs">A target can use double colons <code>file::</code> to allow defining the target multiple times. Otherwise this is an error.</li>
+        <li><code>target_name: dependencies</code></li>
+        <li>A target name can be a filename, multiple filenames (space separated), or just a word.</li>
+        <li>Dependencies work the same way.</li>
+        <li>The indented lines after a target are the commands to run.</li>
+        <li>
+<pre><code><span class="hljs-text hljs-plain">all: $(wildcard *.json)
+convert_json $@
+</span></code></pre></li>
+        <li>A target can use double colons <code>file::</code> to allow defining the target multiple times. Otherwise this is an error.</li>
       </ul>
     </li>
-    <li id="rgwysUVoO">Two types of variables
+    <li>Two types of variables
       <ul class="list-bullet">
-        <li id="Rr2lpFWDx">Recursively-expanded variables are lazily evaluated, and reevaluated every time the variable is used. These use the <code>=</code> operator to assign. e.v. <code>VARNAME = value</code></li>
-        <li id="eZkwQGFzx">Simply-expanded variables use <code>:=</code> to assign, and are just evaluated at the time of assignment. e.g. <code>VARNAME := VALUE</code></li>
-        <li id="v8V_GYU79">Variables are referenced using <code>$(VARNAME)</code> or <code>${VARNAME}</code></li>
+        <li>Recursively-expanded variables are lazily evaluated, and reevaluated every time the variable is used. These use the <code>=</code> operator to assign. e.v. <code>VARNAME = value</code></li>
+        <li>Simply-expanded variables use <code>:=</code> to assign, and are just evaluated at the time of assignment. e.g. <code>VARNAME := VALUE</code></li>
+        <li>Variables are referenced using <code>$(VARNAME)</code> or <code>${VARNAME}</code></li>
       </ul>
     </li>
-    <li id="Z-tv40Wdf">Automatic Variables
+    <li>Automatic Variables
       <ul class="list-bullet">
-        <li id="MwAL4m8tc">Make provides a bunch of ways to make things easier when working with multiple targets at once.</li>
-        <li id="VTtYZIDxk"><code>$@</code> will reference the dependency that the target is running against, one dependency at a time.</li>
-        <li id="7dkRuH-uM"><code>$&lt;</code> references the target for the current dependency (i.e. the output filename when running on filenames)</li>
-        <li id="rDOtQcMTE"><code>$?</code> is the list of all dependencies newer than the target.</li>
-        <li id="3doeNS-PH"><code>$^</code> is the list of all prerequisites.</li>
+        <li>Make provides a bunch of ways to make things easier when working with multiple targets at once.</li>
+        <li><code>$@</code> will reference the dependency that the target is running against, one dependency at a time.</li>
+        <li><code>$&lt;</code> references the target for the current dependency (i.e. the output filename when running on filenames)</li>
+        <li><code>$?</code> is the list of all dependencies newer than the target.</li>
+        <li><code>$^</code> is the list of all prerequisites.</li>
       </ul>
     </li>
-    <li id="xecWdDsOC">Pattern matching
+    <li>Pattern matching
       <ul class="list-bullet">
-        <li id="yPIQCbS3y">The <code>%</code> wildcard operator is used to perform pattern match and replacement.</li>
-        <li id="NTZ85kgRX"><code>$(filenames): %.html: %.md</code> will match every <code>*.md</code> target and generate a matching <code>.html</code> target for that filename.</li>
-        <li id="hJuJvCtwl">Then later you can do <code>%.html:</code> with no dependencies to define the commands to run.</li>
-        <li id="JNHW9nQth">You can also just do <code>%.html: %.md:</code> to set up a dependency from any <code>.md</code> to turn into a <code>.html</code> file.</li>
-        <li id="kEK4_hqtx">You can still override these targets with a target like <code>index.html:</code> if you want a different behavior for a particular file.</li>
-        <li id="wWimXFj6r">But you still need a way to set up the main target, and so something like this usually works well:
+        <li>The <code>%</code> wildcard operator is used to perform pattern match and replacement.</li>
+        <li><code>$(filenames): %.html: %.md</code> will match every <code>*.md</code> target and generate a matching <code>.html</code> target for that filename.</li>
+        <li>Then later you can do <code>%.html:</code> with no dependencies to define the commands to run.</li>
+        <li>You can also just do <code>%.html: %.md:</code> to set up a dependency from any <code>.md</code> to turn into a <code>.html</code> file.</li>
+        <li>You can still override these targets with a target like <code>index.html:</code> if you want a different behavior for a particular file.</li>
+        <li>But you still need a way to set up the main target, and so something like this usually works well:
           <ul class="list-bullet">
-            <li id="JC4IGAPXg"><pre><code><span class="hljs-text hljs-plain">SRC := $(wildcard *.pptx)
+            <li>
+<pre><code><span class="hljs-text hljs-plain">SRC := $(wildcard *.pptx)
 OUT := $(SRC:.pptx=.json)
 all: $(OUT)
-
 %.json: %.pptx
-	compile.sh $&lt; &gt; $@</span></code></pre></li>
+compile.sh $&lt; &gt; $@
+</span></code></pre></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="WlHHGr0CT">Working with filenames
+    <li>Working with filenames
       <ul class="list-bullet">
-        <li id="0GK8rIN2B"><code>$(wildcard *.json)</code> will execute a file glob and expand to the matching filenames.</li>
+        <li><code>$(wildcard *.json)</code> will execute a file glob and expand to the matching filenames.</li>
       </ul>
     </li>
-    <li id="b_2y6CA_p">String substitution
+    <li>String substitution
       <ul class="list-bullet">
-        <li id="rGUQ1VzPQ"><code>$(patsubst INPUT_PATTERN,OUTPUT_PATTERN,STRING_TO_MATCH_AND_REPLACE)</code> </li>
-        <li id="Djqi3l4T6">This has numerous shorthands</li>
-        <li id="gc0QHK7yv"><code>$(VARIABLE:%.o=%.c)</code> to change <code>.o</code> to <code>.c</code> for every file in <code>VARIABLE</code>.</li>
-        <li id="71mfzJK7s"><code>$(VARIABLE:.o=.c)</code> also works when it&#39;s just a suffix.</li>
+        <li><code>$(patsubst INPUT_PATTERN,OUTPUT_PATTERN,STRING_TO_MATCH_AND_REPLACE)</code> </li>
+        <li>This has numerous shorthands</li>
+        <li><code>$(VARIABLE:%.o=%.c)</code> to change <code>.o</code> to <code>.c</code> for every file in <code>VARIABLE</code>.</li>
+        <li><code>$(VARIABLE:.o=.c)</code> also works when it&#39;s just a suffix.</li>
       </ul>
     </li>
-    <li id="aUnkhk4Fn">When running at command, prefixing it with <code>@</code> will suppress printing the command output as it runs.</li>
-    <li id="iPxTBHzRC">Shell commands can be run using <code>VARNAME := $(shell command args)</code></li>
-    <li id="Jq-AHgDyh">If you need to recursively call <code>make</code>, use <code>$(MAKE)</code> instead since it will use all the same CLI flags passed to the current call. </li>
+    <li>When running at command, prefixing it with <code>@</code> will suppress printing the command output as it runs.</li>
+    <li>Shell commands can be run using <code>VARNAME := $(shell command args)</code></li>
+    <li>If you need to recursively call <code>make</code>, use <code>$(MAKE)</code> instead since it will use all the same CLI flags passed to the current call. </li>
   </ul>
 
 

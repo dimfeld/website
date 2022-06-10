@@ -1,38 +1,38 @@
 ---
 title: "Hybrid Logical Clock"
-tags: Logical Clock, State Synchronization
+tags: 
 date: 2020-09-13
 updated: 2020-09-13
 ---
 
 
   <ul class="list-bullet">
-    <li id="1FTCL-k5c">This one combines the advantages of physical time with a logical counter to make it more resilient.</li>
-    <li id="J33EJ3ExD">Sources:
+    <li>This one combines the advantages of physical time with a logical counter to make it more resilient.</li>
+    <li>Sources:
       <ul class="list-bullet">
-        <li id="xLHZFAdxU">Blog post by one of the creators: <a href="https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html">https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html</a></li>
-        <li id="Lu7pTllHb">Good explanation: <a href="https://jaredforsyth.com/posts/hybrid-logical-clocks/">https://jaredforsyth.com/posts/hybrid-logical-clocks/</a></li>
+        <li>Blog post by one of the creators: <a href="https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html">https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html</a></li>
+        <li>Good explanation: <a href="https://jaredforsyth.com/posts/hybrid-logical-clocks/">https://jaredforsyth.com/posts/hybrid-logical-clocks/</a></li>
       </ul>
     </li>
-    <li id="AR0qaKri6">The clock starts out storing the current physical time and also a counter of 0.</li>
-    <li id="stNZkoUun">Most of the time they store a node ID too as a tie breaker in case of identical timestamps and counters.</li>
-    <li id="yP3UJoOVL">When an event occurs locally:
+    <li>The clock starts out storing the current physical time and also a counter of 0.</li>
+    <li>Most of the time they store a node ID too as a tie breaker in case of identical timestamps and counters.</li>
+    <li>When an event occurs locally:
       <ul class="list-bullet">
-        <li id="F0bDtXcHO">If the current time is greater than the one in the clock, update it and set the counter back to 0.</li>
-        <li id="NMQUP2ASR">Otherwise increment the counter.</li>
+        <li>If the current time is greater than the one in the clock, update it and set the counter back to 0.</li>
+        <li>Otherwise increment the counter.</li>
       </ul>
     </li>
-    <li id="G2vHHFRYP">When receiving an event from somewhere else, update the clock as follows:
+    <li>When receiving an event from somewhere else, update the clock as follows:
       <ul class="list-bullet">
-        <li id="II9TvO2uM">Look at the current physical time, the clock’s physical time, and the incoming event’s physical time.</li>
-        <li id="Yt0PR-4NF">If the current physical time is the greatest, use it and reset the counter.</li>
-        <li id="Fph2kaH7d">If the incoming event’s physical time is the greatest, use it and also use the incoming event’s counter.</li>
-        <li id="JKTACbuI6">If the clock’s physical time is equal to the incoming event’s, use the higher logical clock value between the two (plus 1).</li>
+        <li>Look at the current physical time, the clock’s physical time, and the incoming event’s physical time.</li>
+        <li>If the current physical time is the greatest, use it and reset the counter.</li>
+        <li>If the incoming event’s physical time is the greatest, use it and also use the incoming event’s counter.</li>
+        <li>If the clock’s physical time is equal to the incoming event’s, use the higher logical clock value between the two (plus 1).</li>
       </ul>
     </li>
-    <li id="N_yUxbwer">To compare two HLC timestamps, just compare the physical clock, then the logical counter, then the node ID.</li>
-    <li id="QI3fDnHn6">So basically the physical time gets set to the highest seen from any other node when anything happens. This fixes the problem where various nodes are running at different times since all the nodes quickly get updated to the latest clock value.</li>
-    <li id="YR8xQ8d8n">You still want to do some sort of checking around nodes being too far in the future, since setting the physical time really far ahead effectively reduces this timestamp to a Lamport timestamp.</li>
+    <li>To compare two HLC timestamps, just compare the physical clock, then the logical counter, then the node ID.</li>
+    <li>So basically the physical time gets set to the highest seen from any other node when anything happens. This fixes the problem where various nodes are running at different times since all the nodes quickly get updated to the latest clock value.</li>
+    <li>You still want to do some sort of checking around nodes being too far in the future, since setting the physical time really far ahead effectively reduces this timestamp to a Lamport timestamp.</li>
   </ul>
 
 

@@ -7,178 +7,178 @@ updated: 2020-08-10
 
 
   <ul class="list-bullet">
-    <li id="bn_sgHE6x">An approximation algorithm based on three observations
+    <li>An approximation algorithm based on three observations
       <ul class="list-bullet">
-        <li id="nbhkqMMrA">1. A local minimum with respect to one neighborhood structure is not necessarily so for another.</li>
-        <li id="w3-OyEAS7">2. A global minimum is a local minimum with respect to all possible neighborhood structures.</li>
-        <li id="eTbPqWlw9">3. For many problems, local minima with respect to one or several neighborhoods are relatively close to each other.</li>
+        <li>1. A local minimum with respect to one neighborhood structure is not necessarily so for another.</li>
+        <li>2. A global minimum is a local minimum with respect to all possible neighborhood structures.</li>
+        <li>3. For many problems, local minima with respect to one or several neighborhoods are relatively close to each other.</li>
       </ul>
     </li>
-    <li id="QLLN8AAXt">Initalization Choices
+    <li>Initalization Choices
       <ul class="list-bullet">
-        <li id="XlIzQt8l1"><code>f</code>  - the scoring function</li>
-        <li id="nEKN6OJbV"><code>X</code> - The set of possibilities</li>
-        <li id="rUbP6mo8o"><code>N(x)</code> - the neighborhood structure</li>
-        <li id="h69DeyM26"><code>x</code> - the initial solution</li>
+        <li><code>f</code>  - the scoring function</li>
+        <li><code>X</code> - The set of possibilities</li>
+        <li><code>N(x)</code> - the neighborhood structure</li>
+        <li><code>x</code> - the initial solution</li>
       </ul>
     </li>
-    <li id="oU_m8cxFJ">The algorithm is made up of a few different sub algorithms.</li>
-    <li id="mc1DlXpyq">Variable Neighborhood Descent (VND)
+    <li>The algorithm is made up of a few different sub algorithms.</li>
+    <li>Variable Neighborhood Descent (VND)
       <ul class="list-bullet">
-        <li id="tR7RPZ1SQ">A standard way to search through a space is the steepest descent heuristic
+        <li>A standard way to search through a space is the steepest descent heuristic
           <ul class="list-bullet">
-            <li id="czIDeHoKD">Steps
+            <li>Steps
               <ul class="list-bullet">
-                <li id="Eyic6dbov">Find x’ = the smallest value of f(x) for all perturbations</li>
-                <li id="cA7xc-HrA">If f(x’) &lt; f(x), set x = x’ and iterate. Otherwise stop</li>
-                <li id="P7Vhrcphv">Since it may not be feasible to iterate over every possible neighborhood perturbation in every iteration, an alternative is to use the first perturbation found that results in a score reduction.</li>
+                <li>Find x’ = the smallest value of f(x) for all perturbations</li>
+                <li>If f(x’) &lt; f(x), set x = x’ and iterate. Otherwise stop</li>
+                <li>Since it may not be feasible to iterate over every possible neighborhood perturbation in every iteration, an alternative is to use the first perturbation found that results in a score reduction.</li>
               </ul>
             </li>
           </ul>
         </li>
-        <li id="QAdeBwvaw">VND is based on fact 1. Since a local optimum for one type of move may not be a local optimum for another type of move, we can combine descent heuristics to get closer to the global optimum.</li>
-        <li id="zcgFth4SF">Steps
-          <ul class="list-document">
-            <li id="-JZ1FF-AB">Initialize: Select the set of neighborhood structures that will be used and find the initial solution x.</li>
-            <li id="1lMde-4_6">1. Start with the first neighborhood.</li>
-            <li id="73xExoSuk">2. *Local Search*: Find the best neighbor x’ of x using the current neighborhood</li>
-            <li id="7DEMImglF">3. If x’ is better than x, then set x = x’ and go back to step 1. Otherwise go to the next neighborhood and go to step 2.</li>
+        <li>VND is based on fact 1. Since a local optimum for one type of move may not be a local optimum for another type of move, we can combine descent heuristics to get closer to the global optimum.</li>
+        <li>Steps
+          <ul class="list-bullet">
+            <li>Initialize: Select the set of neighborhood structures that will be used and find the initial solution x.</li>
+            <li>1. Start with the first neighborhood.</li>
+            <li>2. <em class="italic">Local Search</em>: Find the best neighbor x’ of x using the current neighborhood</li>
+            <li>3. If x’ is better than x, then set x = x’ and go back to step 1. Otherwise go to the next neighborhood and go to step 2.</li>
           </ul>
         </li>
-        <li id="DCdsQdSRe">This brings up a number of questions.
+        <li>This brings up a number of questions.
           <ul class="list-bullet">
-            <li id="IDvVPUH_O">What is the complexity of the different modes?
+            <li>What is the complexity of the different modes?
               <ul class="list-bullet">
-                <li id="f-f0X1R4E">Moves that take too many operations may be very slow to converge and actually require more time than the exact solution in some cases.</li>
+                <li>Moves that take too many operations may be very slow to converge and actually require more time than the exact solution in some cases.</li>
               </ul>
             </li>
-            <li id="OCGDWrtKd">What is the best order to apply them?
+            <li>What is the best order to apply them?
               <ul class="list-bullet">
-                <li id="6YB1eLvNr">Often moves are ordered by the complexity of their application. Some variants apply all the moves at once, so long as descent is made for some neighborhood in the series.</li>
+                <li>Often moves are ordered by the complexity of their application. Some variants apply all the moves at once, so long as descent is made for some neighborhood in the series.</li>
               </ul>
             </li>
-            <li id="SFuoINA6h">Are these moves sufficient to throughly explore the region?
+            <li>Are these moves sufficient to throughly explore the region?
               <ul class="list-bullet">
-                <li id="-8Vlm2J6U">Too-simple moves may not leave a “narrow valley”</li>
+                <li>Too-simple moves may not leave a “narrow valley”</li>
               </ul>
             </li>
-            <li id="KZtfO47Aj">How precise a solution do we need?</li>
+            <li>How precise a solution do we need?</li>
           </ul>
         </li>
-        <li id="SbDGsT9pH">As an example, we might have two neighborhood structures. The first does a greedy search for placing a new facility and the other does an interchange, moving an existing facility elsewhere. These two would be applied in turn until the algorithm halts. </li>
+        <li>As an example, we might have two neighborhood structures. The first does a greedy search for placing a new facility and the other does an interchange, moving an existing facility elsewhere. These two would be applied in turn until the algorithm halts. </li>
       </ul>
     </li>
-    <li id="SLJZKoz3c">Reduced Variable Neighborhood Search
+    <li>Reduced Variable Neighborhood Search
       <ul class="list-bullet">
-        <li id="5BjlfVHZP">Assume we’ve found a local minimum. We want to leave this valley and find a deeper one, if it exists. </li>
-        <li id="_us8ZA5i1">Motivations
+        <li>Assume we’ve found a local minimum. We want to leave this valley and find a deeper one, if it exists. </li>
+        <li>Motivations
           <ul class="list-bullet">
-            <li id="Op9MNuzns">which direction to go?
+            <li>which direction to go?
               <ul class="list-bullet">
-                <li id="pv3T9PM0H">Simplest answer is to choose randomly</li>
+                <li>Simplest answer is to choose randomly</li>
               </ul>
             </li>
-            <li id="N81Y-iCMf">How far?
+            <li>How far?
               <ul class="list-bullet">
-                <li id="OzQ7tx1pv">Since local minima tend to be close together, we should start with small steps.</li>
+                <li>Since local minima tend to be close together, we should start with small steps.</li>
               </ul>
             </li>
-            <li id="u9jiDd627">If the moves don’t get us out of the valley, how do we modify them?
+            <li>If the moves don’t get us out of the valley, how do we modify them?
               <ul class="list-bullet">
-                <li id="RFknsj4QE">Go farther! Usually this takes the form of each of the neighborhood structures building upon the previous one to create a larger or more complex move (this is called nesting).</li>
+                <li>Go farther! Usually this takes the form of each of the neighborhood structures building upon the previous one to create a larger or more complex move (this is called nesting).</li>
               </ul>
             </li>
           </ul>
         </li>
-        <li id="WPCqQsaVK">Steps
-          <ul class="list-document">
-            <li id="EizhYRzhU">Init: Select a set of neighborhood structures, find initial solution, choose stopping condition, etc.</li>
-            <li id="5u0geMN04">1. Select neighborhood 1</li>
-            <li id="Ag7DX9_kF">2. *Shaking*: Take a randomly selected change from the current neighborhood.</li>
-            <li id="H2p9KVhoM">3. If it’s better, use it and go back to step 1</li>
-            <li id="xyU4wNWdd">4. Otherwise, check the stopping condition, and then go to the next structure and go to step 2.</li>
+        <li>Steps
+          <ul class="list-bullet">
+            <li>Init: Select a set of neighborhood structures, find initial solution, choose stopping condition, etc.</li>
+            <li>1. Select neighborhood 1</li>
+            <li>2. <em class="italic">Shaking</em>: Take a randomly selected change from the current neighborhood.</li>
+            <li>3. If it’s better, use it and go back to step 1</li>
+            <li>4. Otherwise, check the stopping condition, and then go to the next structure and go to step 2.</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="qVjziUVya">Basic Variable Neighborhood Search
+    <li>Basic Variable Neighborhood Search
       <ul class="list-bullet">
-        <li id="yQg9jqW9T">This combines the VND and RVNS methods above into a single method so that we have systematic movement around the current local minimum and also the possibility of a random jump into a better minimum.</li>
-        <li id="t-YYicnca">Steps
-          <ul class="list-document">
-            <li id="E4jMRgpy-">Init: Select neighborhoods N (1 to kmax), initial solution x, stopping condition.</li>
-            <li id="ZaazygAks">1. Set k = 1</li>
-            <li id="Zm25HPOkN">2. Shaking: x’ = a random move in Nk.</li>
-            <li id="nmlvzeJFn">3. Local Search: x’’ = the result of the local search from x’</li>
-            <li id="z12vHeLvp">4. If x’’ is better than x, set x = x’’ and jump to step 1.</li>
-            <li id="uVTSF_cyn">5. Otherwise increment k. If k = kmax, check the stopping condition and jump back to step 1.</li>
+        <li>This combines the VND and RVNS methods above into a single method so that we have systematic movement around the current local minimum and also the possibility of a random jump into a better minimum.</li>
+        <li>Steps
+          <ul class="list-bullet">
+            <li>Init: Select neighborhoods N (1 to kmax), initial solution x, stopping condition.</li>
+            <li>1. Set k = 1</li>
+            <li>2. Shaking: x’ = a random move in Nk.</li>
+            <li>3. Local Search: x’’ = the result of the local search from x’</li>
+            <li>4. If x’’ is better than x, set x = x’’ and jump to step 1.</li>
+            <li>5. Otherwise increment k. If k = kmax, check the stopping condition and jump back to step 1.</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="dj_rlfadi">General Variable Neighborhood Search
+    <li>General Variable Neighborhood Search
       <ul class="list-bullet">
-        <li id="i5ZkOVWWC">This is the general one to use when you don’t have a specific reason to do otherwise. It is similar to the basic VNS, but uses VND as the local search step. We may use different neighborhood selections for the shaking step and the VND step, but it is not required.</li>
+        <li>This is the general one to use when you don’t have a specific reason to do otherwise. It is similar to the basic VNS, but uses VND as the local search step. We may use different neighborhood selections for the shaking step and the VND step, but it is not required.</li>
       </ul>
     </li>
-    <li id="D8mk9DW8C">Neighborhood Selection
+    <li>Neighborhood Selection
       <ul class="list-bullet">
-        <li id="8--7k1NqL">What properties of the neighborhoods are mandatory to be able to find a near-optimal solution
+        <li>What properties of the neighborhoods are mandatory to be able to find a near-optimal solution
           <ul class="list-bullet">
-            <li id="2hge9dgGA">The union of all the neighborhoods should cover the entire set of feasible solutions to guarantee this.</li>
+            <li>The union of all the neighborhoods should cover the entire set of feasible solutions to guarantee this.</li>
           </ul>
         </li>
-        <li id="2MgqE2x58">What properties are helpful for finding a near-optimal solution?</li>
-        <li id="q9dwclBz4">Should neighborhoods be nested, and if not, how should they be ordered?
+        <li>What properties are helpful for finding a near-optimal solution?</li>
+        <li>Should neighborhoods be nested, and if not, how should they be ordered?
           <ul class="list-bullet">
-            <li id="OqbBvH33C">Nesting can easily be done by performing a type of move, and then having the next neighborhood make a similar move</li>
+            <li>Nesting can easily be done by performing a type of move, and then having the next neighborhood make a similar move</li>
           </ul>
         </li>
-        <li id="hdRWYsDsA">What are desirable properties of neighborhood size?
+        <li>What are desirable properties of neighborhood size?
           <ul class="list-bullet">
-            <li id="t1nFZYTC2">Size should go up as we iterate through neighborhoods.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li id="zqHAOBG05">Skewed VNS
-      <ul class="list-bullet">
-        <li id="zwmfe9sls">Some problems have local minima that are spaced far apart, and so if we happen to jump into one we probably want to explore around there.</li>
-        <li id="l30C0H9Oc">With an extremely large neighborhood, we might jump into one of these other minima, and so it can be desirable to try out a not-quite-the-best solution if it’s sufficiently far away from the current best solution.</li>
-        <li id="5DPTukiub">In this method, after we move we check if the candidate solution is better than or worse-but-within-a-tolerance of the best solution, and if it is then we move the search space to it.</li>
-        <li id="lsUWe4qeG">Throughout the process, we remember the best solution even if we’re not currently looking at it.</li>
-        <li id="f_8euD8Ue">Should we do this?
-          <ul class="list-bullet">
-            <li id="qnL7wNmK0">The easiest way to answer the question is to run VNS for a short period of time from a bunch of different starting conditions and see if they end up in very different states with good solutions.</li>
+            <li>Size should go up as we iterate through neighborhoods.</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="EVAnbVXe7">Variable Neighborhood Decomposition Search
+    <li>Skewed VNS
       <ul class="list-bullet">
-        <li id="iliUJLqFq">This scheme changes the local search option to select a subset of the space relating to the space modified by the neighborhood and optimize just that region. The optimization process used can be VNS again, applied to just that region.</li>
+        <li>Some problems have local minima that are spaced far apart, and so if we happen to jump into one we probably want to explore around there.</li>
+        <li>With an extremely large neighborhood, we might jump into one of these other minima, and so it can be desirable to try out a not-quite-the-best solution if it’s sufficiently far away from the current best solution.</li>
+        <li>In this method, after we move we check if the candidate solution is better than or worse-but-within-a-tolerance of the best solution, and if it is then we move the search space to it.</li>
+        <li>Throughout the process, we remember the best solution even if we’re not currently looking at it.</li>
+        <li>Should we do this?
+          <ul class="list-bullet">
+            <li>The easiest way to answer the question is to run VNS for a short period of time from a bunch of different starting conditions and see if they end up in very different states with good solutions.</li>
+          </ul>
+        </li>
       </ul>
     </li>
-    <li id="VGdd3lfA1">Further Research for Approaching a Problem with VNS
+    <li>Variable Neighborhood Decomposition Search
       <ul class="list-bullet">
-        <li id="n5_WjkJ72">Initialization Conditions
+        <li>This scheme changes the local search option to select a subset of the space relating to the space modified by the neighborhood and optimize just that region. The optimization process used can be VNS again, applied to just that region.</li>
+      </ul>
+    </li>
+    <li>Further Research for Approaching a Problem with VNS
+      <ul class="list-bullet">
+        <li>Initialization Conditions
           <ul class="list-bullet">
-            <li id="Zpw8Cfqyd">VNS results tend to not be too dependent on the initialization conditions, so long as the neighborhoods are defined well, and so simpler conditions are better.</li>
+            <li>VNS results tend to not be too dependent on the initialization conditions, so long as the neighborhoods are defined well, and so simpler conditions are better.</li>
           </ul>
         </li>
-        <li id="U-gBLQ7EL">Neighborhood Selection
+        <li>Neighborhood Selection
           <ul class="list-bullet">
-            <li id="FY0tMf4J0">Do research on the neighborhoods used by other approaches to the problem. They tend to be reusable in VNS.</li>
+            <li>Do research on the neighborhoods used by other approaches to the problem. They tend to be reusable in VNS.</li>
           </ul>
         </li>
-        <li id="9_y4mdRVs">Distribution of Neighborhoods
+        <li>Distribution of Neighborhoods
           <ul class="list-bullet">
-            <li id="IuTG-1Z5l">Should neighborhoods be assigned to the local search phase, the shaking phase, or both?</li>
+            <li>Should neighborhoods be assigned to the local search phase, the shaking phase, or both?</li>
           </ul>
         </li>
-        <li id="wpysqTn1B">Ancillary Tests
+        <li>Ancillary Tests
           <ul class="list-bullet">
-            <li id="-409a46GL">Some additional logic can be used to make the “random” selection less random, if we know some useful things about the problem that can help with selection.</li>
+            <li>Some additional logic can be used to make the “random” selection less random, if we know some useful things about the problem that can help with selection.</li>
           </ul>
         </li>
       </ul>

@@ -2,67 +2,67 @@
 title: "Retryable Idempotent Operations"
 tags: programming, Idempotency, database
 date: 2020-11-16
-updated: 2020-11-16
+updated: 2022-06-10
 ---
 
 
   <ul class="list-bullet">
-    <li id="MuEJFRgSK"><span><strong class="rm-attr-ref">Author:</strong> Brandur Leach</span></li>
-    <li id="RjJAKH6uZ"><span><strong class="rm-attr-ref">Source:</strong> <a href="https://brandur.org/idempotency-keys">https://brandur.org/idempotency-keys</a></span></li>
-    <li id="kIV2a0JT0">If you can pull it off, it&#39;s best to just use single database transactions with <a href="/notes/serializable_transactions">Serializable Transactions</a> if you need it, and design them in an idempotent fashion. But that can&#39;t always be done, especially when you must interact with external services.</li>
-    <li id="Jo_ZOWbqg"><span class="rm-heading-2">The Idea of Idempotency Keys</span>
+    <li><span><span class="font-medium text-gray-800">Author:</span> <span>Brandur Leach</span></span></li>
+    <li><span><span class="font-medium text-gray-800">Source:</span> <span><a href="https://brandur.org/idempotency-keys">https://brandur.org/idempotency-keys</a></span></span></li>
+    <li>If you can pull it off, it&#39;s best to just use single database transactions with <a href="/notes/serializable_transactions">Serializable Transactions</a> if you need it, and design them in an idempotent fashion. But that can&#39;t always be done, especially when you must interact with external services.</li>
+    <li>The Idea of Idempotency Keys
       <ul class="list-bullet">
-        <li id="LrgTmStfO">Operations such as this can&#39;t be made inherently idempotent, but they can have the client send an accompanying unique ID to track the operation. The server can then see if the operation with that ID (if the ID already exists) has succeeded, failed, etc. and act appropriately.</li>
-        <li id="v351cYamz">When a request comes in, the server creates a new record for the idempotency key, and uses this to track the progress of the request.</li>
-        <li id="ep4JbbfU4">The response is saved with the idempotency key record, so if the client sends a request for the same key again, the server just returns the same response.</li>
-        <li id="3gzmKTkrf">The record has the following data:
+        <li id="6e5ceba6-90ab-4eb5-8055-860951a4f43a">Operations such as this can&#39;t be made inherently idempotent, but they can have the client send an accompanying unique ID to track the operation. The server can then see if the operation with that ID (if the ID already exists) has succeeded, failed, etc. and act appropriately.</li>
+        <li>When a request comes in, the server creates a new record for the idempotency key, and uses this to track the progress of the request.</li>
+        <li>The response is saved with the idempotency key record, so if the client sends a request for the same key again, the server just returns the same response.</li>
+        <li>The record has the following data:
           <ul class="list-bullet">
-            <li id="Ii-K3vOOi">The key</li>
-            <li id="49j3P5KJu">When it was last run</li>
-            <li id="spJ13Bvet">When it was last locked (if currently locked). This keeps multiple requests from trying to rerun it at the same time.</li>
-            <li id="yoMQ4wgCO">Parameters of the request, needed to rerun it and as a sanity check that the client isn&#39;t sending different requests with the same idempotency key.</li>
-            <li id="YuAUP9GVU">Parameters of the response, if present, to return on repeated requests after final success or failure.</li>
-            <li id="Vr4PxBKs7">Current recovery point.</li>
-            <li id="gm5tZLR1h">User ID of requester (optional but helpful)</li>
+            <li>The key</li>
+            <li>When it was last run</li>
+            <li>When it was last locked (if currently locked). This keeps multiple requests from trying to rerun it at the same time.</li>
+            <li>Parameters of the request, needed to rerun it and as a sanity check that the client isn&#39;t sending different requests with the same idempotency key.</li>
+            <li>Parameters of the response, if present, to return on repeated requests after final success or failure.</li>
+            <li>Current recovery point.</li>
+            <li>User ID of requester (optional but helpful)</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="87th0e-9k"><span class="rm-heading-2">Operation Phases</span>
+    <li>Operation Phases
       <ul class="list-bullet">
-        <li id="X-VScILw5">Operations that talk to foreign services can also be phased. Each phase is recorded at a recovery point so we know exactly how far we got and where to start trying again. Groups of local operations between foreign operations that can all be put in a database transaction can be seems as a single phase. </li>
-        <li id="GFRg0d2ON">Putting any work that can be deferred into a background worker helps simplify this a lot too since there are fewer phases to track. We add the operation using <a href="/notes/transactionally_staged_job_drain_queues">Transactionally Staged Job Drain Queues</a> as part of a phase, and let it execute independently.</li>
-        <li id="sUYSL4Ojn">There are essentially two types of phases:
+        <li>Operations that talk to foreign services can also be phased. Each phase is recorded at a recovery point so we know exactly how far we got and where to start trying again. Groups of local operations between foreign operations that can all be put in a database transaction can be seems as a single phase.</li>
+        <li>Putting any work that can be deferred into a background worker helps simplify this a lot too since there are fewer phases to track. We add the operation using <a href="/notes/transactionally_staged_job_drain_queues">Transactionally Staged Job Drain Queues</a> as part of a phase, and let it execute independently.</li>
+        <li>There are essentially two types of phases:
           <ul class="list-bullet">
-            <li id="KcRpMsCjx">Atomic phases are those that talk to a database and comprise a single transaction.
+            <li>Atomic phases are those that talk to a database and comprise a single transaction.
               <ul class="list-bullet">
-                <li id="q1ZPZFbEO">A phase can end with a recovery point, which sets that point as the current one in the database. This should happen as part of the same transaction.</li>
-                <li id="oKpeSReTC">A phase can indicate that it&#39;s time to return a response to the user. Could be success or some error that can&#39;t be retried (e.g. bad user input that can&#39;t be processed, invalid credit card, etc.)</li>
-                <li id="e7fkXPeje">A phase can also indicate a NoOp, which just means to continue running and not set a recovery point.</li>
+                <li>A phase can end with a recovery point, which sets that point as the current one in the database. This should happen as part of the same transaction.</li>
+                <li>A phase can indicate that it&#39;s time to return a response to the user. Could be success or some error that can&#39;t be retried (e.g. bad user input that can&#39;t be processed, invalid credit card, etc.)</li>
+                <li>A phase can also indicate a NoOp, which just means to continue running and not set a recovery point.</li>
               </ul>
             </li>
-            <li id="Js9dK9CSY">Foreign state mutations are those that talk to any other service, internal or external.</li>
+            <li>Foreign state mutations are those that talk to any other service, internal or external.</li>
           </ul>
         </li>
-        <li id="vXInLc-oI">The rules for determining phases:
+        <li>The rules for determining phases:
           <ul class="list-bullet">
-            <li id="_2jSsGzVY">Upserting the idempotency key is its own phase.</li>
-            <li id="L7vUzVKUY">Every foreign state mutation is a phase.</li>
-            <li id="Fzl5uS1j7">Anything that happens between two foreign state mutations is a single phase and should all be part of a single transaction for each group of things.</li>
+            <li>Upserting the idempotency key is its own phase.</li>
+            <li>Every foreign state mutation is a phase.</li>
+            <li>Anything that happens between two foreign state mutations is a single phase and should all be part of a single transaction for each group of things.</li>
           </ul>
         </li>
-        <li id="F3PmnOkPb">After each phase, the idempotency key record&#39;s recovery point is updated so that it knows where to start from again.</li>
+        <li>After each phase, the idempotency key record&#39;s recovery point is updated so that it knows where to start from again.</li>
       </ul>
     </li>
-    <li id="dPaewUxjx"><span class="rm-heading-2">Problems with non-idempotent foreign services</span>
+    <li>Problems with non-idempotent foreign services
       <ul class="list-bullet">
-        <li id="9cPwRf5K1">When talking to foreign APIs that don&#39;t support idempotency on their own, we can run into issues on some types of failures. For example, on a time out error we may not know if our request actually went through or not. There isn&#39;t really a good way to handle this and you may just have to mark the transaction failed.</li>
+        <li>When talking to foreign APIs that don&#39;t support idempotency on their own, we can run into issues on some types of failures. For example, on a time out error we may not know if our request actually went through or not. There isn&#39;t really a good way to handle this and you may just have to mark the transaction failed.</li>
       </ul>
     </li>
-    <li id="ZDZD5fGjc"><span class="rm-heading-2">Additional useful processes </span>
+    <li>Additional useful processes
       <ul class="list-bullet">
-        <li id="SHNHDJEpE">A completer looks for unfinished processes that the client didn&#39;t try to finish, and tries to retry them.</li>
-        <li id="awY0B94Hh">A reaper deletes old idempotent records. If an old operation is unfinished, it should log somewhere  so that it can be seen.</li>
+        <li>A completer looks for unfinished processes that the client didn&#39;t try to finish, and tries to retry them.</li>
+        <li>A reaper deletes old idempotent records. If an old operation is unfinished, it should log somewhere  so that it can be seen.</li>
       </ul>
     </li>
   </ul>

@@ -7,20 +7,20 @@ updated: 2021-01-06
 
 
   <ul class="list-bullet">
-    <li id="_XRCwKedZ">Shard Allocation Issues
+    <li>Shard Allocation Issues
       <ul class="list-bullet">
-        <li id="WrPUL0-3u"><code>http &#39;localhost:9200/_cluster/allocation/explain?pretty&#39;</code> will explain things with an easy-to-understand vocabulary</li>
+        <li><code>http &#39;localhost:9200/_cluster/allocation/explain?pretty&#39;</code> will explain things with an easy-to-understand vocabulary</li>
       </ul>
     </li>
-    <li id="wiOGHiIQ9">Rolling Minor Version Upgrade
-      <ol class="list-numbered">
-        <li id="qkG_bfk-m"><code>echo &#39;{&quot;persistent&quot;:{&quot;cluster.routing.allocation.enable&quot;: &quot;primaries&quot;}}&#39; | http PUT localhost:9200/_cluster/settings</code></li>
-        <li id="VsuEtZBr9"><code>http POST localhost:9200/_flush/synced</code> - First time only</li>
-        <li id="bF__P8YUA">Upgrade a node</li>
-        <li id="Bi0W2vcBy"><code>echo &#39;{&quot;persistent&quot;:{&quot;cluster.routing.allocation.enable&quot;: null}}&#39; | http PUT localhost:9200/_cluster/settings</code></li>
-        <li id="_2KtUNksc">Wait for the node to recover</li>
-        <li id="yljcXL5Sx">Repeat until all nodes are upgraded</li>
-      </ol>
+    <li>Rolling Minor Version Upgrade
+      <ul class="list-bullet">
+        <li><code>echo &#39;{&quot;persistent&quot;:{&quot;cluster.routing.allocation.enable&quot;: &quot;primaries&quot;}}&#39; | http PUT localhost:9200/_cluster/settings</code></li>
+        <li><code>http POST localhost:9200/_flush/synced</code> - First time only</li>
+        <li>Upgrade a node</li>
+        <li><code>echo &#39;{&quot;persistent&quot;:{&quot;cluster.routing.allocation.enable&quot;: null}}&#39; | http PUT localhost:9200/_cluster/settings</code></li>
+        <li>Wait for the node to recover</li>
+        <li>Repeat until all nodes are upgraded</li>
+      </ul>
     </li>
   </ul>
 

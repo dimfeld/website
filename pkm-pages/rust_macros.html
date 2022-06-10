@@ -7,63 +7,67 @@ updated: 2021-09-15
 
 
   <ul class="list-bullet">
-    <li id="c7qcOJfDY"><span class="rm-heading-1">Useful Links</span>
+    <li>Useful Links
       <ul class="list-bullet">
-        <li id="SVHiHknWP"><a href="https://danielkeep.github.io/tlborm/book">https://danielkeep.github.io/tlborm/book</a> is a useful source of info</li>
-        <li id="D27u2FeJ_"><a href="https://github.com/dtolnay/proc-macro-workshop">https://github.com/dtolnay/proc-macro-workshop</a></li>
+        <li><a href="https://danielkeep.github.io/tlborm/book">https://danielkeep.github.io/tlborm/book</a> is a useful source of info</li>
+        <li><a href="https://github.com/dtolnay/proc-macro-workshop">https://github.com/dtolnay/proc-macro-workshop</a></li>
       </ul>
     </li>
-    <li id="inz8aU59T"><span class="rm-heading-1">Arguments</span>
+    <li>Arguments
       <ul class="list-bullet">
-        <li id="j94ChyGcs">Macro argument types
+        <li>Macro argument types
           <ul class="list-bullet">
-            <li id="c0Yp4w6bk"><code>expr</code> - Any expression</li>
-            <li id="T6ZRUQnc6"><code>ident</code> - An identifier</li>
-            <li id="MYJ7helSB"><code>path</code> - A module path</li>
-            <li id="YPCwGTsMF"><code>ty</code> - A type</li>
-            <li id="4ADqKcxqM"><code>item</code> - A top level item (<code>use</code>, <code>struct Something{}</code>, etc.)</li>
-            <li id="Lkiwefc1q"><code>tt</code> - Any token tree</li>
-            <li id="DU5pHf3c0"><code>block</code> - A code block in brackets</li>
+            <li><code>expr</code> - Any expression</li>
+            <li><code>ident</code> - An identifier</li>
+            <li><code>path</code> - A module path</li>
+            <li><code>ty</code> - A type</li>
+            <li><code>item</code> - A top level item (<code>use</code>, <code>struct Something{}</code>, etc.)</li>
+            <li><code>tt</code> - Any token tree</li>
+            <li><code>block</code> - A code block in brackets</li>
           </ul>
         </li>
-        <li id="bTlYx2E1a">Argument patterns can have <code>*</code> or <code>+</code> added to it to indicate repetition.
+        <li>Argument patterns can have <code>*</code> or <code>+</code> added to it to indicate repetition.
           <ul class="list-bullet">
-            <li id="I7OEByqZo"><pre><code><span class="hljs-source hljs-rust"><span class="hljs-meta hljs-macro hljs-rust"><span class="hljs-support hljs-function hljs-rust">macro_rules!</span> <span class="hljs-entity hljs-name hljs-macro hljs-rust">macro</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
-	<span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span>$an_arg: expr, <span class="hljs-keyword hljs-operator hljs-rust">$</span><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-variable hljs-other hljs-rust">$num</span>: expr<span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span>,<span class="hljs-keyword hljs-operator hljs-rust">*</span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span> <span class="hljs-keyword hljs-operator hljs-rust">=&gt;</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span> 
-	 	<span class="hljs-storage hljs-type hljs-rust">let</span> <span class="hljs-storage hljs-modifier hljs-rust">mut</span> x <span class="hljs-keyword hljs-operator hljs-rust">=</span> <span class="hljs-support hljs-function hljs-rust">get_number</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-variable hljs-other hljs-rust">$an_arg</span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span><span class="hljs-punctuation hljs-terminator hljs-rust">;</span>	
-        <span class="hljs-keyword hljs-operator hljs-rust">$</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span>
-            x <span class="hljs-keyword hljs-operator hljs-rust">+</span><span class="hljs-keyword hljs-operator hljs-rust">=</span> <span class="hljs-variable hljs-other hljs-rust">$num</span><span class="hljs-punctuation hljs-terminator hljs-rust">;</span>
-      	</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span><span class="hljs-keyword hljs-operator hljs-rust">*</span> <span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> Wrapping it like this expands the variadic arguments
-</span>      	x
-	<span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span>
-</span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span></span></code></pre></li>
+            <li>
+<pre><code><span class="hljs-source hljs-rust"><span class="hljs-meta hljs-macro hljs-rust"><span class="hljs-support hljs-function hljs-rust">macro_rules!</span> <span class="hljs-entity hljs-name hljs-macro hljs-rust">macro</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
+<span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span>$an_arg: expr, <span class="hljs-keyword hljs-operator hljs-rust">$</span><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-variable hljs-other hljs-rust">$num</span>: expr<span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span>,<span class="hljs-keyword hljs-operator hljs-rust">*</span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span> <span class="hljs-keyword hljs-operator hljs-rust">=&gt;</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span> 
+ 	<span class="hljs-storage hljs-type hljs-rust">let</span> <span class="hljs-storage hljs-modifier hljs-rust">mut</span> x <span class="hljs-keyword hljs-operator hljs-rust">=</span> <span class="hljs-support hljs-function hljs-rust">get_number</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-variable hljs-other hljs-rust">$an_arg</span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span><span class="hljs-punctuation hljs-terminator hljs-rust">;</span>	
+      <span class="hljs-keyword hljs-operator hljs-rust">$</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span>
+          x <span class="hljs-keyword hljs-operator hljs-rust">+</span><span class="hljs-keyword hljs-operator hljs-rust">=</span> <span class="hljs-variable hljs-other hljs-rust">$num</span><span class="hljs-punctuation hljs-terminator hljs-rust">;</span>
+    	</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span><span class="hljs-keyword hljs-operator hljs-rust">*</span> <span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> Wrapping it like this expands the variadic arguments
+</span>    	x
+<span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span>
+</span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
+</span></code></pre></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="f3BAsf-Fs"><span class="rm-heading-1">Nested macros</span>
+    <li>Nested macros
       <ul class="list-bullet">
-        <li id="wrR5TPhUH">Macros normally can&#39;t call each other if one of the macros is used from another module.</li>
-        <li id="3V0ZN2aS4">But you can create another macro rule in the same macro. Traditionally these rules start with @ to reduce chances of accidentally triggering the rule.</li>
-        <li id="y9t6zJ-FF"><pre><code><span class="hljs-source hljs-rust"><span class="hljs-meta hljs-macro hljs-rust"><span class="hljs-support hljs-function hljs-rust">macro_rules!</span> <span class="hljs-entity hljs-name hljs-macro hljs-rust">macro1</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
-  <span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span> <span class="hljs-keyword hljs-operator hljs-rust">=&gt;</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span> <span class="hljs-support hljs-macro hljs-rust">macro1!</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-keyword hljs-operator hljs-rust">@</span>macro2</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span>;
-  <span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span>@macro2<span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span> <span class="hljs-keyword hljs-operator hljs-rust">=&gt;</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span> the nested <span class="hljs-invalid hljs-illegal hljs-rust">macro</span> <span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span>
-</span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span></span></code></pre></li>
+        <li>Macros normally can&#39;t call each other if one of the macros is used from another module.</li>
+        <li>But you can create another macro rule in the same macro. Traditionally these rules start with @ to reduce chances of accidentally triggering the rule.</li>
+        <li>
+<pre><code><span class="hljs-source hljs-rust"><span class="hljs-meta hljs-macro hljs-rust"><span class="hljs-support hljs-function hljs-rust">macro_rules!</span> <span class="hljs-entity hljs-name hljs-macro hljs-rust">macro1</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
+<span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span> <span class="hljs-keyword hljs-operator hljs-rust">=&gt;</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span> <span class="hljs-support hljs-macro hljs-rust">macro1!</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-keyword hljs-operator hljs-rust">@</span>macro2</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span>;
+<span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span>@macro2<span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span> <span class="hljs-keyword hljs-operator hljs-rust">=&gt;</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span> the nested <span class="hljs-invalid hljs-illegal hljs-rust">macro</span> <span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span>
+</span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
+</span></code></pre></li>
       </ul>
     </li>
-    <li id="j4nmuiLP_"><span class="rm-heading-1">Dealing with tokens</span>
+    <li>Dealing with tokens
       <ul class="list-bullet">
-        <li id="DUQaFf5ea">The <code>paste</code> crate lets you concatenate multiple identifiers into a new identifier, which is difficult to do in normal macros.</li>
+        <li>The <code>paste</code> crate lets you concatenate multiple identifiers into a new identifier, which is difficult to do in normal macros.</li>
       </ul>
     </li>
-    <li id="Wt_9OU23v"><span class="rm-heading-1">Proc Macros</span>
+    <li>Proc Macros
       <ul class="list-bullet">
-        <li id="ZrTQccZqG">These are more powerful and are written in Rust.</li>
-        <li id="WNqKRRlYS">They can be function-like macros as with <code>macro_rules!</code> or attribute macros like <code>#[test]</code>, or derive macros to work with <code>#[derive(...)]</code>.</li>
-        <li id="9HY5-CXpg">Since these are effectively compiler plugins, they have to be in a separate crate from the one that uses the macro.</li>
-        <li id="OgCovgjUk"><span class="rm-heading-2">Useful Crates</span>
+        <li>These are more powerful and are written in Rust.</li>
+        <li>They can be function-like macros as with <code>macro_rules!</code> or attribute macros like <code>#[test]</code>, or derive macros to work with <code>#[derive(...)]</code>.</li>
+        <li>Since these are effectively compiler plugins, they have to be in a separate crate from the one that uses the macro.</li>
+        <li>Useful Crates
           <ul class="list-bullet">
-            <li id="M7Y2ODQff"><code>syn</code> helps with parsing Rust source.</li>
+            <li><code>syn</code> helps with parsing Rust source.</li>
           </ul>
         </li>
       </ul>
