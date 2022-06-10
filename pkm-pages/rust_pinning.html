@@ -7,17 +7,17 @@ updated: 2021-04-01
 
 
   <ul class="list-bullet">
-    <li id="Dt9-E6i3U">Useful Reading
+    <li>Useful Reading
       <ul class="list-bullet">
-        <li id="iY8ZPcg9c"><span><strong class="rm-attr-ref">[std:</strong> pin Documentation](<a href="https://doc.rust-lang.org/1.51.0/std/pin/index.html">https://doc.rust-lang.org/1.51.0/std/pin/index.html</a>)</span></li>
-        <li id="g4sFT_oii"><a href="https://fasterthanli.me/articles/pin-and-suffering">Pin and suffering - fasterthanli.me</a></li>
+        <li><span><span class="font-medium text-gray-800">[std:</span> <span>pin Documentation](<a href="https://doc.rust-lang.org/1.51.0/std/pin/index.html">https://doc.rust-lang.org/1.51.0/std/pin/index.html</a>)</span></span></li>
+        <li><a href="https://fasterthanli.me/articles/pin-and-suffering">Pin and suffering - fasterthanli.me</a></li>
       </ul>
     </li>
-    <li id="K950YM5Ox">Pinning is useful in async because executors have references to Futures while polling. If the executor tries to use a future that was moved, then bad things happen. So the Pin keeps it in one place while the executor can poll it.</li>
-    <li id="bsTUvSyXP"><code>Pin&lt;Box&lt;T&gt;&gt;</code> is a pattern that shows up a lot
+    <li>Pinning is useful in async because executors have references to Futures while polling. If the executor tries to use a future that was moved, then bad things happen. So the Pin keeps it in one place while the executor can poll it.</li>
+    <li><code>Pin&lt;Box&lt;T&gt;&gt;</code> is a pattern that shows up a lot
       <ul class="list-bullet">
-        <li id="yG6cy1lF6">This is similar to using an <code>Arc&lt;Mutex&lt;T&gt;&gt;</code> or similar for lifetimes. It&#39;s not the most efficient way to write things but can be a lot easier to put together.</li>
-        <li id="tHPekLmkC">It allows a type that is normally <code>!Unpin</code> to be used where an <code>Unpin</code> is needed, because the pinned type is then the Box and while the Box value can move, the value that it points to will always stay in the same location on the heap until it is deallocated, as required by the <code>Pin</code> semantics.</li>
+        <li>This is similar to using an <code>Arc&lt;Mutex&lt;T&gt;&gt;</code> or similar for lifetimes. It&#39;s not the most efficient way to write things but can be a lot easier to put together.</li>
+        <li>It allows a type that is normally <code>!Unpin</code> to be used where an <code>Unpin</code> is needed, because the pinned type is then the Box and while the Box value can move, the value that it points to will always stay in the same location on the heap until it is deallocated, as required by the <code>Pin</code> semantics.</li>
       </ul>
     </li>
   </ul>

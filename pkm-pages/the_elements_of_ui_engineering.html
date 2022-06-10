@@ -1,87 +1,86 @@
 ---
 title: "The Elements of UI Engineering"
-tags: programming
+tags: programming, UI
 date: 2020-01-04
-updated: 2020-01-04
+updated: 2022-06-10
 ---
 
 
   <ul class="list-bullet">
-    <li id="noUirR29d"><span class="rm-heading-1"><a href="/notes/ui">UI</a>  </span></li>
-    <li id="a5E0tUI96"><span><strong class="rm-attr-ref">Source:</strong> <a href="https://overreacted.io/the-elements-of-ui-engineering/">https://overreacted.io/the-elements-of-ui-engineering/</a></span></li>
-    <li id="Ettt-V9fD">There are a number of fundamental issues to consider when creating a good UI. </li>
-    <li id="tJLmyCkTT"><span class="rm-heading-2">Consistency</span>
+    <li><span><span class="font-medium text-gray-800">Source:</span> <span><a href="https://overreacted.io/the-elements-of-ui-engineering/">https://overreacted.io/the-elements-of-ui-engineering/</a></span></span></li>
+    <li>There are a number of fundamental issues to consider when creating a good UI.</li>
+    <li>Consistency
       <ul class="list-bullet">
-        <li id="ypyuCrXIu">Elements on the page should be globally and locally consistent. State associated with a button should update in all the appropriate places when the button is clicked. </li>
+        <li>Elements on the page should be globally and locally consistent. State associated with a button should update in all the appropriate places when the button is clicked.</li>
       </ul>
     </li>
-    <li id="3HzRy-Kc2"><span class="rm-heading-2">Responsiveness </span>
+    <li>Responsiveness
       <ul class="list-bullet">
-        <li id="c-l5Pp5KZ">Smooth scrolling</li>
-        <li id="UmwUhZX8S">Visual indicators for delays greater than 100ms</li>
-        <li id="KJ92pyYgf">Page layout shouldn’t jump around when loading</li>
+        <li>Smooth scrolling</li>
+        <li>Visual indicators for delays greater than 100ms</li>
+        <li>Page layout shouldn’t jump around when loading</li>
       </ul>
     </li>
-    <li id="gx5w2tAPF"><span class="rm-heading-2">Latency</span>
+    <li>Latency
       <ul class="list-bullet">
-        <li id="gDriTGQf7">How do we gracefully handle latency without a bunch of loading spinners all the time?</li>
+        <li>How do we gracefully handle latency without a bunch of loading spinners all the time?</li>
       </ul>
     </li>
-    <li id="Cbp63UQ0b"><span class="rm-heading-2">Navigation</span>
+    <li>Navigation
       <ul class="list-bullet">
-        <li id="XuJbS4ewT">Navigation should be local to the thing clicked. Clicking a tab should not modify the UI outside of the set of tabs. When going between states, remember the details of the previous state so that the user doesn’t have to set it up again every time he goes back and forth. </li>
+        <li>Navigation should be local to the thing clicked. Clicking a tab should not modify the UI outside of the set of tabs. When going between states, remember the details of the previous state so that the user doesn’t have to set it up again every time he goes back and forth.</li>
       </ul>
     </li>
-    <li id="c6vx3QGNU"><span class="rm-heading-2">Staleness</span>
+    <li>Staleness
       <ul class="list-bullet">
-        <li id="Xt5ksyKHr">Navigation can be enhanced by using a local cache, but this brings its own issues. </li>
-        <li id="GpmJrGDj5">What about the most recent changes made, which may affect cached data?</li>
-        <li id="Bd-HD4bCh">How does local cache interact with fetched data?</li>
-        <li id="6gz_BsQ74">How do local changes update global data?</li>
+        <li>Navigation can be enhanced by using a local cache, but this brings its own issues.</li>
+        <li>What about the most recent changes made, which may affect cached data?</li>
+        <li>How does local cache interact with fetched data?</li>
+        <li>How do local changes update global data?</li>
       </ul>
     </li>
-    <li id="16o8eIMLX"><span class="rm-heading-2">Entropy</span>
+    <li>Entropy
       <ul class="list-bullet">
-        <li id="IdMnl0MkO">How do we deal with combinatorics explosions of states as the UI grows? UI output should be easy to predict. </li>
+        <li>How do we deal with combinatorics explosions of states as the UI grows? UI output should be easy to predict.</li>
       </ul>
     </li>
-    <li id="HT6HBDtZQ"><span class="rm-heading-2">Priority</span>
+    <li>Priority
       <ul class="list-bullet">
-        <li id="Vsw98iX9G">What appears on top of what?</li>
+        <li>What appears on top of what?</li>
       </ul>
     </li>
-    <li id="aOgnzJAmv"><span class="rm-heading-2">Accessibility</span>
+    <li>Accessibility
       <ul class="list-bullet">
-        <li id="4zl3wf6cX">Not everyone is using a mouse</li>
-        <li id="hV4mJtrRV">Color blindness</li>
-        <li id="hMLB4hmWC">Screen readers </li>
-        <li id="Mq3nlK0kD">Poor vision </li>
-        <li id="a--9rcxob">Contrast</li>
+        <li>Not everyone is using a mouse</li>
+        <li>Color blindness</li>
+        <li>Screen readers</li>
+        <li>Poor vision</li>
+        <li>Contrast</li>
       </ul>
     </li>
-    <li id="grBAlcpWm"><span class="rm-heading-2">Internationalization</span>
+    <li>Internationalization
       <ul class="list-bullet">
-        <li id="2CWR4U1D9">Support multiple languages while retaining</li>
-        <li id="tK5zATvhV">Responsiveness</li>
-        <li id="oZpPLTZ3x">Low latency</li>
-        <li id="1Oj1PmnRa">Ease of updating</li>
+        <li>Support multiple languages while retaining</li>
+        <li>Responsiveness</li>
+        <li>Low latency</li>
+        <li>Ease of updating</li>
       </ul>
     </li>
-    <li id="5Ffi9xZIt"><span class="rm-heading-2">Delivery</span>
+    <li>Delivery
       <ul class="list-bullet">
-        <li id="Uo9Zjt00R">Initial code payload vs. later latency when downloading further packages. </li>
-        <li id="uJkaixaKp">Idle-until-urgent is a nice paradigm here. </li>
+        <li>Initial code payload vs. later latency when downloading further packages.</li>
+        <li>Idle-until-urgent is a nice paradigm here.</li>
       </ul>
     </li>
-    <li id="vez1zBmD7"><span class="rm-heading-2">Resilience</span>
+    <li>Resilience
       <ul class="list-bullet">
-        <li id="x-Ew6-ZEp">How does the application respond to bugs?</li>
-        <li id="TllULSC5i">Exceptions should be relatively self-contained. A bug in rendering one item shouldn’t cause others to fail. </li>
+        <li>How does the application respond to bugs?</li>
+        <li>Exceptions should be relatively self-contained. A bug in rendering one item shouldn’t cause others to fail.</li>
       </ul>
     </li>
-    <li id="j7Tx3zWW_"><span class="rm-heading-2">Abstraction</span>
+    <li>Abstraction
       <ul class="list-bullet">
-        <li id="0bj6UzyP-">How do we properly share common code between different parts of the application? When are two UI components similar enough that we should combine them into a single component?</li>
+        <li>How do we properly share common code between different parts of the application? When are two UI components similar enough that we should combine them into a single component?</li>
       </ul>
     </li>
   </ul>

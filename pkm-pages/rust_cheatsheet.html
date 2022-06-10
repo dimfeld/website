@@ -1,110 +1,116 @@
 ---
 title: "Rust Cheatsheet"
 tags: cheat sheet, Rust
-date: 2020-08-17
+date: 2021-01-25
 updated: 2021-01-25
 ---
 
 
   <ul class="list-bullet">
-    <li id="_ZH76U2nE"><span class="rm-heading-1">Asynchronous Rust</span>
+    <li>Asynchronous Rust
       <ul class="list-bullet">
-        <li id="1wv8dsSIj"><span class="rm-heading-2">Asynchronous Closures</span>
+        <li>Asynchronous Closures
           <ul class="list-bullet">
-            <li id="eL6bq6hNS">You can define code blocks as <code>async</code>, just like you can with functions. You&#39;ll usually need to use <code>move</code> on the code block as well.</li>
-            <li id="XFtS2Bwkl"><pre><code><span class="hljs-source hljs-rust"><span class="hljs-support hljs-function hljs-rust">the_function</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-meta hljs-function hljs-closure hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-begin hljs-rust">|</span></span></span><span class="hljs-meta hljs-function hljs-closure hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-end hljs-rust">|</span></span> </span><span class="hljs-meta hljs-function hljs-closure hljs-rust"><span class="hljs-storage hljs-modifier hljs-rust">move</span> async <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
-  <span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> the code
-</span></span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span>.await<span class="hljs-keyword hljs-operator hljs-rust">?</span><span class="hljs-punctuation hljs-terminator hljs-rust">;</span></span></code></pre></li>
+            <li>You can define code blocks as <code>async</code>, just like you can with functions. You&#39;ll usually need to use <code>move</code> on the code block as well.</li>
+            <li>
+<pre><code><span class="hljs-source hljs-rust"><span class="hljs-support hljs-function hljs-rust">the_function</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-meta hljs-function hljs-closure hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-begin hljs-rust">|</span></span></span><span class="hljs-meta hljs-function hljs-closure hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-end hljs-rust">|</span></span> </span><span class="hljs-meta hljs-function hljs-closure hljs-rust"><span class="hljs-storage hljs-modifier hljs-rust">move</span> async <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
+<span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> the code
+</span></span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span>.await<span class="hljs-keyword hljs-operator hljs-rust">?</span><span class="hljs-punctuation hljs-terminator hljs-rust">;</span>
+</span></code></pre></li>
           </ul>
         </li>
-        <li id="7xc4b6D2b"><span class="rm-heading-2">Taking Asynchronous Closure Arguments</span>
+        <li>Taking Asynchronous Closure Arguments
           <ul class="list-bullet">
-            <li id="0GBjq22-P">It starts like usual, with an <code>Fn</code>, <code>FnOnce</code>, or <code>FnMut</code> trait boundary, but you have to define the return type and you can&#39;t do <code>impl Future</code> in the trait.</li>
-            <li id="5K2WqorUs">The way around this is to define another type parameter, and put the trait boundary on that.</li>
-            <li id="22FarGhyJ"><pre><code><span class="hljs-source hljs-rust">
-async <span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-storage hljs-type hljs-function hljs-rust">fn</span> </span><span class="hljs-entity hljs-name hljs-function hljs-rust">takes_an_async_closure</span></span><span class="hljs-meta hljs-generic hljs-rust"><span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>F, Fut, R, E<span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-begin hljs-rust">(</span><span class="hljs-variable hljs-parameter hljs-rust">f</span> <span class="hljs-punctuation hljs-separator hljs-rust">:</span> F</span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-end hljs-rust">)</span></span></span></span><span class="hljs-meta hljs-function hljs-rust"> <span class="hljs-meta hljs-function hljs-return-type hljs-rust"><span class="hljs-punctuation hljs-separator hljs-rust">-&gt;</span> impl Future
+            <li>It starts like usual, with an <code>Fn</code>, <code>FnOnce</code>, or <code>FnMut</code> trait boundary, but you have to define the return type and you can&#39;t do <code>impl Future</code> in the trait.</li>
+            <li>The way around this is to define another type parameter, and put the trait boundary on that.</li>
+            <li>
+<pre><code><span class="hljs-source hljs-rust">async <span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-storage hljs-type hljs-function hljs-rust">fn</span> </span><span class="hljs-entity hljs-name hljs-function hljs-rust">takes_an_async_closure</span></span><span class="hljs-meta hljs-generic hljs-rust"><span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>F, Fut, R, E<span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-begin hljs-rust">(</span><span class="hljs-variable hljs-parameter hljs-rust">f</span> <span class="hljs-punctuation hljs-separator hljs-rust">:</span> F</span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-end hljs-rust">)</span></span></span></span><span class="hljs-meta hljs-function hljs-rust"> <span class="hljs-meta hljs-function hljs-return-type hljs-rust"><span class="hljs-punctuation hljs-separator hljs-rust">-&gt;</span> impl Future
 </span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-keyword hljs-other hljs-rust">where</span>
-    F<span class="hljs-punctuation hljs-separator hljs-rust">:</span> FnOnce<span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span> -&gt; Fut,
-    Fut<span class="hljs-punctuation hljs-separator hljs-rust">:</span> <span class="hljs-meta hljs-generic hljs-rust">Future<span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>Output = <span class="hljs-meta hljs-generic hljs-rust">Result<span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>R, E<span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span><span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span>,
-    R<span class="hljs-punctuation hljs-separator hljs-rust">:</span> Send,
-    E<span class="hljs-punctuation hljs-separator hljs-rust">:</span> Send
+  F<span class="hljs-punctuation hljs-separator hljs-rust">:</span> FnOnce<span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span> -&gt; Fut,
+  Fut<span class="hljs-punctuation hljs-separator hljs-rust">:</span> <span class="hljs-meta hljs-generic hljs-rust">Future<span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>Output = <span class="hljs-meta hljs-generic hljs-rust">Result<span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>R, E<span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span><span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span>,
+  R<span class="hljs-punctuation hljs-separator hljs-rust">:</span> Send,
+  E<span class="hljs-punctuation hljs-separator hljs-rust">:</span> Send
 </span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
-  <span class="hljs-support hljs-function hljs-rust">f</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span>.await
-</span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span></span></code></pre></li>
+<span class="hljs-support hljs-function hljs-rust">f</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span>.await
+</span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
+</span></code></pre></li>
           </ul>
         </li>
-        <li id="R2WthZqpn"><span class="rm-heading-2">Dealing with Time</span>
+        <li>Dealing with Time
           <ul class="list-bullet">
-            <li id="2zVG5Fx-e"><span class="rm-heading-3">Periodic Functions</span>
+            <li>Periodic Functions
               <ul class="list-bullet">
-                <li id="GLqiyEEsA">For loops that need to run periodically, normally you would use <code>sleep</code> to wait for the next call.</li>
-                <li id="9UCDpD4wP">But Tokio provides an <code>interval</code> object which accounts for the time that the call actually took. So your 500ms periodic poll will actually run every 500ms, instead of 500ms + some random amount.</li>
-                <li id="Y3ON0R4nV">The first call to <code>interval.tick()</code> will trigger right away. You can use <code>interval_at</code> instead if this is undesirable, but generally it just means you move the wait part of the loop to the top.</li>
+                <li>For loops that need to run periodically, normally you would use <code>sleep</code> to wait for the next call.</li>
+                <li>But Tokio provides an <code>interval</code> object which accounts for the time that the call actually took. So your 500ms periodic poll will actually run every 500ms, instead of 500ms + some random amount.</li>
+                <li>The first call to <code>interval.tick()</code> will trigger right away. You can use <code>interval_at</code> instead if this is undesirable, but generally it just means you move the wait part of the loop to the top.</li>
               </ul>
             </li>
-            <li id="EHlBtUJCE"><span class="rm-heading-3">Timeouts</span>
+            <li>Timeouts
               <ul class="list-bullet">
-                <li id="6dR1ogo38"><code>tokio::time::timeout(duration, operation())</code> is an easier way to do a timeout than using <code>select!</code> with a sleep.</li>
+                <li><code>tokio::time::timeout(duration, operation())</code> is an easier way to do a timeout than using <code>select!</code> with a sleep.</li>
               </ul>
             </li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="hFciNvWve"><span class="rm-heading-1">Inner Arc Pattern</span>
+    <li>Inner Arc Pattern
       <ul class="list-bullet">
-        <li id="pa12yC7iO">For types that you want to always be clonable and within an <code>Arc</code> without needing to deal with the Arc everywhere, you can make an outer NewType that just contains an <code>Arc&lt;InnerType&gt;</code>.</li>
-        <li id="yw8-8lnQH">In this case you do have to implement Clone manually for things to really work properly. But it&#39;s pretty easy.</li>
-        <li id="HBHdW_KjC"><pre><code><span class="hljs-source hljs-rust"><span class="hljs-meta hljs-struct hljs-rust"><span class="hljs-storage hljs-type hljs-struct hljs-rust">struct</span> </span><span class="hljs-meta hljs-struct hljs-rust"><span class="hljs-entity hljs-name hljs-struct hljs-rust">Queue</span></span><span class="hljs-meta hljs-struct hljs-rust"><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-meta hljs-generic hljs-rust">Arc<span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>QueueInner<span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span></span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span><span class="hljs-punctuation hljs-terminator hljs-rust">;</span>
-             
+        <li>For types that you want to always be clonable and within an <code>Arc</code> without needing to deal with the Arc everywhere, you can make an outer NewType that just contains an <code>Arc&lt;InnerType&gt;</code>.</li>
+        <li>In this case you do have to implement Clone manually for things to really work properly. But it&#39;s pretty easy.</li>
+        <li>
+<pre><code><span class="hljs-source hljs-rust"><span class="hljs-meta hljs-struct hljs-rust"><span class="hljs-storage hljs-type hljs-struct hljs-rust">struct</span> </span><span class="hljs-meta hljs-struct hljs-rust"><span class="hljs-entity hljs-name hljs-struct hljs-rust">Queue</span></span><span class="hljs-meta hljs-struct hljs-rust"><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-meta hljs-generic hljs-rust">Arc<span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>QueueInner<span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span></span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span><span class="hljs-punctuation hljs-terminator hljs-rust">;</span>
+           
 <span class="hljs-meta hljs-impl hljs-rust"><span class="hljs-storage hljs-type hljs-impl hljs-rust">impl</span> </span><span class="hljs-meta hljs-impl hljs-rust">Clone <span class="hljs-keyword hljs-other hljs-rust">for</span></span><span class="hljs-meta hljs-impl hljs-rust"> <span class="hljs-entity hljs-name hljs-impl hljs-rust">Queue</span> </span><span class="hljs-meta hljs-impl hljs-rust"><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
-    <span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-storage hljs-type hljs-function hljs-rust">fn</span> </span><span class="hljs-entity hljs-name hljs-function hljs-rust">clone</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-begin hljs-rust">(</span><span class="hljs-keyword hljs-operator hljs-rust">&amp;</span><span class="hljs-variable hljs-parameter hljs-rust">self</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-end hljs-rust">)</span></span></span></span><span class="hljs-meta hljs-function hljs-rust"> <span class="hljs-meta hljs-function hljs-return-type hljs-rust"><span class="hljs-punctuation hljs-separator hljs-rust">-&gt;</span> Queue</span> </span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
-        Queue<span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-variable hljs-language hljs-rust">self</span>.<span class="hljs-constant hljs-numeric hljs-float hljs-rust">0.</span><span class="hljs-support hljs-function hljs-rust">clone</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span>
-    </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
+  <span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-storage hljs-type hljs-function hljs-rust">fn</span> </span><span class="hljs-entity hljs-name hljs-function hljs-rust">clone</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-begin hljs-rust">(</span><span class="hljs-keyword hljs-operator hljs-rust">&amp;</span><span class="hljs-variable hljs-parameter hljs-rust">self</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-end hljs-rust">)</span></span></span></span><span class="hljs-meta hljs-function hljs-rust"> <span class="hljs-meta hljs-function hljs-return-type hljs-rust"><span class="hljs-punctuation hljs-separator hljs-rust">-&gt;</span> Queue</span> </span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
+      Queue<span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span><span class="hljs-variable hljs-language hljs-rust">self</span>.<span class="hljs-constant hljs-numeric hljs-float hljs-rust">0.</span><span class="hljs-support hljs-function hljs-rust">clone</span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span>
+  </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
 </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
-
 <span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> Implement methods on the outer type, which access the inner type.
 </span><span class="hljs-meta hljs-impl hljs-rust"><span class="hljs-storage hljs-type hljs-impl hljs-rust">impl</span> </span><span class="hljs-meta hljs-impl hljs-rust"><span class="hljs-entity hljs-name hljs-impl hljs-rust">Queue</span> </span><span class="hljs-meta hljs-impl hljs-rust"><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
-  <span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-storage hljs-type hljs-function hljs-rust">fn</span> </span><span class="hljs-entity hljs-name hljs-function hljs-rust">do_job</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-begin hljs-rust">(</span><span class="hljs-keyword hljs-operator hljs-rust">&amp;</span><span class="hljs-variable hljs-parameter hljs-rust">self</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-end hljs-rust">)</span></span></span></span><span class="hljs-meta hljs-function hljs-rust"> </span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
-    <span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> do stuff with self.0 here...
-</span>  </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
-</span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span></span></code></pre></li>
-        <li id="dSE65Veiv">This pattern should only be used for types that you know will be passed around between threads or async contexts, such as connection pools. Otherwise it&#39;s usually better to let the user of your library add an <code>Arc</code> if needed.</li>
+<span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-storage hljs-type hljs-function hljs-rust">fn</span> </span><span class="hljs-entity hljs-name hljs-function hljs-rust">do_job</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-begin hljs-rust">(</span><span class="hljs-keyword hljs-operator hljs-rust">&amp;</span><span class="hljs-variable hljs-parameter hljs-rust">self</span></span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-function hljs-parameters hljs-rust"><span class="hljs-punctuation hljs-section hljs-parameters hljs-end hljs-rust">)</span></span></span></span><span class="hljs-meta hljs-function hljs-rust"> </span><span class="hljs-meta hljs-function hljs-rust"><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
+  <span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> do stuff with self.0 here...
+</span></span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
+</span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
+</span></code></pre></li>
+        <li>This pattern should only be used for types that you know will be passed around between threads or async contexts, such as connection pools. Otherwise it&#39;s usually better to let the user of your library add an <code>Arc</code> if needed.</li>
       </ul>
     </li>
-    <li id="84GS6ofUj"><span class="rm-heading-2">Partial Moves</span>
+    <li>Partial Moves
       <ul class="list-bullet">
-        <li id="xvfCTr9ns">Rust doesn&#39;t allow moving part of a structure out, but there are better ways than just <code>clone</code>.</li>
-        <li id="mwkz7YR99">Use <code>mem::replace</code> to take items out from structures without needing to take ownership of the entire thing. </li>
-        <li id="IfWH4LhgU">Destructuring also helps when you want to eventually move all the items out of the structure.
+        <li>Rust doesn&#39;t allow moving part of a structure out, but there are better ways than just <code>clone</code>.</li>
+        <li>Use <code>mem::replace</code> to take items out from structures without needing to take ownership of the entire thing. </li>
+        <li>Destructuring also helps when you want to eventually move all the items out of the structure.
           <ul class="list-bullet">
-            <li id="ACo_5FjgV">Lately I&#39;ve been just destructuring more and more.</li>
+            <li>Lately I&#39;ve been just destructuring more and more.</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="CrzgRR4-V"><span class="rm-heading-1">Serde</span>
+    <li>Serde
       <ul class="list-bullet">
-        <li id="JnFQbZUVM">To enable auto-derive of Serialize and Deserialize traits, the best way is to enable the <code>derive</code> feature in the <code>serde</code> crate. You can also just include the <code>serde-derive</code> crate manually.</li>
+        <li>To enable auto-derive of Serialize and Deserialize traits, the best way is to enable the <code>derive</code> feature in the <code>serde</code> crate. You can also just include the <code>serde-derive</code> crate manually.</li>
       </ul>
     </li>
-    <li id="nxo3PCTCo"><span class="rm-heading-2">Performance</span>
+    <li>Performance
       <ul class="list-bullet">
-        <li id="Nvq-IRBQF"><code>fxhash</code> crate is good for fast hashing that doesn&#39;t need to be cryptographically secure.</li>
-        <li id="AvK5PYpWl"><a href="https://nnethercote.github.io/perf-book/">Rust Performance Book</a></li>
-        <li id="i_28WH52k">Enable Link-time Optimization
+        <li><code>fxhash</code> crate is good for fast hashing that doesn&#39;t need to be cryptographically secure.</li>
+        <li><a href="https://nnethercote.github.io/perf-book/">Rust Performance Book</a></li>
+        <li>Enable Link-time Optimization
           <ul class="list-bullet">
-            <li id="lky8O-CVG"><pre><code><span class="hljs-source hljs-js"><span class="hljs-meta hljs-sequence hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-variable hljs-other hljs-object hljs-js">profile</span><span class="hljs-punctuation hljs-accessor hljs-js">.</span><span class="hljs-meta hljs-property hljs-object hljs-js">release</span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span>
-<span class="hljs-variable hljs-other hljs-readwrite hljs-js">lto</span> <span class="hljs-keyword hljs-operator hljs-assignment hljs-js">=</span> <span class="hljs-constant hljs-language hljs-boolean hljs-true hljs-js">true</span></span></code></pre></li>
+            <li>
+<pre><code><span class="hljs-source hljs-js"><span class="hljs-meta hljs-sequence hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-variable hljs-other hljs-object hljs-js">profile</span><span class="hljs-punctuation hljs-accessor hljs-js">.</span><span class="hljs-meta hljs-property hljs-object hljs-js">release</span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span>
+<span class="hljs-variable hljs-other hljs-readwrite hljs-js">lto</span> <span class="hljs-keyword hljs-operator hljs-assignment hljs-js">=</span> <span class="hljs-constant hljs-language hljs-boolean hljs-true hljs-js">true</span>
+</span></code></pre></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="Lyqp4VTGn"><span class="rm-heading-1">Tracing Level Format</span>
+    <li>Tracing Level Format
       <ul class="list-bullet">
-        <li id="rip0scjiU"><code>tracing_subscriber::EnvFilter</code> takes the format <code>target[span{field=value}]=level</code></li>
-        <li id="rWB2syxjh">All except for <code>level</code> are optional.</li>
-        <li id="BIPU2JT-z"><code>value</code>, if present, acts as a regex unless it&#39;s a number or boolean. As a string, it should be surrounded by quotes. If absent, then it just filters on the presence of <code>field</code>.</li>
+        <li><code>tracing_subscriber::EnvFilter</code> takes the format <code>target[span{field=value}]=level</code></li>
+        <li>All except for <code>level</code> are optional.</li>
+        <li><code>value</code>, if present, acts as a regex unless it&#39;s a number or boolean. As a string, it should be surrounded by quotes. If absent, then it just filters on the presence of <code>field</code>.</li>
       </ul>
     </li>
   </ul>

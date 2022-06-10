@@ -48,8 +48,10 @@
 <nav class="flex flex-col">
   <a
     href="/notes"
-    on:click={() => dispatch('change', null)}
-    class={!$activeTag && !currentPost ? selectedDivClasses : unselectedDivClasses}>
+    on:click={() => dispatch('change', '')}
+    class={!$activeTag && !currentPost
+      ? selectedDivClasses
+      : unselectedDivClasses}>
     <span class="truncate group-hover:underline">All Notes</span>
   </a>
   {#each tags as tag (tag.id)}
@@ -61,7 +63,9 @@
       <span class="truncate group-hover:underline">{tag.label}</span>
       {#if tag.count}
         <span
-          class={tag.selected ? selectedBubbleClasses : unselectedBubbleClasses}>
+          class={tag.selected
+            ? selectedBubbleClasses
+            : unselectedBubbleClasses}>
           {tag.count}
         </span>
       {/if}

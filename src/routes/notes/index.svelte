@@ -35,6 +35,6 @@
 
 <PostList base="notes" posts={activeNotes} useUpdatedDate={true} />
 
-<div class="text-center sm:hidden mt-8">
+<div class="mt-8 text-center sm:hidden">
   <a href="/rss/notes.xml">Notes RSS Feed</a>
 </div>

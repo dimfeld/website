@@ -261,19 +261,7 @@ article .has-component > *:not(:last-child) {
   display: none;
 }
 
-article.roam-page {
-  .rm-heading-1 {
-    @apply text-2xl;
-  }
-
-  .rm-heading-2 {
-    @apply text-xl;
-  }
-
-  .rm-heading-3 {
-    @apply text-lg;
-  }
-
+article.pkm-page {
   ul,
   ol {
     margin-top: 0rem;

@@ -1,5 +1,5 @@
 import { maxBy } from 'lodash-es';
-import { postsDir, notesDir, roamDir, readMdFiles, readHtmlFiles, Post } from './readPosts';
+import { postsDir, notesDir, pkmDir, readMdFiles, readHtmlFiles, Post } from './readPosts';
 import partition from 'just-partition';
 import sorter from 'sorters';
 import { IncomingMessage, ServerResponse } from 'http';
@@ -24,28 +24,28 @@ export interface PostCache {
 export var postCache: PostCache;
 
 export async function initPostCache() {
-  let [mdPosts, htmlPosts, mdNotes, htmlNotes, roamPages] = await Promise.all([
+  let [mdPosts, htmlPosts, mdNotes, htmlNotes, pkmPages] = await Promise.all([
     readMdFiles(postsDir, 'post'),
     readHtmlFiles(postsDir, 'post'),
     readMdFiles(notesDir, 'note'),
     readHtmlFiles(notesDir, 'note'),
-    readHtmlFiles(roamDir, 'note'),
+    readHtmlFiles(pkmDir, 'note'),
   ]);
 
-  for (let page of roamPages) {
-    page.source = 'roam';
+  for (let page of pkmPages) {
+    page.source = 'pkm';
   }
 
-  // All roam-exported pages are together, so determine which ones are "posts"
+  // All PKM-exported pages are together, so determine which ones are "posts"
   // by the presence of the Writing tag.
-  let [roamPosts, roamNotes] = partition(roamPages, (p) => p.tags.includes('Writing'));
+  let [pkmPosts, pkmNotes] = partition(pkmPages, (p) => p.tags.includes('Writing'));
 
-  for (let p of roamPosts) {
+  for (let p of pkmPosts) {
     p.type = 'post';
   }
 
-  let postList = [...mdPosts, ...htmlPosts, ...roamPosts];
-  let noteList = [...mdNotes, ...htmlNotes, ...roamNotes];
+  let postList = [...mdPosts, ...htmlPosts, ...pkmPosts];
+  let noteList = [...mdNotes, ...htmlNotes, ...pkmNotes];
 
   postList.sort(sorter({ value: 'date', descending: true }, { value: 'title', descending: false }));
   noteList.sort(sorter({ value: (n) => n.updated || n.date, descending: true }, { value: 'title', descending: false }));

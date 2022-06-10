@@ -1,16 +1,16 @@
 ---
 title: "Transactionally Staged Job Drain Queues"
-tags: Job Queue, programming, database
+tags: programming, Job Queue, database, SQL
 date: 2020-11-16
-updated: 2020-11-16
+updated: 2022-06-10
 ---
 
 
   <ul class="list-bullet">
-    <li id="6xB9YFXBT"><span><strong class="rm-attr-ref">Author:</strong> Brandur Leach</span></li>
-    <li id="IIQp21baD"><span><strong class="rm-attr-ref">Source:</strong> <a href="https://brandur.org/job-drain">https://brandur.org/job-drain</a></span></li>
-    <li id="F61TE_ftV">For transactions that need to enqueue background jobs it&#39;s useful to not talk directly to the job queue, but to add your jobs to a table and have another process that periodically sweeps that table and enqueues the jobs in it. </li>
-    <li id="EymPAtIlg">This way you can do more work in SQL transactions, and the the job queueing can just be another part of the transaction. </li>
+    <li><span><span class="font-medium text-gray-800">Author:</span> <span>Brandur Leach</span></span></li>
+    <li><span><span class="font-medium text-gray-800">Source:</span> <span><a href="https://brandur.org/job-drain">https://brandur.org/job-drain</a></span></span></li>
+    <li>For transactions that need to enqueue background jobs it&#39;s useful to not talk directly to the job queue, but to add your jobs to a table and have another process that periodically sweeps that table and enqueues the jobs in it.</li>
+    <li>This way you can do more work in SQL transactions, and the the job queueing can just be another part of the transaction.</li>
   </ul>
 
 

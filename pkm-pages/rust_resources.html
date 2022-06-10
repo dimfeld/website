@@ -7,145 +7,148 @@ updated: 2021-02-13
 
 
   <ul class="list-bullet">
-    <li id="DBLBkwo0L"><a href="https://github.com/rust-unofficial/awesome-rust">Awesome Rust</a></li>
-    <li id="4AhSj3KZY"><a href="https://github.com/rust-unofficial/patterns">Rust Design Patterns</a></li>
-    <li id="_UXG6Whgt"><a href="https://lib.rs/">https://lib.rs/</a> is great for browsing for crates for a specific purpose or just for fun</li>
-    <li id="JQj8Wna2p"><code>https://docs.rs/CRATE_NAME</code> for docs for any public crate.</li>
-    <li id="O7tP7WQac"><span class="rm-heading-1">Crates</span>
+    <li><a href="https://github.com/rust-unofficial/awesome-rust">Awesome Rust</a></li>
+    <li><a href="https://github.com/rust-unofficial/patterns">Rust Design Patterns</a></li>
+    <li><a href="https://lib.rs/">https://lib.rs/</a> is great for browsing for crates for a specific purpose or just for fun</li>
+    <li><code>https://docs.rs/CRATE_NAME</code> for docs for any public crate.</li>
+    <li>Crates
       <ul class="list-bullet">
-        <li id="0MgpXe9Fk"><span class="rm-heading-2">Asynchronous Code</span>
+        <li>Asynchronous Code
           <ul class="list-bullet">
-            <li id="uqF40nfl-"><code>tokio</code>, <code>async_std</code>, and <code>futures</code> are the base crates. Tokio and Async_std are sort of &quot;competing&quot; and there&#39;s still a lot of similar-but-slightly-different versions of core traits like <code>AsyncRead</code> between them.</li>
-            <li id="OvxiMntkt"><a href="https://docs.rs/tokio-util">tokio-util</a> has a lot of nice adaptors and things that makes it easier to work with streams, readers, writers, etc.</li>
+            <li><code>tokio</code>, <code>async_std</code>, and <code>futures</code> are the base crates. Tokio and Async_std are sort of &quot;competing&quot; and there&#39;s still a lot of similar-but-slightly-different versions of core traits like <code>AsyncRead</code> between them.</li>
+            <li><a href="https://docs.rs/tokio-util">tokio-util</a> has a lot of nice adaptors and things that makes it easier to work with streams, readers, writers, etc.</li>
           </ul>
         </li>
-        <li id="dykznswMv"><span class="rm-heading-2">Performance and Data Processing</span>
+        <li>Performance and Data Processing
           <ul class="list-bullet">
-            <li id="1gmJvZ5QP"><a href="https://docs.rs/rayon">rayon</a> for super-easy parallelism</li>
-            <li id="SbPICd0Nd"><a href="https://docs.rs/itertools">itertools</a> adds a bunch of useful functions that work with <code>Iterator</code></li>
-            <li id="zggLJjS2l"><a href="https://docs.rs/fxhash">fxhash</a> is a good default hash replacement if you DO NOT need a cryptographically secure hash. If you&#39;re running a service that stores user-defined input in a hash table then don&#39;t use it.</li>
-            <li id="bEk9sqGa7"><a href="https://docs.rs/smallvec">smallvec</a> when you are making a lot of mostly-small vectors and most, but not all of them, will be below a certain size.</li>
-            <li id="3e0RsdPLX"><a href="http://docs.rs/arrayvec">arrayvec</a> when you are making a lot of small vectors and know that they will never exceed a certain size</li>
-            <li id="frJQeIxQt"><a href="https://docs.rs/aho-corasick">aho-corasick</a> for performing multiple substring searches at once in a larger string</li>
+            <li><a href="https://docs.rs/rayon">rayon</a> for super-easy parallelism</li>
+            <li><a href="https://docs.rs/itertools">itertools</a> adds a bunch of useful functions that work with <code>Iterator</code></li>
+            <li><a href="https://docs.rs/fxhash">fxhash</a> is a good default hash replacement if you DO NOT need a cryptographically secure hash. If you&#39;re running a service that stores user-defined input in a hash table then don&#39;t use it.</li>
+            <li><a href="https://docs.rs/smallvec">smallvec</a> when you are making a lot of mostly-small vectors and most, but not all of them, will be below a certain size.</li>
+            <li><a href="http://docs.rs/arrayvec">arrayvec</a> when you are making a lot of small vectors and know that they will never exceed a certain size</li>
+            <li><a href="https://docs.rs/aho-corasick">aho-corasick</a> for performing multiple substring searches at once in a larger string</li>
           </ul>
         </li>
-        <li id="dOovSLl_v"><span class="rm-heading-2">Error Handling</span>
+        <li>Error Handling
           <ul class="list-bullet">
-            <li id="xMJRreXpD"><a href="https://docs.rs/anyhow">anyhow</a> is great for just merging random errors together when you don&#39;t really care otherwise and just want to get the error message out and all the various errors to have the same type. (i.e. most CLI utilities)</li>
-            <li id="x98RAGiaA"><a href="https://docs.rs/eyre">eyre</a> is a fork of <code>anyhow</code> with emphasis on better error reporting
+            <li><a href="https://docs.rs/anyhow">anyhow</a> is great for just merging random errors together when you don&#39;t really care otherwise and just want to get the error message out and all the various errors to have the same type. (i.e. most CLI utilities)</li>
+            <li><a href="https://docs.rs/eyre">eyre</a> is a fork of <code>anyhow</code> with emphasis on better error reporting
               <ul class="list-bullet">
-                <li id="l0dHQQpaS"><a href="https://lib.rs/crates/color-eyre">color-eyre</a> works with <code>eyre</code> for much nicer error reporting</li>
+                <li><a href="https://lib.rs/crates/color-eyre">color-eyre</a> works with <code>eyre</code> for much nicer error reporting</li>
               </ul>
             </li>
-            <li id="7FtMhcnGV"><a href="https://docs.rs/thiserror">thiserror</a> is nice for structured error types where you want to add extra formatting or otherwise handle errors in a more detailed way.
+            <li><a href="https://docs.rs/thiserror">thiserror</a> is nice for structured error types where you want to add extra formatting or otherwise handle errors in a more detailed way.
               <ul class="list-bullet">
-                <li id="KXdYv1TBZ">Can wrap an anyhow inside a thiserror as well</li>
-                <li id="TgLHLZ0ag"><pre><code><span class="hljs-source hljs-js">#<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">derive</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-support hljs-class hljs-error hljs-js">Error</span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">Debug</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span>
+                <li>Can wrap an anyhow inside a thiserror as well</li>
+                <li><pre><code><span class="hljs-source hljs-js">#<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">derive</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-support hljs-class hljs-error hljs-js">Error</span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">Debug</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span>
 <span class="hljs-variable hljs-other hljs-readwrite hljs-js">pub</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">enum</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">RequestError</span> <span class="hljs-meta hljs-block hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-js">{</span>
   #<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">error</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-string hljs-quoted hljs-double hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&quot;</span>Invalid query string: {0}<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&quot;</span></span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span>
   <span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">QueryStringError</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span>#<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-variable hljs-other hljs-readwrite hljs-js">from</span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">serde_qs</span>::<span class="hljs-support hljs-class hljs-error hljs-js">Error</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
 
   #<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">error</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-variable hljs-other hljs-readwrite hljs-js">transparent</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span>
   <span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">Other</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span>#<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-variable hljs-other hljs-readwrite hljs-js">from</span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">anyhow</span>::<span class="hljs-support hljs-class hljs-error hljs-js">Error</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
-<span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span></span></code></pre></li>
+<span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span>
+</span></code></pre></li>
               </ul>
             </li>
           </ul>
         </li>
-        <li id="mKvc-ircm"><span class="rm-heading-2">Argument Parsing</span>
+        <li>Argument Parsing
           <ul class="list-bullet">
-            <li id="mtmUf2oxR"><a href="https://docs.rs/structopt">structopt</a> lets you define command-line arguments declaratively
+            <li><a href="https://docs.rs/structopt">structopt</a> lets you define command-line arguments declaratively
               <ul class="list-bullet">
-                <li id="YMYV8ihGO"><pre><code><span class="hljs-source hljs-rust"><span class="hljs-meta hljs-annotation hljs-rust"><span class="hljs-punctuation hljs-definition hljs-annotation hljs-rust">#</span><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">[</span><span class="hljs-variable hljs-annotation hljs-rust">derive</span><span class="hljs-meta hljs-annotation hljs-parameters hljs-rust"><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span></span></span><span class="hljs-meta hljs-annotation hljs-parameters hljs-rust"><span class="hljs-meta hljs-group hljs-rust">Debug<span class="hljs-punctuation hljs-separator hljs-rust">,</span> StructOpt</span></span><span class="hljs-meta hljs-annotation hljs-parameters hljs-rust"><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span></span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">]</span></span>
+                <li><pre><code><span class="hljs-source hljs-rust"><span class="hljs-meta hljs-annotation hljs-rust"><span class="hljs-punctuation hljs-definition hljs-annotation hljs-rust">#</span><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">[</span><span class="hljs-variable hljs-annotation hljs-rust">derive</span><span class="hljs-meta hljs-annotation hljs-parameters hljs-rust"><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span></span></span><span class="hljs-meta hljs-annotation hljs-parameters hljs-rust"><span class="hljs-meta hljs-group hljs-rust">Debug<span class="hljs-punctuation hljs-separator hljs-rust">,</span> StructOpt</span></span><span class="hljs-meta hljs-annotation hljs-parameters hljs-rust"><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span></span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">]</span></span>
 <span class="hljs-meta hljs-annotation hljs-rust"><span class="hljs-punctuation hljs-definition hljs-annotation hljs-rust">#</span><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">[</span><span class="hljs-variable hljs-annotation hljs-rust">structopt</span><span class="hljs-meta hljs-annotation hljs-parameters hljs-rust"><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span></span></span><span class="hljs-meta hljs-annotation hljs-parameters hljs-rust"><span class="hljs-meta hljs-group hljs-rust">name<span class="hljs-keyword hljs-operator hljs-rust">=</span><span class="hljs-string hljs-quoted hljs-double hljs-rust"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-rust">&quot;</span>myapp<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-rust">&quot;</span></span></span></span><span class="hljs-meta hljs-annotation hljs-parameters hljs-rust"><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span></span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">]</span></span>
 <span class="hljs-meta hljs-struct hljs-rust"><span class="hljs-storage hljs-type hljs-struct hljs-rust">struct</span> </span><span class="hljs-meta hljs-struct hljs-rust"><span class="hljs-entity hljs-name hljs-struct hljs-rust">Args</span> </span><span class="hljs-meta hljs-struct hljs-rust"><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span>
   <span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> Can add `default` and a bunch of other things as well
 </span>  #[structopt(long=&quot;file&quot;, short=&quot;f&quot;, help=&quot;&quot;)]
   <span class="hljs-variable hljs-other hljs-member hljs-rust">file</span><span class="hljs-punctuation hljs-separator hljs-rust">:</span> PathBuf,
-  
+
   <span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> Can use long and short without values to get the &quot;obvious&quot; defaults
 </span>  <span class="hljs-comment hljs-line hljs-documentation hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">///</span> Help text can go in a doc comment like this too
 </span>  #[structopt(long, short)]
   <span class="hljs-variable hljs-other hljs-member hljs-rust">tag</span><span class="hljs-punctuation hljs-separator hljs-rust">:</span> <span class="hljs-meta hljs-generic hljs-rust">Option<span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>String<span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span>,
-  
+
   <span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> default_value needs to be a string, even for number values
 </span>  #[structopt(long=&quot;count&quot;, short=&quot;c&quot;, default_value=&quot;5&quot;)]
   <span class="hljs-variable hljs-other hljs-member hljs-rust">count</span><span class="hljs-punctuation hljs-separator hljs-rust">:</span> <span class="hljs-storage hljs-type hljs-rust">u32</span>,
-  
+
   <span class="hljs-comment hljs-line hljs-double-slash hljs-rust"><span class="hljs-punctuation hljs-definition hljs-comment hljs-rust">//</span> array of arguments
 </span>  #[structopt(long, short)]
   <span class="hljs-variable hljs-other hljs-member hljs-rust">values</span><span class="hljs-punctuation hljs-separator hljs-rust">:</span> <span class="hljs-meta hljs-generic hljs-rust">Vec<span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>String<span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span>,
 </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
+
 </span></code></pre></li>
               </ul>
             </li>
-            <li id="-Y1l6t7LB"><code>structopt-toml</code> works with <code>structopt</code> to load from a TOML file and let the command line override the values.
+            <li><code>structopt-toml</code> works with <code>structopt</code> to load from a TOML file and let the command line override the values.
               <ul class="list-bullet">
-                <li id="A5fGGXAxM">derive <code>StructOptToml</code> on the <code>Args</code> struct as well to use this</li>
-                <li id="Z2iAeVUgX">Then use <code>Args::from_args_with_toml(toml_str)</code> to parse</li>
+                <li>derive <code>StructOptToml</code> on the <code>Args</code> struct as well to use this</li>
+                <li>Then use <code>Args::from_args_with_toml(toml_str)</code> to parse</li>
               </ul>
             </li>
           </ul>
         </li>
-        <li id="QxA6MC-3-"><span class="rm-heading-2">Database</span>
+        <li>Database
           <ul class="list-bullet">
-            <li id="g1vlTC7_n"><code>sqlx</code> for connecting to a database and running queries.
+            <li><code>sqlx</code> for connecting to a database and running queries.
               <ul class="list-bullet">
-                <li id="QjLbrpApJ">Contains connection pools, migration support and all that.</li>
-                <li id="094tbrAWq">You can derive <code>sqlx::FromRow</code> on structs to read query results into a structure.</li>
-                <li id="qypRByWPE">Supports a bunch of different async runtimes and all the popular SQL databases.</li>
-                <li id="MzZwkTX51">Supports compile-time query validation and result type generation with the <code>query!</code> macro. Or <code>query_as!</code> to use an existing type.</li>
+                <li>Contains connection pools, migration support and all that.</li>
+                <li>You can derive <code>sqlx::FromRow</code> on structs to read query results into a structure.</li>
+                <li>Supports a bunch of different async runtimes and all the popular SQL databases.</li>
+                <li>Supports compile-time query validation and result type generation with the <code>query!</code> macro. Or <code>query_as!</code> to use an existing type.</li>
               </ul>
             </li>
-            <li id="YF8boGZZP"><code>diesel</code> for a full-fledged ORM if that&#39;s your style. Only supports Postgres but you should probably be using Postgres anyway :)</li>
+            <li><code>diesel</code> for a full-fledged ORM if that&#39;s your style. Only supports Postgres but you should probably be using Postgres anyway :)</li>
           </ul>
         </li>
-        <li id="PAWIURX-g"><span class="rm-heading-2">Image Handling</span>
+        <li>Image Handling
           <ul class="list-bullet">
-            <li id="Dntoqbmx1"><code>image</code> for general image loading and running filters</li>
-            <li id="LxfTJ2OIt"><code>pix</code> is another option. Haven&#39;t tried it though.
+            <li><code>image</code> for general image loading and running filters</li>
+            <li><code>pix</code> is another option. Haven&#39;t tried it though.
               <ul class="list-bullet">
-                <li id="urkAdKxnB">It works with <code>footile</code> to do plotter-style image manipulation</li>
+                <li>It works with <code>footile</code> to do plotter-style image manipulation</li>
               </ul>
             </li>
-            <li id="gn7D1hOeW"><code>ab_glyph</code> and <code>glyph_brush_layout</code> for text rendering</li>
+            <li><code>ab_glyph</code> and <code>glyph_brush_layout</code> for text rendering</li>
           </ul>
         </li>
-        <li id="Kkw24NQqi"><span class="rm-heading-2">Miscellaneous</span>
+        <li>Miscellaneous
           <ul class="list-bullet">
-            <li id="-5H8PpKsJ"><a href="https://docs.rs/nom">nom</a> for building parsers</li>
-            <li id="isvpUjelq"><a href="https://docs.rs/katex">katex</a> for rendering LaTeX</li>
-            <li id="uedToZhTI"><a href="https://docs.rs/syntect">syntect</a> for syntax highlighting
+            <li><a href="https://docs.rs/nom">nom</a> for building parsers</li>
+            <li><a href="https://docs.rs/katex">katex</a> for rendering LaTeX</li>
+            <li><a href="https://docs.rs/syntect">syntect</a> for syntax highlighting
               <ul class="list-bullet">
-                <li id="Y6-iRHvvI">I&#39;ve heard that <a href="https://tree-sitter.github.io/tree-sitter/syntax-highlighting">tree-sitter</a> is good for this too but haven&#39;t tried it.</li>
+                <li>I&#39;ve heard that <a href="https://tree-sitter.github.io/tree-sitter/syntax-highlighting">tree-sitter</a> is good for this too but haven&#39;t tried it.</li>
               </ul>
             </li>
-            <li id="H1X2XaC8x"><a href="https://docs.rs/handlebars">handlebars</a> is one of many templating options</li>
-            <li id="rK9AQGRkG"><a href="https://docs.rs/delegate">delegate</a> for delegating method calls to the same method on an internal field.</li>
+            <li><a href="https://docs.rs/handlebars">handlebars</a> is one of many templating options</li>
+            <li><a href="https://docs.rs/delegate">delegate</a> for delegating method calls to the same method on an internal field.</li>
+            <li><a href="https://crates.io/crates/ouroboros">ouroboros</a> for allowing members of a structure to reference other owned members in the structure, with some additional methods to build and borrow the data.</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="jFy98RiIK"><span class="rm-heading-1">Learning</span>
+    <li>Learning
       <ul class="list-bullet">
-        <li id="P08y_1FCL"><a href="https://doc.rust-lang.org/book/">The Official Book</a> </li>
-        <li id="4Ca3HLWlI"><a href="https://rust-unofficial.github.io/too-many-lists/">Learning Rust with too many Linked Lists</a>
+        <li><a href="https://doc.rust-lang.org/book/">The Official Book</a></li>
+        <li><a href="https://rust-unofficial.github.io/too-many-lists/">Learning Rust with too many Linked Lists</a>
           <ul class="list-bullet">
-            <li id="Q1NnKAyRO">This gets into more advanced usage than you&#39;ll usually need, but this is what really helped the ownership model click for me. I read it a few years ago so it&#39;s quite possible that there are better options now.</li>
+            <li>This gets into more advanced usage than you&#39;ll usually need, but this is what really helped the ownership model click for me. I read it a few years ago so it&#39;s quite possible that there are better options now.</li>
           </ul>
         </li>
-        <li id="D4zpKaG_k"><a href="https://github.com/rust-lang/rustlings">https://github.com/rust-lang/rustlings</a>
+        <li><a href="https://github.com/rust-lang/rustlings">https://github.com/rust-lang/rustlings</a>
           <ul class="list-bullet">
-            <li id="s4tOBuBZF">Exercises for learning Rust</li>
+            <li>Exercises for learning Rust</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li id="5Bg-u4Qft"><span class="rm-heading-1">Debugging</span>
+    <li>Debugging
       <ul class="list-bullet">
-        <li id="SmN6FuYkl">Use the CodeLLDB extension in VS Code</li>
-        <li id="iYYHPrf7C">For vim, <a href="https://alpha2phi.medium.com/setting-up-neovim-for-rust-debugging-termdebug-and-vimspector-df749e1ba47c">https://alpha2phi.medium.com/setting-up-neovim-for-rust-debugging-termdebug-and-vimspector-df749e1ba47c</a> walks through the process of setting up CodeLLDB with the Vimspector plugin.</li>
-        <li id="3Owr4ddfq">In unit tests use <code>cargo test -- --nocapture</code> to show anything the tests write to stdout</li>
+        <li>Use the CodeLLDB extension in VS Code</li>
+        <li>For vim, <a href="https://alpha2phi.medium.com/setting-up-neovim-for-rust-debugging-termdebug-and-vimspector-df749e1ba47c">https://alpha2phi.medium.com/setting-up-neovim-for-rust-debugging-termdebug-and-vimspector-df749e1ba47c</a> walks through the process of setting up CodeLLDB with the Vimspector plugin.</li>
+        <li>In unit tests use <code>cargo test -- --nocapture</code> to show anything the tests write to stdout</li>
       </ul>
     </li>
   </ul>

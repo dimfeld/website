@@ -1,21 +1,13 @@
 <script>
   import { cardImageUrl } from '../postMeta';
-
-  import capitalize from 'just-capitalize';
+  import { formatTag } from '$lib/tags';
   import { flip } from 'svelte/animate';
   export let posts;
   export let base;
   export let useUpdatedDate = false;
 
   function tagLabels(tags) {
-    return (tags || []).map((t) => {
-      return t.split(' ').map((word) => {
-        if(word !== word.toUpperCase()) {
-          word = capitalize(word);
-        }
-        return word;
-      }).join(' ');
-    }).join(', ');
+    return (tags || []).map((t) => formatTag(t)).join(', ');
   }
 
   function backgroundImage(post) {
@@ -35,14 +27,13 @@
 </script>
 
 <div
-  class="post-list w-full flex flex-col items-stretch sm:grid sm:gap-8
-  xl:gap-x-12 sm:mt-4"
-  style=";">
+  class="post-list flex w-full flex-col items-stretch sm:mt-4 sm:grid
+  sm:max-w-7xl sm:justify-center sm:gap-8 sm:px-4 xl:gap-x-12">
   {#each posts as post (post.id)}
     <div
       animate:flip={{ duration: 300 }}
-      class="sm:rounded-sm border-b sm:border border-teal-100 sm:border-teal-100
-      p-2 sm:shadow-md flex-1 flex flex-col">
+      class="flex flex-1 flex-col border-b border-teal-100
+      p-2 sm:rounded-sm sm:border sm:border-teal-100 sm:shadow-md">
       {#if post.cardImage}
         <div class="post-bg" style={backgroundImage(post)} />
       {/if}
@@ -52,16 +43,18 @@
         class="text-lg text-teal-900">
         {post.title}
       </a>
-      <a
-        class="hover:no-underline text-gray-800 font-medium text-sm"
-        sveltekit:prefetch
-        href="{base}/{post.id}">
-        <p>{post.summary || ''}</p>
-      </a>
-      <p class="flex flex-row items-end text-sm mt-auto pt-2">
+      {#if post.summary}
+        <a
+          class="text-sm font-medium text-gray-800 hover:no-underline"
+          sveltekit:prefetch
+          href="{base}/{post.id}">
+          <p>{post.summary || ''}</p>
+        </a>
+      {/if}
+      <p class="mt-auto flex flex-row items-end justify-between pt-2 text-sm">
         <span>{tagLabels(post.tags)}</span>
         {#if post.date}
-          <time class="ml-auto pl-2 whitespace-nowrap">
+          <time class="whitespace-nowrap pl-2">
             {useUpdatedDate && post.updated
               ? post.updated.slice(0, 10)
               : post.date.slice(0, 10)}
@@ -74,7 +67,7 @@
 
 <style lang="postcss">
   .post-bg {
-    @apply absolute left-0 top-0 block w-full h-full;
+    @apply absolute left-0 top-0 block h-full w-full;
     z-index: -1;
     background-repeat: no-repeat;
     background-position-y: center;
@@ -85,20 +78,19 @@
 
   @screen sm {
     .post-list {
-      grid-template-columns: repeat(2, 275px);
-      @apply justify-center;
+      grid-template-columns: repeat(auto-fill, 275px);
     }
   }
 
   @screen lg {
     .post-list {
-      grid-template-columns: repeat(3, 275px);
+      grid-template-columns: repeat(auto-fill, 275px);
     }
   }
 
   @screen xl {
     .post-list {
-      grid-template-columns: repeat(3, 325px);
+      grid-template-columns: repeat(auto-fill, 300px);
     }
   }
 </style>

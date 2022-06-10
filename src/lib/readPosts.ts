@@ -4,7 +4,6 @@ import * as path from 'path';
 import globFn from 'glob';
 import { promisify } from 'util';
 import { promises as fs } from 'fs';
-import capitalize from 'just-capitalize';
 
 const glob = promisify(globFn);
 
@@ -26,7 +25,7 @@ export interface Post {
   id: string;
   format: 'md' | 'html';
   type: 'post' | 'note';
-  source?: 'roam';
+  source?: 'pkm';
   title: string;
   tags: string[];
   date: string;
@@ -43,6 +42,7 @@ export interface Source {
   ext: 'md' | 'html';
   type: 'post' | 'note';
   base: string;
+  source?: string;
 }
 
 export const postSources: Source[] = [
@@ -73,12 +73,20 @@ export const noteSources: Source[] = [
     ext: 'html',
     type: 'note',
     base: 'pkm-pages',
+    source: 'pkm',
   },
 ];
 
-export async function lookupContent(sources: Source[], name: string): Promise<Post | null> {
+export async function lookupContent(
+  sources: Source[],
+  name: string
+): Promise<Post | null> {
   for (let source of sources) {
-    let fullPath = path.join(process.cwd(), source.base, `${name}.${source.ext}`);
+    let fullPath = path.join(
+      process.cwd(),
+      source.base,
+      `${name}.${source.ext}`
+    );
 
     try {
       let data = await fs.readFile(fullPath);
@@ -87,7 +95,12 @@ export async function lookupContent(sources: Source[], name: string): Promise<Po
         continue;
       }
 
-      return { format: source.ext, type: source.type, ...result };
+      return {
+        format: source.ext,
+        type: source.type,
+        source: source.source,
+        ...result,
+      };
     } catch (e) {
       continue;
     }
@@ -96,7 +109,10 @@ export async function lookupContent(sources: Source[], name: string): Promise<Po
   return null;
 }
 
-function processPost(name: string, data: string): Omit<Post, 'format' | 'type'> | null {
+function processPost(
+  name: string,
+  data: string
+): Omit<Post, 'format' | 'type'> | null {
   let { attributes, body } = frontMatter<PostAttributes>(data);
   if (attributes.draft && process.env.NODE_ENV === 'production') {
     return null;
@@ -107,9 +123,12 @@ function processPost(name: string, data: string): Omit<Post, 'format' | 'type'> 
     .map((t) => t.trim())
     .filter(Boolean);
 
-  let pathTags = name.split('/').slice(0, -1).map((tag) => {
-    return tag.replace(/_/g, ' ');
-  });
+  let pathTags = name
+    .split('/')
+    .slice(0, -1)
+    .map((tag) => {
+      return tag.replace(/_/g, ' ');
+    });
 
   let content = body.trim();
   return {

@@ -12,11 +12,11 @@
       image: 'ergo-logo-small.png',
     },
     {
-      name: 'Roam Note Exporter',
-      repo: 'https://www.github.com/dimfeld/export-roam-notes',
-      link: 'https://www.github.com/dimfeld/export-roam-notes',
+      name: 'Logseq Note Exporter',
+      repo: 'https://www.github.com/dimfeld/export-logseq-notes',
+      link: 'https://www.github.com/dimfeld/export-logseq-notes',
       text:
-        'Export selected pages from a Roam Research graph. I use this to populate the note section on this site.',
+        'Export selected pages from a Logseq graph. I use this to populate the note section on this site.',
     },
     {
       name: 'Fund The Rebuild',

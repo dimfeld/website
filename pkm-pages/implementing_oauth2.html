@@ -1,0 +1,58 @@
+---
+title: "Implementing OAuth2"
+tags: 
+date: 2022-01-04
+updated: 2022-06-10
+---
+
+
+  <ul class="list-bullet">
+    <li>For each supported provider (Github, Twitter, etc.) you need to create an application with that provider in order to do OAuth2, even if all you want to do is authenticate.</li>
+    <li>To login, open a new window pointing to a local endpoint.
+      <ul class="list-bullet">
+        <li>Also add a <code>message</code> handler to know when the login is done
+          <ul class="list-bullet">
+            <li><pre><code><span class="hljs-source hljs-js"><span class="hljs-storage hljs-type hljs-js">const</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">loginWindow</span> <span class="hljs-keyword hljs-operator hljs-assignment hljs-js">=</span> <span class="hljs-support hljs-type hljs-object hljs-dom hljs-js">window</span><span class="hljs-punctuation hljs-accessor hljs-js">.</span><span class="hljs-meta hljs-function-call hljs-method hljs-js"><span class="hljs-support hljs-function hljs-dom hljs-js">open</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span>
+ <span class="hljs-string hljs-template hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-template hljs-begin hljs-js">`</span>/user/login/</span><span class="hljs-meta hljs-template hljs-expression hljs-js"><span class="hljs-punctuation hljs-definition hljs-template-expression hljs-begin hljs-js">${</span></span><span class="hljs-meta hljs-template hljs-expression hljs-js"><span class="hljs-source hljs-js hljs-embedded hljs-expression"><span class="hljs-variable hljs-other hljs-readwrite hljs-js">provider</span></span><span class="hljs-punctuation hljs-definition hljs-template-expression hljs-end hljs-js">}</span></span><span class="hljs-string hljs-template hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-template hljs-end hljs-js">`</span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
+ <span class="hljs-string hljs-quoted hljs-single hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&#39;</span>oauthLogin<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&#39;</span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
+ <span class="hljs-string hljs-quoted hljs-single hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&#39;</span>width=600,height=400<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&#39;</span></span>
+    </span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+    <span class="hljs-meta hljs-conditional hljs-js"><span class="hljs-keyword hljs-control hljs-conditional hljs-js">if</span> <span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-variable hljs-other hljs-readwrite hljs-js">loginWindow</span><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span> <span class="hljs-meta hljs-block hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-js">{</span>
+ <span class="hljs-support hljs-type hljs-object hljs-dom hljs-js">window</span><span class="hljs-punctuation hljs-accessor hljs-js">.</span><span class="hljs-meta hljs-function-call hljs-method hljs-js"><span class="hljs-variable hljs-function hljs-js">addEventListener</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-string hljs-quoted hljs-single hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&#39;</span>message<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&#39;</span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span> <span class="hljs-meta hljs-function hljs-declaration hljs-js"><span class="hljs-storage hljs-type hljs-function hljs-js">function</span> <span class="hljs-entity hljs-name hljs-function hljs-js">handler</span><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-js">(</span><span class="hljs-variable hljs-parameter hljs-function hljs-js">event</span><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-js">)</span><span class="hljs-meta hljs-function hljs-declaration hljs-js"> </span></span><span class="hljs-meta hljs-block hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-js">{</span>
+   <span class="hljs-variable hljs-other hljs-object hljs-js">loginWindow</span><span class="hljs-punctuation hljs-accessor hljs-js">.</span><span class="hljs-meta hljs-function-call hljs-method hljs-js"><span class="hljs-support hljs-function hljs-dom hljs-js">close</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+   <span class="hljs-support hljs-type hljs-object hljs-dom hljs-js">window</span><span class="hljs-punctuation hljs-accessor hljs-js">.</span><span class="hljs-meta hljs-function-call hljs-method hljs-js"><span class="hljs-variable hljs-function hljs-js">removeEventListener</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-string hljs-quoted hljs-single hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&#39;</span>message<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&#39;</span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">handler</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+   <span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">invalidate</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-string hljs-quoted hljs-single hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&#39;</span>/user<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&#39;</span></span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+ <span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+    </span><span class="hljs-meta hljs-block hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span></span>
+</span></code></pre></li>
+            <li>This one closes the window and tells SvelteKit to reload the user data.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>That endpoint should redirect to the authorization URL at the provider for your app.</li>
+    <li>The OAuth callback is then another app endpoint that handles the code
+      <ul class="list-bullet">
+        <li>If the user hasn&#39;t logged in before, create a new one.</li>
+        <li>Fetch the user metadata and optionally update it if needed</li>
+        <li>Create a new session, create the session cookie, etc.</li>
+        <li>Finally, return some a small <code>&lt;script&gt;</code> snippet that talks back to the original app&#39;s handler and tells it the login is done.</li>
+        <li><pre><code><span class="hljs-source hljs-js">  <span class="hljs-keyword hljs-control hljs-flow hljs-js">return</span> <span class="hljs-meta hljs-object-literal hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-js">{</span>
+<span class="hljs-meta hljs-object-literal hljs-key hljs-js">headers</span><span class="hljs-punctuation hljs-separator hljs-key-value hljs-js">:</span> <span class="hljs-meta hljs-object-literal hljs-js"><span class="hljs-punctuation hljs-section hljs-block hljs-js">{</span>
+  <span class="hljs-meta hljs-object-literal hljs-key hljs-js"><span class="hljs-string hljs-quoted hljs-single hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&#39;</span>Set-Cookie<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&#39;</span></span></span><span class="hljs-punctuation hljs-separator hljs-key-value hljs-js">:</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">cookie</span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
+  <span class="hljs-meta hljs-object-literal hljs-key hljs-js"><span class="hljs-string hljs-quoted hljs-single hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&#39;</span>Content-Type<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&#39;</span></span></span><span class="hljs-punctuation hljs-separator hljs-key-value hljs-js">:</span> <span class="hljs-string hljs-quoted hljs-single hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&#39;</span>text/html; charset=utf-8<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&#39;</span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
+<span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
+<span class="hljs-meta hljs-object-literal hljs-key hljs-js">body</span><span class="hljs-punctuation hljs-separator hljs-key-value hljs-js">:</span> <span class="hljs-string hljs-template hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-template hljs-begin hljs-js">`</span>
+ &lt;script&gt;
+   window.opener.postMessage({
+     success: true
+   }, window.location.origin);
+ &lt;/script&gt;
+<span class="hljs-punctuation hljs-definition hljs-string hljs-template hljs-end hljs-js">`</span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
+  <span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+</span></code></pre></li>
+      </ul>
+    </li>
+  </ul>
+
+
