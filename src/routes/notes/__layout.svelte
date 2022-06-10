@@ -36,7 +36,9 @@
   $: currentNoteId = $page.url.pathname.slice('/notes/'.length);
   $: currentNote = noteLookup[currentNoteId];
 
-  let activeTag = writable(browser ? $page.url.searchParams.get('tag') : '');
+  let activeTag = writable('');
+  $: $activeTag = browser ? $page.url.searchParams.get('tag') : '';
+
   let searchStore = writable('');
   setContext('activeTag', activeTag);
   setContext('search', searchStore);
@@ -55,13 +57,6 @@
   const FILTER_TAGS = 'tags';
   const FILTER_SEARCH = 'search';
   let activeFilterBox = null;
-
-  function handleTagChange({ detail: tag }) {
-    $activeTag = tag || null;
-    if (activeFilterBox === FILTER_TAGS) {
-      closeTagsPopup();
-    }
-  }
 
   function toggleMobileTagList() {
     if (activeFilterBox === FILTER_TAGS) {
@@ -160,7 +155,7 @@
       containerClass="w-full px-2"
       class="overflow-y-auto"
       style="max-height:60vh">
-      <TagList currentPost={currentNote} on:change={handleTagChange} />
+      <TagList currentPost={currentNote} on:change={closeTagsPopup} />
     </Popup>
 
     <Popup
@@ -205,7 +200,7 @@
       </Popup>
     </div>
 
-    <TagList currentPost={currentNote} on:change={handleTagChange} />
+    <TagList currentPost={currentNote} />
 
     <div class="text-center text-sm">
       <a href="/rss/notes.xml">Notes RSS</a>

@@ -18,6 +18,7 @@
   const sortField = 'date';
   let activeNotes = notes;
   $: {
+    console.log({ $activeTag });
     activeNotes = notes;
     if ($activeTag) {
       activeNotes = get(tags, [$activeTag, 'posts'], [])
@@ -35,6 +36,6 @@
 
 <PostList base="notes" posts={activeNotes} useUpdatedDate={true} />
 
-<div class="text-center sm:hidden mt-8">
+<div class="mt-8 text-center sm:hidden">
   <a href="/rss/notes.xml">Notes RSS Feed</a>
 </div>

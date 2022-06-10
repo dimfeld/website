@@ -1,26 +1,13 @@
 <script>
   import { cardImageUrl } from '../postMeta';
-
-  import capitalize from 'just-capitalize';
+  import { formatTag } from '$lib/tags';
   import { flip } from 'svelte/animate';
   export let posts;
   export let base;
   export let useUpdatedDate = false;
 
   function tagLabels(tags) {
-    return (tags || [])
-      .map((t) => {
-        return t
-          .split(' ')
-          .map((word) => {
-            if (word !== word.toUpperCase()) {
-              word = capitalize(word);
-            }
-            return word;
-          })
-          .join(' ');
-      })
-      .join(', ');
+    return (tags || []).map((t) => formatTag(t)).join(', ');
   }
 
   function backgroundImage(post) {

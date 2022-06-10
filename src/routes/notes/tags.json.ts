@@ -1,6 +1,7 @@
 import { RequestHandler } from '@sveltejs/kit';
 import { noteSources, lookupContent, readAllSources } from '$lib/readPosts';
-import  capitalize  from 'just-capitalize';
+import capitalize from 'just-capitalize';
+import { formatTag } from '$lib/tags';
 
 export const get: RequestHandler = async function get({ params: { id } }) {
   let notes = await readAllSources(noteSources);
@@ -8,13 +9,7 @@ export const get: RequestHandler = async function get({ params: { id } }) {
   let output: Record<string, { posts: string[] }> = {};
   for (let note of notes) {
     for (let tag of note.tags) {
-      tag = tag.split(' ').map((word) => {
-        if(word !== word.toUpperCase()) {
-          word = capitalize(word);
-        }
-
-        return word.replace(/[^a-zA-Z0-9]/g, '-');
-      }).join(' ');
+      tag = formatTag(tag).replace(/[^a-zA-Z0-9]/g, '-');
       let existing = output[tag];
       if (existing) {
         existing.posts.push(note.id);
