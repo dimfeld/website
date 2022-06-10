@@ -18,7 +18,6 @@
   const sortField = 'date';
   let activeNotes = notes;
   $: {
-    console.log({ $activeTag });
     activeNotes = notes;
     if ($activeTag) {
       activeNotes = get(tags, [$activeTag, 'posts'], [])
