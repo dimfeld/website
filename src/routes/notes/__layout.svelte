@@ -115,7 +115,7 @@
 <div class="flex flex-col sm:flex-row">
   <!-- Small Screen filters -->
   <div class="sm:hidden">
-    <div class="m-2 text-lg flex flex-row">
+    <div class="m-2 flex flex-row text-lg">
       <div class="flex-grow">
         <label for="mobile-search" class="sr-only">Search</label>
         <div class="relative rounded-md shadow-sm">
@@ -133,14 +133,18 @@
       <button
         bind:this={mobileTagsButton}
         on:click={toggleMobileTagList}
-        class="ml-2 flex-shrink inline-flex justify-start justify-center
-        rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5
-        font-medium text-gray-700 hover:text-gray-500 focus:outline-none
-        focus:border-blue-300 shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
-        active:bg-gray-50 active:text-gray-800 transition ease-in-out
-        duration-150">
+        class="ml-2 inline-flex flex-shrink justify-start justify-center
+        rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium
+        leading-5 text-gray-700 shadow-sm transition
+        duration-150 ease-in-out hover:text-gray-500 focus:border-blue-300 focus:outline-none
+        focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 active:bg-gray-50
+        active:text-gray-800">
         Tags
-        <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" class="-mr-1 ml-1 h-5 w-5">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="16"
+          viewBox="0 0 24 24"
+          class="-mr-1 ml-1 h-5 w-5">
           <path
             class="secondary"
             fill-rule="evenodd"
@@ -167,14 +171,17 @@
       containerClass="w-full px-2"
       style="max-height:60vh"
       class="overflow-y-auto">
-      <SearchResultsPopup on:click={closeSearchPopup} base="notes" posts={searchPopupNotes} />
+      <SearchResultsPopup
+        on:click={closeSearchPopup}
+        base="notes"
+        posts={searchPopupNotes} />
     </Popup>
   </div>
 
   <!-- Large screen filters -->
-  <div class="hidden sm:block m-4 w-48 flex-none">
+  <div class="m-4 hidden w-48 flex-none sm:block">
     <label for="large-search" class="sr-only">Search</label>
-    <div class="relative rounded-md shadow-sm mb-2" bind:this={largeSearchBox}>
+    <div class="relative mb-2 rounded-md shadow-sm" bind:this={largeSearchBox}>
       <input
         id="large-search"
         on:input={handleSearchBox}
@@ -191,18 +198,21 @@
         style="max-height:75vh;width:400px"
         containerClass="top-0 left-48 ml-2"
         class="overflow-y-auto">
-        <SearchResultsPopup on:click={closeSearchPopup} base="notes" posts={searchPopupNotes} />
+        <SearchResultsPopup
+          on:click={closeSearchPopup}
+          base="notes"
+          posts={searchPopupNotes} />
       </Popup>
     </div>
 
     <TagList currentPost={currentNote} on:change={handleTagChange} />
 
-    <div class="text-sm text-center">
+    <div class="text-center text-sm">
       <a href="/rss/notes.xml">Notes RSS</a>
     </div>
   </div>
 
-  <div class="flex-grow sm:ml-4">
+  <div class="min-w-0 flex-1 overflow-y-auto">
     <slot />
   </div>
 </div>
