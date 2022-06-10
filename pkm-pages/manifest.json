@@ -211,16 +211,16 @@
     "title": "Perceptual Exposure",
     "uid": ""
   },
-  "tacit_knowledge": {
-    "title": "Tacit Knowledge",
-    "uid": ""
-  },
   "sqlx": {
     "title": "sqlx",
     "uid": ""
   },
-  "lateral_joins": {
-    "title": "Lateral Joins",
+  "the_top_3_most_effective_ways_to_take_notes_while_reading": {
+    "title": "The Top 3 Most Effective Ways to Take Notes While Reading",
+    "uid": ""
+  },
+  "tacit_knowledge": {
+    "title": "Tacit Knowledge",
     "uid": ""
   },
   "transactionally_staged_job_drain_queues": {
@@ -243,12 +243,16 @@
     "title": "New Directions in Cloud Programming",
     "uid": ""
   },
-  "github_actions": {
-    "title": "Github Actions",
+  "lateral_joins": {
+    "title": "Lateral Joins",
     "uid": ""
   },
   "ntp_sync": {
     "title": "NTP Sync",
+    "uid": ""
+  },
+  "github_actions": {
+    "title": "Github Actions",
     "uid": ""
   },
   "ui": {
