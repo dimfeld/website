@@ -26,7 +26,7 @@ export interface Post {
   id: string;
   format: 'md' | 'html';
   type: 'post' | 'note';
-  source?: 'roam';
+  source?: 'pkm';
   title: string;
   tags: string[];
   date: string;
@@ -43,6 +43,7 @@ export interface Source {
   ext: 'md' | 'html';
   type: 'post' | 'note';
   base: string;
+  source?: string;
 }
 
 export const postSources: Source[] = [
@@ -73,6 +74,7 @@ export const noteSources: Source[] = [
     ext: 'html',
     type: 'note',
     base: 'pkm-pages',
+    source: 'pkm',
   },
 ];
 
@@ -87,7 +89,7 @@ export async function lookupContent(sources: Source[], name: string): Promise<Po
         continue;
       }
 
-      return { format: source.ext, type: source.type, ...result };
+      return { format: source.ext, type: source.type, source: source.source, ...result };
     } catch (e) {
       continue;
     }

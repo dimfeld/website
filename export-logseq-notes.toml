@@ -1,11 +1,11 @@
-# The Roam graph to open. This can either be an EDN file or a ZIP file containing one.
+# The Logseq directory to open.
 data = "/Users/dimfeld/logseq"
 
 # Write the rendered pages into this directory
 output = "pkm-pages"
 
 # Use this template when rendering pages. See the `templates` directory for examples.
-template = "export-roam-notes.tmpl"
+template = "export-logseq-notes.tmpl"
 
 # Use this file extension on the rendered pages
 extension = "html"
@@ -55,7 +55,7 @@ include_all_page_embeds = true
 
 # Use this attribute to gather tags for a page, which can be used in the
 # template to populate front matter for a CMS
-tags_attr = "Tags"
+tags_attr = "tags"
 
 # Use all hashtags in a page when gathering tags, not just values of the tags_attr
 use_all_hashtags = true
@@ -77,7 +77,9 @@ exclude_tags = [
 ]
 
 omit_attributes = [
+  "progress",
   "Progress",
+  "tags",
   "Tags"
 ]
 
@@ -92,6 +94,23 @@ filter_link_only_blocks = true
 # When rendering links, use this URL prefix (optional)
 base_url = "/notes"
 
+# HTML classes for various elements
+class_bold = "font-bold"
+class_italic = "italic"
+class_strikethrough = "line-through"
+class_highlight = "bg-yellow-200"
+class_blockquote = ""
+class_hr = ""
+class_block_embed = ""
+class_page_embed_container = ""
+class_page_embed_title = ""
+class_page_embed_content = ""
+class_attr_name = "font-medium text-gray-800"
+class_attr_value = ""
+class_heading1 = "text-2xl"
+class_heading2 = "text-xl"
+class_heading3 = "text-lg"
+class_heading4 = "font-medium"
 
 ##### Upcoming features #####
 
@@ -101,3 +120,4 @@ base_url = "/notes"
 # When false (the default), it will be
 # written to books_notes_a_book.
 namespace_dirs = false
+

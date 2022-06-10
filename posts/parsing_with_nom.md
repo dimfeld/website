@@ -11,7 +11,7 @@ Writing a parser can seem intimidating if you haven't done it before. It conjure
 But it doesn't have to be that way. Parser combinator libraries such as [nom](https://docs.rs/nom) present a library of small functions that each do one thing,
 and then allow you to put them together to create a full parser.
 
-I recently built a [utility to export a Roam Research graph to HTML](https://github.com/dimfeld/export-roam-notes), and part of this task involved parsing the Roam
+I recently built a [utility to export a Roam Research graph to HTML](https://github.com/dimfeld/export-logseq-notes) (now supporting Logseq too!), and part of this task involved parsing the Roam
 markdown-like format. The experience of writing the parser was quite nice, and so I've annotated the parser file here so you can see how it all fits together.
 
 ::: side-by-side

@@ -43,7 +43,7 @@
   $: content, remountDynamicComponents();
 </script>
 
-<article class:roam-page={source === 'roam'} class:font-serif={type === 'post'} class="my-4 px-4 sm:px-0">
+<article class:pkm-page={source === 'pkm'} class:font-serif={type === 'post'} class="my-4 px-4 sm:px-0">
   <div class="mb-4 leading-tight">
     <h1 class="font-serif">{title}</h1>
 
