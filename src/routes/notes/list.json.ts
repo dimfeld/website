@@ -6,7 +6,7 @@ export const get: RequestHandler = async function get() {
   let notes = await readAllSources(noteSources);
   notes.sort(
     sorter(
-      { value: (p) => p.date, descending: true },
+      { value: (p) => p.updated || p.date, descending: true },
       { value: (p) => p.title }
     )
   );
