@@ -19,6 +19,10 @@
     "title": "Hiring a Job to Be Done",
     "uid": ""
   },
+  "projects_tracksome": {
+    "title": "Projects/Tracksome",
+    "uid": ""
+  },
   "glowing_text": {
     "title": "Glowing Text",
     "uid": ""
@@ -113,10 +117,6 @@
   },
   "rust_macros": {
     "title": "Rust Macros",
-    "uid": ""
-  },
-  "tracksome": {
-    "title": "Tracksome",
     "uid": ""
   },
   "rust_cheatsheet": {

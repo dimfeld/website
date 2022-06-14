@@ -12,7 +12,8 @@
     "preview": "NODE_ENV=production svelte-kit preview",
     "start": "node build",
     "check-types": "tsc",
-    "build-repl": "rollup -c rollup-repl-workers.js"
+    "build-repl": "rollup -c rollup-repl-workers.js",
+    "build-notes": "rimraf pkm-pages/* && export-logseq-notes"
   },
   "dependencies": {
     "@dimfeld/create-social-card-wasm": "~0.2.0",
