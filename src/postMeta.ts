@@ -1,4 +1,4 @@
-import { Post } from '$lib/readPosts';
+import type { Post } from '$lib/readPosts';
 
 export const statuses = [
   {

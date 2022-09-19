@@ -1,4 +1,3 @@
-import { RequestHandler } from '@sveltejs/kit';
 import {
   stripContent,
   readAllSources,
@@ -7,7 +6,7 @@ import {
 } from '$lib/readPosts';
 import { maxBy } from 'lodash-es';
 
-export const get: RequestHandler = async function get() {
+export async function load() {
   let posts = await readAllSources(postSources);
   let notes = await readAllSources(noteSources);
 
@@ -16,10 +15,8 @@ export const get: RequestHandler = async function get() {
   let lastCreatedNote = maxBy(notes, 'date');
 
   return {
-    body: {
-      post: latestPost ? stripContent(latestPost) : null,
-      note: latestNote ? stripContent(latestNote) : null,
-      lastCreatedNote: lastCreatedNote ? stripContent(lastCreatedNote) : null,
-    } as any,
+    latestPost: latestPost ? stripContent(latestPost) : null,
+    latestNote: latestNote ? stripContent(latestNote) : null,
+    lastCreatedNote: lastCreatedNote ? stripContent(lastCreatedNote) : null,
   };
-};
+}

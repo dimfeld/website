@@ -4,7 +4,6 @@
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import Nav from './_Nav.svelte';
-  export let segment;
 
   const titleStore = writable('');
   setContext('title', titleStore);
@@ -13,14 +12,13 @@
 
   if (import.meta.hot) {
     import.meta.hot.on('content-update', (data) => {
-      invalidate('/writing/latest.json');
+      invalidate('/');
       if (data.type === 'notes') {
-        invalidate('/notes/list.json');
-        invalidate('/notes/tags.json');
-        invalidate(`/notes/note/${data.id}.json`);
+        invalidate('/notes');
+        invalidate(`/notes/${data.id}`);
       } else if (data.type === 'writing') {
-        invalidate('/writing/list.json');
-        invalidate(`/writing/${data.id}.json`);
+        invalidate('/writing');
+        invalidate(`/writing/${data.id}`);
       }
     });
   }
@@ -30,7 +28,7 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="flex flex-col min-h-screen">
-  <Nav {segment} />
+<div class="flex min-h-screen flex-col">
+  <Nav />
   <slot />
 </div>

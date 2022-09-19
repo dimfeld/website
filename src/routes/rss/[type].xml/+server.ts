@@ -1,9 +1,12 @@
+import { error } from '@sveltejs/kit';
 import renderFactory from '$lib/markdown';
 import cheerio from 'cheerio';
-import * as labels from '../../postMeta';
+import * as labels from '../../../postMeta';
 import RSS from 'rss';
 import sorter from 'sorters';
 import { Post, noteSources, postSources, readAllSources } from '$lib/readPosts';
+
+export let prerender = true;
 
 let statuses: any = {};
 for (let status of labels.statuses) {
@@ -28,7 +31,7 @@ function formatPostHeader(post: Post) {
   }
 }
 
-export async function get({ params }) {
+export async function GET({ params }) {
   let type = params.type;
   let host = `https://imfeld.dev`;
 
@@ -51,9 +54,7 @@ export async function get({ params }) {
     ]);
     posts = [...p, ...n];
   } else {
-    return {
-      status: 404,
-    };
+    throw error(404, 'not found');
   }
 
   posts = posts.sort(sorter({ value: 'date', descending: true })).slice(0, 10);
@@ -103,10 +104,9 @@ export async function get({ params }) {
     });
   }
 
-  return {
-    body: feed.xml(),
+  return new Response(feed.xml(), {
     headers: {
       'Content-Type': 'application/rss+xml',
     },
-  };
+  });
 }

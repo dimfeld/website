@@ -1,11 +1,10 @@
-import { RequestHandler } from '@sveltejs/kit';
 import { stripContent, readAllSources, postSources } from '$lib/readPosts';
 import sorter from 'sorters';
 
 /**
- * @type {import('@sveltejs/kit').RequestHandler}
+ * @type {import('./$types').PageServerLoad}
  */
-export async function get() {
+export async function load() {
   let posts = await readAllSources(postSources);
   posts.sort(
     sorter(
@@ -15,8 +14,6 @@ export async function get() {
   );
 
   return {
-    body: {
-      posts: posts.map(stripContent),
-    },
+    posts: posts.map(stripContent),
   };
 }
