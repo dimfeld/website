@@ -12,14 +12,13 @@
 
   if (import.meta.hot) {
     import.meta.hot.on('content-update', (data) => {
-      invalidate('/writing/latest.json');
+      invalidate('/');
       if (data.type === 'notes') {
-        invalidate('/notes/list.json');
-        invalidate('/notes/tags.json');
-        invalidate(`/notes/note/${data.id}.json`);
+        invalidate('/notes');
+        invalidate(`/notes/${data.id}`);
       } else if (data.type === 'writing') {
-        invalidate('/writing/list.json');
-        invalidate(`/writing/${data.id}.json`);
+        invalidate('/writing');
+        invalidate(`/writing/${data.id}`);
       }
     });
   }

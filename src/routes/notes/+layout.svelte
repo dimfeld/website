@@ -9,15 +9,18 @@
   import TagList from './_TagList.svelte';
   import Popup from '../../Popup.svelte';
   import SearchResultsPopup from './_SearchResultsPopup.svelte';
-  import { filterText } from './_filters.ts';
+  import { filterText } from './_filters.js';
   import { browser } from '$app/environment';
   import type { PageData } from './$types';
+  import { orderBy } from 'lodash-es';
+  import type { Post } from '$lib/readPosts';
+  import { beforeNavigate } from '$app/navigation';
 
   export let data: PageData;
 
   const { tags, notes } = data;
 
-  let noteLookup = {};
+  let noteLookup: Record<string, Post> = {};
   for (let note of notes) {
     noteLookup[note.id] = note;
   }
@@ -26,7 +29,7 @@
   $: currentNote = noteLookup[currentNoteId];
 
   let activeTag = writable('');
-  $: $activeTag = browser ? $page.url.searchParams.get('tag') : '';
+  $: $activeTag = browser ? $page.url.searchParams.get('tag') || '' : '';
 
   let searchStore = writable('');
   setContext('activeTag', activeTag);
@@ -45,7 +48,7 @@
 
   const FILTER_TAGS = 'tags';
   const FILTER_SEARCH = 'search';
-  let activeFilterBox = null;
+  let activeFilterBox: string | null = null;
 
   function toggleMobileTagList() {
     if (activeFilterBox === FILTER_TAGS) {
@@ -55,7 +58,7 @@
     }
   }
 
-  function handleSearchBox({ target }) {
+  function handleSearchBox({ target }: Event) {
     $searchStore = (target.value || '').trim();
     if ($searchStore) {
       activeFilterBox = FILTER_SEARCH;
@@ -78,16 +81,24 @@
     }
   }
 
-  let searchPopupNotes = [];
+  let searchPopupNotes: Post[] | null = [];
   $: {
-    // Show the search results popup if we're not on the main page. If on the main
-    // page then the PostList is the search results.
-    if (activeFilterBox === FILTER_SEARCH && $searchStore) {
+    if ($searchStore) {
       searchPopupNotes = orderBy(filterText(notes, $searchStore), 'title');
     } else {
       searchPopupNotes = null;
     }
   }
+
+  beforeNavigate(() => {
+    activeFilterBox = null;
+  });
+
+  $: searchPopupVisible = Boolean(
+    activeFilterBox === FILTER_SEARCH &&
+      $page.params.path &&
+      searchPopupNotes?.length
+  );
 
   let mobileTagsButton;
   let mobileSearchBox;
@@ -115,7 +126,7 @@
       <button
         bind:this={mobileTagsButton}
         on:click={toggleMobileTagList}
-        class="ml-2 inline-flex flex-shrink justify-start justify-center
+        class="ml-2 inline-flex flex-shrink justify-center
         rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium
         leading-5 text-gray-700 shadow-sm transition
         duration-150 ease-in-out hover:text-gray-500 focus:border-blue-300 focus:outline-none
@@ -146,7 +157,7 @@
     </Popup>
 
     <Popup
-      visible={Boolean(searchPopupNotes)}
+      visible={searchPopupVisible}
       triggerElement={mobileSearchBox}
       on:close={closeSearchPopup}
       on:click={closeSearchPopup}
@@ -173,7 +184,7 @@
         placeholder="Search..." />
 
       <Popup
-        visible={Boolean(searchPopupNotes)}
+        visible={searchPopupVisible}
         triggerElement={largeSearchBox}
         on:close={closeSearchPopup}
         on:click={closeSearchPopup}

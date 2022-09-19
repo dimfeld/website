@@ -168,6 +168,13 @@ export async function readAllSources(sources: Source[]): Promise<Post[]> {
 
 export function stripContent(p: Post) {
   let { content, ...rest } = p;
+  if (rest.date) {
+    rest.date = rest.date.toISOString();
+  }
+  if (rest.updated) {
+    rest.updated = rest.updated.toISOString();
+  }
+
   return rest;
 }
 

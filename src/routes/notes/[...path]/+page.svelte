@@ -2,7 +2,7 @@
   import type { PageData } from './$types';
   import Article from '../../writing/_Article.svelte';
   export let data: PageData;
-  const note = data.note;
+  $: note = data.note;
 
   let imageUrl: string;
   $: {
@@ -17,7 +17,7 @@
     }
   }
 
-  let cardType = note.cardType || 'summary_large_image';
+  $: cardType = note.cardType || 'summary_large_image';
 </script>
 
 <svelte:head>

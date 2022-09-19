@@ -1,19 +1,22 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import type { Post } from '$lib/readPosts';
   import Article from '../_Article.svelte';
+
   export let data: PageData;
 
-  let post = data.post;
+  $: post = data.post;
 
-  let imageUrl = post.cardImage;
-  if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = `${process.env.SITE_DOMAIN}/images/${imageUrl}`;
-  } else {
-    imageUrl = `${process.env.SITE_DOMAIN}/writing/${post.id}.og-image.png`;
+  let imageUrl: string;
+  $: {
+    let { cardImage } = post;
+    if (cardImage && !cardImage.startsWith('http')) {
+      imageUrl = `${process.env.SITE_DOMAIN}/images/${cardImage}`;
+    } else {
+      imageUrl = `${process.env.SITE_DOMAIN}/writing/${post.id}.og-image.png`;
+    }
   }
 
-  let cardType = post.cardType || 'summary_large_image';
+  $: cardType = post.cardType || 'summary_large_image';
 </script>
 
 <svelte:head>

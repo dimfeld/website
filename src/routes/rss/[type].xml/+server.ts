@@ -6,6 +6,8 @@ import RSS from 'rss';
 import sorter from 'sorters';
 import { Post, noteSources, postSources, readAllSources } from '$lib/readPosts';
 
+export let prerender = true;
+
 let statuses: any = {};
 for (let status of labels.statuses) {
   statuses[status.id] = status;
