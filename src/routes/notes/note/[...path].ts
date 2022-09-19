@@ -2,7 +2,7 @@ import { RequestHandler } from '@sveltejs/kit';
 import { noteSources, lookupContent } from '$lib/readPosts';
 import md from '$lib/markdown';
 
-export const get: RequestHandler = async function get({ params: { path } }) {
+export const GET: RequestHandler = async function GET({ params: { path } }) {
   if (path.endsWith('.json')) {
     path = path.slice(0, -5);
   }

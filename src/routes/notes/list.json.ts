@@ -2,7 +2,7 @@ import { RequestHandler } from '@sveltejs/kit';
 import { stripContent, readAllSources, noteSources } from '$lib/readPosts';
 import sorter from 'sorters';
 
-export const get: RequestHandler = async function get() {
+export const GET: RequestHandler = async function GET() {
   let notes = await readAllSources(noteSources);
   notes.sort(
     sorter(

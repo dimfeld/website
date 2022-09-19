@@ -2,7 +2,7 @@ import { RequestHandler } from '@sveltejs/kit';
 import { postSources, lookupContent } from '$lib/readPosts';
 import md from '$lib/markdown';
 
-export const get: RequestHandler = async function get({ params: { id } }) {
+export const GET: RequestHandler = async function GET({ params: { id } }) {
   let post = await lookupContent(postSources, id);
   if (!post) {
     return {

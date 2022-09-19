@@ -1,7 +1,7 @@
 import { RequestHandler } from '@sveltejs/kit';
 const prod = process.env.NODE_ENV === 'production';
 
-export const get: RequestHandler = async function get({ params }) {
+export const GET: RequestHandler = async function GET({ params }) {
   let headers: Record<string, string> = {};
   let result = await fetch(`https://svelte.dev/repl/${params.id}.json`);
   if (result.ok) {

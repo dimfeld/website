@@ -3,7 +3,7 @@ import { noteSources, lookupContent, readAllSources } from '$lib/readPosts';
 import capitalize from 'just-capitalize';
 import { formatTag } from '$lib/tags';
 
-export const get: RequestHandler = async function get({ params: { id } }) {
+export const GET: RequestHandler = async function GET({ params: { id } }) {
   let notes = await readAllSources(noteSources);
 
   let output: Record<string, { posts: string[] }> = {};

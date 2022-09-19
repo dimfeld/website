@@ -28,7 +28,7 @@ function formatPostHeader(post: Post) {
   }
 }
 
-export async function get({ params }) {
+export async function GET({ params }) {
   let type = params.type;
   let host = `https://imfeld.dev`;
 

@@ -5,7 +5,7 @@ import sorter from 'sorters';
 /**
  * @type {import('@sveltejs/kit').RequestHandler}
  */
-export async function get() {
+export async function GET() {
   let posts = await readAllSources(postSources);
   posts.sort(
     sorter(

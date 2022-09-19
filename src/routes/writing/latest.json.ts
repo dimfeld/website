@@ -7,7 +7,7 @@ import {
 } from '$lib/readPosts';
 import { maxBy } from 'lodash-es';
 
-export const get: RequestHandler = async function get() {
+export const GET: RequestHandler = async function GET() {
   let posts = await readAllSources(postSources);
   let notes = await readAllSources(noteSources);
 
