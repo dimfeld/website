@@ -38,7 +38,7 @@
         <div class="post-bg" style={backgroundImage(post)} />
       {/if}
       <a
-        sveltekit:prefetch
+        data-sveltekit-prefetch
         href="{base}/{post.id}"
         class="text-lg text-teal-900">
         {post.title}
@@ -46,7 +46,7 @@
       {#if post.summary}
         <a
           class="text-sm font-medium text-gray-800 hover:no-underline"
-          sveltekit:prefetch
+          data-sveltekit-prefetch
           href="{base}/{post.id}">
           <p>{post.summary || ''}</p>
         </a>

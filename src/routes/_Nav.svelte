@@ -52,7 +52,7 @@
       transition-transform top-0 left-0"
       style={backgroundHighlightStyle} />
     <a
-      sveltekit:prefetch
+      data-sveltekit-prefetch
       class="hover:text-teal-200 section-link root-link"
       class:current-link={!segment}
       style="width:{nameWidth}px;padding-left:24px;padding-right:32px"
@@ -61,7 +61,7 @@
     </a>
     {#each links as { name, icon } (name)}
       <a
-        sveltekit:prefetch
+        data-sveltekit-prefetch
         class:current-link={segment === name}
         class="section-link justify-center"
         style="width:100px"
@@ -136,7 +136,7 @@
           shadow-md">
           <div class="flex flex-col flex-grow">
             <a
-              sveltekit:prefetch
+              data-sveltekit-prefetch
               class:current-link={!segment}
               class="section-link justify-start font-medium pl-4 py-2 w-full
               hover:bg-teal-800"
@@ -159,7 +159,7 @@
             </a>
             {#each links as { name, icon }}
               <a
-                sveltekit:prefetch
+                data-sveltekit-prefetch
                 class:current-link={segment === name}
                 class="section-link justify-start font-medium pl-4 py-2 w-full
                 hover:bg-teal-800"

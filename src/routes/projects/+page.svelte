@@ -1,7 +1,3 @@
-<script context="module">
-  export const prerender = true;
-</script>
-
 <script>
   const projects = [
     {
@@ -15,8 +11,7 @@
       name: 'Logseq Note Exporter',
       repo: 'https://www.github.com/dimfeld/export-logseq-notes',
       link: 'https://www.github.com/dimfeld/export-logseq-notes',
-      text:
-        'Export selected pages from a Logseq graph. I use this to populate the note section on this site.',
+      text: 'Export selected pages from a Logseq graph. I use this to populate the note section on this site.',
     },
     {
       name: 'Fund The Rebuild',
@@ -54,7 +49,7 @@
   }
 </script>
 
-<article class="m-4 sm:mx-16 self-center">
+<article class="m-4 self-center sm:mx-16">
   <p class="font-serif">
     Until recently, most of my career work has been in proprietary code bases.
     I'm steadily growing my open source contributions, and the more substantial
@@ -62,13 +57,13 @@
   </p>
 
   {#each projects as project}
-    <div class="flex flex-col space-y-4 mt-4 sm:flex-row sm:space-y-0">
+    <div class="mt-4 flex flex-col space-y-4 sm:flex-row sm:space-y-0">
       <h1 class="block sm:hidden">
         <a href={project.link}>{project.name}</a>
         <a href={project.repo || project.link}>(Source)</a>
       </h1>
       <div
-        class="flex-none flex flex-col items-stretch w-full justify-center sm:block sm:w-48">
+        class="flex w-full flex-none flex-col items-stretch justify-center sm:block sm:w-48">
         {#if project.image}
           <img
             class="w-full sm:w-48"

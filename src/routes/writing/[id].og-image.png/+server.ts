@@ -1,15 +1,16 @@
+import { error } from '@sveltejs/kit';
 import { RequestHandler } from '@sveltejs/kit';
-import { generateImage } from '../../lib/og-image/generate';
-import { lookupContent, postSources } from '../../lib/readPosts';
+import { generateImage } from '../../../lib/og-image/generate';
+import { lookupContent, postSources } from '../../../lib/readPosts';
 
-export const GET: RequestHandler = async function GET({ params }) {
+export const GET: RequestHandler = async function GET({ setHeaders, params }) {
   let { id } = params;
   let post = await lookupContent(postSources, id);
   if (!post) {
-    return {
-      status: 404,
-    };
+    throw error(404, 'Not found');
   }
 
-  return generateImage(post);
+  let { headers, body } = await generateImage(post);
+  setHeaders(headers);
+  return body;
 };

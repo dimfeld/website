@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import { RequestHandler } from '@sveltejs/kit';
 import { noteSources, lookupContent, readAllSources } from '$lib/readPosts';
 import capitalize from 'just-capitalize';
@@ -19,7 +20,5 @@ export const GET: RequestHandler = async function GET({ params: { id } }) {
     }
   }
 
-  return {
-    body: output,
-  };
+  return json(output);
 };

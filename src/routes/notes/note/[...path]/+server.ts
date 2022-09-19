@@ -1,4 +1,4 @@
-import { RequestHandler } from '@sveltejs/kit';
+import { json, RequestHandler } from '@sveltejs/kit';
 import { noteSources, lookupContent } from '$lib/readPosts';
 import md from '$lib/markdown';
 
@@ -24,7 +24,5 @@ export const GET: RequestHandler = async function GET({ params: { path } }) {
     content,
   };
 
-  return {
-    body: { note } as any,
-  };
+  return json({ note });
 };

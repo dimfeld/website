@@ -1,22 +1,10 @@
-<script context="module" lang="ts">
-  import type { Load } from '@sveltejs/kit';
-  import { loadFetchJson } from '$lib/fetch';
-
-  export const prerender = true;
-  export const load: Load = async function load({ fetch, params }) {
-    let result = await loadFetchJson(fetch, `/writing/${params.id}.json`);
-    if ('error' in result) {
-      return result;
-    }
-
-    return { props: result.data };
-  };
-</script>
-
 <script lang="ts">
+  import type { PageData } from './$types';
   import type { Post } from '$lib/readPosts';
-  import Article from './_Article.svelte';
-  export let post: Post;
+  import Article from '../_Article.svelte';
+  export let data: PageData;
+
+  let post = data.post;
 
   let imageUrl = post.cardImage;
   if (imageUrl && !imageUrl.startsWith('http')) {
@@ -30,7 +18,11 @@
 
 <svelte:head>
   <link rel="canonical" href="https://imfeld.dev/writing/{post.id}" />
-  <meta name="Description" content={[`${post.title} by Daniel Imfeld`, post.summary].filter(Boolean).join(' - ')} />
+  <meta
+    name="Description"
+    content={[`${post.title} by Daniel Imfeld`, post.summary]
+      .filter(Boolean)
+      .join(' - ')} />
   {#if post.tags}
     <meta name="keywords" content={post.tags.join(', ')} />
   {/if}

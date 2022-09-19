@@ -1,27 +1,13 @@
-<script context="module">
-  import { loadFetchJson } from '$lib/fetch';
-  export const prerender = true;
-  export async function load({ fetch }) {
-    let result = await loadFetchJson(fetch, '/writing/list.json');
-    if ('error' in result) {
-      return result;
-    }
-
-    return {
-      props: result.data,
-    };
-  }
-</script>
-
-<script>
+<script lang="ts">
+  import type { PageData } from './$types';
   import PostList from '../_PostList.svelte';
   import { getContext } from 'svelte';
-  export let posts;
+  export let data: PageData;
 
   getContext('title').set('Writing');
 
   let activeTag;
-  $: activePosts = posts.filter(
+  $: activePosts = data.posts.filter(
     (p) => !activeTag || (p.tags && p.tags.includes(activeTag))
   );
 </script>
@@ -31,11 +17,11 @@
 </svelte:head>
 
 <div class="ml-4">
-  <div class="flex flex-row justify-center items-baseline flex-shrink">
+  <div class="flex flex-shrink flex-row items-baseline justify-center">
     <PostList base="writing" posts={activePosts} />
   </div>
 
-  <div class="text-center sm:text-left mt-8">
+  <div class="mt-8 text-center sm:text-left">
     <a href="/rss/writing.xml">Writing RSS Feed</a>
   </div>
 </div>

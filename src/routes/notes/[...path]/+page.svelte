@@ -1,26 +1,20 @@
-<script context="module">
-  import { loadFetchJson } from '../../lib/fetch';
+<script lang="ts">
+  import type { PageData } from './$types';
+  import Article from '../../writing/_Article.svelte';
+  export let data: PageData;
+  const note = data.note;
 
-  export const prerender = true;
-  export async function load({ fetch, params: { path } }) {
-    let result = await loadFetchJson(fetch, `/notes/note/${path}.json`);
-    if ('error' in result) {
-      return result;
+  let imageUrl: string;
+  $: {
+    imageUrl = note.cardImage;
+    if (imageUrl && !imageUrl.startsWith('http')) {
+      imageUrl = `${process.env.SITE_DOMAIN}/images/${imageUrl}`;
+    } else {
+      imageUrl = `${process.env.SITE_DOMAIN}/notes/${note.id.replace(
+        /\//g,
+        '_'
+      )}.og-image.png`;
     }
-
-    return { props: result.data };
-  }
-</script>
-
-<script>
-  import Article from '../writing/_Article.svelte';
-  export let note;
-
-  let imageUrl = note.cardImage;
-  if (imageUrl && !imageUrl.startsWith('http')) {
-    imageUrl = `${process.env.SITE_DOMAIN}/images/${imageUrl}`;
-  } else {
-    imageUrl = `${process.env.SITE_DOMAIN}/notes/${note.id.replace(/\//g, '_')}.og-image.png`;
   }
 
   let cardType = note.cardType || 'summary_large_image';
@@ -28,7 +22,11 @@
 
 <svelte:head>
   <link rel="canonical" href="https://imfeld.dev/notes/{note.id}" />
-  <meta name="Description" content={[`${note.title} by Daniel Imfeld`, note.summary].filter(Boolean).join(' - ')} />
+  <meta
+    name="Description"
+    content={[`${note.title} by Daniel Imfeld`, note.summary]
+      .filter(Boolean)
+      .join(' - ')} />
   {#if note.tags}
     <meta name="keywords" content={note.tags.join(', ')} />
   {/if}

@@ -1,6 +1,7 @@
+import { error } from '@sveltejs/kit';
 import renderFactory from '$lib/markdown';
 import cheerio from 'cheerio';
-import * as labels from '../../postMeta';
+import * as labels from '../../../postMeta';
 import RSS from 'rss';
 import sorter from 'sorters';
 import { Post, noteSources, postSources, readAllSources } from '$lib/readPosts';
@@ -51,9 +52,7 @@ export async function GET({ params }) {
     ]);
     posts = [...p, ...n];
   } else {
-    return {
-      status: 404,
-    };
+    throw error(404, 'not found');
   }
 
   posts = posts.sort(sorter({ value: 'date', descending: true })).slice(0, 10);
@@ -103,10 +102,9 @@ export async function GET({ params }) {
     });
   }
 
-  return {
-    body: feed.xml(),
+  return new Response(feed.xml(), {
     headers: {
       'Content-Type': 'application/rss+xml',
     },
-  };
+  });
 }

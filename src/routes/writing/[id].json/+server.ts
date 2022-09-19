@@ -1,13 +1,11 @@
-import { RequestHandler } from '@sveltejs/kit';
+import { json, RequestHandler } from '@sveltejs/kit';
 import { postSources, lookupContent } from '$lib/readPosts';
 import md from '$lib/markdown';
 
 export const GET: RequestHandler = async function GET({ params: { id } }) {
   let post = await lookupContent(postSources, id);
   if (!post) {
-    return {
-      status: 404,
-    };
+    return new Response(undefined, { status: 404 });
   }
 
   const renderer = md();
@@ -23,7 +21,5 @@ export const GET: RequestHandler = async function GET({ params: { id } }) {
     content,
   };
 
-  return {
-    body: { post } as any,
-  };
+  return json({ post });
 };

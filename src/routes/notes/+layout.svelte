@@ -1,19 +1,7 @@
-<script context="module">
+<script lang="ts">
   import sorter from 'sorters';
   import map from 'just-map-values';
   import capitalize from 'just-capitalize';
-
-  export async function load({ fetch }) {
-    let [{ notes }, tags] = await Promise.all([
-      fetch('/notes/list.json').then((r) => r.json()),
-      fetch('/notes/tags.json').then((r) => r.json()),
-    ]);
-
-    return { props: { notes, tags } };
-  }
-</script>
-
-<script>
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import { fade } from 'svelte/transition';
@@ -22,11 +10,12 @@
   import Popup from '../../Popup.svelte';
   import SearchResultsPopup from './_SearchResultsPopup.svelte';
   import { filterText } from './_filters.ts';
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
+  import type { PageData } from './$types';
 
-  export let segment;
-  export let tags;
-  export let notes;
+  export let data: PageData;
+
+  const { tags, notes } = data;
 
   let noteLookup = {};
   for (let note of notes) {
@@ -89,13 +78,11 @@
     }
   }
 
-  $: indexPage = !segment;
-
   let searchPopupNotes = [];
   $: {
     // Show the search results popup if we're not on the main page. If on the main
     // page then the PostList is the search results.
-    if (!indexPage && activeFilterBox === FILTER_SEARCH && $searchStore) {
+    if (activeFilterBox === FILTER_SEARCH && $searchStore) {
       searchPopupNotes = orderBy(filterText(notes, $searchStore), 'title');
     } else {
       searchPopupNotes = null;

@@ -1,7 +1,3 @@
-<script context="module">
-  export const prerender = true;
-</script>
-
 <script>
   import get from 'just-safe-get';
   import sorter from 'sorters';

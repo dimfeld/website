@@ -1,4 +1,4 @@
-import { RequestHandler } from '@sveltejs/kit';
+import { json, RequestHandler } from '@sveltejs/kit';
 import {
   stripContent,
   readAllSources,
@@ -15,11 +15,9 @@ export const GET: RequestHandler = async function GET() {
   let latestNote = maxBy(notes, (note) => note.updated || note.date);
   let lastCreatedNote = maxBy(notes, 'date');
 
-  return {
-    body: {
-      post: latestPost ? stripContent(latestPost) : null,
-      note: latestNote ? stripContent(latestNote) : null,
-      lastCreatedNote: lastCreatedNote ? stripContent(lastCreatedNote) : null,
-    } as any,
-  };
+  return json({
+    post: latestPost ? stripContent(latestPost) : null,
+    note: latestNote ? stripContent(latestNote) : null,
+    lastCreatedNote: lastCreatedNote ? stripContent(lastCreatedNote) : null,
+  });
 };

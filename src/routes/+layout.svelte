@@ -4,7 +4,6 @@
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import Nav from './_Nav.svelte';
-  export let segment;
 
   const titleStore = writable('');
   setContext('title', titleStore);
@@ -30,7 +29,7 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="flex flex-col min-h-screen">
-  <Nav {segment} />
+<div class="flex min-h-screen flex-col">
+  <Nav />
   <slot />
 </div>

@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import { RequestHandler } from '@sveltejs/kit';
 const prod = process.env.NODE_ENV === 'production';
 
@@ -11,19 +12,13 @@ export const GET: RequestHandler = async function GET({ params }) {
 
     let data = await result.json();
 
-    return {
-      body: data,
-      headers,
-    };
+    return json(data, { headers });
   } else {
     let message = await result.text();
     try {
       message = JSON.parse(message);
     } catch (e) {}
 
-    return {
-      status: result.status,
-      body: message,
-    };
+    return json(message, { status: result.status });
   }
 };
