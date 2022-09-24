@@ -21,10 +21,12 @@ interface PostAttributes {
   draft?: boolean;
 }
 
+export type PostType = 'post' | 'note' | 'journal';
+
 export interface Post {
   id: string;
   format: 'md' | 'html';
-  type: 'post' | 'note';
+  type: PostType;
   source?: 'pkm';
   title: string;
   tags: string[];
@@ -40,7 +42,7 @@ export interface Post {
 
 export interface Source {
   ext: 'md' | 'html';
-  type: 'post' | 'note';
+  type: PostType;
   base: string;
   source?: string;
 }
@@ -72,7 +74,16 @@ export const noteSources: Source[] = [
   {
     ext: 'html',
     type: 'note',
-    base: 'pkm-pages',
+    base: 'pkm-pages/notes',
+    source: 'pkm',
+  },
+];
+
+export const journalSources: Source[] = [
+  {
+    ext: 'html',
+    type: 'journal',
+    base: 'pkm-pages/journals',
     source: 'pkm',
   },
 ];
@@ -168,13 +179,6 @@ export async function readAllSources(sources: Source[]): Promise<Post[]> {
 
 export function stripContent(p: Post) {
   let { content, ...rest } = p;
-  if (rest.date) {
-    rest.date = rest.date.toISOString();
-  }
-  if (rest.updated) {
-    rest.updated = rest.updated.toISOString();
-  }
-
   return rest;
 }
 

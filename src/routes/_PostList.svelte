@@ -2,6 +2,7 @@
   import { cardImageUrl } from '../postMeta';
   import { formatTag } from '$lib/tags';
   import { flip } from 'svelte/animate';
+  import { format as formatDate } from 'date-fns';
   export let posts;
   export let base;
   export let useUpdatedDate = false;
@@ -56,8 +57,8 @@
         {#if post.date}
           <time class="whitespace-nowrap pl-2">
             {useUpdatedDate && post.updated
-              ? post.updated.slice(0, 10)
-              : post.date.slice(0, 10)}
+              ? formatDate(post.updated, 'yyyy-MM-dd')
+              : formatDate(post.date, 'yyyy-MM-dd')}
           </time>
         {/if}
       </p>

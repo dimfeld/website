@@ -10,8 +10,8 @@ specifiers:
   '@rollup/plugin-json': ^4.1.0
   '@rollup/plugin-node-resolve': ^13.0.0
   '@rollup/plugin-replace': ^2.4.2
-  '@sveltejs/adapter-vercel': 1.0.0-next.76
-  '@sveltejs/kit': 1.0.0-next.484
+  '@sveltejs/adapter-vercel': 1.0.0-next.77
+  '@sveltejs/kit': 1.0.0-next.502
   '@sveltejs/svelte-repl': github:dimfeld/svelte-repl
   '@tailwindcss/forms': ^0.5.2
   '@types/cheerio': ^0.22.18
@@ -130,8 +130,8 @@ devDependencies:
   '@rollup/plugin-json': 4.1.0_rollup@2.58.0
   '@rollup/plugin-node-resolve': 13.0.5_rollup@2.58.0
   '@rollup/plugin-replace': 2.4.2_rollup@2.58.0
-  '@sveltejs/adapter-vercel': 1.0.0-next.76
-  '@sveltejs/kit': 1.0.0-next.484_svelte@3.50.1+vite@3.1.2
+  '@sveltejs/adapter-vercel': 1.0.0-next.77
+  '@sveltejs/kit': 1.0.0-next.502_svelte@3.50.1+vite@3.1.2
   '@sveltejs/svelte-repl': github.com/dimfeld/svelte-repl/63babd8bb54a41f86ed949057ffecf92da0b27c6
   '@tailwindcss/forms': 0.5.2_tailwindcss@3.0.24
   '@types/cheerio': 0.22.21
@@ -429,8 +429,8 @@ packages:
       picomatch: 2.3.0
     dev: true
 
-  /@sveltejs/adapter-vercel/1.0.0-next.76:
-    resolution: {integrity: sha512-Od9DBfeMwWC/sZNeCJw4TYVE3LMR8lGJivSdkXWgpvksgG+QizLyzTfvBacapId3wcu+7X4PPTLoH00o5iQGEQ==}
+  /@sveltejs/adapter-vercel/1.0.0-next.77:
+    resolution: {integrity: sha512-r4MqtP+lzx83HfcvI8PU0Yxzmxt6WQq9nzZETLboJouJzhSBUFIN5RmNZfEn6nNIlUwZbGQUEK/FxsRnnxI/Ig==}
     dependencies:
       '@vercel/nft': 0.22.1
       esbuild: 0.15.8
@@ -439,8 +439,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.484_svelte@3.50.1+vite@3.1.2:
-    resolution: {integrity: sha512-Y3l8OmlgmfJX3m081rMUZmmEQWHtiSsj3+YWYK/CQ4V99jqoztXPz/4cAxUt5mC45jVF5Ee9ykmh6GzkYjvfAQ==}
+  /@sveltejs/kit/1.0.0-next.502_svelte@3.50.1+vite@3.1.2:
+    resolution: {integrity: sha512-S2MLydojG1G9mQXcM0cAY6CyYtPQ3QeiTTxQe/TQbV1r1zTYwqRea9DVeRJd3EECWvWM46BnW/6yEAs9N5GvXg==}
     engines: {node: '>=16.14'}
     hasBin: true
     requiresBuild: true

@@ -6,6 +6,11 @@
   export let source = undefined;
   export let type;
   export let content;
+  export let showFooter = true;
+  export let indentTopLevel = true;
+  export let titleElement = 'h1';
+
+  import { format as formatDate } from 'date-fns';
 
   import * as labels from '../../postMeta.ts';
   import { tick, getContext, onMount } from 'svelte';
@@ -43,18 +48,22 @@
   $: content, remountDynamicComponents();
 </script>
 
-<article class:pkm-page={source === 'pkm'} class:font-serif={type === 'post'} class="my-4 px-4 sm:px-0">
+<article
+  class:pkm-page={source === 'pkm'}
+  class:font-serif={type === 'post'}
+  class="my-4 px-4 sm:px-0">
   <div class="mb-4 leading-tight">
-    <h1 class="font-serif">{title}</h1>
+    <svelte:element this={titleElement} class="font-serif"
+      >{title}</svelte:element>
 
     <div>
-      {#if date}
+      {#if date?.valueOf()}
         Written
-        <time>{date.slice(0, 10)}</time>
+        <time>{formatDate(date, 'yyyy-MM-dd')}</time>
       {/if}
-      {#if updated && updated !== date}
+      {#if updated?.valueOf() && updated.valueOf() !== date?.valueOf()}
         &mdash; Updated
-        <time>{updated.slice(0, 10)}</time>
+        <time>{formatDate(updated, 'yyyy-MM-dd')}</time>
       {/if}
     </div>
 
@@ -65,13 +74,15 @@
     {/if}
   </div>
 
-  <div class="content">
+  <div class="content" class:indent-top-level={indentTopLevel}>
     {@html content}
   </div>
 
-  <hr />
-  <p>
-    Thanks for reading! If you have any questions or comments, please
-    <a href="https://www.twitter.com/dimfeld">send me a note on Twitter.</a>
-  </p>
+  {#if showFooter}
+    <hr />
+    <p>
+      Thanks for reading! If you have any questions or comments, please
+      <a href="https://www.twitter.com/dimfeld">send me a note on Twitter.</a>
+    </p>
+  {/if}
 </article>

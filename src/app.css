@@ -17,7 +17,7 @@ html {
 
   article {
     max-width: 65ch;
-    @apply leading-relaxed ml-auto mr-auto;
+    @apply ml-auto mr-auto leading-relaxed;
   }
 
   article > ul {
@@ -28,11 +28,11 @@ html {
     @apply my-4;
   }
 
-  article ol > li {
+  article ol:not(.list-document) > li {
     @apply list-inside list-decimal;
   }
 
-  article ul > li {
+  article ul:not(.list-document) > li {
     @apply list-inside list-disc;
   }
 
@@ -41,12 +41,17 @@ html {
     @apply my-2 ml-4;
   }
 
+  article .content:not(.indent-top-level) > ul li,
+  article .content:not(.indent-top-level) > ol li {
+    @apply ml-0;
+  }
+
   article p > img:only-child {
     @apply mx-auto;
   }
 
   blockquote {
-    @apply border-l-4 border-teal-600 -ml-2 pl-3 pr-4 my-4 italic;
+    @apply my-4 -ml-2 border-l-4 border-teal-600 pl-3 pr-4 italic;
   }
 
   code,
@@ -56,7 +61,7 @@ html {
   }
 
   code {
-    @apply bg-gray-200 text-teal-900 px-1 text-base;
+    @apply bg-gray-200 px-1 text-base text-teal-900;
   }
 
   a code {
@@ -64,7 +69,7 @@ html {
   }
 
   pre > code {
-    @apply block border-gray-300 bg-gray-200 text-black px-4 py-2 my-4 whitespace-pre overflow-x-auto shadow-lg;
+    @apply my-4 block overflow-x-auto whitespace-pre border-gray-300 bg-gray-200 px-4 py-2 text-black shadow-lg;
   }
 
   article h1 + p,
@@ -81,14 +86,14 @@ html {
   }
 
   article table {
-    @apply align-middle inline-block shadow overflow-hidden border-b border-gray-200 font-sans;
+    @apply inline-block overflow-hidden border-b border-gray-200 align-middle font-sans shadow;
   }
 
   article table th {
-    @apply px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider;
+    @apply border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500;
   }
   article table td {
-    @apply px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900;
+    @apply whitespace-nowrap px-6 py-4 text-sm font-medium leading-5 text-gray-900;
   }
 
   @screen sm {
@@ -113,7 +118,7 @@ html {
   h2,
   h3,
   h4 {
-    @apply font-medium font-sans text-teal-900;
+    @apply font-sans font-medium text-teal-900;
   }
 
   h1 {
@@ -157,15 +162,15 @@ html {
   }
 
   article aside.note {
-    @apply px-4 py-4 text-sm bg-teal-100 bg-opacity-75 border-gray-300 border;
+    @apply border border-gray-300 bg-teal-100 bg-opacity-75 px-4 py-4 text-sm;
   }
 
   article aside.warn {
-    @apply px-4 py-4 text-sm bg-yellow-100 bg-opacity-75 border-gray-300 border;
+    @apply border border-gray-300 bg-yellow-100 bg-opacity-75 px-4 py-4 text-sm;
   }
 
   div.responsive-svg {
-    @apply my-4 w-full mx-auto;
+    @apply my-4 mx-auto w-full;
   }
 
   @screen sm {
@@ -238,7 +243,7 @@ html {
       }
 
       .left {
-        @apply pr-2 mb-4;
+        @apply mb-4 pr-2;
 
         ul > li,
         ol > li {
@@ -251,7 +256,7 @@ html {
       }
 
       pre > code {
-        @apply h-full w-full my-0 block bg-gray-200 text-black px-4 py-0 whitespace-pre-wrap overflow-x-auto shadow-none;
+        @apply my-0 block h-full w-full overflow-x-auto whitespace-pre-wrap bg-gray-200 px-4 py-0 text-black shadow-none;
       }
     }
   }
