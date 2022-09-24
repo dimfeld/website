@@ -1,0 +1,41 @@
+---
+title: "2022-09-20"
+tags: 
+date: 1970-01-01
+updated: 1970-01-01
+---
+
+
+  <ul class="list-document">
+    
+    <ul class="list-document">
+    <li>Got a spam text today addressed to a group of people, and the larger disruption than the initial text itself was everyone elseangry  and replying to the &quot;sender.&quot; When of course the sender of the text was the only party not seeing it, since it was just a computer program. Oh well :)</li>
+    </ul>
+
+    <li><span class="text-lg">Learning</span>
+      <ul class="list-bullet">
+        <li><span class="text-xl">Typescript Const Assertions</span>
+          <ul class="list-bullet">
+            <li>I keep forgetting this, so writing it down here. Typescript&#39;s <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions">const assertion</a> declarations are helpful for telling Typescript that you aren&#39;t going to mutate an object and so it can more narrowly type the object.
+              <ul class="list-bullet">
+                <li><pre><code><span class="hljs-source hljs-js"><span class="hljs-comment hljs-line hljs-double-slash hljs-js"><span class="hljs-punctuation hljs-definition hljs-comment hljs-js">//</span> Typed as [&#39;a&#39;, &#39;b&#39;] instead of string[];
+</span><span class="hljs-storage hljs-type hljs-js">const</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">values</span> <span class="hljs-keyword hljs-operator hljs-assignment hljs-js">=</span> <span class="hljs-meta hljs-sequence hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-string hljs-quoted hljs-single hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&#39;</span>a<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&#39;</span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span> <span class="hljs-string hljs-quoted hljs-single hljs-js"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-js">&#39;</span>b<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-js">&#39;</span></span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span> <span class="hljs-keyword hljs-control hljs-import-export hljs-js">as</span> <span class="hljs-storage hljs-type hljs-js">const</span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+<span class="hljs-comment hljs-line hljs-double-slash hljs-js"><span class="hljs-punctuation hljs-definition hljs-comment hljs-js">//</span> Typed as [number, number] instead of number[];
+</span><span class="hljs-storage hljs-type hljs-js">const</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">nums</span> <span class="hljs-keyword hljs-operator hljs-assignment hljs-js">=</span> <span class="hljs-meta hljs-sequence hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-constant hljs-numeric hljs-js">1</span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span> <span class="hljs-constant hljs-numeric hljs-js">2</span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span> <span class="hljs-keyword hljs-control hljs-import-export hljs-js">as</span> <span class="hljs-storage hljs-type hljs-js">const</span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
+</span></code></pre></li>
+              </ul>
+            </li>
+            <li>This especially comes in handy when the values need to match up to keys in an object or you have a function argument of type <code>[number, number]</code> to ensure a certain array length.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><span class="text-lg">Links</span>
+      <ul class="list-bullet">
+        <li>A good take on <a href="https://www.airplane.dev/blog/how-to-build-a-technical-moat-for-your-product">technical moats from Dan Robinson, CTO of Heap</a>. Essentially, technical moats are not single &quot;killer features,&quot; but the result of lots of iteration and development of deep understanding.</li>
+        <li><a href="https://www.singlestore.com/blog/what-is-skiplist-why-skiplist-index-for-memsql/">Singlestore&#39;s overview of skiplists</a> provides one of the better descriptions I&#39;ve seen of how the data structure actually works to provide fast lookups and updates.</li>
+      </ul>
+    </li>
+  </ul>
+
+
