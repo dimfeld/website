@@ -12,6 +12,7 @@ import {
   readAllSources,
   type PostType,
 } from '$lib/readPosts';
+import { transformLinkToAbsolute } from '$lib/transforms';
 
 export let prerender = true;
 
@@ -95,6 +96,8 @@ export async function GET({ params }) {
     if (post.format === 'md') {
       let body = render(post.content, { url: path, host });
       desc = formatPostHeader(post) + body;
+    } else if (post.format === 'html') {
+      desc = post.content;
     } else {
       desc = post.summary || '';
     }
@@ -108,6 +111,11 @@ export async function GET({ params }) {
       .append(
         `<p><a href="${fullUrl}">View this post on the website</a> for an interactive example.</p>`
       );
+
+    $('a').each((i, el) => {
+      el.attribs.href = transformLinkToAbsolute(el.attribs.href, path, host);
+    });
+
     desc = $.html();
 
     feed.item({

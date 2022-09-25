@@ -7,6 +7,7 @@ import toc from 'markdown-it-toc-done-right';
 import anchor from 'markdown-it-anchor';
 import container from '@gerhobbelt/markdown-it-container';
 import StateCore from 'markdown-it/lib/rules_core/state_core';
+import { transformLinkToAbsolute } from './transforms';
 
 hljsSvelte(highlight);
 
@@ -138,26 +139,9 @@ export default function renderer() {
   return (content: string, env: { url: string; host?: string }) => {
     let { url: base, host } = env;
 
-    let lastSlash = base.lastIndexOf('/');
-    let sameDir = base.slice(0, lastSlash + 1);
-
     // Convert links to absolute for RSS.
     r.normalizeLink = (url) => {
-      if (!url.includes('//')) {
-        if (url[0] === '#') {
-          url = `${base}${url}`;
-        } else if (!url.startsWith('/')) {
-          if (/\.(svg|png|jpg|gif)$/.test(url)) {
-            url = `/images/${url}`;
-          } else {
-            url = `${sameDir}${url}`;
-          }
-        }
-
-        if (host) {
-          url = `${host}${url}`;
-        }
-      }
+      url = transformLinkToAbsolute(url, base, host);
       return defaultNormalize(url);
     };
 
