@@ -51,8 +51,7 @@ export async function GET({ params }) {
     posts = await readAllSources(postSources);
     title += ' - Writing';
   } else if (type === 'journals') {
-    let p = await readAllSources(journalSources);
-    posts = p.map((p) => ({ ...p, date: new Date(p.title).toISOString() }));
+    posts = await readAllSources(journalSources);
     title += ' - Notes';
   } else if (type === 'notes') {
     posts = await readAllSources(noteSources);
@@ -64,11 +63,7 @@ export async function GET({ params }) {
       readAllSources(noteSources),
       readAllSources(journalSources),
     ]);
-    posts = [
-      ...p,
-      ...n,
-      ...j.map((j) => ({ ...j, date: new Date(j.title).toISOString() })),
-    ];
+    posts = [...p, ...n, ...j];
   } else {
     throw error(404, 'not found');
   }

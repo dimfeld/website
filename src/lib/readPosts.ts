@@ -10,8 +10,8 @@ const glob = promisify(globFn);
 interface PostAttributes {
   title: string;
   tags: string;
-  date: string;
-  updated?: string;
+  date: Date | string;
+  updated?: Date | string;
   summary?: string;
   frontPageSummary?: string;
   cardImage?: string;
@@ -121,6 +121,19 @@ export async function lookupContent(
   return null;
 }
 
+/** Convert a date back to a simple date-only value. This is a workaround for front-matter parsing date-like strings
+ * into actual Date objects. */
+function handleDate(value: string | Date | undefined) {
+  if (value instanceof Date) {
+    let y = value.getUTCFullYear();
+    let m = (value.getUTCMonth() + 1).toString().padStart(2, '0');
+    let d = value.getUTCDate().toString().padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+
+  return value;
+}
+
 function processPost(
   name: string,
   data: string
@@ -145,6 +158,8 @@ function processPost(
   let content = body.trim();
   return {
     ...attributes,
+    date: handleDate(attributes.date),
+    updated: handleDate(attributes.updated),
     id: name,
     content,
     tags: uniq([...metadataTags, ...pathTags]),

@@ -18,7 +18,7 @@ export async function load() {
   let lastCreatedNote = maxBy(notes, 'date');
 
   let sortedJournals = journals.sort(
-    sorter({ value: (p) => p.title, descending: true })
+    sorter({ value: (p) => p.date, descending: true })
   );
 
   const NUM_JOURNALS = 3;

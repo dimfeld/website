@@ -10,8 +10,6 @@
   export let indentTopLevel = true;
   export let titleElement = 'h1';
 
-  import { format as formatDate } from 'date-fns';
-
   import * as labels from '../../postMeta.ts';
   import { tick, getContext, onMount } from 'svelte';
   import instantiateComponents from '../../dynamicComponents';
@@ -59,11 +57,11 @@
     <div>
       {#if date?.valueOf()}
         Written
-        <time>{formatDate(date, 'yyyy-MM-dd')}</time>
+        <time>{date.slice(0, 10)}</time>
       {/if}
       {#if updated?.valueOf() && updated.valueOf() !== date?.valueOf()}
         &mdash; Updated
-        <time>{formatDate(updated, 'yyyy-MM-dd')}</time>
+        <time>{updated.slice(0, 10)}</time>
       {/if}
     </div>
 
