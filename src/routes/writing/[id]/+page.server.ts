@@ -19,8 +19,6 @@ export const load: PageServerLoad = async ({ params }) => {
       : post.content;
   post = {
     ...post,
-    date: post.date.toISOString(),
-    updated: post.updated?.toISOString(),
     content,
   };
 

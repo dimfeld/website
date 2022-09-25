@@ -2,7 +2,7 @@
 title: "Rust Resources"
 tags: Rust
 date: 2021-02-13
-updated: 2021-02-13
+updated: 2022-09-12
 ---
 
 
@@ -99,7 +99,7 @@ updated: 2021-02-13
                 <li>Supports compile-time query validation and result type generation with the <code>query!</code> macro. Or <code>query_as!</code> to use an existing type.</li>
               </ul>
             </li>
-            <li><code>diesel</code> for a full-fledged ORM if that&#39;s your style. Only supports Postgres but you should probably be using Postgres anyway :)</li>
+            <li><code>diesel</code> for a full-fledged ORM if that&#39;s your style. I&#39;ve been using this recently and it&#39;s quite nice. (See <a href="/notes/diesel_rust_orm">Diesel Rust ORM</a>)</li>
           </ul>
         </li>
         <li>Image Handling
@@ -111,6 +111,8 @@ updated: 2021-02-13
               </ul>
             </li>
             <li><code>ab_glyph</code> and <code>glyph_brush_layout</code> for text rendering</li>
+            <li><code>resvg</code> for rendering SVG, and <code>usvg</code> for parsing SVG source</li>
+            <li><code>tiny-skia</code> for drawing. <code>resvg</code> uses this internally</li>
           </ul>
         </li>
         <li>Miscellaneous
@@ -122,9 +124,16 @@ updated: 2021-02-13
                 <li>I&#39;ve heard that <a href="https://tree-sitter.github.io/tree-sitter/syntax-highlighting">tree-sitter</a> is good for this too but haven&#39;t tried it.</li>
               </ul>
             </li>
-            <li><a href="https://docs.rs/handlebars">handlebars</a> is one of many templating options</li>
+            <li><a href="https://docs.rs/handlebars">handlebars</a>, <a href="https://docs.rs/liquid">liquid</a>, and <a href="https://docs.rs/tera">tera</a> are popular libraries for text templates.</li>
             <li><a href="https://docs.rs/delegate">delegate</a> for delegating method calls to the same method on an internal field.</li>
             <li><a href="https://crates.io/crates/ouroboros">ouroboros</a> for allowing members of a structure to reference other owned members in the structure, with some additional methods to build and borrow the data.</li>
+            <li><a href="https://docs.rs/strum/latest/strum/">strum</a> includes a bunch of functionality for enums such as iterating over the members and autogenerating a <code>Display</code> impl.</li>
+            <li>Arena Allocators
+              <ul class="list-bullet">
+                <li><a href="https://docs.rs/bumpalo/latest/bumpalo/">bumpalo</a> skips calling <code>Drop</code> but allows mixed types of allocations in an arena.</li>
+                <li><a href="https://docs.rs/typed-arena/latest/typed_arena/">typed-arena</a> calls <code>Drop</code> but is limited to allocating objects of one type per arena.</li>
+              </ul>
+            </li>
           </ul>
         </li>
       </ul>

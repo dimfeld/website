@@ -4,7 +4,14 @@ import cheerio from 'cheerio';
 import * as labels from '../../../postMeta';
 import RSS from 'rss';
 import sorter from 'sorters';
-import { Post, noteSources, postSources, readAllSources } from '$lib/readPosts';
+import {
+  type Post,
+  noteSources,
+  postSources,
+  journalSources,
+  readAllSources,
+  type PostType,
+} from '$lib/readPosts';
 
 export let prerender = true;
 
@@ -41,23 +48,25 @@ export async function GET({ params }) {
   // Get whichever type of post we want. These are already sorted in descending date order so we
   // only need to sort again if combining them.
   if (type === 'writing') {
-    posts = await readAllSources(postSources);
+    posts = readAllSources(postSources);
     title += ' - Writing';
+  } else if (type === 'journals') {
+    posts = readAllSources(journalSources);
+    title += ' - Notes';
   } else if (type === 'notes') {
-    posts = await readAllSources(noteSources);
+    posts = readAllSources(noteSources);
     title += ' - Notes';
   } else if (type === 'all') {
     title += ' - All Content';
-    let [p, n] = await Promise.all([
-      readAllSources(postSources),
-      readAllSources(noteSources),
-    ]);
-    posts = [...p, ...n];
+    let p = readAllSources(postSources);
+    let n = readAllSources(noteSources);
+    let j = readAllSources(journalSources);
+    posts = [...p, ...n, ...j];
   } else {
     throw error(404, 'not found');
   }
 
-  posts = posts.sort(sorter({ value: 'date', descending: true })).slice(0, 10);
+  posts = posts.sort(sorter({ value: 'date', descending: true }));
 
   let render = renderFactory();
 
@@ -72,8 +81,14 @@ export async function GET({ params }) {
     language: 'English',
   });
 
+  const urlBases: Record<PostType, string> = {
+    post: 'writing',
+    note: 'notes',
+    journal: 'journals',
+  };
+
   for (let post of posts) {
-    let type = post.type === 'post' ? 'writing' : 'notes';
+    let type = urlBases[post.type];
     let path = `/${type}/${post.id}`;
     let fullUrl = `${host}${path}`;
     let desc;

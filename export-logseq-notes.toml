@@ -4,6 +4,8 @@ data = "/Users/dimfeld/logseq"
 # Write the rendered pages into this directory
 output = "pkm-pages"
 
+script = "export-logseq-notes.rhai"
+
 # Use this template when rendering pages. See the `templates` directory for examples.
 template = "export-logseq-notes.tmpl"
 
@@ -14,42 +16,6 @@ extension = "html"
 # this string. This is optional.
 highlight_class_prefix = "hljs-"
 
-
-##### Control Included Pages #####
-
-# Include pages with this tag that are not otherwise excluded. This hashtag will be removed from the output
-include = "note-export"
-
-# Include pages where this attribute is present and has the value "true".
-# When include_all is set, this attribute can also be used to exclude a page if it is present with a non-"true" value.
-bool_include_attr = "public"
-
-# Set to true to include all pages, except daily notes and those excluded by the `exclude` setting.
-include_all = false
-
-# Allow daily notes to be included
-allow_daily_notes = false
-
-# Additional tags to indicate that a page should be included. These tags will not be removed
-# from the rendered output.
-also = [
-  "learning",
-  "svelte",
-  "SQL",
-  "database",
-  "Mental Models",
-  "JTBD"
-]
-
-# Pages that reference any of these pages will be excluded
-exclude = [
-  "Areas",
-  "CV",
-  "syntax-test"
-]
-
-# Include page embeds of pages that don't otherwise qualify for inclusion.
-include_all_page_embeds = true
 
 ##### Tags Output ####
 
@@ -65,7 +31,7 @@ use_all_hashtags = true
 # Tags:: #Books #[[In Progress]] #Finance
 # So you can add "Books" and "In Progress" here to prevent them from
 # being listed as tags for a page and cluttering up the tags.
-exclude_tags = [
+omit_attributes = [
   "Articles",
   "Inbox",
   "In Progress",
@@ -73,10 +39,9 @@ exclude_tags = [
   "Done",
   "Readwise",
   "Deliberate Practice",
-  "Video"
-]
-
-omit_attributes = [
+  "Video",
+  "note-export",
+  "public",
   "progress",
   "Progress",
   "tags",

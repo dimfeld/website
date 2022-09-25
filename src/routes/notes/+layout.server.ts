@@ -3,7 +3,7 @@ import { formatTag } from '$lib/tags';
 import sorter from 'sorters';
 
 export async function load() {
-  let noteResponse = await readAllSources(noteSources);
+  let noteResponse = readAllSources(noteSources);
 
   let tags: Record<string, { posts: string[] }> = {};
   for (let note of noteResponse) {

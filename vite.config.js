@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 
 const domain = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : `http://${hostname()}:${process.env.DEV_PORT || process.env.PORT || 3000}`;
+  : `http://${hostname()}:${process.env.DEV_PORT || process.env.PORT || 5173}`;
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default {
@@ -53,12 +53,17 @@ export default {
         server.watcher.add(path.join(dirname, 'pkm-pages'));
       },
       handleHotUpdate(ctx) {
-        let m = /(notes|posts|pkm-pages)\/(.*)\.(md|html)$/.exec(ctx.file);
+        let m =
+          /(notes|posts|pkm-pages\/notes|pkm-pages\/journals)\/(.*)\.(md|html)$/.exec(
+            ctx.file
+          );
         if (m) {
           let contentType = m[1];
           let id = m[2];
-          if (contentType === 'pkm-pages') {
+          if (contentType === 'pkm-pages/notes') {
             contentType = 'notes';
+          } else if (contentType === 'pkm-pages/journals') {
+            contentType = 'journals';
           } else if (contentType === 'posts') {
             contentType = 'writing';
           }

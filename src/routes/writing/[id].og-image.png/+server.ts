@@ -11,6 +11,5 @@ export const GET: RequestHandler = async function GET({ setHeaders, params }) {
   }
 
   let { headers, body } = await generateImage(post);
-  setHeaders(headers);
-  return body;
+  return new Response(body, { headers });
 };
