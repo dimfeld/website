@@ -43,6 +43,6 @@
   {/if}
 </svelte:head>
 
-<div class="sm:mr-16">
+<div class="my-4 sm:mr-16">
   <Article {...note} />
 </div>

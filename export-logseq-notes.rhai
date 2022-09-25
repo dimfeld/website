@@ -3,6 +3,9 @@ if page.is_journal {
   page.url_base = "/journals";
   page.path_base = "pkm-pages/journals";
 
+  // The title has dashes instead of underscores, which makes for a nicer id.
+  page.path_name = page.title + ".html";
+
   let saw_content_block = false;
   page.each_block(1, |depth| {
     if depth == 0 {

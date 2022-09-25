@@ -17,12 +17,16 @@ export async function load() {
   let latestNote = maxBy(notes, (note) => note.updated || note.date);
   let lastCreatedNote = maxBy(notes, 'date');
 
+  let sortedJournals = journals.sort(
+    sorter({ value: (p) => p.title, descending: true })
+  );
+
+  const NUM_JOURNALS = 3;
   return {
     latestPost: stripContent(latestPost),
     latestNote: stripContent(latestNote),
-    latestJournals: journals
-      .sort(sorter({ value: (p) => p.title, descending: true }))
-      .slice(0, 3),
+    latestJournals: sortedJournals.slice(0, NUM_JOURNALS),
+    nextJournal: sortedJournals[NUM_JOURNALS]?.id,
     lastCreatedNote: stripContent(lastCreatedNote),
   };
 }

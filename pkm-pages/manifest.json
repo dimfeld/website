@@ -1,252 +1,7 @@
 {
-  "pkm-pages/notes/linkedin_on_jobs_to_be_done.html": {
-    "slug": "/notes/linkedin_on_jobs_to_be_done",
-    "title": "LinkedIn on Jobs to Be Done",
-    "uid": ""
-  },
-  "pkm-pages/notes/overlapping_elements_with_css_grid.html": {
-    "slug": "/notes/overlapping_elements_with_css_grid",
-    "title": "Overlapping Elements with CSS Grid",
-    "uid": ""
-  },
-  "pkm-pages/notes/css_grid_overview.html": {
-    "slug": "/notes/css_grid_overview",
-    "title": "CSS Grid Overview",
-    "uid": ""
-  },
-  "pkm-pages/notes/perceptual_exposure.html": {
-    "slug": "/notes/perceptual_exposure",
-    "title": "Perceptual Exposure",
-    "uid": ""
-  },
-  "pkm-pages/notes/acid_database_semantics.html": {
-    "slug": "/notes/acid_database_semantics",
-    "title": "ACID Database Semantics",
-    "uid": ""
-  },
-  "pkm-pages/notes/ntp_sync.html": {
-    "slug": "/notes/ntp_sync",
-    "title": "NTP Sync",
-    "uid": ""
-  },
-  "pkm-pages/notes/sql.html": {
-    "slug": "/notes/sql",
-    "title": "SQL",
-    "uid": ""
-  },
-  "pkm-pages/notes/adam_wathan_on_nailing_your_first_launch.html": {
-    "slug": "/notes/adam_wathan_on_nailing_your_first_launch",
-    "title": "Adam Wathan on Nailing your First Launch",
-    "uid": ""
-  },
-  "pkm-pages/notes/tacit_knowledge.html": {
-    "slug": "/notes/tacit_knowledge",
-    "title": "Tacit Knowledge",
-    "uid": ""
-  },
-  "pkm-pages/notes/programming_courses.html": {
-    "slug": "/notes/programming_courses",
-    "title": "Programming Courses",
-    "uid": ""
-  },
-  "pkm-pages/notes/deliberate_practice.html": {
-    "slug": "/notes/deliberate_practice",
-    "title": "Deliberate Practice",
-    "uid": ""
-  },
-  "pkm-pages/notes/glowing_text.html": {
-    "slug": "/notes/glowing_text",
-    "title": "Glowing Text",
-    "uid": ""
-  },
-  "pkm-pages/notes/variable_neighborhood_search.html": {
-    "slug": "/notes/variable_neighborhood_search",
-    "title": "Variable Neighborhood Search",
-    "uid": ""
-  },
-  "pkm-pages/notes/how_to_read_a_book_the_ultimate_guide_by_mortimer_adler.html": {
-    "slug": "/notes/how_to_read_a_book_the_ultimate_guide_by_mortimer_adler",
-    "title": "How to Read a Book: The Ultimate Guide by Mortimer Adler",
-    "uid": ""
-  },
-  "pkm-pages/notes/svelte_transitions.html": {
-    "slug": "/notes/svelte_transitions",
-    "title": "Svelte Transitions",
-    "uid": ""
-  },
-  "pkm-pages/notes/rust_macros.html": {
-    "slug": "/notes/rust_macros",
-    "title": "Rust Macros",
-    "uid": ""
-  },
-  "pkm-pages/notes/hytradboi_conference.html": {
-    "slug": "/notes/hytradboi_conference",
-    "title": "HYTRADBOI Conference",
-    "uid": ""
-  },
-  "pkm-pages/notes/elasticsearch_cheat_sheet.html": {
-    "slug": "/notes/elasticsearch_cheat_sheet",
-    "title": "Elasticsearch Cheat Sheet",
-    "uid": ""
-  },
-  "pkm-pages/notes/sandbox_method.html": {
-    "slug": "/notes/self_education_teach_yourself_anything_with_the_sandbox_method",
-    "title": "Self-Education: Teach Yourself Anything with the Sandbox Method",
-    "uid": ""
-  },
-  "pkm-pages/notes/transactionally_staged_job_drain_queues.html": {
-    "slug": "/notes/transactionally_staged_job_drain_queues",
-    "title": "Transactionally Staged Job Drain Queues",
-    "uid": ""
-  },
-  "pkm-pages/journals/2022_09_23.html": {
-    "slug": "/journals/2022_09_23",
-    "title": "2022-09-23",
-    "uid": ""
-  },
-  "pkm-pages/notes/rust_pinning.html": {
-    "slug": "/notes/rust_pinning",
-    "title": "Rust Pinning",
-    "uid": ""
-  },
-  "pkm-pages/notes/prose_page_formatting.html": {
-    "slug": "/notes/prose_page_formatting",
-    "title": "Prose Page Formatting",
-    "uid": ""
-  },
-  "pkm-pages/notes/implementing_oauth2.html": {
-    "slug": "/notes/implementing_oauth2",
-    "title": "Implementing OAuth2",
-    "uid": ""
-  },
-  "pkm-pages/notes/serializable_transactions.html": {
-    "slug": "/notes/serializable_transactions",
-    "title": "Serializable Transactions",
-    "uid": ""
-  },
-  "pkm-pages/notes/circle_of_competence.html": {
-    "slug": "/notes/circle_of_competence",
-    "title": "Circle of Competence",
-    "uid": ""
-  },
-  "pkm-pages/notes/book_designing_data_intensive_applications.html": {
-    "slug": "/notes/book_designing_data_intensive_applications",
-    "title": "Book/Designing Data-Intensive Applications",
-    "uid": ""
-  },
-  "pkm-pages/notes/web_scrapers.html": {
-    "slug": "/notes/web_scrapers",
-    "title": "Web Scrapers",
-    "uid": ""
-  },
-  "pkm-pages/notes/the_problems_with_deliberate_practice.html": {
-    "slug": "/notes/the_problems_with_deliberate_practice",
-    "title": "The Problems With Deliberate Practice",
-    "uid": ""
-  },
-  "pkm-pages/notes/useful_svelte_components.html": {
-    "slug": "/notes/useful_svelte_components",
-    "title": "Useful Svelte Components",
-    "uid": ""
-  },
-  "pkm-pages/notes/jobs_to_be_done.html": {
-    "slug": "/notes/jobs_to_be_done",
-    "title": "Jobs to be Done",
-    "uid": ""
-  },
-  "pkm-pages/notes/hybrid_logical_clock.html": {
-    "slug": "/notes/hybrid_logical_clock",
-    "title": "Hybrid Logical Clock",
-    "uid": ""
-  },
-  "pkm-pages/notes/sqlx.html": {
-    "slug": "/notes/sqlx",
-    "title": "sqlx",
-    "uid": ""
-  },
-  "pkm-pages/notes/the_feynman_technique_the_best_way_to_learn_anything.html": {
-    "slug": "/notes/the_feynman_technique_the_best_way_to_learn_anything",
-    "title": "The Feynman Technique: The Best Way to Learn Anything",
-    "uid": ""
-  },
-  "pkm-pages/notes/content_visibility_auto.html": {
-    "slug": "/notes/content_visibility_auto",
-    "title": "content-visibility: auto",
-    "uid": ""
-  },
-  "pkm-pages/notes/rust_modules.html": {
-    "slug": "/notes/rust_modules",
-    "title": "Rust Modules",
-    "uid": ""
-  },
-  "pkm-pages/notes/tiago_forte_on_writing_book_summaries.html": {
-    "slug": "/notes/tiago_forte_on_writing_book_summaries",
-    "title": "Tiago Forte on Writing Book Summaries",
-    "uid": ""
-  },
-  "pkm-pages/notes/book_shape_up.html": {
-    "slug": "/notes/book_shape_up",
-    "title": "Book/Shape Up",
-    "uid": ""
-  },
-  "pkm-pages/notes/svg_dashes_around_the_edge_of_a_circle.html": {
-    "slug": "/notes/svg_dashes_around_the_edge_of_a_circle",
-    "title": "SVG Dashes around the edge of a Circle",
-    "uid": ""
-  },
-  "pkm-pages/notes/book_sql_antipatterns.html": {
-    "slug": "/notes/book_sql_antipatterns",
-    "title": "Book/SQL Antipatterns",
-    "uid": ""
-  },
-  "pkm-pages/notes/george_orwell_what_is_fascism.html": {
-    "slug": "/notes/george_orwell_what_is_fascism",
-    "title": "George Orwell - What is Fascism?",
-    "uid": ""
-  },
-  "pkm-pages/notes/patrick_mckenzie_on_leveling_up.html": {
-    "slug": "/notes/patrick_mckenzie_on_leveling_up",
-    "title": "Patrick McKenzie on Leveling Up",
-    "uid": ""
-  },
-  "pkm-pages/notes/the_top_3_most_effective_ways_to_take_notes_while_reading.html": {
-    "slug": "/notes/the_top_3_most_effective_ways_to_take_notes_while_reading",
-    "title": "The Top 3 Most Effective Ways to Take Notes While Reading",
-    "uid": ""
-  },
-  "pkm-pages/notes/github_actions.html": {
-    "slug": "/notes/github_actions",
-    "title": "Github Actions",
-    "uid": ""
-  },
-  "pkm-pages/notes/rust_with_webassembly.html": {
-    "slug": "/notes/rust_with_webassembly",
-    "title": "Rust with WebAssembly",
-    "uid": ""
-  },
-  "pkm-pages/notes/css_color_tricks.html": {
-    "slug": "/notes/css_color_tricks",
-    "title": "CSS Color Tricks",
-    "uid": ""
-  },
-  "pkm-pages/notes/selective_closure_capture_in_rust.html": {
-    "slug": "/notes/selective_closure_capture_in_rust",
-    "title": "Selective Closure Capture in Rust",
-    "uid": ""
-  },
-  "pkm-pages/notes/onboarding_design_for_switching.html": {
-    "slug": "/notes/onboarding_design_for_switching",
-    "title": "Onboarding Design for Switching",
-    "uid": ""
-  },
-  "pkm-pages/journals/2022_09_21.html": {
-    "slug": "/journals/2022_09_21",
-    "title": "2022-09-21",
-    "uid": ""
-  },
-  "pkm-pages/notes/activation_functions.html": {
-    "slug": "/notes/activation_functions",
-    "title": "Activation Functions",
+  "pkm-pages/notes/roam_edn_structure.html": {
+    "slug": "/notes/roam_edn_structure",
+    "title": "Roam EDN Structure",
     "uid": ""
   },
   "pkm-pages/notes/comparing_postgresql_json_values.html": {
@@ -254,79 +9,24 @@
     "title": "Comparing PostgreSQL JSON Values",
     "uid": ""
   },
-  "pkm-pages/notes/vanishing_gradient_problem.html": {
-    "slug": "/notes/vanishing_gradient_problem",
-    "title": "Vanishing Gradient Problem",
+  "pkm-pages/notes/tacit_knowledge.html": {
+    "slug": "/notes/tacit_knowledge",
+    "title": "Tacit Knowledge",
     "uid": ""
   },
-  "pkm-pages/notes/mistakes_to_avoid_when_learning_jobs_to_be_done.html": {
-    "slug": "/notes/mistakes_to_avoid_when_learning_jobs_to_be_done",
-    "title": "Mistakes to Avoid when Learning Jobs to be Done",
+  "pkm-pages/notes/deliberate_practice.html": {
+    "slug": "/notes/deliberate_practice",
+    "title": "Deliberate Practice",
     "uid": ""
   },
-  "pkm-pages/journals/2022_09_20.html": {
-    "slug": "/journals/2022_09_20",
-    "title": "2022-09-20",
+  "pkm-pages/notes/the_top_3_most_effective_ways_to_take_notes_while_reading.html": {
+    "slug": "/notes/the_top_3_most_effective_ways_to_take_notes_while_reading",
+    "title": "The Top 3 Most Effective Ways to Take Notes While Reading",
     "uid": ""
   },
-  "pkm-pages/notes/proximate_vs_root_causes.html": {
-    "slug": "/notes/proximate_vs_root_causes",
-    "title": "Proximate vs. Root Causes",
-    "uid": ""
-  },
-  "pkm-pages/notes/ui.html": {
-    "slug": "/notes/ui",
-    "title": "UI",
-    "uid": ""
-  },
-  "pkm-pages/notes/roam_edn_structure.html": {
-    "slug": "/notes/roam_edn_structure",
-    "title": "Roam EDN Structure",
-    "uid": ""
-  },
-  "pkm-pages/notes/makefile_cheatsheet.html": {
-    "slug": "/notes/makefile_cheatsheet",
-    "title": "Makefile Cheatsheet",
-    "uid": ""
-  },
-  "pkm-pages/notes/lateral_joins.html": {
-    "slug": "/notes/lateral_joins",
-    "title": "Lateral Joins",
-    "uid": ""
-  },
-  "pkm-pages/notes/rust_error_handling.html": {
-    "slug": "/notes/rust_error_handling",
-    "title": "Rust Error Handling",
-    "uid": ""
-  },
-  "pkm-pages/notes/new_directions_in_cloud_programming.html": {
-    "slug": "/notes/new_directions_in_cloud_programming",
-    "title": "New Directions in Cloud Programming",
-    "uid": ""
-  },
-  "pkm-pages/notes/building_things_to_help_sell_the_things_you_make.html": {
-    "slug": "/notes/building_things_to_help_sell_the_things_you_make",
-    "title": "Building Things to Help Sell the Things You Make",
-    "uid": ""
-  },
-  "pkm-pages/notes/embedding_v8_in_rust.html": {
-    "slug": "/notes/embedding_v8_in_rust",
-    "title": "Embedding V8 in Rust",
-    "uid": ""
-  },
-  "pkm-pages/notes/first_row_per_group_in_postgresql.html": {
-    "slug": "/notes/first_row_per_group_in_postgresql",
-    "title": "First Row per Group in PostgreSQL",
-    "uid": ""
-  },
-  "pkm-pages/journals/2022_09_22.html": {
-    "slug": "/journals/2022_09_22",
-    "title": "2022-09-22",
-    "uid": ""
-  },
-  "pkm-pages/notes/theory_of_constraints.html": {
-    "slug": "/notes/theory_of_constraints",
-    "title": "Theory of Constraints",
+  "pkm-pages/notes/programming_courses.html": {
+    "slug": "/notes/programming_courses",
+    "title": "Programming Courses",
     "uid": ""
   },
   "pkm-pages/notes/nodejs_performance.html": {
@@ -334,39 +34,19 @@
     "title": "Node.js Performance",
     "uid": ""
   },
-  "pkm-pages/notes/git_cheatsheet.html": {
-    "slug": "/notes/git_cheatsheet",
-    "title": "Git Cheatsheet",
+  "pkm-pages/notes/the_feynman_technique_the_best_way_to_learn_anything.html": {
+    "slug": "/notes/the_feynman_technique_the_best_way_to_learn_anything",
+    "title": "The Feynman Technique: The Best Way to Learn Anything",
     "uid": ""
   },
-  "pkm-pages/notes/article_the_four_theories_of_truth_as_a_method_for_critical_thinking.html": {
-    "slug": "/notes/article_the_four_theories_of_truth_as_a_method_for_critical_thinking",
-    "title": "Article/The Four Theories of Truth as a Method for Critical Thinking",
+  "pkm-pages/notes/rust_modules.html": {
+    "slug": "/notes/rust_modules",
+    "title": "Rust Modules",
     "uid": ""
   },
-  "pkm-pages/notes/retryable_idempotent_operations.html": {
-    "slug": "/notes/retryable_idempotent_operations",
-    "title": "Retryable Idempotent Operations",
-    "uid": ""
-  },
-  "pkm-pages/notes/diesel_rust_orm.html": {
-    "slug": "/notes/diesel_rust_orm",
-    "title": "Diesel Rust ORM",
-    "uid": ""
-  },
-  "pkm-pages/notes/hiring_a_job_to_be_done.html": {
-    "slug": "/notes/hiring_a_job_to_be_done",
-    "title": "Hiring a Job to Be Done",
-    "uid": ""
-  },
-  "pkm-pages/notes/projects_tracksome.html": {
-    "slug": "/notes/projects_tracksome",
-    "title": "Tracksome",
-    "uid": ""
-  },
-  "pkm-pages/notes/the_elements_of_ui_engineering.html": {
-    "slug": "/notes/the_elements_of_ui_engineering",
-    "title": "The Elements of UI Engineering",
+  "pkm-pages/notes/svelte_transitions.html": {
+    "slug": "/notes/svelte_transitions",
+    "title": "Svelte Transitions",
     "uid": ""
   },
   "pkm-pages/notes/web_development_links.html": {
@@ -374,9 +54,24 @@
     "title": "Web Development Links",
     "uid": ""
   },
-  "pkm-pages/notes/rust_cheatsheet.html": {
-    "slug": "/notes/rust_cheatsheet",
-    "title": "Rust Cheatsheet",
+  "pkm-pages/notes/rust_error_handling.html": {
+    "slug": "/notes/rust_error_handling",
+    "title": "Rust Error Handling",
+    "uid": ""
+  },
+  "pkm-pages/notes/hytradboi_conference.html": {
+    "slug": "/notes/hytradboi_conference",
+    "title": "HYTRADBOI Conference",
+    "uid": ""
+  },
+  "pkm-pages/notes/building_things_to_help_sell_the_things_you_make.html": {
+    "slug": "/notes/building_things_to_help_sell_the_things_you_make",
+    "title": "Building Things to Help Sell the Things You Make",
+    "uid": ""
+  },
+  "pkm-pages/notes/linkedin_on_jobs_to_be_done.html": {
+    "slug": "/notes/linkedin_on_jobs_to_be_done",
+    "title": "LinkedIn on Jobs to Be Done",
     "uid": ""
   },
   "pkm-pages/notes/position_sticky_for_table_headers.html": {
@@ -384,9 +79,314 @@
     "title": "Position:sticky for table headers",
     "uid": ""
   },
+  "pkm-pages/notes/variable_neighborhood_search.html": {
+    "slug": "/notes/variable_neighborhood_search",
+    "title": "Variable Neighborhood Search",
+    "uid": ""
+  },
+  "pkm-pages/notes/elasticsearch_cheat_sheet.html": {
+    "slug": "/notes/elasticsearch_cheat_sheet",
+    "title": "Elasticsearch Cheat Sheet",
+    "uid": ""
+  },
   "pkm-pages/notes/rust_resources.html": {
     "slug": "/notes/rust_resources",
     "title": "Rust Resources",
+    "uid": ""
+  },
+  "pkm-pages/notes/activation_functions.html": {
+    "slug": "/notes/activation_functions",
+    "title": "Activation Functions",
+    "uid": ""
+  },
+  "pkm-pages/notes/web_scrapers.html": {
+    "slug": "/notes/web_scrapers",
+    "title": "Web Scrapers",
+    "uid": ""
+  },
+  "pkm-pages/notes/css_grid_overview.html": {
+    "slug": "/notes/css_grid_overview",
+    "title": "CSS Grid Overview",
+    "uid": ""
+  },
+  "pkm-pages/notes/book_designing_data_intensive_applications.html": {
+    "slug": "/notes/book_designing_data_intensive_applications",
+    "title": "Book/Designing Data-Intensive Applications",
+    "uid": ""
+  },
+  "pkm-pages/notes/the_elements_of_ui_engineering.html": {
+    "slug": "/notes/the_elements_of_ui_engineering",
+    "title": "The Elements of UI Engineering",
+    "uid": ""
+  },
+  "pkm-pages/notes/tiago_forte_on_writing_book_summaries.html": {
+    "slug": "/notes/tiago_forte_on_writing_book_summaries",
+    "title": "Tiago Forte on Writing Book Summaries",
+    "uid": ""
+  },
+  "pkm-pages/notes/george_orwell_what_is_fascism.html": {
+    "slug": "/notes/george_orwell_what_is_fascism",
+    "title": "George Orwell - What is Fascism?",
+    "uid": ""
+  },
+  "pkm-pages/notes/vanishing_gradient_problem.html": {
+    "slug": "/notes/vanishing_gradient_problem",
+    "title": "Vanishing Gradient Problem",
+    "uid": ""
+  },
+  "pkm-pages/notes/implementing_oauth2.html": {
+    "slug": "/notes/implementing_oauth2",
+    "title": "Implementing OAuth2",
+    "uid": ""
+  },
+  "pkm-pages/notes/jobs_to_be_done.html": {
+    "slug": "/notes/jobs_to_be_done",
+    "title": "Jobs to be Done",
+    "uid": ""
+  },
+  "pkm-pages/notes/lateral_joins.html": {
+    "slug": "/notes/lateral_joins",
+    "title": "Lateral Joins",
+    "uid": ""
+  },
+  "pkm-pages/notes/rust_cheatsheet.html": {
+    "slug": "/notes/rust_cheatsheet",
+    "title": "Rust Cheatsheet",
+    "uid": ""
+  },
+  "pkm-pages/notes/rust_macros.html": {
+    "slug": "/notes/rust_macros",
+    "title": "Rust Macros",
+    "uid": ""
+  },
+  "pkm-pages/notes/ui.html": {
+    "slug": "/notes/ui",
+    "title": "UI",
+    "uid": ""
+  },
+  "pkm-pages/notes/git_cheatsheet.html": {
+    "slug": "/notes/git_cheatsheet",
+    "title": "Git Cheatsheet",
+    "uid": ""
+  },
+  "pkm-pages/notes/sandbox_method.html": {
+    "slug": "/notes/self_education_teach_yourself_anything_with_the_sandbox_method",
+    "title": "Self-Education: Teach Yourself Anything with the Sandbox Method",
+    "uid": ""
+  },
+  "pkm-pages/notes/hybrid_logical_clock.html": {
+    "slug": "/notes/hybrid_logical_clock",
+    "title": "Hybrid Logical Clock",
+    "uid": ""
+  },
+  "pkm-pages/notes/patrick_mckenzie_on_leveling_up.html": {
+    "slug": "/notes/patrick_mckenzie_on_leveling_up",
+    "title": "Patrick McKenzie on Leveling Up",
+    "uid": ""
+  },
+  "pkm-pages/notes/content_visibility_auto.html": {
+    "slug": "/notes/content_visibility_auto",
+    "title": "content-visibility: auto",
+    "uid": ""
+  },
+  "pkm-pages/notes/new_directions_in_cloud_programming.html": {
+    "slug": "/notes/new_directions_in_cloud_programming",
+    "title": "New Directions in Cloud Programming",
+    "uid": ""
+  },
+  "pkm-pages/notes/svg_dashes_around_the_edge_of_a_circle.html": {
+    "slug": "/notes/svg_dashes_around_the_edge_of_a_circle",
+    "title": "SVG Dashes around the edge of a Circle",
+    "uid": ""
+  },
+  "pkm-pages/notes/retryable_idempotent_operations.html": {
+    "slug": "/notes/retryable_idempotent_operations",
+    "title": "Retryable Idempotent Operations",
+    "uid": ""
+  },
+  "pkm-pages/notes/github_actions.html": {
+    "slug": "/notes/github_actions",
+    "title": "Github Actions",
+    "uid": ""
+  },
+  "pkm-pages/notes/adam_wathan_on_nailing_your_first_launch.html": {
+    "slug": "/notes/adam_wathan_on_nailing_your_first_launch",
+    "title": "Adam Wathan on Nailing your First Launch",
+    "uid": ""
+  },
+  "pkm-pages/notes/book_shape_up.html": {
+    "slug": "/notes/book_shape_up",
+    "title": "Book/Shape Up",
+    "uid": ""
+  },
+  "pkm-pages/notes/circle_of_competence.html": {
+    "slug": "/notes/circle_of_competence",
+    "title": "Circle of Competence",
+    "uid": ""
+  },
+  "pkm-pages/journals/2022-09-21.html": {
+    "slug": "/journals/2022_09_21",
+    "title": "2022-09-21",
+    "uid": ""
+  },
+  "pkm-pages/notes/theory_of_constraints.html": {
+    "slug": "/notes/theory_of_constraints",
+    "title": "Theory of Constraints",
+    "uid": ""
+  },
+  "pkm-pages/notes/sql.html": {
+    "slug": "/notes/sql",
+    "title": "SQL",
+    "uid": ""
+  },
+  "pkm-pages/journals/2022-09-20.html": {
+    "slug": "/journals/2022_09_20",
+    "title": "2022-09-20",
+    "uid": ""
+  },
+  "pkm-pages/notes/book_sql_antipatterns.html": {
+    "slug": "/notes/book_sql_antipatterns",
+    "title": "Book/SQL Antipatterns",
+    "uid": ""
+  },
+  "pkm-pages/notes/prose_page_formatting.html": {
+    "slug": "/notes/prose_page_formatting",
+    "title": "Prose Page Formatting",
+    "uid": ""
+  },
+  "pkm-pages/notes/transactionally_staged_job_drain_queues.html": {
+    "slug": "/notes/transactionally_staged_job_drain_queues",
+    "title": "Transactionally Staged Job Drain Queues",
+    "uid": ""
+  },
+  "pkm-pages/notes/useful_svelte_components.html": {
+    "slug": "/notes/useful_svelte_components",
+    "title": "Useful Svelte Components",
+    "uid": ""
+  },
+  "pkm-pages/notes/embedding_v8_in_rust.html": {
+    "slug": "/notes/embedding_v8_in_rust",
+    "title": "Embedding V8 in Rust",
+    "uid": ""
+  },
+  "pkm-pages/notes/glowing_text.html": {
+    "slug": "/notes/glowing_text",
+    "title": "Glowing Text",
+    "uid": ""
+  },
+  "pkm-pages/notes/rust_with_webassembly.html": {
+    "slug": "/notes/rust_with_webassembly",
+    "title": "Rust with WebAssembly",
+    "uid": ""
+  },
+  "pkm-pages/notes/hiring_a_job_to_be_done.html": {
+    "slug": "/notes/hiring_a_job_to_be_done",
+    "title": "Hiring a Job to Be Done",
+    "uid": ""
+  },
+  "pkm-pages/notes/onboarding_design_for_switching.html": {
+    "slug": "/notes/onboarding_design_for_switching",
+    "title": "Onboarding Design for Switching",
+    "uid": ""
+  },
+  "pkm-pages/notes/serializable_transactions.html": {
+    "slug": "/notes/serializable_transactions",
+    "title": "Serializable Transactions",
+    "uid": ""
+  },
+  "pkm-pages/notes/sqlx.html": {
+    "slug": "/notes/sqlx",
+    "title": "sqlx",
+    "uid": ""
+  },
+  "pkm-pages/journals/2022-09-22.html": {
+    "slug": "/journals/2022_09_22",
+    "title": "2022-09-22",
+    "uid": ""
+  },
+  "pkm-pages/notes/first_row_per_group_in_postgresql.html": {
+    "slug": "/notes/first_row_per_group_in_postgresql",
+    "title": "First Row per Group in PostgreSQL",
+    "uid": ""
+  },
+  "pkm-pages/notes/overlapping_elements_with_css_grid.html": {
+    "slug": "/notes/overlapping_elements_with_css_grid",
+    "title": "Overlapping Elements with CSS Grid",
+    "uid": ""
+  },
+  "pkm-pages/notes/rust_pinning.html": {
+    "slug": "/notes/rust_pinning",
+    "title": "Rust Pinning",
+    "uid": ""
+  },
+  "pkm-pages/notes/css_color_tricks.html": {
+    "slug": "/notes/css_color_tricks",
+    "title": "CSS Color Tricks",
+    "uid": ""
+  },
+  "pkm-pages/notes/proximate_vs_root_causes.html": {
+    "slug": "/notes/proximate_vs_root_causes",
+    "title": "Proximate vs. Root Causes",
+    "uid": ""
+  },
+  "pkm-pages/notes/article_the_four_theories_of_truth_as_a_method_for_critical_thinking.html": {
+    "slug": "/notes/article_the_four_theories_of_truth_as_a_method_for_critical_thinking",
+    "title": "Article/The Four Theories of Truth as a Method for Critical Thinking",
+    "uid": ""
+  },
+  "pkm-pages/notes/the_problems_with_deliberate_practice.html": {
+    "slug": "/notes/the_problems_with_deliberate_practice",
+    "title": "The Problems With Deliberate Practice",
+    "uid": ""
+  },
+  "pkm-pages/notes/selective_closure_capture_in_rust.html": {
+    "slug": "/notes/selective_closure_capture_in_rust",
+    "title": "Selective Closure Capture in Rust",
+    "uid": ""
+  },
+  "pkm-pages/notes/acid_database_semantics.html": {
+    "slug": "/notes/acid_database_semantics",
+    "title": "ACID Database Semantics",
+    "uid": ""
+  },
+  "pkm-pages/notes/how_to_read_a_book_the_ultimate_guide_by_mortimer_adler.html": {
+    "slug": "/notes/how_to_read_a_book_the_ultimate_guide_by_mortimer_adler",
+    "title": "How to Read a Book: The Ultimate Guide by Mortimer Adler",
+    "uid": ""
+  },
+  "pkm-pages/notes/mistakes_to_avoid_when_learning_jobs_to_be_done.html": {
+    "slug": "/notes/mistakes_to_avoid_when_learning_jobs_to_be_done",
+    "title": "Mistakes to Avoid when Learning Jobs to be Done",
+    "uid": ""
+  },
+  "pkm-pages/journals/2022-09-23.html": {
+    "slug": "/journals/2022_09_23",
+    "title": "2022-09-23",
+    "uid": ""
+  },
+  "pkm-pages/notes/projects_tracksome.html": {
+    "slug": "/notes/projects_tracksome",
+    "title": "Tracksome",
+    "uid": ""
+  },
+  "pkm-pages/notes/makefile_cheatsheet.html": {
+    "slug": "/notes/makefile_cheatsheet",
+    "title": "Makefile Cheatsheet",
+    "uid": ""
+  },
+  "pkm-pages/notes/ntp_sync.html": {
+    "slug": "/notes/ntp_sync",
+    "title": "NTP Sync",
+    "uid": ""
+  },
+  "pkm-pages/notes/diesel_rust_orm.html": {
+    "slug": "/notes/diesel_rust_orm",
+    "title": "Diesel Rust ORM",
+    "uid": ""
+  },
+  "pkm-pages/notes/perceptual_exposure.html": {
+    "slug": "/notes/perceptual_exposure",
+    "title": "Perceptual Exposure",
     "uid": ""
   }
 }

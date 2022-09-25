@@ -51,7 +51,7 @@
 <article
   class:pkm-page={source === 'pkm'}
   class:font-serif={type === 'post'}
-  class="my-4 px-4 sm:px-0">
+  class="px-4 sm:px-0">
   <div class="mb-4 leading-tight">
     <svelte:element this={titleElement} class="font-serif"
       >{title}</svelte:element>
@@ -74,7 +74,7 @@
     {/if}
   </div>
 
-  <div class="content" class:indent-top-level={indentTopLevel}>
+  <div class="content" class:no-indent={!indentTopLevel}>
     {@html content}
   </div>
 

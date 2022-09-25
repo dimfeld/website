@@ -40,6 +40,6 @@
   <meta property="og:image" content={imageUrl} />
 </svelte:head>
 
-<div class="sm:mx-16">
+<div class="my-4 sm:mx-16">
   <Article {...post} />
 </div>

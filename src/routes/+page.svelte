@@ -2,7 +2,7 @@
   import type { PageData } from './$types';
   import { getContext, onMount } from 'svelte';
   import { annotate } from 'svelte-rough-notation';
-  import Article from './writing/_Article.svelte';
+  import Journal from '$lib/Journal.svelte';
 
   export let data: PageData;
   $: ({ latestPost, latestNote, latestJournals, lastCreatedNote } = data);
@@ -34,23 +34,24 @@
 
   <h1>Latest Daily Updates</h1>
 
-  <div class="flex flex-col">
+  <div class="mt-2 flex flex-col gap-4">
     {#each latestJournals as post}
-      <Article
-        {...post}
-        titleElement="h2"
-        showFooter={false}
-        indentTopLevel={false} />
+      <Journal {...post} titleElement="h2" />
     {/each}
   </div>
 
   <p>
-    <a data-sveltekit-prefetch href="/journals">See more daily updates...</a>
+    <a
+      data-sveltekit-prefetch
+      href="/journals#{data.nextJournal}"
+      class="font-medium">
+      See more daily updates...
+    </a>
   </p>
 
   <p class="mt-8">
-    In addition to the daily posts, I sometimes write longer articles too. My
-    latest is {#if latestPost.frontPageSummary}
+    In addition to these short updates, I sometimes write longer articles too.
+    My latest is {#if latestPost.frontPageSummary}
       <a use:annotate={annotationOptions} href="writing/{latestPost.id}"
         >{latestPost.title}</a
       >, about {latestPost.frontPageSummary}.

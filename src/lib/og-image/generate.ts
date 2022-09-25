@@ -7,7 +7,9 @@ import { Post } from '../readPosts';
 const prod = process.env.NODE_ENV === 'production';
 
 // Work in Vercel serverless function or in Vite.
-const dirname = import.meta?.url ? fileURLToPath(import.meta.url) : __dirname;
+const dirname = import.meta?.url
+  ? path.dirname(fileURLToPath(import.meta.url))
+  : __dirname;
 
 async function read(filename: string) {
   let fullPath = path.join(dirname, filename);

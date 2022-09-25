@@ -4,7 +4,14 @@ import cheerio from 'cheerio';
 import * as labels from '../../../postMeta';
 import RSS from 'rss';
 import sorter from 'sorters';
-import { Post, noteSources, postSources, readAllSources } from '$lib/readPosts';
+import {
+  type Post,
+  noteSources,
+  postSources,
+  journalSources,
+  readAllSources,
+  type PostType,
+} from '$lib/readPosts';
 
 export let prerender = true;
 
@@ -43,21 +50,30 @@ export async function GET({ params }) {
   if (type === 'writing') {
     posts = await readAllSources(postSources);
     title += ' - Writing';
+  } else if (type === 'journals') {
+    let p = await readAllSources(journalSources);
+    posts = p.map((p) => ({ ...p, date: new Date(p.title).toISOString() }));
+    title += ' - Notes';
   } else if (type === 'notes') {
     posts = await readAllSources(noteSources);
     title += ' - Notes';
   } else if (type === 'all') {
     title += ' - All Content';
-    let [p, n] = await Promise.all([
+    let [p, n, j] = await Promise.all([
       readAllSources(postSources),
       readAllSources(noteSources),
+      readAllSources(journalSources),
     ]);
-    posts = [...p, ...n];
+    posts = [
+      ...p,
+      ...n,
+      ...j.map((j) => ({ ...j, date: new Date(j.title).toISOString() })),
+    ];
   } else {
     throw error(404, 'not found');
   }
 
-  posts = posts.sort(sorter({ value: 'date', descending: true })).slice(0, 10);
+  posts = posts.sort(sorter({ value: 'date', descending: true }));
 
   let render = renderFactory();
 
@@ -72,8 +88,14 @@ export async function GET({ params }) {
     language: 'English',
   });
 
+  const urlBases: Record<PostType, string> = {
+    post: 'writing',
+    note: 'notes',
+    journal: 'journals',
+  };
+
   for (let post of posts) {
-    let type = post.type === 'post' ? 'writing' : 'notes';
+    let type = urlBases[post.type];
     let path = `/${type}/${post.id}`;
     let fullUrl = `${host}${path}`;
     let desc;

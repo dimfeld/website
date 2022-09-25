@@ -8,6 +8,10 @@
       icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-news"><path class="primary" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm2 3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H7z"/><path class="secondary" d="M7 14h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1zm7-8h3a1 1 0 0 1 0 2h-3a1 1 0 0 1 0-2zm0 4h3a1 1 0 0 1 0 2h-3a1 1 0 0 1 0-2z"/></svg>`,
     },
     {
+      name: 'journals',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-light"><path class="primary" d="M5 8a7 7 0 1 1 10.62 6l-.64 3.2a1 1 0 0 1-.98.8h-4a1 1 0 0 1-.98-.8L8.38 14A7 7 0 0 1 5 8zm12 0a5 5 0 0 0-5-5 1 1 0 0 0 0 2 3 3 0 0 1 3 3 1 1 0 0 0 2 0z"/><path class="secondary" d="M15 21a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2 1 1 0 0 1 0-2h6a1 1 0 0 1 0 2z"/></svg>`,
+    },
+    {
       name: 'notes',
       icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-document-notes"><path class="primary" d="M6 2h6v6c0 1.1.9 2 2 2h6v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2zm2 11a1 1 0 0 0 0 2h8a1 1 0 0 0 0-2H8zm0 4a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2H8z"/><polygon class="secondary" points="14 2 20 8 14 8"/></svg>`,
     },
@@ -43,17 +47,17 @@
 
 <div
   id="navbar"
-  class="flex flex-row items-stretch inset-x-0 text-lg shadow-sm shadow-inner
-  bg-teal-900"
+  class="inset-x-0 flex flex-row items-stretch bg-teal-900 text-lg shadow-sm
+  shadow-inner"
   style="height:40px">
-  <div class="hidden sm:flex flex-row w-full">
+  <div class="hidden w-full flex-row sm:flex">
     <div
-      class="bg-highlight absolute h-full bg-teal-700 duration-1000 ease-out
-      transition-transform top-0 left-0"
+      class="bg-highlight absolute top-0 left-0 h-full bg-teal-700
+      transition-transform duration-1000 ease-out"
       style={backgroundHighlightStyle} />
     <a
       data-sveltekit-prefetch
-      class="hover:text-teal-200 section-link root-link"
+      class="section-link root-link hover:text-teal-200"
       class:current-link={!segment}
       style="width:{nameWidth}px;padding-left:24px;padding-right:32px"
       href="/">
@@ -70,13 +74,17 @@
       </a>
     {/each}
 
-    <div class="h-full flex flex-row ml-auto mr-4 text-teal-200 items-center">
+    <div class="ml-auto mr-4 flex h-full flex-row items-center text-teal-200">
       <a
         class="p-2 hover:bg-teal-800"
         href="https://www.twitter.com/dimfeld"
         aria-label="My Twitter Feed"
         title="Twitter">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24">
           <path
             class="primary"
             d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574
@@ -97,7 +105,11 @@
         title="RSS Feed"
         type="application/rss+xml"
         href="/rss/all.xml">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24">
           <path
             class="primary"
             d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796
@@ -112,14 +124,27 @@
     </div>
   </div>
 
-  <div id="vert-navbar" class="w-full flex sm:hidden flex-row items-center" on:click={() => (displayNav = false)}>
-    <div class="bg-highlight absolute bg-teal-700 h-full top-0" style="left:-8px;width:218px" />
-    <a class="text-white" style="padding-left:24px" href="/{currentLink?.name || ''}">
+  <div
+    id="vert-navbar"
+    class="flex w-full flex-row items-center sm:hidden"
+    on:click={() => (displayNav = false)}>
+    <div
+      class="bg-highlight absolute top-0 h-full bg-teal-700"
+      style="left:-8px;width:218px" />
+    <a
+      class="text-white"
+      style="padding-left:24px"
+      href="/{currentLink?.name || ''}">
       {currentLink ? capitalize(currentLink.name) : 'Daniel Imfeld'}
     </a>
 
-    <span class="ml-auto mr-2 cursor-pointer w-12 h-12" on:click|stopPropagation={() => (displayNav = !displayNav)}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-cheveron-down">
+    <span
+      class="ml-auto mr-2 h-12 w-12 cursor-pointer"
+      on:click|stopPropagation={() => (displayNav = !displayNav)}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="icon-cheveron-down">
         <path
           class="secondary"
           fill-rule="evenodd"
@@ -129,21 +154,27 @@
     </span>
 
     {#if displayNav}
-      <div class="absolute inset-x-0 z-40" style="top:40px" transition:fade={{ duration: 200 }}>
+      <div
+        class="absolute inset-x-0 z-40"
+        style="top:40px"
+        transition:fade={{ duration: 200 }}>
         <div
           on:click|stopPropagation={() => {}}
-          class="bg-teal-900 w-full flex flex-row pb-2 border-t border-teal-700
+          class="flex w-full flex-row border-t border-teal-700 bg-teal-900 pb-2
           shadow-md">
-          <div class="flex flex-col flex-grow">
+          <div class="flex flex-grow flex-col">
             <a
               data-sveltekit-prefetch
               class:current-link={!segment}
-              class="section-link justify-start font-medium pl-4 py-2 w-full
+              class="section-link w-full justify-start py-2 pl-4 font-medium
               hover:bg-teal-800"
               on:click={() => (displayNav = false)}
               href="/">
-              <span class="w-8 h-8">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-home">
+              <span class="h-8 w-8">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  class="icon-home">
                   <path
                     class="primary"
                     d="M9 22H5a1 1 0 0 1-1-1V11l8-8 8 8v10a1 1 0 0 1-1 1h-4a1 1
@@ -161,11 +192,11 @@
               <a
                 data-sveltekit-prefetch
                 class:current-link={segment === name}
-                class="section-link justify-start font-medium pl-4 py-2 w-full
+                class="section-link w-full justify-start py-2 pl-4 font-medium
                 hover:bg-teal-800"
                 on:click={() => (displayNav = false)}
                 href="/{name}">
-                <span class="w-8 h-8">
+                <span class="h-8 w-8">
                   {@html icon}
                 </span>
                 <span class="ml-2">{capitalize(name)}</span>
@@ -173,13 +204,17 @@
             {/each}
           </div>
 
-          <div class="pt-2 pb-1 pr-2 flex flex-col text-teal-200 justify-end">
+          <div class="flex flex-col justify-end pt-2 pb-1 pr-2 text-teal-200">
             <a
               aria-label="Twitter"
               title="Twitter Feed"
               class="flex-none p-2 hover:bg-teal-800"
               href="https://www.twitter.com/dimfeld">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24">
                 <path
                   class="primary"
                   d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609
@@ -201,7 +236,11 @@
               title="RSS Feed"
               type="application/rss+xml"
               href="/rss/all.xml">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24">
                 <path
                   class="primary"
                   d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796
@@ -227,7 +266,7 @@
 
 <style lang="postcss">
   a {
-    @apply transition-colors ease-in-out flex flex-row items-center;
+    @apply flex flex-row items-center transition-colors ease-in-out;
   }
 
   a.section-link:not(.root-link) {

@@ -41,8 +41,8 @@ html {
     @apply my-2 ml-4;
   }
 
-  article .content:not(.indent-top-level) > ul li,
-  article .content:not(.indent-top-level) > ol li {
+  article .content.no-indent > ul > li,
+  article .content.no-indent > ol > li {
     @apply ml-0;
   }
 

@@ -34,6 +34,7 @@ export interface Post {
   updated?: string;
   summary?: string;
   frontPageSummary?: string;
+  cardType?: string;
   cardImage?: string;
   content: string;
   confidence?: string;
@@ -44,7 +45,7 @@ export interface Source {
   ext: 'md' | 'html';
   type: PostType;
   base: string;
-  source?: string;
+  source?: 'pkm';
 }
 
 export const postSources: Source[] = [
