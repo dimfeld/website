@@ -44,20 +44,35 @@ export interface Post {
 export interface Source {
   ext: 'md' | 'html';
   type: PostType;
-  base: string;
+  files: Record<string, string>;
   source?: 'pkm';
+}
+
+function stripGlobbedPrefix(prefix: string, files: Record<string, string>) {
+  return Object.fromEntries(
+    Object.entries(files).map(([path, content]) => [
+      path.slice(prefix.length),
+      content,
+    ])
+  );
 }
 
 export const postSources: Source[] = [
   {
     ext: 'md',
     type: 'post',
-    base: 'posts',
+    files: stripGlobbedPrefix(
+      '../../posts/',
+      import.meta.glob('../../posts/*.md', { as: 'raw', eager: true })
+    ),
   },
   {
     ext: 'html',
     type: 'post',
-    base: 'posts',
+    files: stripGlobbedPrefix(
+      '../../posts/',
+      import.meta.glob('../../posts/*.html', { as: 'raw', eager: true })
+    ),
   },
 ];
 
@@ -65,17 +80,29 @@ export const noteSources: Source[] = [
   {
     ext: 'md',
     type: 'note',
-    base: 'notes',
+    files: stripGlobbedPrefix(
+      '../../notes/',
+      import.meta.glob('../../notes/*.md', { as: 'raw', eager: true })
+    ),
   },
   {
     ext: 'html',
     type: 'note',
-    base: 'notes',
+    files: stripGlobbedPrefix(
+      '../../notes/',
+      import.meta.glob('../../notes/*.html', { as: 'raw', eager: true })
+    ),
   },
   {
     ext: 'html',
     type: 'note',
-    base: 'pkm-pages/notes',
+    files: stripGlobbedPrefix(
+      '../../pkm-pages/notes/',
+      import.meta.glob('../../pkm-pages/notes/*.html', {
+        as: 'raw',
+        eager: true,
+      })
+    ),
     source: 'pkm',
   },
 ];
@@ -84,7 +111,13 @@ export const journalSources: Source[] = [
   {
     ext: 'html',
     type: 'journal',
-    base: 'pkm-pages/journals',
+    files: stripGlobbedPrefix(
+      '..././pkm-pages/journals/',
+      import.meta.glob('../../pkm-pages/journals/*.html', {
+        as: 'raw',
+        eager: true,
+      })
+    ),
     source: 'pkm',
   },
 ];
@@ -94,15 +127,14 @@ export async function lookupContent(
   name: string
 ): Promise<Post | null> {
   for (let source of sources) {
-    let fullPath = path.join(
-      process.cwd(),
-      source.base,
-      `${name}.${source.ext}`
-    );
-
     try {
-      let data = await fs.readFile(fullPath);
-      let result = await processPost(name, data.toString());
+      let key = `${name}.${source.ext}`;
+      let data = source.files[key];
+      if (!data) {
+        continue;
+      }
+
+      let result = processPost(name, data.toString());
       if (!result) {
         continue;
       }
@@ -166,29 +198,23 @@ function processPost(
   } as Post;
 }
 
-export async function readAllSources(sources: Source[]): Promise<Post[]> {
-  let posts = await Promise.all(
-    sources.map(async (source) => {
-      let files = await glob(`${source.base}/**/*.${source.ext}`);
-      return Promise.all(
-        files.map(async (filename) => {
-          let ext = path.extname(filename);
-          let name = filename.slice(source.base.length + 1);
-          if (ext) {
-            name = name.slice(0, -ext.length);
-          }
+export function readAllSources(sources: Source[]): Post[] {
+  let posts = sources.map((source) => {
+    return Object.entries(source.files).map(([filename, data]) => {
+      let ext = path.extname(filename);
+      let name = filename;
+      if (ext) {
+        name = name.slice(0, -ext.length);
+      }
 
-          let data = await fs.readFile(filename);
-          let result = processPost(name, data.toString());
-          if (!result) {
-            return null;
-          }
+      let result = processPost(name, data);
+      if (!result) {
+        return null;
+      }
 
-          return { format: source.ext, type: source.type, ...result };
-        })
-      );
-    })
-  );
+      return { format: source.ext, type: source.type, ...result };
+    });
+  });
 
   return posts.flatMap((s) => s).filter(Boolean) as Post[];
 }

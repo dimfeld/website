@@ -9,9 +9,9 @@ import { maxBy } from 'lodash-es';
 import sorter from 'sorters';
 
 export async function load() {
-  let posts = await readAllSources(postSources);
-  let notes = await readAllSources(noteSources);
-  let journals = await readAllSources(journalSources);
+  let posts = readAllSources(postSources);
+  let notes = readAllSources(noteSources);
+  let journals = readAllSources(journalSources);
 
   let latestPost = maxBy(posts, (post) => post.date);
   let latestNote = maxBy(notes, (note) => note.updated || note.date);

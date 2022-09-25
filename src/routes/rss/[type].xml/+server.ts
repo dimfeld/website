@@ -48,21 +48,19 @@ export async function GET({ params }) {
   // Get whichever type of post we want. These are already sorted in descending date order so we
   // only need to sort again if combining them.
   if (type === 'writing') {
-    posts = await readAllSources(postSources);
+    posts = readAllSources(postSources);
     title += ' - Writing';
   } else if (type === 'journals') {
-    posts = await readAllSources(journalSources);
+    posts = readAllSources(journalSources);
     title += ' - Notes';
   } else if (type === 'notes') {
-    posts = await readAllSources(noteSources);
+    posts = readAllSources(noteSources);
     title += ' - Notes';
   } else if (type === 'all') {
     title += ' - All Content';
-    let [p, n, j] = await Promise.all([
-      readAllSources(postSources),
-      readAllSources(noteSources),
-      readAllSources(journalSources),
-    ]);
+    let p = readAllSources(postSources);
+    let n = readAllSources(noteSources);
+    let j = readAllSources(journalSources);
     posts = [...p, ...n, ...j];
   } else {
     throw error(404, 'not found');
