@@ -16,7 +16,7 @@ html {
   }
 
   article {
-    max-width: 65ch;
+    max-width: min(65ch, 95vw);
     @apply ml-auto mr-auto leading-relaxed;
   }
 

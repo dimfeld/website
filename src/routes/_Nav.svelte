@@ -45,9 +45,9 @@
   let displayNav = false;
 </script>
 
-<div
+<nav
   id="navbar"
-  class="inset-x-0 flex flex-row items-stretch bg-teal-900 text-lg shadow-sm
+  class="flex w-full flex-row items-stretch bg-teal-900 text-lg shadow-sm
   shadow-inner"
   style="height:40px">
   <div class="hidden w-full flex-row sm:flex">
@@ -126,7 +126,7 @@
 
   <div
     id="vert-navbar"
-    class="flex w-full flex-row items-center sm:hidden"
+    class="z-20 flex w-full flex-row items-center sm:hidden"
     on:click={() => (displayNav = false)}>
     <div
       class="bg-highlight absolute top-0 h-full bg-teal-700"
@@ -256,13 +256,13 @@
         </div>
       </div>
       <div
-        class="fixed inset-x-0 z-30"
-        style="top:40px;bottom:0px;background-color:rgba(0, 0, 0, 0.3);"
+        class="fixed inset-0 z-30"
+        style="background-color:rgba(0, 0, 0, 0.3);"
         on:click={() => (displayNav = false)}
         transition:fade={{ duration: 200 }} />
     {/if}
   </div>
-</div>
+</nav>
 
 <style lang="postcss">
   a {
