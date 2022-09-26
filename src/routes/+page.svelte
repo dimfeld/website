@@ -23,16 +23,7 @@
 </script>
 
 <article class="m-4 self-center font-serif">
-  <p>
-    Welcome! This site is inspired by the
-    <a href="writing/digital_garden">Digital Garden</a>
-    concept, which essentially means that I'm writing not just to share information,
-    but also to encourage discussion and mutual learning. If you have some thoughts
-    about anything here, please feel free to reach out on
-    <a href="https://www.twitter.com/dimfeld">Twitter</a>.
-  </p>
-
-  <h1>Latest Daily Updates</h1>
+  <h1>Latest Updates</h1>
 
   <div class="mt-2 flex flex-col gap-4">
     {#each latestJournals as post}
