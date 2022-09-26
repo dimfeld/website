@@ -1,3 +1,9 @@
+let autotags = #{
+  "sql": "databases",
+  "rust": "rust",
+  "ml": "Machine Learning",
+  "machine learning": "Machine Learning"
+};
 
 if page.is_journal {
   page.url_base = "/journals";
@@ -7,30 +13,31 @@ if page.is_journal {
   page.path_name = page.title + ".html";
 
   let saw_content_block = false;
-  page.each_block(1, |depth| {
+  each_block(1, |block, depth| {
     if depth == 0 {
       // The top level
-      this.view_type = ViewType::Document;
-    } else if this.contents == "Journal" {
-      this.include = BlockInclude::OnlyChildren;
+      block.view_type = ViewType::Document;
+    } else if block.contents == "Journal" {
+      block.include = BlockInclude::OnlyChildren;
       saw_content_block = true;
-      // debug(this.contents);
-    } else if this.contents == "Learning" ||
-        this.contents == "Links" {
-      this.view_type = ViewType::Bullet;
-      this.heading = 3;
-      this.include = BlockInclude::IfChildrenPresent;
+
+      let tags = autotag(autotags, block.id);
+      page.add_tags(tags);
+    } else if block.contents == "Learning" ||
+        block.contents == "Links" {
+      block.view_type = ViewType::Bullet;
+      block.heading = 3;
+      block.include = BlockInclude::IfChildrenPresent;
       saw_content_block = true;
-      // debug(this.contents);
+
+      let tags = autotag(autotags, block.id);
+      page.add_tags(tags);
     } else if depth > 0 {
-      this.include = BlockInclude::Exclude;
+      block.include = BlockInclude::Exclude;
     }
   });
 
-  //if saw_content_block {
-  //  debug(page.title);
-  //}
-  page.allow_render(saw_content_block);
+  page.include = saw_content_block;
 } else {
   page.url_base = "/notes";
   page.path_base = "pkm-pages/notes";
@@ -63,23 +70,50 @@ if page.is_journal {
     "note-export"
   ];
 
-  page.each_block(9999, |depth| {
-    let tags = this.tags;
+  let omit_tags = [
+    "Articles",
+    "Inbox",
+    "In Progress",
+    "Newsletter Item",
+    "Done",
+    "Readwise",
+    "Deliberate Practice",
+    "Video",
+    "note-export",
+    "public",
+    "progress",
+    "Progress",
+    "tags",
+    "Tags"
+  ];
+
+  each_block(9999, |block, depth| {
+    let tags = block.tags;
     if !exclude && tags.some(|t| t in exclude_tags) {
       exclude = true;
     } else if !include && tags.some(|t| t in include_tags) {
       include = true;
     }
 
-    if this.contents.starts_with("Highlights first synced") ||
-          this.contents.starts_with("New highlights added") {
-      this.include = BlockInclude::Exclude;
+    // Add all the hashtags seen in the content.
+    page.add_tags(tags);
+
+    if block.contents.starts_with("Highlights first synced") ||
+          block.contents.starts_with("New highlights added") {
+      block.include = BlockInclude::Exclude;
     }
   });
 
   if !exclude {
     page.allow_embedding = AllowEmbed::Yes;
   }
-  page.allow_render(include && !exclude);
+
+  let allow = include && !exclude;
+  page.include = allow;
+  if allow {
+    for tag in omit_tags {
+      page.remove_tag(tag);
+    }
+  }
 }
 
