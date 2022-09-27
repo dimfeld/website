@@ -2,7 +2,12 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  content: ['./src/**/*.{svelte,pcss,css,js,ts}', './posts/*', './notes/*'],
+  content: [
+    './src/**/*.{svelte,pcss,css,js,ts}',
+    './pkm-pages/**/*.html',
+    './posts/*',
+    './notes/*',
+  ],
   theme: {
     extend: {
       colors: {

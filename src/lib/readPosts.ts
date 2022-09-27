@@ -122,10 +122,7 @@ export const journalSources: Source[] = [
   },
 ];
 
-export async function lookupContent(
-  sources: Source[],
-  name: string
-): Promise<Post | null> {
+export function lookupContent(sources: Source[], name: string): Post | null {
   for (let source of sources) {
     try {
       let key = `${name}.${source.ext}`;

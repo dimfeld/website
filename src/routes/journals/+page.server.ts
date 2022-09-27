@@ -1,7 +1,8 @@
+import type { PageServerLoad } from './$types';
 import { journalSources, readAllSources } from '$lib/readPosts';
 import sorter from 'sorters';
 
-export async function load() {
+export const load: PageServerLoad = () => {
   let journals = readAllSources(journalSources);
   let sortedJournals = journals.sort(
     sorter({ value: (p) => p.date, descending: true })
@@ -10,4 +11,4 @@ export async function load() {
   return {
     journals: sortedJournals.slice(0, 30),
   };
-}
+};
