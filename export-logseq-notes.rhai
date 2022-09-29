@@ -2,7 +2,8 @@ let autotags = #{
   "sql": "databases",
   "rust": "rust",
   "ml": "Machine Learning",
-  "machine learning": "Machine Learning"
+  "machine learning": "Machine Learning",
+  "ergo": "ergo"
 };
 
 if page.is_journal {
