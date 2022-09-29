@@ -68,7 +68,7 @@ export async function GET({ params }) {
     throw error(404, 'not found');
   }
 
-  posts = posts.sort(sorter({ value: 'date', descending: true }));
+  posts = posts.sort(sorter({ value: 'date', descending: true })).slice(0, 20);
 
   let render = renderFactory();
 
