@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import { createHash } from 'crypto';
 import renderFactory from '$lib/markdown';
 import cheerio from 'cheerio';
 import * as labels from '../../../postMeta';
@@ -118,12 +119,15 @@ export async function GET({ params }) {
 
     desc = $.html();
 
+    let guid = createHash('sha256').update(desc).digest('hex');
+
     feed.item({
       date: post.date,
       title: post.title,
       description: desc,
       url: fullUrl,
       categories: post.tags || [],
+      guid,
     });
   }
 
