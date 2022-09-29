@@ -1,14 +1,18 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 
 import * as path from 'path';
-import glob from 'glob';
 import { string } from 'rollup-plugin-string';
 import { hostname } from 'os';
 import { fileURLToPath } from 'url';
 
-const domain = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : `http://${hostname()}:${process.env.DEV_PORT || process.env.PORT || 5173}`;
+const domain =
+  process.env.VERCEL_ENV === 'production'
+    ? 'https://imfeld.dev'
+    : process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : `http://${hostname()}:${
+        process.env.DEV_PORT || process.env.PORT || 5173
+      }`;
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default {
