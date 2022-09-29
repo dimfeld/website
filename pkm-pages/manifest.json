@@ -39,6 +39,11 @@
     "title": "2022-09-27",
     "uid": ""
   },
+  "pkm-pages/journals/2022-09-28.html": {
+    "slug": "/journals/2022_09_28",
+    "title": "2022-09-28",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -242,6 +247,11 @@
   "pkm-pages/notes/programming_courses.html": {
     "slug": "/notes/programming_courses",
     "title": "Programming Courses",
+    "uid": ""
+  },
+  "pkm-pages/notes/projects_ergo.html": {
+    "slug": "/notes/projects_ergo",
+    "title": "Ergo",
     "uid": ""
   },
   "pkm-pages/notes/projects_tracksome.html": {

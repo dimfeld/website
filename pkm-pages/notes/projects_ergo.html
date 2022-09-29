@@ -1,0 +1,742 @@
+---
+title: "Ergo"
+tags: Projects
+date: 2022-05-20
+updated: 2022-09-28
+---
+
+
+  <ul class="list-bullet">
+    <li>This is sort of similar to Zapier, IFTTT, etc., with some added low-code features.
+      <ul class="list-bullet">
+        <li>Tasks can incorporate Javascript for more custom behavior.</li>
+        <li>Tasks can be persistent and update state or trigger actions in response to incoming events.</li>
+      </ul>
+    </li>
+    <li>Developing on <a href="https://github.com/dimfeld/ergo">Github</a></li>
+    <li>Rework of Design
+      <ul class="list-bullet">
+        <li>Developing complex JS within a web UI is a hassle. So discourage inline Javascript tasks.</li>
+        <li>Instead tasks will mostly be state machines that can optionally have snippets of Javascript in them.</li>
+        <li>External actions will all be done through raw commands, docker containers, or task orchestrators
+          <ul class="list-bullet">
+            <li>Need to figure out a good way for tasks to communicate their results back to Ergo.</li>
+            <li>A few options
+              <ul class="list-bullet">
+                <li>Provide an HTTP endpoint to hit with the output payload.
+                  <ul class="list-bullet">
+                    <li>This has the downside that you have to provide a URL that is actually resolvable by the task.</li>
+                    <li>Providing the base hostname or IP in the Ergo config would be a good way to do this.</li>
+                  </ul>
+                </li>
+                <li>Provide a file path to write with the output payload. For docker containers this would be a volume mounted into the container. For task orchestrators, can we do something similar?</li>
+                <li>Force use of WASM for tasks that need to return data more than a success or failure. This would enable use of an</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Current Tasks
+      <ul class="list-bullet">
+        <li>Need to drop a lot of this given the above design rework.</li>
+        <li><input type="checkbox" readonly="true"  /> Package import and export that contains tasks and the various other objects they reference.
+          <ul class="list-bullet">
+            <li>Allow cross-instance import</li>
+            <li>Link imported objects to the original package to facilitate re-imports and other things.</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> <strong class="font-bold">Enough to get the weather task working</strong>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> New Action Screen
+              <ul class="list-bullet">
+                <li>Actually make fields editable</li>
+                <li>New action screen</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  /> Action Account Management</li>
+            <li><input type="checkbox" readonly="true" checked /> Actual testing of periodic tasks</li>
+            <li><input type="checkbox" readonly="true" checked /> Script simulator
+:LOGBOOK:
+CLOCK: [2022-05-30 Mon 10:34:11]--[2022-09-28 Wed 08:51:27] =&gt;  2902:17:16
+:END:</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> Task triggers can have a built-in payload filter
+          <ul class="list-bullet">
+            <li>this would just check for equality on certain fields of the body, nothing complicated</li>
+            <li>or it could be Javascript?</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> Task triggers can be configured to fire periodically
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Each periodic task trigger can be associated with a payload that must conform to the input schema of the task trigger&#39;s input.</li>
+            <li><input type="checkbox" readonly="true" checked /> Add a new table of periodic triggers
+              <ul class="list-bullet">
+                <li>Each one links to a specific task trigger.</li>
+                <li>Each entry can be configured to run the trigger on a schedule with a particular payload.
+                  <ul class="list-bullet">
+                    <li>The payload can be anything that conforms to the associated input payload&#39;s schema.</li>
+                  </ul>
+                </li>
+                <li>Trigger schedule formats
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" readonly="true" checked /> Cron format</li>
+                    <li><input type="checkbox" readonly="true" checked /> Weekday schedules like &quot;2nd tuesday of month&quot;
+                      <ul class="list-bullet">
+                        <li>Done via human-readable descriptions of</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true" checked /> Track scheduled inputs using the input logs
+              <ul class="list-bullet">
+                <li>Add a &quot;scheduled_at&quot; field to the input logs table.</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true" checked /> Re-enqueue task triggers
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true" checked /> Upon running successfully</li>
+                <li><input type="checkbox" readonly="true" checked /> On error if the maximum number of retries is hit.</li>
+                <li><input type="checkbox" readonly="true" checked /> With a sweeper that makes sure things get re-enqueued, just in case.</li>
+                <li><input type="checkbox" readonly="true" checked /> Test it
+:LOGBOOK:
+CLOCK: [2022-05-30 Mon 10:34:29]--[2022-05-30 Mon 10:34:30] =&gt;  00:00:01
+:END:</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true" checked /> Test API code for creating/deleting/updating task triggers</li>
+            <li><input type="checkbox" readonly="true" checked /> Provide cheerio or something as scraping logic. (npm/skypack/pika/deno package imports will work for this)</li>
+            <li>Old plan
+              <ul class="list-bullet">
+                <li>The task triggers already sort of support this so perhaps what we want is a generic main input type that the task triggers can link to.</li>
+                <li>How do we define a payload for the trigger? One option is to not have a payload or do make it fixed, like a timestamp and the trigger name. Since the triggers only belong to one task this is probably fine.</li>
+                <li>The next step is to make triggers run on a repeating basis. This could be done with a &quot;periodic&quot; field on the task trigger. Then these just get enqueued like anything else but with a scheduled &quot;run at&quot; time, perhaps with the job id being the task trigger id to make it easy to modify the job in the queue.</li>
+                <li><del class="line-through">Can we do this as Nomad tasks</del>?  Probably not the right way to go.
+                  <ul class="list-bullet">
+                    <li>How would a Nomad task communicate back to the server?
+                      <ul class="list-bullet">
+                        <li>Create a temporary ID and the task can call an endpoint with the ID and whatever value was fetched?</li>
+                        <li>There&#39;s a way to read a file out of the allocation. Not sure how reliably we can know that the allocation will still be there though after the process ends.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li><input type="checkbox" readonly="true" checked /> <del class="line-through">Optionally perform automatic dedupe against previous fetched payload, so that we don&#39;t trigger tasks if nothing has changed.</del>
+                  <ul class="list-bullet">
+                    <li>Actually just make this easy to do with functions that work with the task context.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> UI Work
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Input editor</li>
+            <li><input type="checkbox" readonly="true"  /> Action editor
+              <ul class="list-bullet">
+                <li>Screen is implemented but this is mostly readonly right now</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  /> Task action editor
+              <ul class="list-bullet">
+                <li>Simple management is done. Need to add template editor</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true" checked /> Task trigger editor</li>
+            <li><input type="checkbox" readonly="true"  /> Task script editor
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true" checked /> Allow writing tasks in Typescript? This would also help with type checking the context function and action definitions.
+                  <ul class="list-bullet">
+                    <li>Use <a href="https://www.npmjs.com/package/@typescript/vfs">https://www.npmjs.com/package/@typescript/vfs</a> to help integrate it in the browser.</li>
+                  </ul>
+                </li>
+                <li><input type="checkbox" readonly="true"  /> Run simulated inputs in the client and show the result, along with validating the actions taken.
+                  <ul class="list-bullet">
+                    <li>ability to save input payloads</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  /> Text Editor Work
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true" checked /> Javascript editor</li>
+                <li><input type="checkbox" readonly="true" checked /> JSON/JSON5 editor with schema validation</li>
+                <li><input type="checkbox" readonly="true" checked /> Validate use of payload/input fields?
+                  <ul class="list-bullet">
+                    <li>Probably possible based on the schema for each input/action</li>
+                    <li>Now that this is done in Rust it&#39;s just a matter of making that work properly.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  /> State machine editor
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true" checked /> Text editor as JSON with schema validation</li>
+                <li><input type="checkbox" readonly="true"  /> Simulation and visualization of states
+                  <ul class="list-bullet">
+                    <li>Can we take stuff from stately.ai? Probably more fun to build my own.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  />  API key generation</li>
+            <li><input type="checkbox" readonly="true"  />  Permissions editor for API keys and users</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  />  Task Queue Upgrades
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked />  Doesn&#39;t seem to run more than one task at a time</li>
+            <li><input type="checkbox" readonly="true" checked />  Use listener for Postgres queue checker for better response times.</li>
+            <li><input type="checkbox" readonly="true" checked />  <del class="line-through">Can I use a listener for Redis queue checker? Probably use the pubsub for this</del></li>
+            <li><input type="checkbox" readonly="true" checked /> Scheduled Task Sweeper</li>
+            <li><input type="checkbox" readonly="true" checked /> Move all queue staging to the generic model</li>
+            <li><input type="checkbox" readonly="true"  /> Expired Task Sweeper</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  />  Permissions system upgrades
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  />  Create an &quot;owner&quot; permission
+              <ul class="list-bullet">
+                <li>This assigns full rights to an object</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  />  Think about how to better systematize permissions checks
+              <ul class="list-bullet">
+                <li>Problems right now:
+                  <ul class="list-bullet">
+                    <li>Permissions checks need to be built into every query manually</li>
+                    <li>Failed permissions checks are indistinguishable from the &quot;not found&quot; case.</li>
+                  </ul>
+                </li>
+                <li>Possible solutions:
+                  <ul class="list-bullet">
+                    <li>Do a separate query that does permissions checks <em class="italic">before</em> or concurrent with the primary data fetch.
+                      <ul class="list-bullet">
+                        <li>This is less good for performance but better for abstracting out the permissions checks into one module.</li>
+                      </ul>
+                    </li>
+                    <li>Generate a separate boolean for the permissions check
+                      <ul class="list-bullet">
+                        <li>This works ok. Doesn&#39;t really solve a lot of the problems but does let us separate permissions errors from &quot;not found&quot; errors.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  />  Object tags
+              <ul class="list-bullet">
+                <li>These should be not only a method of organizing objects, but permissions should be assignable to tags</li>
+                <li>Assigning roles to permissions on tags should be the primary method of arranging permissions.</li>
+                <li>A user should be able assign a tag to an object if:
+                  <ul class="list-bullet">
+                    <li>The user owns the object or the user owns the tag.</li>
+                    <li>The user has write permissions (or is in a role with write permissions) to objects with that tag.</li>
+                    <li>Or org admins can do anything.</li>
+                  </ul>
+                </li>
+                <li>Should all user-created tags participate in the permissions system, or just admin-created tags? (Probably the former)</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  /> Role inheritance</li>
+            <li>Do we want to have something more expressive like casbin, or does the roles -&gt; tags arrangement get us everything we need?</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  />  Scripting v1
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked />  Script executor</li>
+            <li><input type="checkbox" readonly="true" checked />  Action templates can be scripts instead of templates.</li>
+            <li><input type="checkbox" readonly="true" checked />  Implement scripts in state machine conditions</li>
+            <li><input type="checkbox" readonly="true"  />  Tasks can be serialized scripts
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true" checked /> This requires some database modifications.</li>
+                <li><input type="checkbox" readonly="true" checked /> Currently it&#39;s assumed that tasks are state machines. We can change the column names of the state machine config and data to reuse them for task scripts and task data.</li>
+                <li><input type="checkbox" readonly="true"  /> PendingEvents get run as actions which then reschedule the task to run after the pending event is done.</li>
+                <li><input type="checkbox" readonly="true"  /> Sleep action</li>
+                <li><input type="checkbox" readonly="true"  /> Implement something like Promise.all and Promise.race to coordinate multiple simultaneous events.
+                  <ul class="list-bullet">
+                    <li>Do we actually need this, or do we just need a timeout functionality?</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true" checked /> Task context management
+              <ul class="list-bullet">
+                <li>This is a simple method of keeping state for a task.</li>
+                <li><input type="checkbox" readonly="true" checked /> Tasks can set their context
+                  <ul class="list-bullet">
+                    <li>Almost done. Need to write the context back to Postgres</li>
+                    <li>localStorage is a common interface but it sucks since it&#39;s all string based</li>
+                    <li>IndexedDB is too complex</li>
+                    <li>Perhaps best to implement something simple myself for now...
+                      <ul class="list-bullet">
+                        <li><code>setTaskContext(context)</code></li>
+                        <li>This will then let us do whatever serialization is needed to preserve maps and things.</li>
+                        <li>It would be easiest to use the raw serde functionality, but that prevents introspection.</li>
+                        <li><span><span class="font-medium text-gray-800">Choice:</span> <span>TODO How to preserve task context</span></span>
+                          <ul class="list-bullet">
+                            <li><span><span class="font-medium text-gray-800">Decision:</span> <span><a class="block-ref" href="/notes/projects_ergo#ecd431e0-b734-4669-b8a5-8c0d6b4f8712">Prewritten JS library</a></span></span></li>
+                            <li><span><span class="font-medium text-gray-800">Options:</span> <span></span></span>
+                              <ul class="list-bullet">
+                                <li>JSON
+                                  <ul class="list-bullet">
+                                    <li>Simple, but prevents serializing Maps and Sets</li>
+                                    <li>Can use a custom reviver</li>
+                                  </ul>
+                                </li>
+                                <li id="ecd431e0-b734-4669-b8a5-8c0d6b4f8712">Prewritten JS library
+                                  <ul class="list-bullet">
+                                    <li>Already written so I don&#39;t have to. Probably a good choice.</li>
+                                    <li><a href="https://github.com/Rich-Harris/devalue">https://github.com/Rich-Harris/devalue</a> looks like the one to use.</li>
+                                    <li><a href="https://github.com/yahoo/serialize-javascript">https://github.com/yahoo/serialize-javascript</a> is an alternative if it doesn&#39;t work out.</li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li><input type="checkbox" readonly="true" checked /> Feed context into the script on each run
+                  <ul class="list-bullet">
+                    <li>Fetchable from in the script with <code>Ergo.getContext()</code></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true" checked /> Scripts can fire actions
+              <ul class="list-bullet">
+                <li>This won&#39;t run it right away, but will add it to a list of things to do, which are then all enqueued at the end of the script.</li>
+                <li><input type="checkbox" readonly="true" checked /> Provide a function something like <code>Ergo.runAction(&#39;actionName&#39;, args)</code>.</li>
+                <li><input type="checkbox" readonly="true" checked /> Enqueue the actions from the list</li>
+                <li><input type="checkbox" readonly="true" checked /> Testing</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  /> Implement module loaders.
+              <ul class="list-bullet">
+                <li>Doing this on the client for now via Rollup bundling</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> User-definable inputs that trigger multiple tasks.
+          <ul class="list-bullet">
+            <li>Currently inputs can only be created by admins but we want to have inputs that are per-org, with task triggers subscribing to those inputs triggering. This really brings up a few new features
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true"  />  Creation of org-specific inputs</li>
+                <li><input type="checkbox" readonly="true"  />  Task triggers can listen to these inputs</li>
+                <li><input type="checkbox" readonly="true"  />  Inputs can be triggered globally, for globally-owned inputs, or per-org, for org-owned inputs.
+                  <ul class="list-bullet">
+                    <li>Inputs should be marked as global, which means that they can be triggered apart from a task, and will instead trigger any task trigger attached to the input.</li>
+                  </ul>
+                </li>
+                <li><input type="checkbox" readonly="true"  />  Inputs can be triggered by other tasks</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Future Tasks
+      <ul class="list-bullet">
+        <li><input type="checkbox" readonly="true"  /> tasks rescheduling themselves
+          <ul class="list-bullet">
+            <li>How should this work? This feels like a different level where we are scheduling one-off input sends but it&#39;s kind of the same thing as periodic tasks. Probably this becomes an action/executor type to send an input at a scheduled time.</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true" checked /> Figure out versioning
+          <ul class="list-bullet">
+            <li>The ground work in the data structures has been done. Actual support for working with it still remains</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> Dashboards
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Array of buttons to trigger tasks with certain inputs</li>
+            <li><input type="checkbox" readonly="true" checked /> Show recent runs</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> (MAYBE) Templates may need a way to interpolate arrays and objects into values instead of just strings
+          <ul class="list-bullet">
+            <li>e.g. <code>{ &quot;obj_field&quot;: object_argument }</code></li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> (MAYBE) Tasks can access a KV store like redis or PG for more complex needs than the context system provides</li>
+        <li>Other Executors
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Docker executor</li>
+            <li><input type="checkbox" readonly="true"  /> Discord executor
+              <ul class="list-bullet">
+                <li>Send a discord message. Useful for notifications.</li>
+                <li>This actually should be implemented as an action on top of the HTTP executor.</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  /> &quot;Send an input&quot; executor
+              <ul class="list-bullet">
+                <li>To the triggering task, to a particular task, or to all tasks once global input listeners are ready.</li>
+                <li><input type="checkbox" readonly="true" checked /> And this needs to interact with the permission system.
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" readonly="true" checked /> See if the user can send inputs to a certain task.</li>
+                    <li>Adding a global trigger to a task should require a permission.</li>
+                  </ul>
+                </li>
+                <li><input type="checkbox" readonly="true"  /> Testing</li>
+              </ul>
+            </li>
+            <li>
+              <ul class="list-bullet">
+                <li>New job to run a container image or run an existing Nomad job.</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  /> Kubernetes Executor
+              <ul class="list-bullet">
+                <li>I&#39;m not really going to use this but it needs to be done if this project is going to get a lot of external pickup.</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true"  /> WASM executor?
+              <ul class="list-bullet">
+                <li>This would load and run a WASM module. Might need to wait until WASI supports socket operations for this to really be useful. Might also be obviated by the Docker/Nomad/Kubernetes executors.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Done Tasks
+      <ul class="list-bullet">
+        <li><input type="checkbox" readonly="true" checked /> Connection Pool Changes
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Switch to sqlx default pool
+              <ul class="list-bullet">
+                <li>This wasn&#39;t as good of a fit back when I was doing Vault auto-reload, but I think this is more hassle than it&#39;s worth. Better to just kill and restart the container if you&#39;re doing this kind of thing.</li>
+              </ul>
+            </li>
+            <li><input type="checkbox" readonly="true" checked /> <del class="line-through">See about switching from redis pool to a single multiplexed connection.</del>
+              <ul class="list-bullet">
+                <li>Status: So far this looks like a hassle since despite the conection manager supporting multiplexing, you need <code>mut</code> access to the connection to do anything which makes everything harder and it&#39;s not really worth it to implement interior mutability compared to the deadpool solution which already works.</li>
+                <li>Since redis is single-threaded anyway it&#39;s not like multiple connections gets us much.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true" checked /> Client-side Task Validation
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Put <code>task_types</code> crate back into the normal <code>tasks</code> crate and figure out how to make that work</li>
+            <li><input type="checkbox" readonly="true" checked /> Add validation that referenced inputs, actions, states, etc. all exist
+              <ul class="list-bullet">
+                <li>Base work is done</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true" checked /> Endpoint to get recent logs
+          <ul class="list-bullet">
+            <li>Go from inputs to actions</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true" checked />  Dashboard home page
+          <ul class="list-bullet">
+            <li>First version just shows recent logs.</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true" checked /> Improve test coverage</li>
+        <li><input type="checkbox" readonly="true" checked /> API input HTTP endpoint can have the API key as part of the path. (done: query string)</li>
+        <li><input type="checkbox" readonly="true" checked /> Events v0.1
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Table to store events</li>
+            <li><input type="checkbox" readonly="true" checked /> Table to store tasks</li>
+            <li><input type="checkbox" readonly="true" checked /> Table to store actions</li>
+            <li><input type="checkbox" readonly="true" checked /> Trigger events from endpoint
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true" checked /> Simple state machine implementation</li>
+                <li><input type="checkbox" readonly="true" checked /> Figure out atomic updates for state machines
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" readonly="true" checked /> Maybe have a flag for single-state state machines that aren&#39;t keeping any state so we don&#39;t have to touch the database.</li>
+                    <li><input type="checkbox" readonly="true" checked /> Use Postgres SELECT FOR UPDATE, or is it better to use a serializable transaction? I think the latter is better because it won&#39;t block runs that don&#39;t actually update any internal task state.
+                      <ul class="list-bullet">
+                        <li>Serializable transaction</li>
+                      </ul>
+                    </li>
+                    <li><input type="checkbox" readonly="true" checked /> Queue up actions to be done in a postgres table so that the transaction itself doesn&#39;t have to wait for them to run</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true" checked /> User Management v0.1
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Simple users/roles/orgs tables</li>
+            <li><input type="checkbox" readonly="true" checked /> API keys for users</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true" checked /> Pull actions out of the queue and run them.</li>
+        <li><input type="checkbox" readonly="true" checked /> Event logging on inputs</li>
+        <li><input type="checkbox" readonly="true" checked /> Discord webhooks for inputs and actions</li>
+        <li><input type="checkbox" readonly="true" checked /> Execute actions
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Raw Command Executor</li>
+            <li><input type="checkbox" readonly="true" checked /> Http Request Executor
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true"  /> Add a per-task cookie jar or something? (probably not but is this useful ever?)</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true" checked /> Each input and each action execution gets an ID which is created when it enters the queue, and those ID ends up in the action log so we can read back the results later and link actions to the inputs that most directly caused them.</li>
+        <li><input type="checkbox" readonly="true" checked /> Make sure all components are instantiated in the aio-server.</li>
+        <li><input type="checkbox" readonly="true" checked /> Clean up ergonomics of getting a connection from the pool March 19th, 2021</li>
+        <li><input type="checkbox" readonly="true" checked /> Single SIGINT listener that closes a <code>broadcast</code> channel, and all other things using sigint listeners listen to that instead March 17th, 2021</li>
+      </ul>
+    </li>
+    <li>Why?
+      <ul class="list-bullet">
+        <li>There are already good alternatives out there, but it’s fun to do my own.</li>
+        <li>It’s mostly an excuse to learn Rust async and server stuff</li>
+      </ul>
+    </li>
+    <li>Packages to Use
+      <ul class="list-bullet">
+        <li>Web Server
+          <ul class="list-bullet">
+            <li>Look at <a href="https://github.com/seanmonstar/warp">https://github.com/seanmonstar/warp</a> for the server</li>
+            <li>Consider actix-web too. There&#39;s a lot more community around it.</li>
+          </ul>
+        </li>
+        <li><code>sqlx</code> for database access</li>
+        <li><code>reqwest</code> for http client? How does this compare to using raw Hyper?</li>
+      </ul>
+    </li>
+    <li>Use Cases
+      <ul class="list-bullet">
+        <li>Weather alerts using data from <a href="https://open-meteo.com/en">https://open-meteo.com/en</a></li>
+        <li>Scrape web sources and send emails based on some content in them</li>
+        <li><input type="checkbox" readonly="true" checked /> Receive a payload and run youtube-dl on the provided URL</li>
+        <li>Periodically download Roam database</li>
+        <li>Some sort of Twitter list archiving?</li>
+        <li>Scrape TradeMachine and load potential trades into database</li>
+        <li>Fetch filled brokerage orders</li>
+      </ul>
+    </li>
+    <li>Data Model
+      <ul class="list-bullet">
+        <li>Inputs
+          <ul class="list-bullet">
+            <li>Inputs come into a task and trigger some behavior in the task&#39;s state machines.</li>
+            <li>Input Schemas
+              <ul class="list-bullet">
+                <li>These just define a schema that a particular input can conform to.
+                  <ul class="list-bullet">
+                    <li>Weather Info</li>
+                    <li>A URL</li>
+                    <li>A stock ticker and price</li>
+                    <li>Any (for task-specific triggers only)</li>
+                  </ul>
+                </li>
+                <li>Certain fields an be defined as listenable, and then task inputs can filter on those</li>
+              </ul>
+            </li>
+            <li>Periodic Input Checker
+              <ul class="list-bullet">
+                <li>Some input schemas are linked to one or more periodic checkers that can automatically pull some data from somewhere else and then trigger inputs as necessary.</li>
+                <li>Eventually this should be automatically linked to adding inputs that need them, and check only the things that inputs care about. Probably will be manual at first.</li>
+              </ul>
+            </li>
+            <li>Task Triggers
+              <ul class="list-bullet">
+                <li>A task trigger is linked to an input schema and can listen to incoming events for that schema.</li>
+                <li>Task inputs can also just be specific to the task and triggerable by REST endpoint.
+                  <ul class="list-bullet">
+                    <li>Eventually these inputs will have a way to define their own data schema.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Actions
+          <ul class="list-bullet">
+            <li>Actions do something and can also fire more events</li>
+            <li>Some actions spawn docker containers</li>
+            <li>Others are built-in actions and can run commands, hit HTTP endpoints, and so on.</li>
+            <li>The action data model has four components
+              <ul class="list-bullet">
+                <li>Executor
+                  <ul class="list-bullet">
+                    <li>This is the &quot;type&quot; of the action, such as sending an HTTP request, running a Nomad job, and so on.</li>
+                    <li>An executor defines some low-level templates to fill in specific arguments.
+                      <ul class="list-bullet">
+                        <li>HTTP URL, Method, Body</li>
+                        <li>Nomad job, the entire argument hash</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>Accounts
+                  <ul class="list-bullet">
+                    <li>Account info for external services</li>
+                    <li>These fill in templates in the action.</li>
+                    <li>API Keys, URL components, etc.</li>
+                  </ul>
+                </li>
+                <li>Action
+                  <ul class="list-bullet">
+                    <li>An action is a particular instance of an executor.
+                      <ul class="list-bullet">
+                        <li>Run youtube-dl with some URL</li>
+                        <li>Send an HTTP request to Slack.</li>
+                      </ul>
+                    </li>
+                    <li>Actions support zero or more account types</li>
+                    <li>Actions have their own templates which fill in the executor template with a combination of constant data defined on the action and information from the task action and the state machine that triggers the task action.</li>
+                  </ul>
+                </li>
+                <li>Task Action
+                  <ul class="list-bullet">
+                    <li>This is part of a task and is triggered from a task. It links to an action and fills in the specific values that it requires.</li>
+                    <li>A task action links to an account, if applicable, and can also include  default values to be used when executing the underlying action. These values can be overridden by the state machine that triggers the action.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Tasks
+          <ul class="list-bullet">
+            <li>A task is a collection of state machines that listen to inputs and fire actions.</li>
+            <li>State machines can have persistent state across calls.</li>
+            <li><input type="checkbox" readonly="true"  /> Tasks can fork themselves, for instance to launch a chatbot for a particular user in response to an inquiry.
+              <ul class="list-bullet">
+                <li>How do we deal with routing future incoming requests to the correct task clone?
+                  <ul class="list-bullet">
+                    <li>Ideas:
+                      <ul class="list-bullet">
+                        <li>State machine can have a routing table.
+                          <ul class="list-bullet">
+                            <li>This starts out as just an object in the context that it can update.</li>
+                            <li>Later, expose a KV store abstraction to the task that it can use to maintain a routing table.</li>
+                          </ul>
+                        </li>
+                        <li>State machine provides an extractor to use on certain inputs (can be JSONPath or a script) that provides a key used to route to clones, so then the routing happens automatically.
+                          <ul class="list-bullet">
+                            <li>The event that comes in then checks the routing table first, and on routing misses it goes to the state machine which can then spawn a new state machine or handle it some other way.</li>
+                            <li>I think this will be the right way to go.</li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>Forked tasks should be differentiated in the API and UI so they don&#39;t clutter up the main list.</li>
+                <li>Forked tasks need a way to &quot;end&quot;</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Logs
+          <ul class="list-bullet">
+            <li>Log each trigger, event, task, action, etc.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><input type="checkbox" readonly="true"  /> Scripting
+      <ul class="list-bullet">
+        <li><input type="checkbox" readonly="true" checked /> Action Templates can be scripts</li>
+        <li><input type="checkbox" readonly="true" checked /> Task state machine handlers can be scripts.</li>
+        <li><input type="checkbox" readonly="true"  /> Scripts need a timeout.</li>
+        <li>Ended up choosing Deno core
+          <ul class="list-bullet">
+            <li>Some of these types of functionality are best done with some embedded scripting language.</li>
+            <li>Actually leaning toward QuickJS since Javascript is so widely used.</li>
+            <li><a href="https://docs.rs/js-sandbox/0.1.6/js_sandbox/">https://docs.rs/js-sandbox/0.1.6/js_sandbox/</a> or <a href="https://github.com/denoland/deno/blob/main/core/examples/hello_world.rs">https://github.com/denoland/deno/blob/main/core/examples/hello_world.rs</a> may be a better choice. Based on V8/Deno, but it doesn&#39;t yet allow placing functions into the JS context.</li>
+            <li><a href="https://rhai.rs">rhai</a> is a popular one and designed to work with Rust.</li>
+            <li><a href="https://lib.rs/crates/mlua">mlua</a> may also be a good choice to embed Lua
+              <ul class="list-bullet">
+                <li>After using Lua on the Redis scripts I&#39;m not a huge fan. Let&#39;s do something else.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>May still want to consider WASM at some point</li>
+      </ul>
+    </li>
+    <li>Event Loop
+      <ul class="list-bullet">
+        <li><input type="checkbox" readonly="true" checked /> Events and actions are each in a separate queue</li>
+        <li><input type="checkbox" readonly="true" checked /> Separate from the web server, there will be listener processes for events and actions. (Currently all-in-one)</li>
+        <li><input type="checkbox" readonly="true" checked /> The events queue listener will actually run the tasks</li>
+        <li><input type="checkbox" readonly="true" checked /> The actions queue listener is just responsible for running actions.</li>
+      </ul>
+    </li>
+    <li>GUI Ideas
+      <ul class="list-bullet">
+        <li>Since each task will be a network of connected nodes, how can we make that easier to deal with?
+          <ul class="list-bullet">
+            <li>Zoom in on state machines.</li>
+            <li>Allow grouped nodes and autolayout of just those nodes within the group, and treat group as a single entity for autolayout.
+              <ul class="list-bullet">
+                <li><a href="https://github.com/kieler/elkjs">https://github.com/kieler/elkjs</a> can help with autolayout</li>
+              </ul>
+            </li>
+            <li>Sometimes like vim easymotion to jump between different nodes</li>
+          </ul>
+        </li>
+        <li>Simulate state machines on the client</li>
+        <li>Verify JS code on the client</li>
+      </ul>
+    </li>
+    <li>State Machine abstractions
+      <ul class="list-bullet">
+        <li>One thing that would make this much more useful is various ways to define state machines that don&#39;t look like state machines, but internally compile down to them.</li>
+        <li>Chat bot decision tree
+          <ul class="list-bullet">
+            <li>This doesn&#39;t stray too far from a state machine, but does abstract over the existence of states and hardcodes the event types. Probably a good first start.</li>
+          </ul>
+        </li>
+        <li>Imperative programming compiled to state machine, where each call to an action is a continuation stopping point (see Temporal workflows for inspiration).
+          <ul class="list-bullet">
+            <li>Look at async/await/continuation compilation, since these internally compile down to state machines.</li>
+          </ul>
+        </li>
+        <li>Some way for tasks to wait for multiple inputs to arrive and then to act on all of them at once.
+          <ul class="list-bullet">
+            <li>Essentially this saves the incoming payload of each input in the context and then transitions to a new state that processes them all. Just need to figure out the exact semantics on handling concurrency and time delay between arrival of inputs here.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Version Control
+      <ul class="list-bullet">
+        <li>Tasks should be versioned in some way so that the user can compare with previous versions or restore to them.</li>
+        <li>It should be possible to create staging versions of tasks that can then be promoted to the &quot;real&quot; version after some testing.
+          <ul class="list-bullet">
+            <li>This means that for each task, there will be an <code>external_task_id</code> for each version, as well as an <code>external_task_id</code> for the &quot;active&quot; version.</li>
+          </ul>
+        </li>
+        <li>Questions
+          <ul class="list-bullet">
+            <li>How do we decide when to create a &quot;new&quot; version? Is this just done explicitly by the user?</li>
+            <li>How do we manage these versions?
+              <ul class="list-bullet">
+                <li>I guess just store them in Postgres.</li>
+              </ul>
+            </li>
+            <li>Granularity of versioning?
+              <ul class="list-bullet">
+                <li>Task-level is the most obvious, but there&#39;s a good argument to do it on some sort of &quot;task group&quot; level too. Probably just task-level though.</li>
+              </ul>
+            </li>
+            <li>Might be cool to have some way to just sync a bunch of task definitions stored in Git to the system.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+
