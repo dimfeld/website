@@ -1,0 +1,172 @@
+---
+title: "Pic Store"
+tags: 
+date: 2022-06-11
+updated: 2022-07-16
+---
+
+
+  <ul class="list-bullet">
+    <li>This is a project that can take image uploads, convert them to appropriate formats and sizes, and store them in some web-accessible block storage for use in websites.</li>
+    <li>Goals
+      <ul class="list-bullet">
+        <li><input type="checkbox" readonly="true"  /> Image Upload</li>
+        <li><input type="checkbox" readonly="true"  /> Convert and resize</li>
+        <li><input type="checkbox" readonly="true"  /> Helper library for image upload from front-end</li>
+        <li><input type="checkbox" readonly="true"  /> Helper library (vite plugin maybe?) for using uploaded images</li>
+      </ul>
+    </li>
+    <li>Codecs
+      <ul class="list-bullet">
+        <li>AVIF - <a href="https://docs.rs/ravif">ravif</a></li>
+        <li>WebP <a href="https://docs.rs/webp">webp</a></li>
+        <li>PNG and JPG -  <a href="https://docs.rs/image">image</a></li>
+      </ul>
+    </li>
+    <li>Store image convert queue in sqlite/postgres with some adapter</li>
+    <li>Store input image on disk or in blob storage while it waits to be converted</li>
+    <li>Upload output to S3</li>
+    <li>Immediate Task List
+      <ul class="list-bullet">
+        <li><input type="checkbox" readonly="true" checked /> Check out tracing-tree as a replacement for bunyan formatter
+:LOGBOOK:
+CLOCK: [2022-06-16 Thu 08:45:06]--[2022-06-16 Thu 08:45:07] =&gt;  00:00:01
+:END:</li>
+        <li><input type="checkbox" readonly="true" checked /> Integrate DB into Axum</li>
+        <li><input type="checkbox" readonly="true" checked /> Set up storage providers</li>
+        <li><input type="checkbox" readonly="true" checked /> Accept HTTP uploads of images</li>
+        <li><input type="checkbox" readonly="true" checked /> Put uploaded images into S3 (can we stream them directly?)</li>
+        <li><input type="checkbox" readonly="true" checked /> Download files to convert from S3</li>
+        <li><input type="checkbox" readonly="true" checked /> Do conversion on files and save them back to S3</li>
+        <li><input type="checkbox" readonly="true"  /> Bootstrapping command
+          <ul class="list-bullet">
+            <li>team</li>
+            <li>user</li>
+            <li>project</li>
+            <li>storage locations</li>
+            <li>conversion profile</li>
+            <li>upload profile</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> Simple tests of functionality</li>
+        <li><input type="checkbox" readonly="true"  /> Set up e2e test framework
+:LOGBOOK:
+CLOCK: [2022-07-20 Wed 19:38:24]--[2022-07-20 Wed 19:38:25] =&gt;  00:00:01
+:END:
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Scaffold base data</li>
+            <li><input type="checkbox" readonly="true"  /> Create temporary folder to hold output images</li>
+            <li><input type="checkbox" readonly="true"  /> Testing functionality, new database and so on</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> Endpoint to check by hash if an image already exists</li>
+      </ul>
+    </li>
+    <li>Task Queue Desires
+      <ul class="list-bullet">
+        <li>Schedule jobs for later times</li>
+        <li>Multiple channels and workers only pull the channels they&#39;re interested in</li>
+        <li>Automatically keep job alive while it runs</li>
+        <li>Retry on failure</li>
+        <li>Nice to have
+          <ul class="list-bullet">
+            <li>Checkpoints with payload updates</li>
+            <li>Run everything in a Diesel transaction and include the job completion at the end of the transaction</li>
+            <li>Likewise with checkpoints</li>
+          </ul>
+        </li>
+        <li><input type="checkbox" readonly="true"  /> Currently using a modified version of sqlxmq, changed to work with Diesel. While I like the queue code, maintaining a fork like this isn&#39;t a great idea so I should find something else.</li>
+      </ul>
+    </li>
+    <li><span class="text-xl">Workflows</span>
+      <ul class="list-bullet">
+        <li><span class="text-lg">Image Upload</span>
+          <ul class="list-bullet">
+            <li>Add base image</li>
+            <li>Upload image
+              <ul class="list-bullet">
+                <li>If presigned url upload
+                  <ul class="list-bullet">
+                    <li>Client uploads the image</li>
+                    <li>Client calls the server to indicate that it is finished</li>
+                  </ul>
+                </li>
+                <li>If direct upload, then accept the upload</li>
+              </ul>
+            </li>
+            <li>Look at the conversion profile to determine which conversions need to take place</li>
+            <li>Enqueue the conversions</li>
+            <li>Task queue does the conversions</li>
+            <li>When they are all done, image is marked as done.</li>
+          </ul>
+        </li>
+        <li><span class="text-lg">Text Overlay</span>
+          <ul class="list-bullet">
+            <li>Given an existing base image</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><span class="text-lg">Roadmap</span>
+      <ul class="list-bullet">
+        <li>Support conversion profiles</li>
+        <li>Auth key validation</li>
+        <li>Permissions table</li>
+        <li>Simple web UI</li>
+      </ul>
+    </li>
+    <li><span class="text-xl">Permissions Lookup</span>
+      <ul class="list-bullet">
+        <li>Each object has a linked &quot;permissioned object,&quot; which is the object on which we need to actually check that the permission is present.</li>
+        <li>This means that given the roles, we need to
+          <ul class="list-bullet">
+            <li>Option 1
+              <ul class="list-bullet">
+                <li>Left join on the permissions table using a subquery that checks if any of the user&#39;s roles have the required permission on the linked permissioned object.</li>
+                <li>Select an &quot;allowed&quot; field on whether that returns null or not</li>
+                <li>This feels bulky...</li>
+              </ul>
+            </li>
+            <li>Option 2
+              <ul class="list-bullet">
+                <li>Siimilar left join, but just return nothing if it&#39;s not allowed.</li>
+                <li>This has the problem that we can&#39;t distinguish a missing object from a lack of permissions.</li>
+              </ul>
+            </li>
+            <li>Option 3
+              <ul class="list-bullet">
+                <li>Fetch the object</li>
+                <li>Do the permissions check on the relevant field in a separate query.</li>
+                <li>This is clean but
+                  <ul class="list-bullet">
+                    <li>requires two queries</li>
+                    <li>requires remembering to do the permissions check</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>An ideal solution, I think, would be option 1, but in a way that it can be automated as part of the fetch process.
+              <ul class="list-bullet">
+                <li>Could do this with a function that takes some arguments
+                  <ul class="list-bullet">
+                    <li>Table to read</li>
+                    <li>Operation requested</li>
+                    <li>The field on which the operation must be allowed (i.e.  project_id)</li>
+                    <li>the user info (roles and such)</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><span class="text-xl">Lazy Conversion</span>
+      <ul class="list-bullet">
+        <li>Might end up doing this for v2</li>
+        <li>Store the raw image and convert it as requests come in. Requires a little more coordination since we may end up needing to handle concurrent requests for an image format that is currently being generated.</li>
+      </ul>
+    </li>
+  </ul>
+
+
