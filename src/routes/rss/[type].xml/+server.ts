@@ -13,7 +13,7 @@ import {
   readAllSources,
   type PostType,
 } from '$lib/readPosts';
-import { transformLinkToAbsolute } from '$lib/transforms';
+import { transformLinkToAbsolute, journalLink } from '$lib/transforms';
 
 export let prerender = true;
 
@@ -91,7 +91,8 @@ export async function GET({ params }) {
 
   for (let post of posts) {
     let type = urlBases[post.type];
-    let path = `/${type}/${post.id}`;
+    let path =
+      post.type === 'journal' ? journalLink(post.id) : `/${type}/${post.id}`;
     let fullUrl = `${host}${path}`;
     let desc;
     if (post.format === 'md') {

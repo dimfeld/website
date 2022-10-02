@@ -122,10 +122,7 @@ export const journalSources: Source[] = [
   },
 ];
 
-export async function lookupContent(
-  sources: Source[],
-  name: string
-): Promise<Post | null> {
+export function lookupContent(sources: Source[], name: string): Post | null {
   for (let source of sources) {
     try {
       let key = `${name}.${source.ext}`;
@@ -223,7 +220,3 @@ export function stripContent(p: Post) {
   let { content, ...rest } = p;
   return rest;
 }
-
-// Sveltekit migration todo:
-// - Link up dev.to to articles
-// - lowercase note tags
