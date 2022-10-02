@@ -2,7 +2,8 @@ let autotags = #{
   "sql": "databases",
   "rust": "rust",
   "ml": "Machine Learning",
-  "machine learning": "Machine Learning"
+  "machine learning": "Machine Learning",
+  "ergo": "ergo"
 };
 
 if page.is_journal {
@@ -70,23 +71,6 @@ if page.is_journal {
     "note-export"
   ];
 
-  let omit_tags = [
-    "Articles",
-    "Inbox",
-    "In Progress",
-    "Newsletter Item",
-    "Done",
-    "Readwise",
-    "Deliberate Practice",
-    "Video",
-    "note-export",
-    "public",
-    "progress",
-    "Progress",
-    "tags",
-    "Tags"
-  ];
-
   each_block(9999, |block, depth| {
     let tags = block.tags;
     if !exclude && tags.some(|t| t in exclude_tags) {
@@ -110,7 +94,40 @@ if page.is_journal {
 
   let allow = include && !exclude;
   page.include = allow;
+
   if allow {
+    // Handle namespaced pages, setting the final element as the title and adding the other elements as tags.
+    let title = page.title.split("/");
+    if title.len > 1 {
+      page.title = title.pop();
+      for t in title {
+        if t == "Book" {
+          page.add_tag("Books");
+        } else if t == "Article" {
+          page.add_tag("Articles")
+        } else if t == "Project" {
+          page.add_tag("Projects")
+        }
+      }
+    }
+
+    let omit_tags = [
+      "Inbox",
+      "In Progress",
+      "Newsletter Item",
+      "Done",
+      "Readwise",
+      "Deliberate Practice",
+      "Video",
+      "note-export",
+      "public",
+      "progress",
+      "Progress",
+      "tags",
+      "Tags"
+    ];
+
+    // Save computation time by only doing these operations on pages that we're allowing.
     for tag in omit_tags {
       page.remove_tag(tag);
     }

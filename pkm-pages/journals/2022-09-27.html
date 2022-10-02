@@ -1,0 +1,23 @@
+---
+title: "2022-09-27"
+tags: ergo
+date: 2022-09-27
+updated: 2022-09-27
+---
+
+
+  <ul class="list-document">
+    
+    <li>I&#39;m reconsidering the design goals for <a href="https://github.com/dimfeld/ergo">Ergo</a> right now. Last I left it, I had the Javascript task runner working, but was confronted with the fact that developing code inside a web UI isn&#39;t great unless you have the full development resources of repl.it or similar.</li>
+    <li>So instead, the new plan is to focus more on the &quot;state machine with some Javascript&quot; use case, where each state can perform actions that run external commands or docker containers. (And maybe locally-hosted WASM if the network access story has been figured out, but given all the recent WASI drama, maybe not yet.)</li>
+    <li>The main advantage here is that the complex code development can be done with real tools. But it also opens up other possibilities, such as writing the code in other languages and using tools like SQLite for persistent data.</li>
+    <li>Hopefully with this change in design goals I&#39;ll be able to get unstuck on the project and get it going again.</li>
+
+    <li><span class="text-lg">Links</span>
+      <ul class="list-bullet">
+        <li><a href="https://just.systems/man/en/">Just</a> is a lightweight, but flexible, task runner. We installed this in our monorepo at work today. The low friction to automate common tasks and the ability to access them all through a single command are already making things easier.</li>
+      </ul>
+    </li>
+  </ul>
+
+
