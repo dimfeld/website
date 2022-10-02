@@ -23,3 +23,8 @@ export function transformLinkToAbsolute(
 
   return url;
 }
+
+export function journalLink(id: string) {
+  const [year, month] = id.split('-');
+  return `/journals/${year}/${month}/${id}`;
+}

@@ -220,7 +220,3 @@ export function stripContent(p: Post) {
   let { content, ...rest } = p;
   return rest;
 }
-
-// Sveltekit migration todo:
-// - Link up dev.to to articles
-// - lowercase note tags
