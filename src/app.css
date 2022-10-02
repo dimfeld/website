@@ -41,6 +41,12 @@ html {
     @apply my-2 ml-4;
   }
 
+  @supports selector(:has(pre:first-child)) {
+    article ul > li:has(> pre:first-child) {
+      @apply list-none pl-4;
+    }
+  }
+
   article .content.no-indent > ul > li,
   article .content.no-indent > ol > li {
     @apply ml-0;
