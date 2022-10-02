@@ -105,7 +105,7 @@ if page.is_journal {
           page.add_tag("Books");
         } else if t == "Article" {
           page.add_tag("Articles")
-        } else if t == "Project" {
+        } else if t == "Projects" {
           page.add_tag("Projects")
         }
       }
