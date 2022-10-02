@@ -54,6 +54,11 @@
     "title": "2022-09-30",
     "uid": ""
   },
+  "pkm-pages/journals/2022-10-01.html": {
+    "slug": "/journals/2022_10_01",
+    "title": "2022-10-01",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -267,6 +272,11 @@
   "pkm-pages/notes/projects_pic_store.html": {
     "slug": "/notes/projects_pic_store",
     "title": "Pic Store",
+    "uid": ""
+  },
+  "pkm-pages/notes/projects_prefect.html": {
+    "slug": "/notes/projects_prefect",
+    "title": "Prefect",
     "uid": ""
   },
   "pkm-pages/notes/projects_tracksome.html": {

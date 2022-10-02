@@ -1,0 +1,36 @@
+---
+title: "Prefect"
+tags: 
+date: 2022-10-02
+updated: 2022-10-02
+---
+
+
+  <ul class="list-bullet">
+    <li><span><span class="font-medium text-gray-800">status:</span> <span>Early</span></span></li>
+    <li><span><span class="font-medium text-gray-800">url:</span> <span><a href="https://github.com/dimfeld/prefect">https://github.com/dimfeld/prefect</a></span></span></li>
+    <li>A task queue based on SQLite, which will eventually be usable either embedded as a library or standalone.</li>
+    <li>Features
+      <ul class="list-bullet">
+        <li>Scheduled Tasks</li>
+        <li>Repeating Tasks</li>
+        <li>Multiple types of tasks</li>
+        <li>Task can checkpoint and update payload, so that retries will start from there.</li>
+        <li>Tasks can submit a heartbeat while they are still working on long tasks.</li>
+        <li>Tasks expire and are retried if the heartbeat times out for too long</li>
+        <li>Worker Tasks
+          <ul class="list-bullet">
+            <li>can listen only for specific types of tasks.</li>
+            <li>can call a function to wait for the next task, which the library will resolve once one is available.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>In the future this library will be runnable standalone, with task clients connecting over HTTP or gRPC.
+      <ul class="list-bullet">
+        <li>HTTP Long polling and gRPC streaming to wait for task availability</li>
+      </ul>
+    </li>
+  </ul>
+
+
