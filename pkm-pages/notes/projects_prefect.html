@@ -2,33 +2,215 @@
 title: "Prefect"
 tags: Projects
 date: 2022-10-02
-updated: 2022-10-02
+updated: 2022-10-03
 ---
 
 
   <ul class="list-bullet">
-    <li><span><span class="font-medium text-gray-800">status:</span> <span>Early</span></span></li>
+    <li><span><span class="font-medium text-gray-800">status:</span> <span>Early Design</span></span></li>
     <li><span><span class="font-medium text-gray-800">url:</span> <span><a href="https://github.com/dimfeld/prefect">https://github.com/dimfeld/prefect</a></span></span></li>
-    <li>A task queue based on SQLite, which will eventually be usable either embedded as a library or standalone.</li>
+    <li>A job queue based on SQLite, which will eventually be usable either embedded as a library or standalone.</li>
     <li>Features
       <ul class="list-bullet">
-        <li>Scheduled Tasks</li>
-        <li>Repeating Tasks</li>
-        <li>Multiple types of tasks</li>
-        <li>Task can checkpoint and update payload, so that retries will start from there.</li>
-        <li>Tasks can submit a heartbeat while they are still working on long tasks.</li>
-        <li>Tasks expire and are retried if the heartbeat times out for too long</li>
-        <li>Worker Tasks
+        <li>Scheduled Jobs</li>
+        <li>Repeating Jobs</li>
+        <li>Multiple types of jobs, and workers can handle one or more types</li>
+        <li>Job can checkpoint and update payload, so that retries will start from there.</li>
+        <li>Jobs can submit a heartbeat while they are still working on long tasks.</li>
+        <li>Jobs expire and are retried if the heartbeat times out for too long</li>
+        <li>Pending jobs can be cancelled</li>
+        <li>Worker Tasks...
           <ul class="list-bullet">
-            <li>can listen only for specific types of tasks.</li>
-            <li>can call a function to wait for the next task, which the library will resolve once one is available.</li>
+            <li>can listen only for specific types of jobs.</li>
+            <li>can call a function to wait for the next job, which the library will resolve once one is available.</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li>In the future this library will be runnable standalone, with task clients connecting over HTTP or gRPC.
+    <li>In the future this library will be runnable as a standalone server, with task clients connecting over HTTP or gRPC.
       <ul class="list-bullet">
         <li>HTTP Long polling and gRPC streaming to wait for task availability</li>
+      </ul>
+    </li>
+    <li><span class="text-xl">Database Structures</span>
+      <ul class="list-bullet">
+        <li>Base Data
+          <ul class="list-bullet">
+            <li>All tables will have these fields, which is not needed for every case but helps for reporting later.</li>
+            <li>Do we want to store most of this in a separate table that just has task info? Would help to keep from needing to move a bunch of data around to switch things between tables, at the expense of a bit more bookkeeping when purging old data.</li>
+            <li>Fields
+              <ul class="list-bullet">
+                <li>job d</li>
+                <li>external job id (this will be a uuid or something÷)</li>
+                <li>job type
+                  <ul class="list-bullet">
+                    <li>Used to filter which workers will try to run this job.</li>
+                  </ul>
+                </li>
+                <li>job status
+                  <ul class="list-bullet">
+                    <li>Not a full representation of the job&#39;s status.</li>
+                    <li>Just these values
+                      <ul class="list-bullet">
+                        <li>Succeeded</li>
+                        <li>Failed (and exhausted retries)</li>
+                        <li>Cancelled</li>
+                        <li>Active (everything else)</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>time status changed</li>
+                <li>recurrence id (for recurring tasks)</li>
+                <li>Original &quot;run at&quot; time
+                  <ul class="list-bullet">
+                    <li>job that should run immediately will have this set to now</li>
+                  </ul>
+                </li>
+                <li>payload</li>
+                <li>num retries allowed</li>
+                <li>retry backoff spec
+                  <ul class="list-bullet">
+                    <li>How long to wait between retries, and how to increase that value on future retries</li>
+                    <li>May want to have this be configurable for &quot;quick&quot; and &quot;slow&quot; desired retries e.g.
+                      <ul class="list-bullet">
+                        <li>Worker failed to complete - retry quick?</li>
+                        <li>Some service needed by the background job is down - retry slow</li>
+                        <li>Something the job needed to do was rate limited - retry quick</li>
+                      </ul>
+                    </li>
+                    <li>Should we allow anything other than exponential backoff?</li>
+                  </ul>
+                </li>
+                <li>time job was added</li>
+                <li>job timeout
+                  <ul class="list-bullet">
+                    <li>Default expiration time when starting the task is (now + timeout)</li>
+                  </ul>
+                </li>
+                <li>heartbeat expiration increment
+                  <ul class="list-bullet">
+                    <li>When receiving a heartbeat, the new expiration will be max of current expiration and (now + expiration increment)</li>
+                    <li>This can be 0 to have a strict timeout, regardless of heartbeat</li>
+                  </ul>
+                </li>
+                <li>run info (info about each failure for failed runs, info about success from a successful run)</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Pending - Jobs which are waiting to run
+          <ul class="list-bullet">
+            <li>job id</li>
+            <li>job type (copied from the jobs table but helps make lookups more efficient when only looking for certain task types)</li>
+            <li>current &quot;run at&quot; time</li>
+            <li>current retry count</li>
+            <li>checkpointed payload from previous try (if any)</li>
+          </ul>
+        </li>
+        <li>Running - Tasks which have been sent to a worker
+          <ul class="list-bullet">
+            <li>job id</li>
+            <li>job type</li>
+            <li>Time this run was started</li>
+            <li>checkpointed payload (if any)
+              <ul class="list-bullet">
+                <li>Jobs can use this to update the data for future retries in case this run fails partway through.</li>
+              </ul>
+            </li>
+            <li>last heartbeat time seen</li>
+            <li>current retry count</li>
+            <li>current expiration time</li>
+          </ul>
+        </li>
+        <li>Recurring Job Spec
+          <ul class="list-bullet">
+            <li>recurrence id</li>
+            <li>base data job id
+              <ul class="list-bullet">
+                <li>When starting a recurring job, the row from the jobs table will be copied to a new job with a new id</li>
+              </ul>
+            </li>
+            <li>schedule</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><span class="text-xl">In-Memory Data Structures</span>
+      <ul class="list-bullet">
+        <li>Track &quot;next&quot; job run time
+          <ul class="list-bullet">
+            <li>Is it sufficient to have a single value here and just query a DB index for the next time? Possibly.</li>
+            <li>If not, a timer wheel should suffice.</li>
+          </ul>
+        </li>
+        <li>List of clients waiting for each job type
+          <ul class="list-bullet">
+            <li>When a job is taken off of the pending list, find a waiting client for that job type and send the info to it. Then remove it from the list.</li>
+            <li>Job waiter
+              <ul class="list-bullet">
+                <li>For library use, this could take the form of a oneshot channel. Delivering a job to a worker is then just a matter of sending the job across the channel.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><span class="text-xl">Worker Task Info/Functions</span>
+      <ul class="list-bullet">
+        <li>current retry count</li>
+        <li>Is job expired? (also implement as a future we can await)</li>
+        <li>send heartbeat to queue</li>
+        <li>send checkpoint to queue (like heartbeat but includes an updated payload)</li>
+        <li>mark job as failed with error</li>
+        <li>mark job as succeeded with info</li>
+      </ul>
+    </li>
+    <li><span class="text-xl">Algorithms</span>
+      <ul class="list-bullet">
+        <li>Running a pending task
+          <ul class="list-bullet">
+            <li>Get a task from the pending table which has waiting job runners for the task types.</li>
+            <li>Pull a client off the waiting list and send the task to it.</li>
+            <li>If the task has closed its receiver, then try the next one, and if none of them work, leave the task on the pending list.</li>
+            <li>If the send succeeds, put the task onto the running list.</li>
+            <li>Need to figure out the exact best way to do this
+              <ul class="list-bullet">
+                <li>Delete from pending list right away and then add to running list once it succeeds</li>
+                <li>Or find the row first, and wait to delete once it succeeds
+                  <ul class="list-bullet">
+                    <li>This might work better if we&#39;re taking a batch of rows at a time, especially since we may run out of waiting clients for a particular task type.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><span class="text-xl">Queue Internal Tasks</span>
+      <ul class="list-bullet">
+        <li>Move pending jobs to running when they reach their &quot;run at&quot; time.
+          <ul class="list-bullet">
+            <li>This moves jobs in batches until there aren’t any left to move, then waits until the next “run at” time to do anything else. It also needs to be updated whenever that time changes.</li>
+          </ul>
+        </li>
+        <li>Sweeper for expired tasks
+          <ul class="list-bullet">
+            <li>Update retry data and move them from running back to pending</li>
+          </ul>
+        </li>
+        <li>Sweeper for deleting old data on successful tasks
+          <ul class="list-bullet">
+            <li>Optional but keeps the DB from blowing up too much.</li>
+            <li>Probably have some hook to send &quot;done&quot; task data somewhere external too.</li>
+          </ul>
+        </li>
+        <li>Sweeper for recurring jobs which should be scheduled or running, but are not.
+          <ul class="list-bullet">
+            <li>Create a new entry in pending for these (and probably log something since other mechanisms should really handle this)</li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>

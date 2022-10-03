@@ -1,0 +1,29 @@
+---
+title: "SQLite Options"
+tags: SQLite
+date: 2022-10-02
+updated: 2022-10-02
+---
+
+
+  <ul class="list-bullet">
+    <li><code>PRAGMA journal_mode=WAL</code> will enable the write-ahead log. This is persisted into the database and so only needs to be done once when the file is created.</li>
+    <li><code>PRAGMA case_sensitive_like = true</code> will cause the LIKE operator to match case sensitively. Note that there is no <code>ILIKE</code> operator, so you have to choose one or the other. The <code>GLOB</code> operator can help here though, since it is case-sensitive (and uses <code>*</code> instead of <code>%</code> for its wildcards).</li>
+    <li>Enforcement of column types can be enabled by adding the keyword <code>STRICT</code> to the end of the <code>CREATE TABLE</code> statement.</li>
+    <li><code>PRAGMA defer_foreign_keys = true</code> can be used to indicate that deferrable foreign key constraint checking should be deferred until the end of a transaction. This only applies to the current transaction, so it needs to be done again every time you are in a transaction that needs it.</li>
+    <li>Bulk Loading
+      <ul class="list-bullet">
+        <li>When bulk loading data, the following settings can improve write performance significantly. Most of these settings should absolutely not be used in other scenarios or you can&#39;t recreate the entire database in the event of a crash, as they trade away all the the safety guarantees in exchange for faster writes.</li>
+        <li><pre><code><span class="hljs-source hljs-sql">PRAGMA journal_mode <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> OFF;
+PRAGMA page_size <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> <span class="hljs-constant hljs-numeric hljs-sql">16384</span>; <span class="hljs-comment hljs-line hljs-double-dash hljs-sql"><span class="hljs-punctuation hljs-definition hljs-comment hljs-sql">--</span> if using the zstd VFS extension
+</span>PRAGMA synchronous <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> <span class="hljs-constant hljs-numeric hljs-sql">0</span>;
+PRAGMA auto_vacuum <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> NONE;
+PRAGMA cache_size <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> <span class="hljs-keyword hljs-operator hljs-math hljs-sql">-</span><span class="hljs-constant hljs-numeric hljs-sql">10485760</span>;
+PRAGMA locking_mode <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> EXCLUSIVE;
+PRAGMA temp_store <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> MEMORY;
+</span></code></pre></li>
+      </ul>
+    </li>
+  </ul>
+
+

@@ -359,6 +359,11 @@
     "title": "SQL",
     "uid": ""
   },
+  "pkm-pages/notes/sqlite_options.html": {
+    "slug": "/notes/sqlite_options",
+    "title": "SQLite Options",
+    "uid": ""
+  },
   "pkm-pages/notes/sqlx.html": {
     "slug": "/notes/sqlx",
     "title": "sqlx",
