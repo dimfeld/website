@@ -2,7 +2,7 @@
 title: "Prefect"
 tags: Projects
 date: 2022-10-02
-updated: 2022-10-03
+updated: 2022-10-04
 ---
 
 
@@ -36,8 +36,7 @@ updated: 2022-10-03
       <ul class="list-bullet">
         <li>Base Data
           <ul class="list-bullet">
-            <li>All tables will have these fields, which is not needed for every case but helps for reporting later.</li>
-            <li>Do we want to store most of this in a separate table that just has task info? Would help to keep from needing to move a bunch of data around to switch things between tables, at the expense of a bit more bookkeeping when purging old data.</li>
+            <li>This is stored in the <code>active_jobs</code> table for tasks that are not fully resolved, and in the <code>done_jobs</code> table for tasks which suceeded, failed, or were cancelled.</li>
             <li>Fields
               <ul class="list-bullet">
                 <li>job id</li>
@@ -47,15 +46,19 @@ updated: 2022-10-03
                     <li>Used to filter which workers will try to run this job.</li>
                   </ul>
                 </li>
+                <li>job priority
+                  <ul class="list-bullet">
+                    <li>Higher priority jobs will go first when multiple jobs can be run.</li>
+                  </ul>
+                </li>
                 <li>job status
                   <ul class="list-bullet">
-                    <li>Not a full representation of the job&#39;s status.</li>
+                    <li>This only exists in <code>done_jobs</code>.</li>
                     <li>Just these values
                       <ul class="list-bullet">
                         <li>Succeeded</li>
                         <li>Failed (and exhausted retries)</li>
                         <li>Cancelled</li>
-                        <li>Active (everything else)</li>
                       </ul>
                     </li>
                   </ul>
