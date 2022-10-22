@@ -2,7 +2,7 @@
 title: "Prefect"
 tags: Projects
 date: 2022-10-02
-updated: 2022-10-07
+updated: 2022-10-22
 ---
 
 
@@ -168,6 +168,23 @@ updated: 2022-10-07
         <li>send checkpoint to queue (like heartbeat but includes an updated payload)</li>
         <li>mark job as failed with error</li>
         <li>mark job as succeeded with info</li>
+      </ul>
+    </li>
+    <li><span class="text-xl">Job Workers</span>
+      <ul class="list-bullet">
+        <li>We want a way to have a single worker able to run multiple types of jobs. The simplest way is to have a single function which gets the job type along with the payload and whatnot, and dispatches manually to different functions depending on the type. This isn&#39;t really ergonomic though.</li>
+        <li>Better would be a way to register a function for each supported job type, and have the worker automatically call the right function depending on the type of job it gets.
+          <ul class="list-bullet">
+            <li>This gets tricky with async though because the functions each have different return types.</li>
+            <li>So we wrap the job runner function with a closure that starts a task, calls the actual runner function, serializes the success or failure values into JSON, and then handles cleaning up the task and writing the job info if it&#39;s not done already.
+              <ul class="list-bullet">
+                <li>The type of this ends up being something like <code>Box&lt;dyn Fn(Job, Context) -&gt; Box&lt;dyn Future&lt;Output=JobResult&gt;&gt;&gt;</code></li>
+                <li>See <a href="https://users.rust-lang.org/t/boxed-closure-returning-impl-future/51264">https://users.rust-lang.org/t/boxed-closure-returning-impl-future/51264</a> for full details on how to set this up.</li>
+              </ul>
+            </li>
+            <li>We can then use a oneshot channel or something similar to handle tracking when the task has exited.</li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><span class="text-xl">Algorithms</span>

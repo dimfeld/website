@@ -1,0 +1,18 @@
+---
+title: "2022-10-21"
+tags: rust
+date: 2022-10-21
+updated: 2022-10-21
+---
+
+
+  <ul class="list-document">
+    
+    <li>Back from vacation, and while I didn&#39;t get much done on <a href="/notes/projects_prefect">Prefect</a>, I did come closer to figuring out the structure of the job registry. By wrapping each job runner function with a closure, I can abstract away the need to represent all the different possible return types of each task, and instead just handle cleaning up the task and processing its result inside the closure.</li>
+    <li><a href="https://users.rust-lang.org/t/boxed-closure-returning-impl-future/51264">This thread</a> on the Rust forum describes the proper way to save reference a closure that also returns a future. The main thing to remember here is that you have to manually pin the future.</li>
+    <li>The remaining part here is figuring out how to deal with shared state (things like database pools and so on). The easiest way would probably be to set up a single context type for a worker, which all task types share, and use it as a generic type parameter.</li>
+    <li>Ideally, each task runner could have its own structure for the shared state, instead of them all needing to use the same one. Something like the <a href="https://docs.rs/axum/latest/axum/struct.Extension.html">Extension</a> structure that various Rust web frameworks use could work. For the first version I&#39;ll probably punt on this though, just to get something up and running.</li>
+
+  </ul>
+
+
