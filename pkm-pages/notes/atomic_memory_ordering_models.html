@@ -7,14 +7,8 @@ updated: 2022-10-23
 
 
   <ul class="list-bullet">
-    <li><span><span class="font-medium text-gray-800">Source:</span> <span><a href="https://doc.rust-lang.org/nomicon/atomics.html">Atomics - The Rustonomicon</a></span></span></li>
+    <li><span><span class="font-medium text-gray-800">Source:</span> <span><a href="https://doc.rust-lang.org/nomicon/atomics.html">Atomics - The Rustonomicon</a>, <a href="https://jeehoonkang.github.io/2017/08/23/synchronization-patterns.html">Relaxed-Memory Concurrency Synchronization Patterns | From Pencil to Metal</a></span></span></li>
     <li>This mostly focuses on Rust&#39;s model, which is in turn derived from the C++20 model.</li>
-    <li>Sequentially Consistent
-      <ul class="list-bullet">
-        <li>This is like a traditional memory barrier, but with an atomic access built-in. When doing an atomic store in <code>SeqCst</code> mode, any code that does an atomic load from that location in the same mode will be guaranteed to see all other stores from the other thread.</li>
-        <li>This behavior allows you to use this kind of ordering as a &quot;ready&quot; indicator. Other threads can load the indicator the flag, and then read related data that you set while being sure that those locations are also all up-to-date.</li>
-      </ul>
-    </li>
     <li>Acquire and Release
       <ul class="list-bullet">
         <li>These modes are usually paired, with one thread doing an Acquire, running some code, and then doing a Release.</li>
@@ -22,6 +16,17 @@ updated: 2022-10-23
         <li>The Release ensures that all writes before the Release are not reordered after it.</li>
         <li>This is useful for lock-free algorithms, where you want to ensure that the data is visible to the other thread when you release the lock.</li>
         <li>Generally the reader will then Acquire the same memory location before doing its reads, to ensure that it sees all the writes.</li>
+      </ul>
+    </li>
+    <li>AcqRel
+      <ul class="list-bullet">
+        <li>This is a combination of <code>Acquire</code> and <code>Release</code>. When doing an atomic store in <code>AcqRel</code> mode, any other thread that does an <code>Acquire</code> or <code>AcqRel</code> atomic load from that location will be guaranteed to see all writes to other locations that took place before the first thread&#39;s atomic write.</li>
+        <li>This is most useful when your thread needs to both read data written by another thread, and write its own data.</li>
+      </ul>
+    </li>
+    <li><code>SeqCst</code>
+      <ul class="list-bullet">
+        <li>This mode is similar to <code>AcqRel</code>, but also ensures that all threads will see all <code>SeqCst</code> operations in the same order. This is rarely necessary. (See <a href="https://github.com/rust-lang/nomicon/issues/166">SeqCst as a default atomic ordering considered harmful · Issue #166 · rust-lang/nomicon</a> for a good explanation.)</li>
       </ul>
     </li>
     <li>Relaxed
