@@ -1,0 +1,35 @@
+---
+title: "Atomic Memory Ordering Models"
+tags: 
+date: 2022-10-23
+updated: 2022-10-23
+---
+
+
+  <ul class="list-bullet">
+    <li><span><span class="font-medium text-gray-800">Source:</span> <span><a href="https://doc.rust-lang.org/nomicon/atomics.html">Atomics - The Rustonomicon</a></span></span></li>
+    <li>This mostly focuses on Rust&#39;s model, which is in turn derived from the C++20 model.</li>
+    <li>Sequentially Consistent
+      <ul class="list-bullet">
+        <li>This is like a traditional memory barrier, but with an atomic access built-in. When doing an atomic store in <code>SeqCst</code> mode, any code that does an atomic load from that location in the same mode will be guaranteed to see all other stores from the other thread.</li>
+        <li>This behavior allows you to use this kind of ordering as a &quot;ready&quot; indicator. Other threads can load the indicator the flag, and then read related data that you set while being sure that those locations are also all up-to-date.</li>
+      </ul>
+    </li>
+    <li>Acquire and Release
+      <ul class="list-bullet">
+        <li>These modes are usually paired, with one thread doing an Acquire, running some code, and then doing a Release.</li>
+        <li>The Acquire ensures all writes after the Acquire are not reordered before it.</li>
+        <li>The Release ensures that all writes before the Release are not reordered after it.</li>
+        <li>This is useful for lock-free algorithms, where you want to ensure that the data is visible to the other thread when you release the lock.</li>
+        <li>Generally the reader will then Acquire the same memory location before doing its reads, to ensure that it sees all the writes.</li>
+      </ul>
+    </li>
+    <li>Relaxed
+      <ul class="list-bullet">
+        <li>Relaxed operations provide no guarantees about ordering of other memory accesses.</li>
+        <li>This means that you can use it for atomic read-modify-write operations on a single memory location, but not to synchronize accesses to other data.</li>
+      </ul>
+    </li>
+  </ul>
+
+

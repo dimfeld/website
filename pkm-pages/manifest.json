@@ -94,6 +94,11 @@
     "title": "2022-10-21",
     "uid": ""
   },
+  "pkm-pages/journals/2022-10-22.html": {
+    "slug": "/journals/2022_10_22",
+    "title": "2022-10-22",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -112,6 +117,11 @@
   "pkm-pages/notes/article_the_four_theories_of_truth_as_a_method_for_critical_thinking.html": {
     "slug": "/notes/article_the_four_theories_of_truth_as_a_method_for_critical_thinking",
     "title": "The Four Theories of Truth as a Method for Critical Thinking",
+    "uid": ""
+  },
+  "pkm-pages/notes/atomic_memory_ordering_models.html": {
+    "slug": "/notes/atomic_memory_ordering_models",
+    "title": "Atomic Memory Ordering Models",
     "uid": ""
   },
   "pkm-pages/notes/book_designing_data_intensive_applications.html": {
