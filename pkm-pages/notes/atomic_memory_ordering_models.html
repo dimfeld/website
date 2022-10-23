@@ -8,19 +8,20 @@ updated: 2022-10-23
 
   <ul class="list-bullet">
     <li><span><span class="font-medium text-gray-800">Source:</span> <span><a href="https://doc.rust-lang.org/nomicon/atomics.html">Atomics - The Rustonomicon</a>, <a href="https://jeehoonkang.github.io/2017/08/23/synchronization-patterns.html">Relaxed-Memory Concurrency Synchronization Patterns | From Pencil to Metal</a></span></span></li>
-    <li>This mostly focuses on Rust&#39;s model, which is in turn derived from the C++20 model.</li>
-    <li>Acquire and Release
+    <li>This mostly focuses on Rust&#39;s model, which is in turn derived from the C++20 model. Most of the time you&#39;ll just want to use a normal Mutex or something, which already uses a lot of these types of operations under the hood, but these can be useful for more advanced algorithms.</li>
+    <li><code>Acquire</code> and <code>Release</code>
       <ul class="list-bullet">
+        <li>Acquire mode ensures that all writes after the Acquire will only be visible after the Acquire operation is visible.</li>
+        <li>Release mode ensures that all writes before the Release will be visible before the Release operation is visible.</li>
         <li>These modes are usually paired, with one thread doing an Acquire, running some code, and then doing a Release.</li>
-        <li>The Acquire ensures all writes after the Acquire are not reordered before it.</li>
-        <li>The Release ensures that all writes before the Release are not reordered after it.</li>
-        <li>This is useful for lock-free algorithms, where you want to ensure that the data is visible to the other thread when you release the lock.</li>
-        <li>Generally the reader will then Acquire the same memory location before doing its reads, to ensure that it sees all the writes.</li>
+        <li>It is also feasible for the first thread to only do a Release, if it only needs to notify when it&#39;s done writing and does not have to indicate that a write is in progress.</li>
+        <li>This is useful for lock-free algorithms, where you want to ensure that the data is visible to the other thread when you perform the Release.</li>
+        <li>Generally the reader, in another thread, will then Acquire the same memory location before doing its reads, to ensure that it sees all the writes.</li>
       </ul>
     </li>
-    <li>AcqRel
+    <li><code>AcqRel</code>
       <ul class="list-bullet">
-        <li>This is a combination of <code>Acquire</code> and <code>Release</code>. When doing an atomic store in <code>AcqRel</code> mode, any other thread that does an <code>Acquire</code> or <code>AcqRel</code> atomic load from that location will be guaranteed to see all writes to other locations that took place before the first thread&#39;s atomic write.</li>
+        <li>This is a combination of <code>Acquire</code> and <code>Release</code>. When doing an atomic operation in <code>AcqRel</code> mode, any other thread that does an <code>Acquire</code> or <code>AcqRel</code> atomic load from that location will be guaranteed to see all writes to other locations that took place before the first thread&#39;s atomic write.</li>
         <li>This is most useful when your thread needs to both read data written by another thread, and write its own data.</li>
       </ul>
     </li>
