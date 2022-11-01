@@ -26,7 +26,11 @@ if page.is_journal {
       page.add_tags(tags);
     } else if block.contents == "Learning" ||
         block.contents == "Links" {
-      block.view_type = ViewType::Bullet;
+      if block.contents == "Learning" {
+        block.view_type = ViewType::Document;
+      } else {
+        block.view_type = ViewType::Bullet;
+      }
       block.heading = 3;
       block.include = BlockInclude::IfChildrenPresent;
       saw_content_block = true;
