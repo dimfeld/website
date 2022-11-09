@@ -2,34 +2,35 @@
 title: "Prefect"
 tags: Projects
 date: 2022-10-02
-updated: 2022-10-22
+updated: 2022-11-07
 ---
 
 
   <ul class="list-bullet">
-    <li><span><span class="font-medium text-gray-800">status:</span> <span>Early Design</span></span></li>
+    <li><span><span class="font-medium text-gray-800">status:</span> <span>v0.1 released</span></span></li>
     <li><span><span class="font-medium text-gray-800">url:</span> <span><a href="https://github.com/dimfeld/prefect">https://github.com/dimfeld/prefect</a></span></span></li>
     <li>A job queue based on SQLite, which will eventually be usable either embedded as a library or standalone.</li>
-    <li>Features
+    <li>Current Features
       <ul class="list-bullet">
         <li>Scheduled Jobs</li>
-        <li>Repeating Jobs</li>
         <li>Multiple types of jobs, and workers can handle one or more types</li>
         <li>Job can checkpoint and update payload, so that retries will start from there.</li>
         <li>Jobs can submit a heartbeat while they are still working on long tasks.</li>
         <li>Jobs expire and are retried if the heartbeat times out for too long</li>
-        <li>Pending jobs can be cancelled</li>
         <li>Worker Tasks...
           <ul class="list-bullet">
             <li>can listen only for specific types of jobs.</li>
-            <li>can call a function to wait for the next job, which the library will resolve once one is available.</li>
+            <li>can run multiple jobs concurrently</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li>In the future this library will be runnable as a standalone server, with task clients connecting over HTTP or gRPC.
+    <li>Future Features
       <ul class="list-bullet">
-        <li>HTTP Long polling and gRPC streaming to wait for task availability</li>
+        <li>Better handling of unexpected process restart</li>
+        <li>Pending jobs can be cancelled</li>
+        <li>Repeating Jobs</li>
+        <li>Runnable as a server, with HTTP Long polling and gRPC streaming to wait for task availability</li>
       </ul>
     </li>
     <li><span class="text-xl">Database Structures</span>

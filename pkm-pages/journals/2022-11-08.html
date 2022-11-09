@@ -1,0 +1,16 @@
+---
+title: "2022-11-08"
+tags: 
+date: 2022-11-08
+updated: 2022-11-08
+---
+
+
+  <ul class="list-document">
+    
+    <li>The initial release of <a href="/notes/projects_prefect">Prefect</a> is out! Pretty happy with how it turned out, and my first application will be to use it for background image processing in <a href="/notes/projects_pic_store">Pic Store</a>. Look for more about that in the coming weeks.</li>
+    <li>One interesting issue I immediately encountered after releasing v0.1.0 was that the trait bounds on the job runner were overly strict. I had required <code>Sync</code> on the future returned by the job runner function, when actually nothing in the library required that. But that meant that any job runner function could not hold a non-Sync value across an await point. Fortunately this was just a matter of removing the trait bound and adding a test whose job runner function holds a <code>Cell</code> across an await.</li>
+
+  </ul>
+
+
