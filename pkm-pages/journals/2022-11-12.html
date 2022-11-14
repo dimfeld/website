@@ -1,0 +1,16 @@
+---
+title: "2022-11-12"
+tags: 
+date: 2022-11-12
+updated: 2022-11-12
+---
+
+
+  <ul class="list-document">
+    
+    <li>Today I wrote image reading and writing tests for <a href="/notes/projects_pic_store">Pic Store</a>. I came across a number of issues reading AVIF files, which eventually were fixed by switching directly to the <code>libavif</code> crate which seems to do a better job parsing  certain AVIF files that aren&#39;t quite up to spec.</li>
+    <li>I also made a <a href="https://github.com/dimfeld/imageinfo-rs">fork of the `imageinfo` crate</a> to help with detecting these files, but I need to go back and see if my fix is really correct before I submit it upstream.</li>
+
+  </ul>
+
+
