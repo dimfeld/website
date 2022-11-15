@@ -1,0 +1,51 @@
+---
+title: "Email Digest Service"
+tags: Projects
+date: 2022-11-15
+updated: 2022-11-15
+---
+
+
+  <ul class="list-bullet">
+    <li><span><span class="font-medium text-gray-800">status:</span> <span>Pre-development</span></span></li>
+    <li>Have noisy services like Github send notifications to this service, which batches them up and sends groups of emails to you periodically. This way you aren&#39;t getting 15 emails in 10 minutes when people are commenting on things.</li>
+    <li><span class="text-2xl">Features</span>
+      <ul class="list-bullet">
+        <li>Email digest viewer</li>
+        <li>Send emails with full contents or summaries</li>
+        <li>Configurable behavior for sending email batches
+          <ul class="list-bullet">
+            <li>Send a batch of emails X minutes after the first is received</li>
+            <li>Send a batch X minutes after the last is received</li>
+            <li>Send a batch once X emails are in the batch, regardless of time.</li>
+            <li>Option for a digest to never send during a particular time period. Just keep batching up instead.</li>
+          </ul>
+        </li>
+        <li>Configure filters for emails, both to and from and subject regex
+          <ul class="list-bullet">
+            <li>Filter to send immediately, put into a batch, or delete (but probably retain for manual checking)</li>
+          </ul>
+        </li>
+        <li>group by sender, keyword, etc</li>
+        <li>Multiple concurrent digests with different settings (e.g. one for GitHub and another for a forum)
+          <ul class="list-bullet">
+            <li>Can do this with the filtering capability and/or custom To addresses for each batch</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><span class="text-2xl">Needs</span>
+      <ul class="list-bullet">
+        <li>queue with rescheduleable tasks (<a href="/notes/projects_prefect">Prefect</a> upcoming feature)</li>
+        <li>some email parsing functionality</li>
+        <li>postmark or something for sending the digests</li>
+      </ul>
+    </li>
+    <li><span class="text-2xl">Useful crates</span>
+      <ul class="list-bullet">
+        <li><a href="https://crates.io/crates/mailin">https://crates.io/crates/mailin</a> for mail server functionality</li>
+      </ul>
+    </li>
+  </ul>
+
+
