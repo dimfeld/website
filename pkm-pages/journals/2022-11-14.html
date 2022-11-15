@@ -1,0 +1,20 @@
+---
+title: "2022-11-14"
+tags: 
+date: 2022-11-14
+updated: 2022-11-14
+---
+
+
+  <ul class="list-document">
+    
+    <li>Got the <a href="/notes/projects_pic_store">Pic Store</a> bootstrap command working today. The Postgres ability to defer constraints checking until the end of a transaction is very handy here, when you&#39;re loading a bunch of JSON files and don&#39;t want to have to sort them topologically according to the foreign arrangement of the tables.</li>
+
+    <li><span class="text-lg">Learning</span>
+      <ul class="list-document">
+        <li>AWS Route53 <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-choosing-alias-non-alias.html">lets you create &quot;alias&quot; records</a> that work like a CNAME, but just redirect to another AWS resource (including other Route53 entries). This incurs less cost than a normal CNAME, since resolving the alias doesn&#39;t count as an extra lookup.</li>
+      </ul>
+    </li>
+  </ul>
+
+
