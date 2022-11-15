@@ -2,7 +2,7 @@
 title: "SQL Antipatterns"
 tags: Books, SQL
 date: 2021-03-09
-updated: 2022-06-10
+updated: 2022-11-15
 ---
 
 
@@ -101,16 +101,26 @@ updated: 2022-06-10
               </ul>
             </li>
             <li>In an intersection table, the two columns for the intersection make a great compound primary key and reduce chance of bugs. No need for a separate ID.</li>
-            <li>The primary key should have a more descriptive name, not just <code>id</code>.
+            <li>The book says:
               <ul class="list-bullet">
-                <li>e.g. <code>account_id</code> in an <code>Account</code> table.</li>
-                <li>Less need to rename fields in query results when joining tables.</li>
-                <li>This also allows more queries to use USING in joins.</li>
+                <li>The primary key should have a more descriptive name, not just <code>id</code>.
+                  <ul class="list-bullet">
+                    <li>e.g. <code>account_id</code> in an <code>Account</code> table.</li>
+                    <li>Less need to rename fields in query results when joining tables.</li>
+                    <li>This also allows more queries to use USING in joins.</li>
+                  </ul>
+                </li>
+                <li>Using an ORM can make it hard to use primary keys optimally, so that’s ok.
+                  <ul class="list-bullet">
+                    <li>Some ORMs let you change the primary key from the default.</li>
+                  </ul>
+                </li>
               </ul>
             </li>
-            <li>Using an ORM can make it hard to use primary keys optimally, so that’s ok.
+            <li>I generally disagree with the advice on primary key naming nowadays.
               <ul class="list-bullet">
-                <li>Some ORMs let you change the primary key from the default.</li>
+                <li>It makes the SQL easier to write but the SQL is a minor part of most applications now and tends to change less than the rest of the application.</li>
+                <li>Having a constant name for the primary key such as <code>id</code> makes it easier to write other code, particularly in the front end, that abstracts across multiple object types.</li>
               </ul>
             </li>
           </ul>

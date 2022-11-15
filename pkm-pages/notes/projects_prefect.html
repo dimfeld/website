@@ -2,7 +2,7 @@
 title: "Prefect"
 tags: Projects
 date: 2022-10-02
-updated: 2022-11-10
+updated: 2022-11-15
 ---
 
 
@@ -10,7 +10,7 @@ updated: 2022-11-10
     <li><span><span class="font-medium text-gray-800">status:</span> <span>v0.1 released</span></span></li>
     <li><span><span class="font-medium text-gray-800">url:</span> <span><a href="https://github.com/dimfeld/prefect">https://github.com/dimfeld/prefect</a></span></span></li>
     <li>A job queue based on SQLite, which will eventually be usable either embedded as a library or standalone.</li>
-    <li>Current Features
+    <li><span class="text-2xl">Current Features</span>
       <ul class="list-bullet">
         <li>Scheduled Jobs</li>
         <li>Multiple types of jobs, and workers can handle one or more types</li>
@@ -27,9 +27,14 @@ updated: 2022-11-10
         </li>
       </ul>
     </li>
-    <li><span class="text-xl">Future Features</span>
+    <li><span class="text-2xl">Future Features</span>
       <ul class="list-bullet">
-        <li><span class="text-lg">Handle Unexpected Process Restarts</span>
+        <li><span class="text-xl">Examples</span>
+          <ul class="list-bullet">
+            <li>Create example programs that demonstrate actual usage of the library.</li>
+          </ul>
+        </li>
+        <li><span class="text-xl">Handle Unexpected Process Restarts</span>
           <ul class="list-bullet">
             <li>If the process crashes we want to cleanly handle jobs that had been running at the time.</li>
             <li>This involves doing a sweep for running jobs when the queue is created, and scheduling them for retries
@@ -44,18 +49,18 @@ updated: 2022-11-10
             </li>
           </ul>
         </li>
-        <li><span class="text-lg">Cancellation and Modification of Pending Jobs</span>
+        <li><span class="text-xl">Cancellation and Modification of Pending Jobs</span>
           <ul class="list-bullet">
             <li>Disallow this for jobs that are already running, but otherwise jobs should be able to be cancelled, rescheduled, or otherwise modified.</li>
           </ul>
         </li>
-        <li><span class="text-lg">Recurring Jobs</span>
+        <li><span class="text-xl">Recurring Jobs</span>
           <ul class="list-bullet">
             <li>A job template will be added to the database, which will have all the same fields as a normal job except that it will not be scheduled.</li>
             <li>For this job, a corresponding entry will be added to <code>recurring_jobs</code> with a cron-like spec. A task in the queue will then automatically schedule the jobs for the appropriate times.</li>
           </ul>
         </li>
-        <li><span class="text-lg">Server Mode</span>
+        <li><span class="text-xl">Server Mode</span>
           <ul class="list-bullet">
             <li>If you need to scale up, ability to run the queue as its own server.</li>
             <li>Workers will be remote processes and communicate to the server over HTTP and/or gRPC
@@ -67,9 +72,9 @@ updated: 2022-11-10
         </li>
       </ul>
     </li>
-    <li><span class="text-xl">Database Structures</span>
+    <li><span class="text-2xl">Database Structures</span>
       <ul class="list-bullet">
-        <li>Base Data
+        <li><span class="text-xl">Base Data</span>
           <ul class="list-bullet">
             <li>This is stored in the <code>jobs</code> table.</li>
             <li>Fields
@@ -136,8 +141,9 @@ updated: 2022-11-10
             </li>
           </ul>
         </li>
-        <li>Active Jobs - Jobs which are running or waiting to run
+        <li><span class="text-xl">Active Jobs</span>
           <ul class="list-bullet">
+            <li>This is information specific to jobs which are running or waiting to run</li>
             <li>job id</li>
             <li>worker id, if currently running</li>
             <li>job type (copied from the jobs table but helps make lookups more efficient when only looking for certain task types)</li>
@@ -147,8 +153,9 @@ updated: 2022-11-10
             <li>expiration time for currently running jobs</li>
           </ul>
         </li>
-        <li>Recurring Job Spec - Not supported yet
+        <li><span class="text-xl">Recurring Job Spec</span>
           <ul class="list-bullet">
+            <li>Not supported yet, this is on the roadmap.</li>
             <li>recurrence id</li>
             <li>base data job id
               <ul class="list-bullet">
@@ -160,7 +167,7 @@ updated: 2022-11-10
         </li>
       </ul>
     </li>
-    <li><span class="text-xl">In-Memory Data Structures and Tasks</span>
+    <li><span class="text-2xl">In-Memory Data Structures and Tasks</span>
       <ul class="list-bullet">
         <li>Track &quot;next&quot; job run time for each job type</li>
         <li>List of clients that can run for each job type
@@ -177,7 +184,7 @@ updated: 2022-11-10
         </li>
       </ul>
     </li>
-    <li><span class="text-xl">Job Runners</span>
+    <li><span class="text-2xl">Job Runners</span>
       <ul class="list-bullet">
         <li>Each job has a name and a runner function. The runner function is a normal async function which takes the current job and a context object (for database pools and so on).</li>
         <li>Every job runner for a particular worker has the same type for its context.</li>
@@ -185,7 +192,7 @@ updated: 2022-11-10
         <li>Eventually there will probably be a proc macro that can automatically create a full runner from the function, but for now you have to create it manually. It&#39;s just a. single line of code though, so not too bad.</li>
       </ul>
     </li>
-    <li><span class="text-xl">Job Workers</span>
+    <li><span class="text-2xl">Job Workers</span>
       <ul class="list-bullet">
         <li>Workers run independently of each other, and are linked to the queue primarily by the notification channels that indicate when new jobs become available.</li>
         <li>The worker runs a loop that waits for pending jobs if it has enough capacity to run them, and otherwise just waits for one of its own jobs to finish.</li>
@@ -201,7 +208,7 @@ updated: 2022-11-10
         </li>
       </ul>
     </li>
-    <li><span class="text-xl">Algorithms</span>
+    <li><span class="text-2xl">Algorithms</span>
       <ul class="list-bullet">
         <li>Running a pending task
           <ul class="list-bullet">
@@ -223,7 +230,7 @@ updated: 2022-11-10
         </li>
       </ul>
     </li>
-    <li><span class="text-xl">Queue Internal Tasks</span>
+    <li><span class="text-2xl">Queue Internal Tasks</span>
       <ul class="list-bullet">
         <li>Move pending jobs to running when they reach their &quot;run at&quot; time.
           <ul class="list-bullet">

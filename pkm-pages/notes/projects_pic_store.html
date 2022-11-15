@@ -2,13 +2,13 @@
 title: "Pic Store"
 tags: Projects
 date: 2022-06-11
-updated: 2022-11-12
+updated: 2022-11-15
 ---
 
 
   <ul class="list-bullet">
     <li>This is a project that can take image uploads, convert them to appropriate formats and sizes, and store them in some web-accessible block storage for use in websites.</li>
-    <li>Goals
+    <li><span class="text-2xl">Goals</span>
       <ul class="list-bullet">
         <li><input type="checkbox" readonly="true"  /> Image Upload</li>
         <li><input type="checkbox" readonly="true"  /> Convert and resize</li>
@@ -16,9 +16,14 @@ updated: 2022-11-12
         <li><input type="checkbox" readonly="true"  /> Helper library (vite plugin maybe?) for using uploaded images</li>
       </ul>
     </li>
-    <li>Codecs
+    <li><span class="text-2xl">Codecs</span>
       <ul class="list-bullet">
-        <li>AVIF - <a href="https://docs.rs/ravif">ravif</a></li>
+        <li>AVIF
+          <ul class="list-bullet">
+            <li><a href="https://docs.rs/ravif">ravif</a> for encoding</li>
+            <li><a href="https://docs.rs/libavif/latest/libavif/">libavif</a> for decoding since it&#39;s more tolerant of slightly out-of-spec AVIF headers than other libraries</li>
+          </ul>
+        </li>
         <li>WebP <a href="https://docs.rs/webp">webp</a></li>
         <li>PNG and JPG -  <a href="https://docs.rs/image">image</a></li>
       </ul>
@@ -42,7 +47,7 @@ CLOCK: [2022-06-16 Thu 08:45:06]--[2022-06-16 Thu 08:45:07] =&gt;  00:00:01
 :LOGBOOK:
 CLOCK: [2022-11-11 Fri 09:39:39]--[2022-11-11 Fri 09:39:39] =&gt;  00:00:00
 :END:</li>
-        <li><input type="checkbox" readonly="true"  /> Bootstrapping command
+        <li><input type="checkbox" readonly="true" checked /> Bootstrapping command
           <ul class="list-bullet">
             <li>team</li>
             <li>user</li>
@@ -56,10 +61,10 @@ CLOCK: [2022-11-11 Fri 09:39:39]--[2022-11-11 Fri 09:39:39] =&gt;  00:00:00
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true"  /> Set upload locations, conversion profile, etc. and read them back</li>
             <li><input type="checkbox" readonly="true"  /> Upload a base image and see that the output images get created</li>
-            <li><input type="checkbox" readonly="true"  /> Targeted tests for each image type
+            <li><input type="checkbox" readonly="true" checked /> Targeted tests for each image type
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true"  /> Read PNG, JPEG, Avif, Webp</li>
-                <li><input type="checkbox" readonly="true"  /> Convert image to PNG, JPEG, Avif, Webp</li>
+                <li><input type="checkbox" readonly="true" checked /> Read PNG, JPEG, Avif, Webp</li>
+                <li><input type="checkbox" readonly="true" checked /> Convert image to PNG, JPEG, Avif, Webp</li>
               </ul>
             </li>
           </ul>
@@ -69,9 +74,10 @@ CLOCK: [2022-11-11 Fri 09:39:39]--[2022-11-11 Fri 09:39:39] =&gt;  00:00:00
 CLOCK: [2022-07-20 Wed 19:38:24]--[2022-07-20 Wed 19:38:25] =&gt;  00:00:01
 :END:
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Scaffold base data</li>
+            <li><input type="checkbox" readonly="true" checked /> Scaffold base data</li>
+            <li><input type="checkbox" readonly="true" checked /> Testing functionality, new database and so on</li>
             <li><input type="checkbox" readonly="true"  /> Create temporary folder to hold output images</li>
-            <li><input type="checkbox" readonly="true"  /> Testing functionality, new database and so on</li>
+            <li><input type="checkbox" readonly="true"  /> Some method of checking that output images actually look ok. The <a href="https://docs.rs/image-compare">image-compare</a> crate may work well here.</li>
           </ul>
         </li>
         <li><input type="checkbox" readonly="true"  /> Endpoint to check by hash if an image already exists</li>
