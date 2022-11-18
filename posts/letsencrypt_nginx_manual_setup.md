@@ -1,7 +1,7 @@
 ---
 title: Setting up Let's Encrypt with NGINX in Docker
 date: 2022-11-17
-tags: LetsEncrypt, nginx, certbot
+tags: LetsEncrypt, nginx
 ---
 
 I was setting up Let's Encrypt today for the first time, and it's impressive how easy they've made this process that used to be a big hassle. Our NGINX configuration at work is too complicated for certbot's bulit-in configuration management, and so we write the configuration ourselves.

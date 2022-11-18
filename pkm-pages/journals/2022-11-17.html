@@ -7,6 +7,10 @@ updated: 2022-11-18
 
 
   <ul class="list-document">
+    
+    <li>Logseq&#39;s latest release no longer uses its <code>pages-metadata.edn</code> file, which my <a href="https://github.com/dimfeld/export-logseq-notes">note exporter</a> was using to track the created and updated dates of each exported page. Since this file is no longer updated, I updated the program to track them in a SQLite database.</li>
+    <li>For each page, I calculate a hash, and if the page&#39;s hash has changed, it updates the database with the file&#39;s last modified time. Nice and easy. For older pages, it can still import the initial data from <code>pages-metadata.edn</code> too. Integrating SQLite into the exporter program was a pretty smooth experience; I&#39;m hoping to use it more often.</li>
+
     <li><span class="text-lg">Learning</span>
       <ul class="list-document">
         <li>I set up Let&#39;s Encrypt at work today. Our nginx configuration is somewhat complex and we also run it inside a Docker container, so the process was a bit unusual. <a href="/writing/letsencrypt_nginx_manual_setup">I wrote about it here</a>.</li>
