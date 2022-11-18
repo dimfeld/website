@@ -10,6 +10,7 @@ updated: 2022-11-18
     
     <li>Logseq&#39;s latest release no longer uses its <code>pages-metadata.edn</code> file, which my <a href="https://github.com/dimfeld/export-logseq-notes">note exporter</a> was using to track the created and updated dates of each exported page. Since this file is no longer updated, I updated the program to track them in a SQLite database.</li>
     <li>For each page, I calculate a hash, and if the page&#39;s hash has changed, it updates the database with the file&#39;s last modified time. Nice and easy. For older pages, it can still import the initial data from <code>pages-metadata.edn</code> too. Integrating SQLite into the exporter program was a pretty smooth experience; I&#39;m hoping to use it more often.</li>
+    <li>Of course, now that I have all the pages in a database, I can add other data, and that brings up more fun questions about what else I can do with it.</li>
 
     <li><span class="text-lg">Learning</span>
       <ul class="list-document">
