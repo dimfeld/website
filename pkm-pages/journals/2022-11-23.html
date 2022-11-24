@@ -10,7 +10,7 @@ updated: 2022-11-24
     
     <li>Didn&#39;t have time to mention it here last night but the Let&#39;s Encrypt DNS challenge tool is all working. It starts the challenge, adds the required DNS entry to Vercel, and then uploads the resulting certificate to DigitalOcean and enables it.</li>
     <li>It&#39;s a bit over-engineered — I mean, a shell script run every 60 days would <em class="italic">probably</em> have been sufficient — but this will make it easier to add support for more hosts and services types in the future for other projects.</li>
-    <li>I spent an hour trying to figure out why Let&#39;s Encrypt was rejecting my DNS record, and in the end turned out to be just a typo in my DNS record (<em class="italic">acme</em>challenge instead of _acme-challenge). But overall the process wasn&#39;t too bad.</li>
+    <li>I spent an hour trying to figure out why Let&#39;s Encrypt was rejecting my DNS record, and in the end turned out to be just a typo in my DNS record (<code>_acme_challenge</code> instead of <code>_acme-challenge</code>). But overall the process wasn&#39;t too bad.</li>
     <li>I&#39;ll get around to a full writeup in the near future, I hope, but in the meantime here&#39;s <a href="https://github.com/dimfeld/remote-ssl-renewal">the Github repo</a>.</li>
 
     <li><span class="text-lg">Learning</span>
