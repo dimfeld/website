@@ -7,6 +7,12 @@ updated: 2022-11-24
 
 
   <ul class="list-document">
+    
+    <li>Didn&#39;t have time to mention it here last night but the Let&#39;s Encrypt DNS challenge tool is all working. It starts the challenge, adds the required DNS entry to Vercel, and then uploads the resulting certificate to DigitalOcean and enables it.</li>
+    <li>It&#39;s a bit over-engineered — I mean, a shell script run every 60 days would <em class="italic">probably</em> have been sufficient — but this will make it easier to add support for more hosts and services types in the future for other projects.</li>
+    <li>I spent an hour trying to figure out why Let&#39;s Encrypt was rejecting my DNS record, and in the end turned out to be just a typo in my DNS record (<em class="italic">acme</em>challenge instead of _acme-challenge). But overall the process wasn&#39;t too bad.</li>
+    <li>I&#39;ll get around to a full writeup in the near future, I hope, but in the meantime here&#39;s <a href="https://github.com/dimfeld/remote-ssl-renewal">the Github repo</a>.</li>
+
     <li><span class="text-lg">Learning</span>
       <ul class="list-document">
         <li>In getting S3 upload for <a href="/notes/projects_pic_store">Pic Store</a> to work, I found that DigitalOcean Spaces defaults all files to private, with no way to change the default from the web UI. But you can use <code>s3cmd</code> to do it by setting the S3 bucket policy. First, create a policy JSON file:</li>
@@ -33,7 +39,7 @@ updated: 2022-11-24
 </span><span class="hljs-variable hljs-parameter hljs-option hljs-shell"><span class="hljs-punctuation hljs-definition hljs-parameter hljs-shell">    --</span>acl-public</span></span>
 </span></code></pre></li>
         <li>It&#39;s a bit quirky, as the DO web interface still shows the files as private, but they are actually public, and this public status also applies to files uploaded in the future.</li>
-        <li>Many thanks to <a href="https://hugo.md/post/setting-bucket-policy-digital-ocean-spaces/">Hugo</a> for the solution.</li>
+        <li>But all that done with, the good news is that <a href="/notes/projects_pic_store">Pic Store</a> is now uploading files to cloud storage. Many thanks to <a href="https://hugo.md/post/setting-bucket-policy-digital-ocean-spaces/">Hugo</a> for figuring out this policy file solution and writing about it!</li>
       </ul>
     </li>
   </ul>
