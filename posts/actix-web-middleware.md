@@ -31,10 +31,6 @@ As with many things in Rust, middleware for the Actix Web framework is rather mo
 
 Actix provides a [wrap_fn](https://docs.rs/actix-web/4.0.0-beta.4/actix_web/struct.Scope.html#method.wrap_fn) helper to make middleware with only a closure, similar to the JS example. This works for any middleware that can be written as a closure, but otherwise it's not an option, so let's continue so we can see what's happening under the hood.
 
-:::note 
-In this post I'm using the middleware traits from `actix-service` version 2, used by `actix-web` 4.0 which is in beta as I write this. The primary difference from `actix-web` 3 is that the `Transform` trait used to have an associated `Transform::Request` type, but it is now a type parameter on the trait instead: `Transform<S, Req>`.  In actual use, this makes very little difference.
-:::
-
 So we need a `Transform`, a `Service`, and maybe an extractor, but how do they fit together? For many middlewares, most of the complexity turns out to be boilerplate, but it still helps to understand what that boilerplate is actually doing. First, let's take a step back and understand more generally what a `Service` represents.
 
 
@@ -245,7 +241,6 @@ Actix also makes heavy use of request extractors. Route handlers commonly use `D
 pub struct Authenticated(AuthenticationInfo);
 
 impl FromRequest for Authenticated {
-    type Config = ();
     type Error = Error;
     type Future = Ready<Result<Self, Self::Error>>;
 
@@ -272,7 +267,13 @@ impl std::ops::Deref for Authenticated {
 
 This function also uses the extensions API to get the user information, and then returns it inside a `Ready` future. We also implement `Deref` to make it easy to use the `AuthenticationInfo` object embedded in the `Authenticated` extractor.
 
-The `Config` type is a bit confusing, and it appears to be a relic from a much older version of Actix Web. Nowadays, it is almost always the unit type, and in the few places where the type is used, its only purpose is to document a related type that the extractor uses. A [recent Github PR](https://github.com/actix/actix-web/pull/2233) suggests removing it completely. (If it has been removed by the time you read this and I haven't updated the blog post, please let me know!)
+:::note
+
+A previous version of this article explained about a useless `Config` type associated with the `FromRequest` trait.
+`Config` has been removed for the final release of Actix Web 4, so I've removed the corresponding explanation that used
+to be here.
+
+:::
 
 Now that we have our extractor, we can drop it into the argument list of any handler.
 

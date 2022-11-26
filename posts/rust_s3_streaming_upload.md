@@ -6,6 +6,14 @@ tags: Rust
 date: 2021-06-28
 ---
 
+
+:::note
+
+Since I wrote this, InfluxDB has created the [object_store](https://docs.rs/object_store/latest/object_store/) crate and donated it to the Apache Arrow project. It does
+everything mentioned here and more, so I would recommend just using that for your future projects.
+
+:::
+
 Amazon’s S3 API makes it easy to upload large files, but it gets harder with dynamically generated data since S3 wants to know up front how much data you're going to upload, and you might not know that until you're done generating it. This might occur when streaming data from some other source or recording live media, for example.
 
 The multipart upload API fixes this somewhat -- you still have to know the size of each part as you upload it, but you can have up to 10,000 parts and you don't have to know in advance how many parts you will upload. The one complication with the multipart API is that each part must be at least 5MB.
