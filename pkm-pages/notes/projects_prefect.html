@@ -2,7 +2,7 @@
 title: "Prefect"
 tags: Projects
 date: 2022-10-02
-updated: 2022-11-16
+updated: 2022-11-26
 ---
 
 
@@ -19,21 +19,8 @@ updated: 2022-11-16
         <li>Jobs expire and are retried if the heartbeat times out for too long</li>
         <li>Jobs can have higher priority to run sooner.</li>
         <li>Jobs can have higher &quot;weight&quot; for processing-intensive jobs for which we may want to use lower concurrency.</li>
-        <li>Worker Tasks...
-          <ul class="list-bullet">
-            <li>can listen only for specific types of jobs.</li>
-            <li>can run multiple jobs concurrently</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">Future Features</span>
-      <ul class="list-bullet">
-        <li><span class="text-xl">Examples</span>
-          <ul class="list-bullet">
-            <li>Create example programs that demonstrate actual usage of the library.</li>
-          </ul>
-        </li>
+        <li>Workers can listen only for specific types of jobs.</li>
+        <li>Workers can run multiple jobs concurrently.</li>
         <li><span class="text-xl">Handle Unexpected Process Restarts</span>
           <ul class="list-bullet">
             <li>If the process crashes we want to cleanly handle jobs that had been running at the time.</li>
@@ -47,6 +34,15 @@ updated: 2022-11-16
                 <li>This will probably also work best if the worker details are persisted to the database too.</li>
               </ul>
             </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><span class="text-2xl">Future Features</span>
+      <ul class="list-bullet">
+        <li><span class="text-xl">Examples</span>
+          <ul class="list-bullet">
+            <li>Create example programs that demonstrate actual usage of the library.</li>
           </ul>
         </li>
         <li><span class="text-xl">Cancellation and Modification of Pending Jobs</span>
@@ -63,7 +59,8 @@ updated: 2022-11-16
         <li><span class="text-xl">Server Mode</span>
           <ul class="list-bullet">
             <li>If you need to scale up, ability to run the queue as its own server.</li>
-            <li>Workers will be remote processes and communicate to the server over HTTP and/or gRPC
+            <li>This should present the same (or nearly the same) interface as the local mode, to make it easy to switch from one to the other.</li>
+            <li>Workers will be remote processes and communicate to the server over gRPC (maybe normal REST too?)
               <ul class="list-bullet">
                 <li>Use long polling or gRPC streaming here for workers that wait for pending jobs?</li>
               </ul>
