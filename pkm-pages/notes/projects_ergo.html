@@ -2,7 +2,7 @@
 title: "Ergo"
 tags: Projects
 date: 2022-05-20
-updated: 2022-11-16
+updated: 2022-11-28
 ---
 
 
@@ -68,7 +68,8 @@ CLOCK: [2022-05-30 Mon 10:34:11]--[2022-09-28 Wed 08:51:27] =&gt;  2902:17:16
             <li>or it could be Javascript?</li>
           </ul>
         </li>
-        <li><input type="checkbox" readonly="true"  /> Task triggers can be configured to fire periodically
+        <li><span><span class="font-medium text-gray-800">DONE Task triggers can be configured to fire periodically
+collapsed:</span> <span>true</span></span>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true" checked /> Each periodic task trigger can be associated with a payload that must conform to the input schema of the task trigger&#39;s input.</li>
             <li><input type="checkbox" readonly="true" checked /> Add a new table of periodic triggers
@@ -147,7 +148,8 @@ CLOCK: [2022-05-30 Mon 10:34:29]--[2022-05-30 Mon 10:34:30] =&gt;  00:00:01
               </ul>
             </li>
             <li><input type="checkbox" readonly="true" checked /> Task trigger editor</li>
-            <li><input type="checkbox" readonly="true"  /> Task script editor
+            <li><span><span class="font-medium text-gray-800">TODO Task script editor
+collapsed:</span> <span>true</span></span>
               <ul class="list-bullet">
                 <li><input type="checkbox" readonly="true" checked /> Allow writing tasks in Typescript? This would also help with type checking the context function and action definitions.
                   <ul class="list-bullet">
@@ -161,7 +163,8 @@ CLOCK: [2022-05-30 Mon 10:34:29]--[2022-05-30 Mon 10:34:30] =&gt;  00:00:01
                 </li>
               </ul>
             </li>
-            <li><input type="checkbox" readonly="true"  /> Text Editor Work
+            <li><span><span class="font-medium text-gray-800">TODO Text Editor Work
+collapsed:</span> <span>true</span></span>
               <ul class="list-bullet">
                 <li><input type="checkbox" readonly="true" checked /> Javascript editor</li>
                 <li><input type="checkbox" readonly="true" checked /> JSON/JSON5 editor with schema validation</li>
@@ -195,6 +198,7 @@ CLOCK: [2022-05-30 Mon 10:34:29]--[2022-05-30 Mon 10:34:30] =&gt;  00:00:01
             <li><input type="checkbox" readonly="true" checked /> Scheduled Task Sweeper</li>
             <li><input type="checkbox" readonly="true" checked /> Move all queue staging to the generic model</li>
             <li><input type="checkbox" readonly="true"  /> Expired Task Sweeper</li>
+            <li><input type="checkbox" readonly="true"  /> Just move to Prefect</li>
           </ul>
         </li>
         <li><input type="checkbox" readonly="true"  />  Permissions system upgrades
@@ -222,6 +226,7 @@ CLOCK: [2022-05-30 Mon 10:34:29]--[2022-05-30 Mon 10:34:30] =&gt;  00:00:01
                     <li>Generate a separate boolean for the permissions check
                       <ul class="list-bullet">
                         <li>This works ok. Doesn&#39;t really solve a lot of the problems but does let us separate permissions errors from &quot;not found&quot; errors.</li>
+                        <li>Did this in Pic Store, it woks nicely.</li>
                       </ul>
                     </li>
                   </ul>
@@ -251,20 +256,14 @@ CLOCK: [2022-05-30 Mon 10:34:29]--[2022-05-30 Mon 10:34:30] =&gt;  00:00:01
             <li><input type="checkbox" readonly="true" checked />  Script executor</li>
             <li><input type="checkbox" readonly="true" checked />  Action templates can be scripts instead of templates.</li>
             <li><input type="checkbox" readonly="true" checked />  Implement scripts in state machine conditions</li>
-            <li><input type="checkbox" readonly="true"  />  Tasks can be serialized scripts
+            <li><input type="checkbox" readonly="true" checked />  <del class="line-through">Tasks can be serialized scripts</del>
               <ul class="list-bullet">
                 <li><input type="checkbox" readonly="true" checked /> This requires some database modifications.</li>
                 <li><input type="checkbox" readonly="true" checked /> Currently it&#39;s assumed that tasks are state machines. We can change the column names of the state machine config and data to reuse them for task scripts and task data.</li>
-                <li><input type="checkbox" readonly="true"  /> PendingEvents get run as actions which then reschedule the task to run after the pending event is done.</li>
-                <li><input type="checkbox" readonly="true"  /> Sleep action</li>
-                <li><input type="checkbox" readonly="true"  /> Implement something like Promise.all and Promise.race to coordinate multiple simultaneous events.
-                  <ul class="list-bullet">
-                    <li>Do we actually need this, or do we just need a timeout functionality?</li>
-                  </ul>
-                </li>
               </ul>
             </li>
-            <li><input type="checkbox" readonly="true" checked /> Task context management
+            <li><span><span class="font-medium text-gray-800">DONE Task context management
+collapsed:</span> <span>true</span></span>
               <ul class="list-bullet">
                 <li>This is a simple method of keeping state for a task.</li>
                 <li><input type="checkbox" readonly="true" checked /> Tasks can set their context
@@ -318,7 +317,8 @@ CLOCK: [2022-05-30 Mon 10:34:29]--[2022-05-30 Mon 10:34:30] =&gt;  00:00:01
                 <li><input type="checkbox" readonly="true" checked /> Testing</li>
               </ul>
             </li>
-            <li><input type="checkbox" readonly="true"  /> Implement module loaders.
+            <li><span><span class="font-medium text-gray-800">DONE ~~Implement module loaders.~~
+collapsed:</span> <span>true</span></span>
               <ul class="list-bullet">
                 <li>Doing this on the client for now via Rollup bundling</li>
               </ul>
