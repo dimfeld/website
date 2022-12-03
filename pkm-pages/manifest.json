@@ -189,6 +189,16 @@
     "title": "2022-11-28",
     "uid": ""
   },
+  "pkm-pages/journals/2022-12-02.html": {
+    "slug": "/journals/2022_12_02",
+    "title": "2022-12-02",
+    "uid": ""
+  },
+  "pkm-pages/journals/2022-12-03.html": {
+    "slug": "/journals/2022_12_03",
+    "title": "2022-12-03",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -399,6 +409,11 @@
     "title": "Programming Courses",
     "uid": ""
   },
+  "pkm-pages/notes/projects_effectum.html": {
+    "slug": "/notes/projects_effectum",
+    "title": "Effectum",
+    "uid": ""
+  },
   "pkm-pages/notes/projects_email_digest_service.html": {
     "slug": "/notes/projects_email_digest_service",
     "title": "Email Digest Service",
@@ -412,11 +427,6 @@
   "pkm-pages/notes/projects_pic_store.html": {
     "slug": "/notes/projects_pic_store",
     "title": "Pic Store",
-    "uid": ""
-  },
-  "pkm-pages/notes/projects_prefect.html": {
-    "slug": "/notes/projects_prefect",
-    "title": "Prefect",
     "uid": ""
   },
   "pkm-pages/notes/projects_tracksome.html": {

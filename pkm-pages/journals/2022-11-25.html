@@ -2,13 +2,13 @@
 title: "2022-11-25"
 tags: 
 date: 2022-11-25
-updated: 2022-11-26
+updated: 2022-12-03
 ---
 
 
   <ul class="list-document">
     
-    <li>Implemented job recovery in <a href="/notes/projects_prefect">Prefect</a> today, so that if the process restarts unexpectedly the jobs can be retried. I also did a bit of cleanup to prepare for the eventual addition of a server mode. The aim is to allow switching from an embedded task queue to one hosted on a server, and not have to significantly change the API, so that you can keep complexity down at first but then scale up with minimal fuss when necessary.</li>
+    <li>Implemented job recovery in <a href="/notes/projects_effectum">Effectum</a> today, so that if the process restarts unexpectedly the jobs can be retried. I also did a bit of cleanup to prepare for the eventual addition of a server mode. The aim is to allow switching from an embedded task queue to one hosted on a server, and not have to significantly change the API, so that you can keep complexity down at first but then scale up with minimal fuss when necessary.</li>
     <li><a href="/notes/projects_pic_store">Pic Store</a> is now running on <a href="https://github.com/tokio-rs/axum">Axum</a> 0.6, which was just released. For the feature set I was using, it was a pretty seamless change. I like that there&#39;s a lot more clarity now between extractors that consume the request body (e.g. Json parsing) and those that don&#39;t touch it at all.</li>
 
   </ul>

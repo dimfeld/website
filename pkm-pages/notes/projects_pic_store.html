@@ -2,7 +2,7 @@
 title: "Pic Store"
 tags: Projects
 date: 2022-06-11
-updated: 2022-11-25
+updated: 2022-12-03
 ---
 
 
@@ -151,13 +151,13 @@ CLOCK: [2022-11-11 Fri 09:39:39]--[2022-11-11 Fri 09:39:39] =&gt;  00:00:00
             <li>Checkpoints with payload updates</li>
             <li>Run everything in a Diesel transaction and include the job completion at the end of the transaction
               <ul class="list-bullet">
-                <li>Just implement outbox pattern for this. Best to add helpers for it to <a href="/notes/projects_prefect">Prefect</a></li>
+                <li>Just implement outbox pattern for this. Best to add helpers for it to <a href="/notes/projects_effectum">Effectum</a></li>
               </ul>
             </li>
             <li>Likewise with checkpoints</li>
           </ul>
         </li>
-        <li><input type="checkbox" readonly="true" checked /> Currently using a modified version of sqlxmq, changed to work with Diesel. While I like the queue code, maintaining a fork like this isn&#39;t a great idea so I should find something else. (Switched to <a href="/notes/projects_prefect">Prefect</a> )</li>
+        <li><input type="checkbox" readonly="true" checked /> Currently using a modified version of sqlxmq, changed to work with Diesel. While I like the queue code, maintaining a fork like this isn&#39;t a great idea so I should find something else. (Switched to <a href="/notes/projects_effectum">Effectum</a> )</li>
       </ul>
     </li>
     <li><span class="text-xl">Workflows</span>
