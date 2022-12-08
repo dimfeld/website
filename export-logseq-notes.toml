@@ -86,3 +86,6 @@ class_heading4 = "font-medium"
 # written to books_notes_a_book.
 namespace_dirs = false
 
+[pic_store]
+url = "http://localhost:7205"
+upload_profile = "blog"
