@@ -1,4 +1,4 @@
-import { json, RequestHandler } from '@sveltejs/kit';
+import { error, json, type RequestHandler } from '@sveltejs/kit';
 import { noteSources, lookupContent } from '$lib/readPosts';
 import md from '$lib/markdown';
 
@@ -8,7 +8,7 @@ export const GET: RequestHandler = async function GET({ params: { path } }) {
   }
   let note = await lookupContent(noteSources, path);
   if (!note) {
-    return;
+    throw error(404, 'Note not found');
   }
 
   const renderer = md();
