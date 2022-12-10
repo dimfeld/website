@@ -2,7 +2,7 @@
 title: "Ergo"
 tags: Projects
 date: 2022-05-20
-updated: 2022-11-28
+updated: 2022-12-10
 ---
 
 
@@ -35,6 +35,11 @@ updated: 2022-11-28
             </li>
           </ul>
         </li>
+        <li>Another possibility is to do a block-based design, similar to natto.dev, but where everything continues running on the server when you close the tab. This is slightly different from a state machine, more of a data flow type of thing, but fits well with the input-based model, and could probably reuse a lot of the UI design between the two.
+          <ul class="list-bullet">
+            <li>Some blocks can be tables and graphs, and these will be automatically exposed in a “view” mode and can show up in some form in the dashboard as well.</li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li>Current Tasks
@@ -46,6 +51,7 @@ updated: 2022-11-28
             <li>Link imported objects to the original package to facilitate re-imports and other things.</li>
           </ul>
         </li>
+        <li><input type="checkbox" readonly="true"  /> Think about using row locking instead of serializable transaction mode when handling inputs</li>
         <li><input type="checkbox" readonly="true"  /> <strong class="font-bold">Enough to get the weather task working</strong>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true" checked /> New Action Screen
