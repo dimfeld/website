@@ -45,8 +45,14 @@ export default function renderer() {
     .use(anchor, {
       permalink: true,
       permalinkSymbol: '🔗',
-      permalinkHref: (slug: string, state: StateCore) =>
-        `${state.env.host}${state.env.url}#${slug}`,
+      slugify: (s: string) => {
+        return encodeURIComponent(
+          String(s)
+            .trim()
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+        );
+      },
     })
     .use(container, 'side-by-side', {
       content: renderSideBySide,
