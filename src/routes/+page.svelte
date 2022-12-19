@@ -2,6 +2,7 @@
   import type { PageData } from './$types';
   import { getContext, onMount } from 'svelte';
   import { annotate } from 'svelte-rough-notation';
+  import * as contact from '$lib/contact';
   import Journal from '$lib/Journal.svelte';
 
   export let data: PageData;
@@ -120,9 +121,11 @@
   <h2>Where to find me</h2>
   <p>
     <a href="https:///www.twitter.com/dimfeld">Twitter</a> is probably the best
-    way to contact me, or you can email me at <em>daniel</em> at this domain.
-    I'm fairly active on <a href="https:///www.github.com/dimfeld">Github</a> as
-    well.
+    way to contact me, and I'm trying out
+    <a rel="me" href={contact.mastodon}>Mastodon</a>
+    as well. You can also email me at <em>daniel</em> at this domain or find me
+    on
+    <a href="https:///www.github.com/dimfeld">Github</a>.
   </p>
 
   <h2>About this site</h2>

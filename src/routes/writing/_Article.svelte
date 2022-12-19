@@ -10,7 +10,7 @@
   export let indentTopLevel = true;
   export let titleElement = 'h1';
 
-  import * as labels from '../../postMeta.ts';
+  import * as contact from '$lib/contact';
   import { tick, getContext, onMount } from 'svelte';
   import instantiateComponents from '../../dynamicComponents';
   let titleStore = getContext('title');
@@ -79,8 +79,9 @@
   {#if showFooter}
     <hr />
     <p>
-      Thanks for reading! If you have any questions or comments, please
-      <a href="https://www.twitter.com/dimfeld">send me a note on Twitter.</a>
+      Thanks for reading! If you have any questions or comments, please send me
+      a note on <a href="https://www.twitter.com/dimfeld">Twitter</a>
+      or <a rel="me" href={contact.mastodon}>Mastodon</a>.
     </p>
   {/if}
 </article>
