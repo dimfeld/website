@@ -1,0 +1,37 @@
+@font-face {
+  font-family: Inconsolata;
+  src: url($lib/fonts/Inconsolata.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: Inter;
+  src: url($lib/fonts/Inter.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: Merriweather;
+  src: url($lib/fonts/Merriweather-Regular.woff2) format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Merriweather;
+  src: url($lib/fonts/Merriweather-Bold.woff2) format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Merriweather;
+  src: url($lib/fonts/Merriweather-Italic.woff2) format('woff2');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Merriweather;
+  src: url($lib/fonts/Merriweather-BoldItalic.woff2) format('woff2');
+  font-weight: 700;
+  font-style: italic;
+}
