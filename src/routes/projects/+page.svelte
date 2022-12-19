@@ -4,20 +4,32 @@
       name: 'Ergo',
       repo: 'https://www.github.com/dimfeld/ergo',
       link: 'https://www.github.com/dimfeld/ergo',
-      text: `Ergo is a low-code task engine built with Rust and Svelte. Think IFTTT or Zapier, but the task behavior is customizable through Javascript and tasks can contain state machines.`,
+      text: `Ergo is a low-code task engine built with Rust and Svelte. Think IFTTT or Zapier, but the task behavior is customizable through Javascript and tasks can be represented as state machines or as a DAG. Future work will involve task templates that take an easy configuration and internally compile down to state machines.`,
       image: 'ergo-logo-small.png',
+    },
+    {
+      name: 'Effectum',
+      repo: 'https://www.github.com/dimfeld/effectum',
+      link: 'https://www.github.com/dimfeld/effectum',
+      text: `Effectum is a SQLite-based task queue, designed to be embedded into Rust applications. Future work will allow running it as a standalone server as well, so that it can start simple and then scale up.`,
+    },
+    {
+      name: 'Pic Store',
+      repo: 'https://www.github.com/dimfeld/pic-store',
+      link: 'https://www.github.com/dimfeld/pic-store',
+      text: `This is an "image CDN" application which will take uploaded images, resize and reencode them in desired formats, and store them on a CDN for use on the web. I originally wrote Effectum to power this project. (Better name pending?)`,
     },
     {
       name: 'Logseq Note Exporter',
       repo: 'https://www.github.com/dimfeld/export-logseq-notes',
       link: 'https://www.github.com/dimfeld/export-logseq-notes',
-      text: 'Export selected pages from a Logseq graph. I use this to populate the note section on this site.',
+      text: 'Export selected pages from a Logseq graph. I use this to populate the notes and journals sections on this site.',
     },
     {
       name: 'Fund The Rebuild',
       repo: 'https://www.github.com/dimfeld/fund-the-rebuild',
       link: 'https://fundtherebuild.com',
-      text: `(Currently dormant.) We all hear about the GoFundMe pages that go viral and exceed their fundraising goals. But many don't attract much attention &mdash; fundraisers for goals just as important, but perhaps without the social media savvy to get coverage. This site brings attention to those forgotten GoFundMe campaigns that were started in the wake of the 2020 riots.`,
+      text: `This site brought attention to GoFundMe campaigns that were started in the wake of the 2020 riots. Currently dormant, but it was developed in a day and a half, and in the end was also useful in seeing how quickly I could get an MVP up and running.`,
       image: 'https://fundtherebuild.com/card.jpg',
     },
     {
@@ -26,12 +38,6 @@
       link: 'https://palettes.imfeld.dev',
       text: `Transform a color palette to fit any other color you want! I put this together after doing it manually once, and I wrote about the initial experience and the theory behind it <a href="/writing/transferring_color_palettes">here</a>.`,
       image: 'https://palettes.imfeld.dev/card.png',
-    },
-    {
-      name: 'Video Trimmer',
-      link: 'https://github.com/dimfeld/video-trimmer-gui',
-      text: `A mostly-finished project I'm putting together for my church. Take a selection from a video, and add an intro and outro without the complexity of a full-fledged video editor.`,
-      image: 'projects-video-trimmer.jpg',
     },
     {
       name: 'httptreemux',
@@ -51,9 +57,9 @@
 
 <article class="m-4 self-center sm:mx-16">
   <p class="font-serif">
-    Until recently, most of my career work has been in proprietary code bases.
-    I'm steadily growing my open source contributions, and the more substantial
-    ones will show up here.
+    For the first half of my career, most of my work has been in proprietary
+    code bases. I'm steadily growing my open source contributions, and the more
+    substantial ones will show up here.
   </p>
 
   {#each projects as project}
@@ -62,6 +68,7 @@
         <a href={project.link}>{project.name}</a>
         <a href={project.repo || project.link}>(Source)</a>
       </h1>
+      <!--
       <div
         class="flex w-full flex-none flex-col items-stretch justify-center sm:block sm:w-48">
         {#if project.image}
@@ -71,7 +78,8 @@
             src={imageUrl(project.image)} />
         {/if}
       </div>
-      <div class="flex flex-col sm:ml-12">
+      -->
+      <div class="flex flex-col">
         <h2 class="hidden sm:block">
           <a href={project.link}>{project.name}</a>
           <a href={project.repo || project.link}>(Source)</a>
@@ -84,9 +92,10 @@
   <h2>Other Minor Projects</h2>
   <ul>
     <li>
-      <a href="https://www.github.com/dimfeld/svelte-zoomable"
-        >Svelte Zoomable</a>
-      is an experiment in zoomable UI and advanced transitions in Svelte.
+      <a href="https://www.github.com/dimfeld/codemirror-json5"
+        >codemirror-json5</a>
+      is an NPM package providing JSON5 language support for the excellent
+      <a href="https://codemirror.net/">CodeMirror</a> editor component.
     </li>
     <li>
       <a href="https://www.npmjs.com/package/sorters">Sorters</a>
@@ -102,6 +111,15 @@
       it provides automatic periodic refreshes with browser focus tracking, exponential
       backoff, and other nice features. I also wrote an
       <a href="/writing/swr_with_xstate">article about the implementation.</a>
+    </li>
+    <li>
+      <a href="https://www.github.com/dimfeld/svelte-zoomable"
+        >Svelte Zoomable</a>
+      is an experiment in zoomable UI and advanced transitions in Svelte. This was
+      a fun way to get better at understanding Svelte transitions, but ultimately
+      I would favor a more traditional SVG zooming approach with some kind of level-of-detail
+      based render switching, instead of pushing the limits of Svelte's transition
+      system past what it was really good for.
     </li>
   </ul>
 </article>
