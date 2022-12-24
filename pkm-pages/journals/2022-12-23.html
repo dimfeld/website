@@ -1,0 +1,24 @@
+---
+title: "2022-12-23"
+tags: ergo, rust
+date: 2022-12-23
+updated: 2022-12-24
+---
+
+
+  <ul class="list-document">
+    
+    <li>I&#39;ve been doing a lot of work on the Ergo dataflow node UI. Ended up doing both the dragging and the connector code totally from scratch to get them just how I liked, which was a fun diversion. The line drawing code takes some pains to not interact with the source and destination boxes. There&#39;s more work to do there but I&#39;m happy with it for now.</li>
+    <li>The demos right now are mostly videos and it&#39;s a bit of a hassle to post videos here. Here&#39;s one though:</li>
+    <li><video width="800" height="450" controls src="https://images.imfeld.dev/blog/ergo-redraw-lines.mp4"></video></li>
+    <li>Next up will be to integrate the actual editors and things into that UI.</li>
+    <li>But for now, it&#39;s holiday research project time! I&#39;ll be diving into semantic search, trying to build <a href="https://github.com/dimfeld/perceive">Perceive</a>, a search engine for my local computer and expanding to browser history if I can.</li>
+    <li>The core will be in Rust, starting with a CLI interface and adding a Tauri app and Svelte GUI if I have the time.</li>
+    <li>I&#39;m using <code>rust-bert</code> for running the embedding models. There are a couple small tricks to get it running on an M1 Mac, which I&#39;ll publish soon.</li>
+    <li>The persistent data store will be sqlite3. Postgres provides a nice pgvector extension for vector search, but it&#39;s more difficult to ship something self-contained that uses Postgres, so I think SQLite is the way to go here.</li>
+    <li>So far I&#39;ve built a REPL that does a simple embedding comparison. More to come!</li>
+    <li>And if you&#39;re on Mastodon, you can <a href="https://techhub.social/tags/PerceiveProject">follow the tag #PerceiveProject</a> to see the progress in real-time.</li>
+
+  </ul>
+
+
