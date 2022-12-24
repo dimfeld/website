@@ -8,6 +8,12 @@
       image: 'ergo-logo-small.png',
     },
     {
+      name: 'Perceive',
+      repo: 'https://www.github.com/dimfeld/perceive',
+      link: 'https://www.github.com/dimfeld/perceive',
+      text: `In early development, Perceive is a semantic search experiment, with a goal to catalog your files, browser history, and more, and make them all searchable through a single interface that understands what you mean, even if the right words aren't there.`,
+    },
+    {
       name: 'Effectum',
       repo: 'https://www.github.com/dimfeld/effectum',
       link: 'https://www.github.com/dimfeld/effectum',
