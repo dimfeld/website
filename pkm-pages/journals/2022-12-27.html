@@ -1,0 +1,24 @@
+---
+title: "2022-12-27"
+tags: 
+date: 2022-12-27
+updated: 2022-12-28
+---
+
+
+  <ul class="list-document">
+    
+    <li>Got the import pipeline, model encoding, and embedding search working for Perceive. I ended up using the <code>instant-distance</code> crate to do the nearest neighbor searching, but <code>hnsw_rs</code> looks good as well.</li>
+    <li>Tomorrow I&#39;ll look at generating better embeddings. The model I&#39;m using cuts off the input at 250 tokens so I&#39;m going to add something to cut documents up and do a weighted average of the resulting vectors for each piece. Might play around with some other methods too.</li>
+    <li>
+<picture>
+  <source srcset="https://images.imfeld.dev/blog/CleanShot_2022-12-27_at_22.05.39-2x_1672257454607_0-w650-AYVaUNi6j5C0vAw3mkwMag.avif" type="image/avif" width="650" height="318" />
+  <source srcset="https://images.imfeld.dev/blog/CleanShot_2022-12-27_at_22.05.39-2x_1672257454607_0-w650-AYVaUNi6j5C0vAw3mkwMag.webp" type="image/webp" width="650" height="318" />
+  <source srcset="https://images.imfeld.dev/blog/CleanShot_2022-12-27_at_22.05.39-2x_1672257454607_0-w650-AYVaUNi6j5C0vAw3mkwMag.png" type="image/png" width="650" height="318" />
+  <img src="https://images.imfeld.dev/blog/CleanShot_2022-12-27_at_22.05.39-2x_1672257454607_0-w650-AYVaUNi6j5C0vAw3mkwMag.png" alt="Terminal Output of Search" width="650" height="318" />
+</picture>
+</li>
+
+  </ul>
+
+

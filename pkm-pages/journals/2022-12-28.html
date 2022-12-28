@@ -1,0 +1,17 @@
+---
+title: "2022-12-28"
+tags: rust
+date: 2022-12-28
+updated: 2022-12-28
+---
+
+
+  <ul class="list-document">
+    
+    <li>It was a bit tricky getting <code>rust-bert</code> to work on the M1 GPU. The issue, apparently, is that pytorch JIT models not trained for MPS (the macOS GPU framework) can not be directly loaded on MPS. But it does work to load them and then convert them to MPS.</li>
+    <li>But it turns out there&#39;s an easy solution. After loading the <code>VarStore</code> on the CPU device, it&#39;s just a matter of <code>var_store.set_device(tch::Device::Mps)</code> and then you&#39;re running on the GPU!</li>
+    <li>In my initial tests with an M1 Pro, this is about 2-3x as fast as running on CPU/AMX. So the time to scan and index my Logseq database (~1000 documents) is now down to 6 seconds. Curious if this would have been 3 seconds on an M1 Max, but I didn&#39;t spend the extra $400 a couple years ago to find out now. :)</li>
+
+  </ul>
+
+
