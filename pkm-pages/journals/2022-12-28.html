@@ -2,15 +2,32 @@
 title: "2022-12-28"
 tags: rust
 date: 2022-12-28
-updated: 2022-12-28
+updated: 2022-12-29
 ---
 
 
   <ul class="list-document">
     
+    <li><span class="text-xl">Torch on M1 GPU</span></li>
     <li>It was a bit tricky getting <code>rust-bert</code> to work on the M1 GPU. The issue, apparently, is that pytorch JIT models not trained for MPS (the macOS GPU framework) can not be directly loaded on MPS. But it does work to load them and then convert them to MPS.</li>
     <li>But it turns out there&#39;s an easy solution. After loading the <code>VarStore</code> on the CPU device, it&#39;s just a matter of <code>var_store.set_device(tch::Device::Mps)</code> and then you&#39;re running on the GPU!</li>
-    <li>In my initial tests with an M1 Pro, this is about 2-3x as fast as running on CPU/AMX. So the time to scan and index my Logseq database (~1000 documents) is now down to 6 seconds. Curious if this would have been 3 seconds on an M1 Max, but I didn&#39;t spend the extra $400 a couple years ago to find out now. :)</li>
+    <li>In my initial tests with an M1 Pro, this is about 2-3x as fast as running on CPU/AMX. This took the time to scan and index my Logseq database (~1000 documents) down to 6 seconds. Curious if this would have been 3 seconds on an M1 Max, but I didn&#39;t spend the extra $400 a couple years ago to find out now. :)</li>
+    <li><span class="text-xl">Switching Models</span></li>
+    <li>The <code>MiniLmL12V2</code> model that I started out with is trained more for &quot;sentence similarity&quot; than for searching longer documents, and it shows. I switched the model to <code>msmarco-bert-base-dot-v5</code>, which is supposed to work a lot better for semantic search, and indeed the search results improved immensely. The import process takes a lot longer (40 seconds for ~1000 documents), but that&#39;s still not bad. That GPU inference is pulling its weight.</li>
+    <li>These models aren&#39;t automatically supported by <code>rust-bert</code>, but the instructions on how to download and use other models worked great, and this one is similar enough to the existing sentence embedding pipeline that I didn&#39;t have to change much.</li>
+    <li><span class="text-xl">Search Highlighting</span></li>
+    <li>Finally, I implemented search result highlighting, so that you get not only the title of the found document, but a snippet of text from the document relevant to the query. I&#39;m now using two models in the program at once. The primary model used for the search is still a BERT-based model, and handles the full document encoding.</li>
+    <li>The BERT model is powerful but relatively slow, so for highlighting, I used the <code>MiniLmL6V2</code> model, which is both much faster and focused on small strings of text.</li>
+    <li>Then for each matching document, I tokenize it, break the list of tokens into overlapping chunks, and encode each chunk with the model. Finally, I also encode the original query, take a dot product between the two results, and the highest dot product for each document is the best-matching chunk.</li>
+    <li>I think it could use some tweaking to pay more attention to actual word boundaries in the tokens. But overall I&#39;m quite happy with this as a first effort in a few hours.</li>
+    <li>
+<picture>
+  <source srcset="https://images.imfeld.dev/blog/CleanShot_2022-12-28_at_21.27.22-2x_1672300167346_0-w650-AYVc3HQGoF5kkayGV5jGHg.avif" type="image/avif" width="650" height="168" />
+  <source srcset="https://images.imfeld.dev/blog/CleanShot_2022-12-28_at_21.27.22-2x_1672300167346_0-w650-AYVc3HQGoF5kkayGV5jGHg.webp" type="image/webp" width="650" height="168" />
+  <source srcset="https://images.imfeld.dev/blog/CleanShot_2022-12-28_at_21.27.22-2x_1672300167346_0-w650-AYVc3HQGoF5kkayGV5jGHg.png" type="image/png" width="650" height="168" />
+  <img src="https://images.imfeld.dev/blog/CleanShot_2022-12-28_at_21.27.22-2x_1672300167346_0-w650-AYVc3HQGoF5kkayGV5jGHg.png" alt="Search results with snippets" width="650" height="168" />
+</picture>
+</li>
 
   </ul>
 
