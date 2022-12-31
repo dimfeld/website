@@ -1,0 +1,17 @@
+---
+title: "2022-12-29"
+tags: 
+date: 2022-12-29
+updated: 2022-12-31
+---
+
+
+  <ul class="list-document">
+    
+    <li>Got browser history searching done today. Chrome&#39;s history file is just a SQLite database so that was pretty easy to pull in.</li>
+    <li>Lots of little details related to actually fetching the date, which aren&#39;t worth talking about too much and took up most of the day. I also revamped the import pipeline a bit to reduce head-of-line blocking when some requests take a while.</li>
+    <li>With this done, the database contains about 13,000 items, and the HNSW search index takes a while to build. So I&#39;ll work on optimizing that tomorrow.</li>
+
+  </ul>
+
+
