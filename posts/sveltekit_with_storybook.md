@@ -3,8 +3,15 @@ title: Setting up SvelteKit with Storybook
 summary: All the workarounds in one place
 frontPageSummary: all the workarounds needed to get it working properly
 date: 2021-07-19
+updated: 2023-01-03
 tags: Svelte
 ---
+
+:::note
+
+2023 Update: Storybook 7 is in beta and works great with SvelteKit 1.0 out of the box! No need for the workarounds below, just follow the [official instructions](https://github.com/storybookjs/storybook/blob/next/code/frameworks/sveltekit/README.md).
+
+:::
 
 I've become a big fan of using Storybook to develop components in an isolated context,
 and so it was a natural choice to use it for [Ergo](https://github.com/dimfeld/ergo).
