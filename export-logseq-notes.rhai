@@ -6,6 +6,9 @@ let autotags = #{
   "ergo": "ergo"
 };
 
+let site_category = page.get_attr_first("site-category");
+let public_attr = page.get_attr_first("public") == "true";
+
 if page.is_journal {
   page.url_base = "/journals";
   page.path_base = "pkm-pages/journals";
@@ -43,6 +46,20 @@ if page.is_journal {
   });
 
   page.include = saw_content_block;
+} else if site_category == "writing" {
+  page.include = public_attr;
+  page.url_base = "/writing";
+  page.path_base = "pkm-pages/writing";
+
+  each_block(1, |block, depth| {
+    if depth == 0 {
+      block.view_type = ViewType::Document;
+    } else if block.contents.starts_with("Contents") {
+      block.include = BlockInclude::OnlyChildren;
+    } else {
+      block.include = BlockInclude::Exclude;
+    }
+  });
 } else {
   page.url_base = "/notes";
   page.path_base = "pkm-pages/notes";
@@ -50,7 +67,7 @@ if page.is_journal {
   let include = false;
   let exclude = false;
 
-  if page.get_attr_first("public") == "true" {
+  if public_attr {
     include = true;
   }
 

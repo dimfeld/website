@@ -2,7 +2,10 @@
 title: "{{replace title "/" " - "}}"
 tags: {{join tags ", "}}
 date: {{format_time "%Y-%m-%d" created_time}}
-updated: {{format_time "%Y-%m-%d" edited_time}}
+updated: {{format_time "%Y-%m-%d" edited_time}}{{#if attrs.draft}}
+draft: true{{/if}}{{#if attrs.cta}}
+cta: {{attrs.cta}}{{/if}}{{#if attrs.series}}
+series: {{attrs.series}}{{/if}}
 ---
 
 {{{body}}}
