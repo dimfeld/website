@@ -6,5 +6,5 @@
 </script>
 
 <div class="pt-2">
-  <Journal {...data.post} />
+  <Journal {...data.post} showFooter />
 </div>

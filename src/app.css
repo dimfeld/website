@@ -16,6 +16,11 @@ html {
     font-size: 16px;
   }
 
+  .content {
+    max-width: min(65ch, 95vw);
+    @apply ml-auto mr-auto leading-relaxed;
+  }
+
   article {
     max-width: min(65ch, 95vw);
     @apply ml-auto mr-auto leading-relaxed;
@@ -87,7 +92,9 @@ html {
   }
 
   article * + p,
+  footer * + p,
   article > * + div,
+  footer > * + div,
   hr {
     @apply my-4;
   }
@@ -273,7 +280,7 @@ article .has-component > *:not(:last-child) {
   display: none;
 }
 
-article.pkm-page {
+.pkm-page {
   ul,
   ol {
     margin-top: 0rem;

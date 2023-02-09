@@ -4,6 +4,7 @@
   import { annotate } from 'svelte-rough-notation';
   import * as contact from '$lib/contact';
   import Journal from '$lib/Journal.svelte';
+  import NewsletterSignup from '$lib/components/NewsletterSignup.svelte';
 
   export let data: PageData;
   $: ({ latestPost, latestNote, latestJournals, lastCreatedNote } = data);
@@ -69,6 +70,13 @@
     {/if}
   </p>
 
+  <p class="mt-4">
+    And if you like what you've read, please consider subscribing to my
+    weekly-ish newsletter, where I announce new articles and share other
+    interesting things I've found.
+    <NewsletterSignup />
+  </p>
+
   <h1>About Me</h1>
 
   <h2>Work</h2>
@@ -77,8 +85,9 @@
     I'm a co-founder of
     <a href="https://www.carevoyance.com">Carevoyance</a> (acquired by
     <a href="https://www.h1.co">H1 Insights</a>), a sales acceleration tool that
-    enables healthcare sellers to zero in on their best prospects and generate
-    custom reports and insights with just a few clicks.
+    analyzes healthcare data and enables healthcare sellers to zero in on their
+    best prospects and generate custom reports and insights with just a few
+    clicks.
   </p>
 
   <p>

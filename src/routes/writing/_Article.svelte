@@ -10,7 +10,7 @@
   export let indentTopLevel = true;
   export let titleElement = 'h1';
 
-  import * as contact from '$lib/contact';
+  import ArticleFooter from '$lib/ArticleFooter.svelte';
   import { tick, getContext, onMount } from 'svelte';
   import instantiateComponents from '../../dynamicComponents';
   let titleStore = getContext('title');
@@ -49,7 +49,7 @@
 <article
   class:pkm-page={source === 'pkm'}
   class:font-serif={type === 'post'}
-  class="px-4 sm:px-0">
+  class="mb-12 px-4 sm:px-0">
   <div class="mb-4 leading-tight">
     <svelte:element this={titleElement} class="font-serif"
       >{title}</svelte:element>
@@ -77,11 +77,6 @@
   </div>
 
   {#if showFooter}
-    <hr />
-    <p>
-      Thanks for reading! If you have any questions or comments, please send me
-      a note on <a href="https://www.twitter.com/dimfeld">Twitter</a>
-      or <a rel="me" href={contact.mastodon}>Mastodon</a>.
-    </p>
+    <ArticleFooter />
   {/if}
 </article>

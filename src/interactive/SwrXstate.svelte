@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fetcher as createFetcher } from 'swr-xstate';
   import type { FetchResult } from 'swr-xstate';
-  import Switch from '../components/Switch.svelte';
+  import Switch from '$lib/components/Switch.svelte';
 
   let fetcherState = { context: {}, toStrings: () => '' };
 
@@ -73,41 +73,41 @@
     behavior of the state machine.
   </div>
 
-  <div class="flex flex-col sm:flex-row font-sans mt-4">
+  <div class="mt-4 flex flex-col font-sans sm:flex-row">
     <div class="flex flex-col sm:px-4">
       <label
         for="swr-enabled"
-        class="text-sm font-medium text-gray-800 mt-2 flex items-center">
+        class="mt-2 flex items-center text-sm font-medium text-gray-800">
         <Switch id="swr-enabled" bind:value={enabled} />
         <span class="ml-1">Enable Fetcher</span>
       </label>
       <label
         for="swr-permitted"
-        class="text-sm font-medium text-gray-800 mt-2 flex items-center">
+        class="mt-2 flex items-center text-sm font-medium text-gray-800">
         <Switch id="swr-permitted" bind:value={permitted} />
         <span class="ml-1">Permit Fetching</span>
       </label>
       <label
         for="swr-success"
-        class="text-sm font-medium text-gray-800 mt-2 flex items-center">
+        class="mt-2 flex items-center text-sm font-medium text-gray-800">
         <Switch id="swr-success" bind:value={fetchSuccess} />
         <span class="ml-1">Fetch Succeeds</span>
       </label>
-      <span class="inline-flex rounded-md shadow-sm mt-2">
+      <span class="mt-2 inline-flex rounded-md shadow-sm">
         <button
           type="button"
-          class="inline-flex items-center px-2.5 py-1.5 border border-gray-300
-          text-xs leading-4 font-medium rounded text-gray-700 bg-white
-          hover:text-gray-500 focus:outline-none focus:border-blue-300
-          focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 active:text-gray-800 active:bg-gray-50
-          transition ease-in-out duration-150 font-sans"
+          class="inline-flex items-center rounded border border-gray-300 bg-white
+          px-2.5 py-1.5 font-sans text-xs font-medium leading-4
+          text-gray-700 transition duration-150
+          ease-in-out hover:text-gray-500 focus:border-blue-300 focus:outline-none focus:ring-2
+          focus:ring-blue-500 focus:ring-offset-2 active:bg-gray-50 active:text-gray-800"
           on:click={() => fetcher.refresh()}>
           Force Refresh
         </button>
       </span>
       <label
         for="swr-delay"
-        class="text-sm mt-2 items-start flex flex-col space-y-1">
+        class="mt-2 flex flex-col items-start space-y-1 text-sm">
         <div>
           <span class="font-medium text-gray-800">Fetch Delay</span>
           {fetchDelay}ms
@@ -125,7 +125,7 @@
       </label>
     </div>
 
-    <div class="flex-1 mt-2 sm:mt-0">
+    <div class="mt-2 flex-1 sm:mt-0">
       <div>
         <span class="font-medium text-gray-800">Fetch Result:</span>
         {errorText || imageSrc}
