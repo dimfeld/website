@@ -326,8 +326,8 @@ updated: 2022-06-10
             <li>This still doesn&#39;t work for enforcing things like uniqueness constraints though, since it only really tells you after the fact which write should win, but by that time you may have allowed two users to grab the same username, or whatever is the constraint.</li>
             <li>For this we need <strong class="font-bold">total order broadcast</strong>, which requires two properties for messages traveling between nodes:
               <ul class="list-bullet">
-                <li>Reliable delivery -- every message is seen by every node</li>
-                <li>Totally ordered delivery -- Messages arrive in the same order</li>
+                <li>Reliable delivery &emdash; every message is seen by every node</li>
+                <li>Totally ordered delivery &emdash; Messages arrive in the same order</li>
               </ul>            </li>
             <li>This basically puts you in the CP style of system, where you handle network partitions by not allowing writes until they heal.</li>
             <li>Linearizable compare-and-set operations can be built upon a total order broadcast, for example by using it as an append-only log.

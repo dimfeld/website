@@ -73,6 +73,9 @@ class_page_embed_content = ""
 class_attr_name = "font-medium text-gray-800"
 class_attr_value = ""
 
+# Convert -- to &emdash;
+convert_emdash = true
+
 ##### Upcoming features #####
 
 # Write namespaced pages into nested directories.
