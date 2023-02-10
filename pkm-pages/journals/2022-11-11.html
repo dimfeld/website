@@ -6,15 +6,13 @@ updated: 2022-12-03
 ---
 
 
-  <ul class="list-document">
     
-    <li>Started up development on  <a href="/notes/projects_pic_store">Pic Store</a>  again. I switched out the task queue to  <a href="/notes/projects_effectum">Effectum</a>  and I got it to the point where the server starts, creates the database, and a simple authenticated request succeeds. A lot of the core code for the project is already implemented, so there will be some testing to see if stuff actually works and then I can start working on a simple web interface, and tools to make it convenient to use.</li>
-    <li>I&#39;m thinking of a Vite plugin that will automatically upload the images if needed and generate a full  <code>&lt;picture&gt;</code>  tag. Also some CLI/GUI utilities that can make it convenient to upload and reference images from other contexts, such as when writing a document.</li>
-    <li>If it&#39;s possible, I would love to be able to drag an image straight into Logseq, and have that handle the upload and URL pasting. Will have to see if the plugin system allows intercepting events like that.</li>
-    <li>I&#39;ve also been rethinking  <a href="/notes/projects_ergo">Ergo</a> a bit. While I previously had done a lot of work on the Javascript task model and got it pretty much working, the development experience still paled compared to any real development environment. I achieved a fair amount there, but I think I&#39;m going to rip out a lot of that support, and focus instead on the &quot;hosted state machine&quot; model that I had originally envisioned.</li>
-    <li>Since I already have a working JS engine in the project, the state machines will continue to support bits of JS to assist in evaluating conditions and such. Tasks with heavier scripting will be runnable as actions that spawn external processes, and can then return values that can trigger further actions in the state machines.</li>
-    <li>From there, I can create other types of tasks that are basically wrappers around certain types of state machines, and hopefully come up with something that&#39;s both intuitive to use and actually useful.</li>
+    <p>Started up development on  <a href="/notes/projects_pic_store">Pic Store</a>  again. I switched out the task queue to  <a href="/notes/projects_effectum">Effectum</a>  and I got it to the point where the server starts, creates the database, and a simple authenticated request succeeds. A lot of the core code for the project is already implemented, so there will be some testing to see if stuff actually works and then I can start working on a simple web interface, and tools to make it convenient to use.</p>
+    <p>I&#39;m thinking of a Vite plugin that will automatically upload the images if needed and generate a full  <code>&lt;picture&gt;</code>  tag. Also some CLI/GUI utilities that can make it convenient to upload and reference images from other contexts, such as when writing a document.</p>
+    <p>If it&#39;s possible, I would love to be able to drag an image straight into Logseq, and have that handle the upload and URL pasting. Will have to see if the plugin system allows intercepting events like that.</p>
+    <p>I&#39;ve also been rethinking  <a href="/notes/projects_ergo">Ergo</a> a bit. While I previously had done a lot of work on the Javascript task model and got it pretty much working, the development experience still paled compared to any real development environment. I achieved a fair amount there, but I think I&#39;m going to rip out a lot of that support, and focus instead on the &quot;hosted state machine&quot; model that I had originally envisioned.</p>
+    <p>Since I already have a working JS engine in the project, the state machines will continue to support bits of JS to assist in evaluating conditions and such. Tasks with heavier scripting will be runnable as actions that spawn external processes, and can then return values that can trigger further actions in the state machines.</p>
+    <p>From there, I can create other types of tasks that are basically wrappers around certain types of state machines, and hopefully come up with something that&#39;s both intuitive to use and actually useful.</p>
 
-  </ul>
 
 

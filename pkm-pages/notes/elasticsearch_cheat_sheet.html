@@ -10,8 +10,7 @@ updated: 2021-01-06
     <li>Shard Allocation Issues
       <ul class="list-bullet">
         <li><code>http &#39;localhost:9200/_cluster/allocation/explain?pretty&#39;</code> will explain things with an easy-to-understand vocabulary</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Rolling Minor Version Upgrade
       <ul class="list-bullet">
         <li><code>echo &#39;{&quot;persistent&quot;:{&quot;cluster.routing.allocation.enable&quot;: &quot;primaries&quot;}}&#39; | http PUT localhost:9200/_cluster/settings</code></li>
@@ -20,8 +19,6 @@ updated: 2021-01-06
         <li><code>echo &#39;{&quot;persistent&quot;:{&quot;cluster.routing.allocation.enable&quot;: null}}&#39; | http PUT localhost:9200/_cluster/settings</code></li>
         <li>Wait for the node to recover</li>
         <li>Repeat until all nodes are upgraded</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

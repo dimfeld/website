@@ -6,12 +6,10 @@ updated: 2022-12-31
 ---
 
 
-  <ul class="list-document">
     
-    <li>After yesterday&#39;s work and the resulting performance issues, I did some quick profiling. This revealed that most of the time in building the HNSW search index was in dot product calculations between the 768-element vectors that make up each document embedding. Fortunately, the <code>ndarray</code> crate came to the rescue.  With support for BLAS and Apple&#39;s Accelerate framework enabled, the time to build the search index went from 45 seconds down to 5, so I&#39;m quite happy with that.</li>
-    <li>Next up I&#39;m going to try out putting all this into a simple GUI using <a href="https://tauri.app/">Tauri</a>.</li>
-    <li>I&#39;ve also been enjoying, Rust&#39;s new let/else syntax. Take a bit to get used to, but it&#39;s really convenient, for example when you want to unwrap an option or return from the function early if it&#39;s <code>None</code>.</li>
+    <p>After yesterday&#39;s work and the resulting performance issues, I did some quick profiling. This revealed that most of the time in building the HNSW search index was in dot product calculations between the 768-element vectors that make up each document embedding. Fortunately, the <code>ndarray</code> crate came to the rescue.  With support for BLAS and Apple&#39;s Accelerate framework enabled, the time to build the search index went from 45 seconds down to 5, so I&#39;m quite happy with that.</p>
+    <p>Next up I&#39;m going to try out putting all this into a simple GUI using <a href="https://tauri.app/">Tauri</a>.</p>
+    <p>I&#39;ve also been enjoying, Rust&#39;s new let/else syntax. Take a bit to get used to, but it&#39;s really convenient, for example when you want to unwrap an option or return from the function early if it&#39;s <code>None</code>.</p>
 
-  </ul>
 
 

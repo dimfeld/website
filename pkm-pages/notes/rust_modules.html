@@ -19,24 +19,20 @@ updated: 2021-03-22
         <li><code>pub(in path)</code> lets you define specific paths where the item should be importable.
           <ul class="list-bullet">
             <li>e.g. <code>pub(in crate::other_module)</code></li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li><code>pub(self)</code> is public only within the current module, which is effectively the same as the default private visibility.</li>
         <li><code>pub(super)</code> makes it visible to the parent module.</li>
         <li><code>pub(crate)</code> makes it visible within the whole crate.</li>
         <li>Notably, access to any item msut be allowed to the importer along the whole chain. Declaring a function <code>pub</code> in a module that isn&#39;t visible outside the crate doesn&#39;t actually expose that field to external importers. The module itself must be exposed in some way too.</li>
         <li>In structures, fields and functions are also private by default even if the structure itself is public. All the <code>pub</code> modifiers above apply when you do want to expose them.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li><code>use</code> syntax
       <ul class="list-bullet">
         <li>You can access anything visible with the entire full path to the item, but <code>use</code> makes it simpler.</li>
         <li><code>use crate::a::b::{ fn1, fn2 }</code> will expose <code>fn1</code> and <code>fn2</code> in the module&#39;s scope.</li>
         <li><code>use X as Y</code> will rename the function too.</li>
         <li><code>pub use</code> reexports an imported module or other item.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li><code>super::other_module::X</code> and <code>self::X</code> can help for relative references and to remove ambiguity.</li>
   </ul>
-
 

@@ -24,10 +24,8 @@ updated: 2022-09-30
             <li>Parameters of the response, if present, to return on repeated requests after final success or failure.</li>
             <li>Current recovery point.</li>
             <li>User ID of requester (optional but helpful)</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Operation Phases
       <ul class="list-bullet">
         <li>Operations that talk to foreign services can also be phased. Each phase is recorded at a recovery point so we know exactly how far we got and where to start trying again. Groups of local operations between foreign operations that can all be put in a database transaction can be seems as a single phase.</li>
@@ -39,32 +37,25 @@ updated: 2022-09-30
                 <li>A phase can end with a recovery point, which sets that point as the current one in the database. This should happen as part of the same transaction.</li>
                 <li>A phase can indicate that it&#39;s time to return a response to the user. Could be success or some error that can&#39;t be retried (e.g. bad user input that can&#39;t be processed, invalid credit card, etc.)</li>
                 <li>A phase can also indicate a NoOp, which just means to continue running and not set a recovery point.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Foreign state mutations are those that talk to any other service, internal or external.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>The rules for determining phases:
           <ul class="list-bullet">
             <li>Upserting the idempotency key is its own phase.</li>
             <li>Every foreign state mutation is a phase.</li>
             <li>Anything that happens between two foreign state mutations is a single phase and should all be part of a single transaction for each group of things.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>After each phase, the idempotency key record&#39;s recovery point is updated so that it knows where to start from again.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Problems with non-idempotent foreign services
       <ul class="list-bullet">
         <li>When talking to foreign APIs that don&#39;t support idempotency on their own, we can run into issues on some types of failures. For example, on a time out error we may not know if our request actually went through or not. There isn&#39;t really a good way to handle this and you may just have to mark the transaction failed.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Additional useful processes
       <ul class="list-bullet">
         <li>A completer looks for unfinished processes that the client didn&#39;t try to finish, and tries to retry them.</li>
         <li>A reaper deletes old idempotent records. If an old operation is unfinished, it should log somewhere  so that it can be seen.</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

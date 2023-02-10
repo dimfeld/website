@@ -25,14 +25,11 @@ ErrorType <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctua
         <li>This generates an <code>ErrorType</code> structure that can be used to add content to an <code>AnError</code> error. <code>ErrorType</code> contains everything <strong class="font-bold">except</strong> the source and backtrace fields. This can then be used with the context trait. 
           <ul class="list-bullet">
             <li>The context type also uses generics parameterized with <code>Into&lt;OriginalType&gt;</code>,  so you don&#39;t have to do things like <code>to_string()</code> all over the place.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li><code>do_it_or_anerror().context(ErrorType{ operation: &quot;doing it&quot; })</code></li>
         <li>Source fields can be mapped using <code>#[snafu(source(from(ErrorType, MapFunc)))]</code></li>
         <li>Applications may want to enable the <code>backtraces-impl-backtrace-crate</code> feature to capture backtraces. The <code>unstable-backtraces-impl-std</code> feature does the same for Rust&#39;s built-in backtraces, but those aren&#39;t stabilized yet.</li>
         <li>The <code>futures</code> feature adds context methods to futures and streams that return Results.</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

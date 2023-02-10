@@ -10,22 +10,19 @@ updated: 2022-06-10
     <li><span><span class="font-medium text-gray-800">Source:</span> <span><a href="https://scotch.io/tutorials/deep-dive-into-css-grid-2">https://scotch.io/tutorials/deep-dive-into-css-grid-2</a></span></span>
       <ul class="list-bullet">
         <li>And more added over time</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Also See
       <ul class="list-bullet">
         <li><a href="http://1linelayouts.glitch.me/">http://1linelayouts.glitch.me/</a> has a lot of nice CSS Grid examples</li>
         <li><a href="https://codepen.io/TurkAysenur/full/QWyPMgq">Task Manager Example</a></li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Definitions
       <ul class="list-bullet">
         <li>“Grid lines“ are like lines between cells on a spreadsheet.</li>
         <li>“Grid tracks” are the rows and columns in the grid, where the content actually goes.</li>
         <li>Cells are the individual spaces in the tracks where content goes.</li>
         <li>Areas are cells combined together when they span more than one row or column.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li><code>display:grid</code> sets the element to be a container for a grid layout.</li>
     <li>Row and Column Sizing
       <ul class="list-bullet">
@@ -34,22 +31,19 @@ updated: 2022-06-10
             <li>These units are new for Grid layout. <code>fr</code> stands for fraction, and <code>1fr</code> represents one unit of space out of the sum of the <code>fr</code> units.</li>
             <li>So <code>3fr 4fr 3fr</code> would be 10 in all with the space allocated proportionally.</li>
             <li>When fixed units are used alongside fractions, the fixed units get their space and the rest is allocated proportionally to the fractions.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li><code>minmax(min, max)</code> sets flexible sizing, with the size clamped to the values given.</li>
         <li><code>width: auto</code> tells the item to use as much space as possible given the constraints of the other items. As a minimum, it is similar to <code>width:min-content</code>.</li>
         <li><code>width: fitcontent(200px)</code> works like <code>auto</code> but with a maximum size</li>
         <li>If a CSS grid column does not have an explicit width then its min-width ends up similar to <code>auto</code>. This can sometimes cause undesired issues, like with large images or <code>&lt;pre&gt;</code> tags, and so using something like <code>minmax(0px, 1fr)</code> can help here.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Grid Layout
       <ul class="list-bullet">
         <li><code>grid-template-columns</code> defines the grid column layout
           <ul class="list-bullet">
             <li>It takes a variety of values.</li>
             <li><code>100px 100px 100px</code> defines three columns each of 100px width, for example</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li><code>grid-template-rows</code> works just like <code>grid-template-columns</code> but for rows</li>
         <li>If either rows or columns is omitted, the widest/longest element in the row or column is used for all elements.</li>
         <li><code>grid-template</code> is shorthand for rows, columns, and <code>grid-template-areas</code></li>
@@ -64,10 +58,8 @@ updated: 2022-06-10
             <li>Instead of absolute widths you can use <code>span</code> to indicate widths.
               <ul class="list-bullet">
                 <li><code>3 / span 2</code> to start at 3 with a width of 2, or <code>span 2/ 5</code> to end at 5 and go back 2 from there.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li><code>grid-template-area</code>
           <ul class="list-bullet">
             <li>This allows you to name different areas of the grid</li>
@@ -96,10 +88,8 @@ updated: 2022-06-10
 </span><span class="hljs-punctuation hljs-section hljs-property-list hljs-css">}</span>
 </span></code></pre></li>
                 <li>So in this case the <code>main</code> area is named and the <code>[main-start]</code> and <code>[main-end]</code> delimiters specify its location and size.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li><code>repeat</code> just repeats some layout some number of times.
           <ul class="list-bullet">
             <li><code>repeat(3, 1fr 2fr)</code>  expands to <code>1fr 2fr 1fr 2fr 1fr 2fr</code></li>
@@ -107,13 +97,10 @@ updated: 2022-06-10
             <li><code>repeat(auto-fill, values)</code> repeats the values as much as possible without overflowing.</li>
             <li><code>auto-fit</code> works like <code>auto-fill</code> but empty tracks are collapsed.</li>
             <li><code>grid-template-columns: repeat(auto-fill, minmax(50px, 1fr))</code> is a commonly-used technique to fit as many equally-spaced columns as possible, keeping a minimum width too.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li><code>grid-row-gap</code> and <code>grid-column-gap</code> define spacing between cells</li>
         <li><code>order</code> sets the order in which cells appear if you want to do so explicitly.</li>
         <li><code>grid-auto-flow: dense</code> can allow the grid system to place cells in the first empty grid spot, even if it’s before other items in the logical order.</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

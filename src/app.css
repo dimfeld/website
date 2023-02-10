@@ -18,85 +18,36 @@ html {
 
   .content {
     max-width: min(65ch, 95vw);
-    @apply ml-auto mr-auto leading-relaxed;
+    @apply ml-auto mr-auto;
   }
 
   article {
     max-width: min(65ch, 95vw);
-    @apply ml-auto mr-auto leading-relaxed;
-  }
-
-  article > ul {
-    @apply my-4;
-  }
-
-  article > ol {
-    @apply my-4;
-  }
-
-  article ol:not(.list-document) > li {
-    @apply list-inside list-decimal;
-  }
-
-  article ul:not(.list-document) > li {
-    @apply list-inside list-disc;
-  }
-
-  article ul li,
-  article ol li {
-    @apply my-2 ml-4;
+    @apply ml-auto mr-auto w-full;
   }
 
   @supports selector(:has(pre:first-child)) {
     article ul > li:has(> pre:first-child) {
-      @apply list-none pl-4;
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    article ul > li:has(> blockquote:first-child) {
+      list-style-type: none;
     }
   }
 
-  article .content.no-indent > ul > li,
-  article .content.no-indent > ol > li {
-    @apply ml-0;
+  article .content.no-indent > ul,
+  article .content.no-indent > ol {
+    @apply ml-0 pl-4;
   }
 
   article p > img:only-child {
     @apply mx-auto;
   }
 
-  blockquote {
-    @apply my-4 -ml-2 border-l-4 border-teal-600 pl-3 pr-4 italic;
-  }
-
-  code,
-  pre {
-    @apply font-mono leading-snug;
-    box-decoration-break: clone;
-  }
-
-  code {
-    @apply bg-gray-200 px-1 text-base text-teal-900;
-  }
-
   a code {
     @apply underline;
-  }
-
-  pre > code {
-    @apply my-4 block overflow-x-auto whitespace-pre border-gray-300 bg-gray-200 px-4 py-2 text-black shadow-lg;
-  }
-
-  article h1 + p,
-  article h2 + p,
-  article h3 + p,
-  article h4 + p {
-    @apply mt-2 mb-4;
-  }
-
-  article * + p,
-  footer * + p,
-  article > * + div,
-  footer > * + div,
-  hr {
-    @apply my-4;
   }
 
   article table {
@@ -126,36 +77,6 @@ html {
 
   a:hover {
     text-decoration: underline;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply font-sans font-medium text-teal-900;
-  }
-
-  h1 {
-    @apply text-2xl;
-  }
-
-  h2 {
-    @apply text-xl;
-  }
-
-  h3 {
-    @apply text-lg;
-  }
-
-  h4 {
-    @apply text-base;
-  }
-
-  h1:not(:first-child),
-  h2:not(:first-child),
-  h3:not(:first-child),
-  h4:not(:first-child) {
-    @apply mt-4 mb-2;
   }
 
   svg .primary {
@@ -280,6 +201,7 @@ article .has-component > *:not(:last-child) {
   display: none;
 }
 
+/*
 .pkm-page {
   ul,
   ol {
@@ -305,3 +227,4 @@ article .has-component > *:not(:last-child) {
     margin-left: 2rem;
   }
 }
+*/

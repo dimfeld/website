@@ -26,10 +26,8 @@ updated: 2022-11-16
 );
 </span></code></pre></li>
                 <li>This also makes it easy to add metadata on a relationship, such as the date it was created or who added the entry.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Naive Trees
           <ul class="list-bullet">
             <li>Representing a tree structure in a SQL database can be tricky. The obvious way is for each row to have a reference to its parent row, called the <strong class="font-bold">Adjacency List</strong> method, though this doesn&#39;t scale well as the tree gets deeper.</li>
@@ -39,8 +37,7 @@ updated: 2022-11-16
                 <li>&quot;How many tree levels do we need to support?&quot;</li>
                 <li>You hate touching the code that manages the tree. This usually means you haven&#39;t used the worst solution, but you&#39;re not using the best one either.</li>
                 <li>You have to periodically clean up orphaned nodes. Proper tree management should never leave the database in an invalid state like this.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>That said, for simple applications that don&#39;t need extensive traversal or flexible updates, the Adjacency List can work just fine.</li>
             <li>Recursive CTEs make querying such structures a lot easier as well.</li>
             <li>Better Tree Structures
@@ -51,26 +48,22 @@ updated: 2022-11-16
                     <li>Each node stores its entire path. This makes it easy to find all ancestors or all descendents of a node. You do have to know the entire path of the node first, but generally this is readily available.</li>
                     <li>Inserting a new node is as simple as adding it with the path of the parent plus the id of the new node.</li>
                     <li>This is best for trees that don&#39;t get too deep though, since maintaining the entire path for every node becomes costly and requires supporting application logic to keep the path in sync. It also shares problems with the Comma-Separated Lists antipattern.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Nested Sets
                   <ul class="list-bullet">
                     <li>Each node has a number (distinct from the normal node id), and <code>nsleft</code> and <code>nsright</code> fields, which are the bounds of the range of the descendants&#39; node numbers.
                       <ul class="list-bullet">
                         <li>The numbers can be assigned by traversing the tree depth-first and assigning <code>nsleft</code> as you go down, incrementing as you go, and <code>nsright</code> as you go back up.</li>
-                      </ul>
-                    </li>
+                      </ul>                    </li>
                     <li>Deleting nodes becomes really easy. To remove a node, you just remove the node and the parent of it automatically takes ownership.</li>
                     <li>Querying ancestors or children then just involves looking for nodes where one node&#39;s <code>nsleft</code> is between the <code>nsleft</code> and <code>nsright</code> of the children or parents.</li>
                     <li>Disadvantages
                       <ul class="list-bullet">
                         <li>Fetching immediate parents and children is complex. You need to use some complex outer joins to make it work, which are basically looking for nodes that fit conditions only the direct parent or children would satisfy.</li>
                         <li>Inserting or moving nodes requires updating node numbers, although it doesn&#39;t require recalculating everything.</li>
-                      </ul>
-                    </li>
+                      </ul>                    </li>
                     <li>This works best when you want to query against subtrees more than you want to work with individual nodes or update the tree structure.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Closure Table
                   <ul class="list-bullet">
                     <li>This method involves storing the tree structure not in the same table as the nodes, but in a separate table that does nothing but store paths through the tree.</li>
@@ -80,12 +73,9 @@ updated: 2022-11-16
                     <li>Separating the tree structure from the nodes themselves also makes it easy to remove a node from the tree without removing the node itself, or to create multiple overlapping trees (in multiple tables) around the same set of nodes.</li>
                     <li>To better support querying for immediate children and parents, you can add a column to the table that contains the length of the path between the two nodes. This makes updates more complex though.</li>
                     <li>The main downside is increased use of space since it requires <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \log{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span></span></span> rows. But overall this seems like the best method when heavy use of trees is required.</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+                  </ul>                </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Bad Primary Keys
           <ul class="list-bullet">
             <li>The primary key should make sense for the table.</li>
@@ -95,11 +85,9 @@ updated: 2022-11-16
                 <li>A natural key is a column that appears naturally in the data and also happens to uniquely identify a row.
                   <ul class="list-bullet">
                     <li>Be sure that it is <strong class="font-bold">actually</strong> unique since this can cause trouble down the line if it turns out that duplicates are ok in some cases.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>A compound key is two or more natural keys that combine to be unique.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>In an intersection table, the two columns for the intersection make a great compound primary key and reduce chance of bugs. No need for a separate ID.</li>
             <li>The book says:
               <ul class="list-bullet">
@@ -108,23 +96,18 @@ updated: 2022-11-16
                     <li>e.g. <code>account_id</code> in an <code>Account</code> table.</li>
                     <li>Less need to rename fields in query results when joining tables.</li>
                     <li>This also allows more queries to use USING in joins.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Using an ORM can make it hard to use primary keys optimally, so that’s ok.
                   <ul class="list-bullet">
                     <li>Some ORMs let you change the primary key from the default.</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+                  </ul>                </li>
+              </ul>            </li>
             <li>I generally disagree with the advice on primary key naming nowadays.
               <ul class="list-bullet">
                 <li>It makes the SQL easier to write but the SQL is a minor part of most applications now and tends to change less than the rest of the application.</li>
                 <li>Having a constant name for the primary key such as <code>id</code> makes it easier to write other code, particularly in the front end, that abstracts across multiple object types.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Missing Foreign Keys
           <ul class="list-bullet">
             <li>Using foreign keys can appear to make some things slightly more difficult at first, but beyond the most simple cases it actually makes some things a lot easier since the database can automatically handle some types of updates, and it also reduces bug potential a lot.</li>
@@ -132,8 +115,7 @@ updated: 2022-11-16
               <ul class="list-bullet">
                 <li><code>column text REFERENCES other_table(other_column)</code></li>
                 <li><code>FOREIGN KEY (c1, c2) REFERENCES other_table(a, b)</code></li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Foreign keys can also define special behavior when the value in the other table updates.</li>
             <li>A big thing about foreign keys is that they not only prevent deletions of data, but can help with updates too.
               <ul class="list-bullet">
@@ -143,10 +125,8 @@ updated: 2022-11-16
                 <li><code>CASCADE</code> deletes any rows that reference a deleted foreign row, or update the values in this table to match an updated foreign row&#39;s key.</li>
                 <li><code>SET NULL</code> sets this column to NULL when the reference is broken.</li>
                 <li><code>SET DEFAULT</code> sets it to the default value when the reference is broken. If the default is not null then the default value must exist in the foreign table.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Entity-Attribute-Value
           <ul class="list-bullet">
             <li>Some graph databases work like this, but it&#39;s not well-suited for SQL databases that don&#39;t natively support it.</li>
@@ -157,13 +137,10 @@ updated: 2022-11-16
                 <li>You can set up child tables and have each object reference a row in that other table when needed for the subtype fields.
                   <ul class="list-bullet">
                     <li>Working with this can also be made easier with a view that does the <code>LEFT JOIN</code> on the child tables for you.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>If you&#39;re stuck with an EAV schema, your best bet is to just do the reconstruction in the code that reads the database query results.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Polymorphic Associations
           <ul class="list-bullet">
             <li>Sometimes you need a particular object to be linked to two different types of things. A Comment might reference an Issue or a Pull Request, for example.</li>
@@ -171,15 +148,13 @@ updated: 2022-11-16
               <ul class="list-bullet">
                 <li>This makes it difficult to write joining queries</li>
                 <li>It&#39;s impossible to use foreign key constraints with this model.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Better solutions
               <ul class="list-bullet">
                 <li>Use an intersection table for each of the tables.
                   <ul class="list-bullet">
                     <li>This does have the downside that it&#39;s harder to enforce a one-to-one foreign key setup, and the select queries can be complicated depending on what you really want to do.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Create a common parent table
                   <ul class="list-bullet">
                     <li>This doesn&#39;t work for everything but is nice when it makes sense for the data model.</li>
@@ -189,17 +164,11 @@ updated: 2022-11-16
                       <ul class="list-bullet">
                         <li>Issues and Pull Requests have their primary key reference the parent table.</li>
                         <li>Comments have their <code>parent_id</code> reference the parent table.</li>
-                      </ul>
-                    </li>
+                      </ul>                    </li>
                     <li>Select queries can be done normally, and don&#39;t even have to reference the master ID table.</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+                  </ul>                </li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
   </ul>
-
 

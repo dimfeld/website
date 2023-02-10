@@ -17,25 +17,20 @@ updated: 2022-11-09
         <li>It is also feasible for the first thread to only do a Release, if it only needs to notify when it&#39;s done writing and does not have to indicate that a write is in progress.</li>
         <li>This is useful for lock-free algorithms, where you want to ensure that the data is visible to the other thread when you perform the Release.</li>
         <li>Generally the reader, in another thread, will then Acquire the same memory location before doing its reads, to ensure that it sees all the writes.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li><code>AcqRel</code>
       <ul class="list-bullet">
         <li>This is a combination of <code>Acquire</code> and <code>Release</code>. When doing an atomic operation in <code>AcqRel</code> mode, any other thread that does an <code>Acquire</code> or <code>AcqRel</code> atomic load from that location will be guaranteed to see all writes to other locations that took place before the first thread&#39;s atomic write.</li>
         <li>This is most useful when your thread needs to both read data written by another thread, and write its own data.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li><code>SeqCst</code>
       <ul class="list-bullet">
         <li>This mode is similar to <code>AcqRel</code>, but also ensures that all threads will see all <code>SeqCst</code> operations in the same order. This is rarely necessary. (See <a href="https://github.com/rust-lang/nomicon/issues/166">SeqCst as a default atomic ordering considered harmful · Issue #166 · rust-lang/nomicon</a> for a good explanation.)</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Relaxed
       <ul class="list-bullet">
         <li>Relaxed operations provide no guarantees about ordering of other memory accesses.</li>
         <li>This means that you can use it for atomic read-modify-write operations on a single memory location, but not to synchronize accesses to other data.</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

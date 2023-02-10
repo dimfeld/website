@@ -12,8 +12,7 @@ updated: 2021-07-27
       <ul class="list-bullet">
         <li><a href="https://v8.dev/docs/embed">https://v8.dev/docs/embed</a></li>
         <li><a href="https://github.com/danbev/learning-v8/blob/master/README.md">https://github.com/danbev/learning-v8/blob/master/README.md</a></li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>While using rusty_v8, you&#39;ll need to use scopes, isolates, locals and globals. This can seem confusing at first, especially when you need to get a local from a global, or when you need a scope and an isolate, but need to take mutable borrows on the engine for both at the same time.</li>
     <li><code>HandleScope</code> derefs to <code>Isolate</code>, so you only need to explicitly get the scope from <code>runtime.handle_scope()</code>, and then can use it as an isolate as well.</li>
     <li>Converting a <code>Global&lt;Value&gt;</code> to a <code>Local&lt;Value&gt;</code>
@@ -23,8 +22,6 @@ updated: 2021-07-27
 <span class="hljs-storage hljs-type hljs-js">let</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">local</span> <span class="hljs-keyword hljs-operator hljs-assignment hljs-js">=</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">v8</span>::<span class="hljs-entity hljs-name hljs-label hljs-js">Local</span><span class="hljs-punctuation hljs-separator hljs-js">:</span>:<span class="hljs-meta hljs-instance hljs-constructor hljs-js"><span class="hljs-keyword hljs-operator hljs-word hljs-new hljs-js">new</span><span class="hljs-meta hljs-function-call hljs-constructor hljs-js"><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span><span class="hljs-keyword hljs-operator hljs-bitwise hljs-js">&amp;</span><span class="hljs-variable hljs-other hljs-readwrite hljs-js">mut</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">scope</span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">value</span><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span></span><span class="hljs-punctuation hljs-terminator hljs-statement hljs-js">;</span>
 </span></code></pre></li>
         <li>This is useful with <code>serde_v8</code>, which simplifies a lot of conversion between JS types and Rust types but needs a <code>Local</code>.</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

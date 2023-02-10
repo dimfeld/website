@@ -12,16 +12,14 @@ updated: 2020-08-10
         <li>1. A local minimum with respect to one neighborhood structure is not necessarily so for another.</li>
         <li>2. A global minimum is a local minimum with respect to all possible neighborhood structures.</li>
         <li>3. For many problems, local minima with respect to one or several neighborhoods are relatively close to each other.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Initalization Choices
       <ul class="list-bullet">
         <li><code>f</code>  - the scoring function</li>
         <li><code>X</code> - The set of possibilities</li>
         <li><code>N(x)</code> - the neighborhood structure</li>
         <li><code>x</code> - the initial solution</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>The algorithm is made up of a few different sub algorithms.</li>
     <li>Variable Neighborhood Descent (VND)
       <ul class="list-bullet">
@@ -32,10 +30,8 @@ updated: 2020-08-10
                 <li>Find x’ = the smallest value of f(x) for all perturbations</li>
                 <li>If f(x’) &lt; f(x), set x = x’ and iterate. Otherwise stop</li>
                 <li>Since it may not be feasible to iterate over every possible neighborhood perturbation in every iteration, an alternative is to use the first perturbation found that results in a score reduction.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>VND is based on fact 1. Since a local optimum for one type of move may not be a local optimum for another type of move, we can combine descent heuristics to get closer to the global optimum.</li>
         <li>Steps
           <ul class="list-bullet">
@@ -43,31 +39,25 @@ updated: 2020-08-10
             <li>1. Start with the first neighborhood.</li>
             <li>2. <em class="italic">Local Search</em>: Find the best neighbor x’ of x using the current neighborhood</li>
             <li>3. If x’ is better than x, then set x = x’ and go back to step 1. Otherwise go to the next neighborhood and go to step 2.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>This brings up a number of questions.
           <ul class="list-bullet">
             <li>What is the complexity of the different modes?
               <ul class="list-bullet">
                 <li>Moves that take too many operations may be very slow to converge and actually require more time than the exact solution in some cases.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>What is the best order to apply them?
               <ul class="list-bullet">
                 <li>Often moves are ordered by the complexity of their application. Some variants apply all the moves at once, so long as descent is made for some neighborhood in the series.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Are these moves sufficient to throughly explore the region?
               <ul class="list-bullet">
                 <li>Too-simple moves may not leave a “narrow valley”</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>How precise a solution do we need?</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>As an example, we might have two neighborhood structures. The first does a greedy search for placing a new facility and the other does an interchange, moving an existing facility elsewhere. These two would be applied in turn until the algorithm halts. </li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Reduced Variable Neighborhood Search
       <ul class="list-bullet">
         <li>Assume we’ve found a local minimum. We want to leave this valley and find a deeper one, if it exists. </li>
@@ -76,20 +66,16 @@ updated: 2020-08-10
             <li>which direction to go?
               <ul class="list-bullet">
                 <li>Simplest answer is to choose randomly</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>How far?
               <ul class="list-bullet">
                 <li>Since local minima tend to be close together, we should start with small steps.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>If the moves don’t get us out of the valley, how do we modify them?
               <ul class="list-bullet">
                 <li>Go farther! Usually this takes the form of each of the neighborhood structures building upon the previous one to create a larger or more complex move (this is called nesting).</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Steps
           <ul class="list-bullet">
             <li>Init: Select a set of neighborhood structures, find initial solution, choose stopping condition, etc.</li>
@@ -97,10 +83,8 @@ updated: 2020-08-10
             <li>2. <em class="italic">Shaking</em>: Take a randomly selected change from the current neighborhood.</li>
             <li>3. If it’s better, use it and go back to step 1</li>
             <li>4. Otherwise, check the stopping condition, and then go to the next structure and go to step 2.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Basic Variable Neighborhood Search
       <ul class="list-bullet">
         <li>This combines the VND and RVNS methods above into a single method so that we have systematic movement around the current local minimum and also the possibility of a random jump into a better minimum.</li>
@@ -112,35 +96,28 @@ updated: 2020-08-10
             <li>3. Local Search: x’’ = the result of the local search from x’</li>
             <li>4. If x’’ is better than x, set x = x’’ and jump to step 1.</li>
             <li>5. Otherwise increment k. If k = kmax, check the stopping condition and jump back to step 1.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>General Variable Neighborhood Search
       <ul class="list-bullet">
         <li>This is the general one to use when you don’t have a specific reason to do otherwise. It is similar to the basic VNS, but uses VND as the local search step. We may use different neighborhood selections for the shaking step and the VND step, but it is not required.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Neighborhood Selection
       <ul class="list-bullet">
         <li>What properties of the neighborhoods are mandatory to be able to find a near-optimal solution
           <ul class="list-bullet">
             <li>The union of all the neighborhoods should cover the entire set of feasible solutions to guarantee this.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>What properties are helpful for finding a near-optimal solution?</li>
         <li>Should neighborhoods be nested, and if not, how should they be ordered?
           <ul class="list-bullet">
             <li>Nesting can easily be done by performing a type of move, and then having the next neighborhood make a similar move</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>What are desirable properties of neighborhood size?
           <ul class="list-bullet">
             <li>Size should go up as we iterate through neighborhoods.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Skewed VNS
       <ul class="list-bullet">
         <li>Some problems have local minima that are spaced far apart, and so if we happen to jump into one we probably want to explore around there.</li>
@@ -150,39 +127,30 @@ updated: 2020-08-10
         <li>Should we do this?
           <ul class="list-bullet">
             <li>The easiest way to answer the question is to run VNS for a short period of time from a bunch of different starting conditions and see if they end up in very different states with good solutions.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Variable Neighborhood Decomposition Search
       <ul class="list-bullet">
         <li>This scheme changes the local search option to select a subset of the space relating to the space modified by the neighborhood and optimize just that region. The optimization process used can be VNS again, applied to just that region.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Further Research for Approaching a Problem with VNS
       <ul class="list-bullet">
         <li>Initialization Conditions
           <ul class="list-bullet">
             <li>VNS results tend to not be too dependent on the initialization conditions, so long as the neighborhoods are defined well, and so simpler conditions are better.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Neighborhood Selection
           <ul class="list-bullet">
             <li>Do research on the neighborhoods used by other approaches to the problem. They tend to be reusable in VNS.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Distribution of Neighborhoods
           <ul class="list-bullet">
             <li>Should neighborhoods be assigned to the local search phase, the shaking phase, or both?</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Ancillary Tests
           <ul class="list-bullet">
             <li>Some additional logic can be used to make the “random” selection less random, if we know some useful things about the problem that can help with selection.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
   </ul>
-
 

@@ -12,8 +12,7 @@ updated: 2022-07-11
       <ul class="list-bullet">
         <li><a href="https://docs.rs/diesel-derive-enum/latest/diesel_derive_enum/">`diesel-derive-enum`</a> helps with translating between Rust enums and database enum types.</li>
         <li>Although Diesel doesn&#39;t support async natively, there are many packages that enable that support with minimal fuss. I&#39;ve been using <a href="https://docs.rs/deadpool-diesel/latest/deadpool_diesel/">`deadpool-diesel`</a>.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Selecting into other structures
       <ul class="list-bullet">
         <li>When creating a reusable structure to select into that isn&#39;t the normal one, you can derive <code>Selectable</code> and then use <code>type::as_select()</code> to return the list of columns for a select column. Note that this structure must also implement <code>Queryable</code>.</li>
@@ -35,8 +34,7 @@ updated: 2022-07-11
       .<span class="hljs-meta hljs-path hljs-rust">first<span class="hljs-punctuation hljs-accessor hljs-rust">::</span></span><span class="hljs-meta hljs-generic hljs-rust"><span class="hljs-punctuation hljs-definition hljs-generic hljs-begin hljs-rust">&lt;</span>PartialResult<span class="hljs-punctuation hljs-definition hljs-generic hljs-end hljs-rust">&gt;</span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span></span><span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span>
 </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
 </span></code></pre></li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>JSON Deserializing
       <ul class="list-bullet">
         <li>One of diesel&#39;s design decisions is that it will never include any translation code that could fail to serialize or deserialize data from the database. As such, they do not natively support translating from JSON types into Rust structs using the <code>Deserialize</code> attribute. However, this can be implemented generically with a macro, such as this one which converts between the Rust struct and a PostgreSQL JSONB column.</li>
@@ -90,8 +88,6 @@ updated: 2022-07-11
 </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
 
 </span></code></pre></li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

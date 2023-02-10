@@ -11,8 +11,7 @@ updated: 2021-04-20
       <ul class="list-bullet">
         <li>An example that will do what you want 90% of the time: <a href="https://ddrscott.github.io/blog/2021/i-heart-make/">https://ddrscott.github.io/blog/2021/i-heart-make/</a></li>
         <li>More in-depth tutorial: <a href="https://makefiletutorial.com/">https://makefiletutorial.com/</a></li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Targets
       <ul class="list-bullet">
         <li><code>target_name: dependencies</code></li>
@@ -24,15 +23,13 @@ updated: 2021-04-20
 convert_json $@
 </span></code></pre></li>
         <li>A target can use double colons <code>file::</code> to allow defining the target multiple times. Otherwise this is an error.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Two types of variables
       <ul class="list-bullet">
         <li>Recursively-expanded variables are lazily evaluated, and reevaluated every time the variable is used. These use the <code>=</code> operator to assign. e.v. <code>VARNAME = value</code></li>
         <li>Simply-expanded variables use <code>:=</code> to assign, and are just evaluated at the time of assignment. e.g. <code>VARNAME := VALUE</code></li>
         <li>Variables are referenced using <code>$(VARNAME)</code> or <code>${VARNAME}</code></li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Automatic Variables
       <ul class="list-bullet">
         <li>Make provides a bunch of ways to make things easier when working with multiple targets at once.</li>
@@ -40,8 +37,7 @@ convert_json $@
         <li><code>$&lt;</code> references the target for the current dependency (i.e. the output filename when running on filenames)</li>
         <li><code>$?</code> is the list of all dependencies newer than the target.</li>
         <li><code>$^</code> is the list of all prerequisites.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Pattern matching
       <ul class="list-bullet">
         <li>The <code>%</code> wildcard operator is used to perform pattern match and replacement.</li>
@@ -58,26 +54,21 @@ all: $(OUT)
 %.json: %.pptx
 compile.sh $&lt; &gt; $@
 </span></code></pre></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Working with filenames
       <ul class="list-bullet">
         <li><code>$(wildcard *.json)</code> will execute a file glob and expand to the matching filenames.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>String substitution
       <ul class="list-bullet">
         <li><code>$(patsubst INPUT_PATTERN,OUTPUT_PATTERN,STRING_TO_MATCH_AND_REPLACE)</code> </li>
         <li>This has numerous shorthands</li>
         <li><code>$(VARIABLE:%.o=%.c)</code> to change <code>.o</code> to <code>.c</code> for every file in <code>VARIABLE</code>.</li>
         <li><code>$(VARIABLE:.o=.c)</code> also works when it&#39;s just a suffix.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>When running at command, prefixing it with <code>@</code> will suppress printing the command output as it runs.</li>
     <li>Shell commands can be run using <code>VARNAME := $(shell command args)</code></li>
     <li>If you need to recursively call <code>make</code>, use <code>$(MAKE)</code> instead since it will use all the same CLI flags passed to the current call. </li>
   </ul>
-
 

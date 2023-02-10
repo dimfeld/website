@@ -7,25 +7,22 @@ updated: 2022-09-26
 
 
   <ul class="list-bullet">
-    <li><span class="text-2xl">Atomicity</span>
+    <li><h1>Atomicity</h1>
       <ul class="list-bullet">
         <li>Changes within a transaction are all-or-nothing.</li>
         <li>This lets you make multiple changes without having to handle failure at each point.</li>
         <li>Postgres implements this by tracking, for each tuple, what are the first and last transactions that should be able to see it.
           <ul class="list-bullet">
             <li>When there are multiple versions of a tuple active at once, for ongoing transactions, it tracks each one and then as transactions commit these tuples become inactive and are later emptied out during vacuuming.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">Consistency</span>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h1>Consistency</h1>
       <ul class="list-bullet">
         <li>Each transaction leaves the database in a valid state.</li>
         <li>There&#39;s no way to violate a <code>unique</code> constraint, for example.</li>
         <li>You can take advantage of this through <code>unique</code> constraints and also through <code>serializable</code> isolation level transaction.</li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">Isolation</span>
+      </ul>    </li>
+    <li><h1>Isolation</h1>
       <ul class="list-bullet">
         <li>Transactions work on snapshots and two transactions executing at the same time don&#39;t interfere with each other.</li>
         <li>There are a few different levels of isolation which exhibit different interaction phenomena.</li>
@@ -34,54 +31,44 @@ updated: 2022-09-26
             <li>Dirty Read
               <ul class="list-bullet">
                 <li>In this case, a read from one transaction can read data written by another ongoing transaction. In Postgres, this never actually happens, but the standard allows it in &quot;read uncommitted&quot; mode.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Nonrepeatable Read
               <ul class="list-bullet">
                 <li>When a transaction commits, other transactions then start to see that data. So a transaction may read the same data twice with different results if another transaction commits while it&#39;s running.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Phantom Read
               <ul class="list-bullet">
                 <li>Similar to nonrepeatable read, but affecting the set of rows returned by a query instead of just the data in those rows.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Serialization Anomaly
               <ul class="list-bullet">
                 <li>A successful group of transactions may leave the database in a state different from if they ran serially.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Isolation Levels
           <ul class="list-bullet">
             <li>Serializable
               <ul class="list-bullet">
                 <li>None of the interactions will occur. The result is the same as if all the transactions ran one at a time.</li>
                 <li>As with Repeatable Read, the client should be prepared to retry the transaction.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Repeatable Read
               <ul class="list-bullet">
                 <li>By the standard, this allows Phantom Read and Serialization Anomaly interactions to occur.</li>
                 <li>In Postgres, only only Serialization Anomaly will actually occur.</li>
                 <li>Realistically, this is implemented by cancelling transactions that would otherwise violate this. The client can then retry the transaction.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Read Committted
               <ul class="list-bullet">
                 <li>Nonrepeatable Read, Phantom Read, and Serialization Anomaly can occur.</li>
                 <li>In Postgres this is the default.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Read Uncommitted
               <ul class="list-bullet">
                 <li>All of these interactions are possible.</li>
                 <li>In Postgres, Dirty Read never happens so this is actually the same as &quot;Read Committed&quot;.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>There are performance implications to higher isolation levels, of course, but there are some ways to help here.
           <ul class="list-bullet">
             <li>Transactions can be declared as read only, which simplifies the tracking.</li>
@@ -89,15 +76,11 @@ updated: 2022-09-26
             <li>Transactions should not be long-running.</li>
             <li>Don&#39;t use <code>SELECT FOR UPDATE</code> and similar locking techniques, inside serializable transactions because the transaction semantics already provide similar protections.</li>
             <li>Sequential scans greatly increase the risk of serialization failures, so queries should use index scans whenever possible.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">Durability</span>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h1>Durability</h1>
       <ul class="list-bullet">
         <li>Committed transactions can not be lost. Instead of fsyncing all the time, this is often implemented using a WAL which is faster to write to, and that allows recovery of any committed data in the canonical data store that was lost in a crash or unexpected reboot.</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

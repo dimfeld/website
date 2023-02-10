@@ -14,15 +14,13 @@ updated: 2022-06-10
           <ul class="list-bullet">
             <li>A <strong class="font-bold">fault</strong> is when a component inside the system fails to function properly.</li>
             <li>A <strong class="font-bold">failure</strong> is when the system as a whole breaks, as a result of one or more faults.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Prevent faults when you can, but it&#39;s not possible to prevent 100% of faults.</li>
         <li>The big idea of reliability is to keep faults from turning into failures.</li>
         <li><blockquote>The bugs that cause these kinds of software faults often lie dormant for a long time until they are triggered by an unusual set of circumstances. In those circumstances, it is revealed that the software is making some kind of assumption about its environment — and while that assumption is usually true, it eventually stops being true for some reason</blockquote></li>
         <li>Chaos Monkey style testing helps here. As with backup, you only know if your error handling really works if you are testing it.</li>
         <li>Monitoring can help a lot to catch small problems before they balloon into big problems.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Scalability
       <ul class="list-bullet">
         <li>To talk about scalability we have to think about what we are scaling and what the load on the system actually comprises.</li>
@@ -32,8 +30,7 @@ updated: 2022-06-10
             <li>What kind of SLAs do we have?
               <ul class="list-bullet">
                 <li>Both internal or external/contractual</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Do we care more about the average case or the tails?</li>
             <li>How do changes that we make affect the different types of load in the system?</li>
             <li>The nature of the load and what we want to optimize for makes a big difference in the design of the system.</li>
@@ -41,10 +38,8 @@ updated: 2022-06-10
               <ul class="list-bullet">
                 <li>Twitter uses an approach in which each user has a timeline cache, and when someone  tweets, it is replicated out to the timeline cache of all their followers at the time that the tweet is made, even if the follower isn&#39;t currently using Twitter.</li>
                 <li>But this falls apart at the top where some users may have tens of millions of followers, so for those specific users they use a read-based system, where their tweets are fetched when the follower actually opens Twitter and then merged into the rest of the timeline cache.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Describing Performance
           <ul class="list-bullet">
             <li>When you increase load, how is the performance of the system affected?</li>
@@ -54,29 +49,23 @@ updated: 2022-06-10
                 <li>Response time</li>
                 <li>Latency to start serving a response</li>
                 <li>Throughput of a stream</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Of course all these are <strong class="font-bold">distributions</strong> as well and our thinking needs to encompass that.
               <ul class="list-bullet">
                 <li>Your best users may have the most data or the most complex queries, and thus experience the longest response times. This is an especially good reason to pay attention to the tail of the distribution.</li>
                 <li>At some point the tail of the distribution is dominated by random events that you can&#39;t really control. AWS decided that optimizing for the 99.9 percentile to meet their response time SLA was useful, but optimizing the 99.99th percentile (1 in 10,000 requests) was not.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Head-of-Line Blocking
               <ul class="list-bullet">
                 <li>When multiple slow requests are running and blocking faster requests from running, so those faster requests end up taking a long time as well.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Dealing with Load
           <ul class="list-bullet">
             <li>Each factor of 10 increase in load tends to require a change in architecture.</li>
             <li>The architecture depends a lot on how the load is distributed, read-heavy vs. write-heavy, OLAP vs OLTP, and so on.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Maintainability
       <ul class="list-bullet">
         <li>Operability — Keeping things running smoothly shouldn’t be a chore.
@@ -92,8 +81,7 @@ updated: 2022-06-10
             <li>Maintaining security as things change</li>
             <li>Defining processes for all the above</li>
             <li>Writing knowledge down</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Simplicity — Easy for new engineers to understand the system and its components.
           <ul class="list-bullet">
             <li>Sources of complexity
@@ -104,19 +92,15 @@ updated: 2022-06-10
                 <li>Inconsistent naming</li>
                 <li>Performance problems solved via hacks that never go away</li>
                 <li>Special cases to work around issues in other modules</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Simplicity makes software easier to write and deploy performant, correct software.</li>
             <li>Good abstractions enable simplicity of the layers above. Bad, leaky abstractions can hurt more than they help.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Evolvability — Easy to make changes in the future and adapt to new requirements.
           <ul class="list-bullet">
             <li>This is closely linked to the simplicity of the system. Simpler systems are easier to change.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Replication
       <ul class="list-bullet">
         <li>This chapter discusses replication in the case where the entire dataset can be stored on each machine.</li>
@@ -127,8 +111,7 @@ updated: 2022-06-10
               <ul class="list-bullet">
                 <li>All writes go to a single leader, which applies the writes locally and also  sends the writes to all the followers.</li>
                 <li>This simplifies things because you don&#39;t have to deal with different replicas receiving simultaneous conflicting writes.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Multi-Leader Replication
               <ul class="list-bullet">
                 <li>Since all writes go to the same place in a single-leader system, it can become a performance bottleneck and a reliability bottleneck; if the leader goes down, no writes take place until the system can detect it and elect a new leader.</li>
@@ -136,14 +119,12 @@ updated: 2022-06-10
                 <li>When the system spans multiple datacenters, you’ll often want to have a leader in each datacenter, so that each write request can go to a server within the same datacenter.
                   <ul class="list-bullet">
                     <li>In this model, each follower follows a particular leader — generally the one in its datacenter. Then the leaders replicate with each other, and when a leader receives a write from another leader, it processes it and replicates it to its followers just like any other write.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Multi-leader synchronization is almost always asynchronous, and often performed with the help of external tools to handle the inter-datacenter communication. So each datacenter is operating independently, in a sense.</li>
                 <li>Offline Operation
                   <ul class="list-bullet">
                     <li>Allowing client devices to operate offline is very similar to a multi-leader replication system. Each client device is, in effect, a leader on its own, albeit for a subset of the entire data. And it makes writes which then need to be reconciled with the rest of the system when it comes back online.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Write Conflicts
                   <ul class="list-bullet">
                     <li>The main issue with multi-leader replication is when conflicting writes arrive at different leaders at roughly the same time.</li>
@@ -151,8 +132,7 @@ updated: 2022-06-10
                     <li>The easiest way to handle this is avoiding conflicts completely, such as by ensuring that all writes for a particular key go to the same leader. This isn&#39;t always possible though.</li>
                     <li>If you can&#39;t avoid conflicts or use a data type that can natively resolve conflicts, then you have to figure out how to order concurrent writes. A lot of systems use a timestamp, a random number, or other identifier, and just order the writes by that identifier. A logical or hybrid clock is usually better.</li>
                     <li>Some database systems allow you to specify custom conflict resolution logic. Sometimes this can be run by the database itself. This type of logic often ends up handling a ton of edge cases and is bug-prone. If you find yourself doing this, it&#39;s better to look into a CRDT or similar solution, if that fits your needs.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Things like integrity constraints, autoincrementing types, and so on can cause trouble in multi-leader setups, so they need to be used with care, if at all.</li>
                 <li>Multi-Leader Topologies
                   <ul class="list-bullet">
@@ -160,10 +140,8 @@ updated: 2022-06-10
                     <li>In a circular topology, the nodes form a ring. Each node sends replication data to the next node in the ring and receives it from the previous node in the ring.</li>
                     <li>A star topology designates certain nodes as replication hubs. All other nodes replicate writes to the hubs, which them send them our to the rest of the network. This forms a replication tree at larger scales.</li>
                     <li>All-to-all topologies are the most resilient, but can run into problems with writes arriving at the wrong order at some nodes if the network connection speed isn&#39;t the same throughout the system.</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+                  </ul>                </li>
+              </ul>            </li>
             <li>Leaderless Replication
               <ul class="list-bullet">
                 <li>These systems tend to be much more oriented around eventual consistency, and nodes may not even replicate between each other, depending on the design.</li>
@@ -171,22 +149,18 @@ updated: 2022-06-10
                 <li>Leaderless systems often move more intelligence to the client, which will write to and read from multiple replicas at a time itself of relying on a leader to do that.
                   <ul class="list-bullet">
                     <li>Some clients will also perform <strong class="font-bold">read repair</strong>. If they read a value from three nodes and detect that one has a stale value, they will write the current value to the stale node to fix it.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Quorums
                   <ul class="list-bullet">
                     <li>Defining the number of nodes we need to acknowledge a write or return a value for a read gives us certain properties of the system.  These numbers are called the quorum numbers. Generally we want <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>+</mo><mi>r</mi><mo>&gt;</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">w + r &gt; n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>, where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span> is the write quorum, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span></span></span></span> is the read quorum, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> is the total number of nodes that should hold a particular key. This lets us ensure that at least one node will have a current value when we read.</li>
                     <li>Commonly <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span></span></span></span> are set to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">(n + 1)/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/2</span></span></span></span>.</li>
                     <li>When this total quorum condition holds, we can still process writes if <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>&lt;</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">w &lt; n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>, and can still process reads, if <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>&lt;</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">r &lt; n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>, so long as <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>&lt;</mo><mo>=</mo><msub><mi>n</mi><mrow><mi>a</mi><mi>v</mi><mi>a</mi><mi>i</mi><mi>l</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">w &lt;= n_{available}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span><span class="mord mathnormal mtight">ai</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">ab</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> or <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>&lt;</mo><mo>=</mo><msub><mi>n</mi><mrow><mi>a</mi><mi>v</mi><mi>a</mi><mi>i</mi><mi>l</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">r &lt;= n_{available}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span><span class="mord mathnormal mtight">ai</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">ab</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>.</li>
                     <li>A <strong class="font-bold">sloppy quorum</strong> can be used to allow writes even when you can&#39;t reach the nodes that normally would accept the writes. It trades better availability for less consistency during network partitions. Some sort of handoff process moves the writing back to the proper nodes once they come back.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Stalesness should be monitored to make sure things aren&#39;t falling too far behind. This can be a sign of a larger problem.</li>
                 <li>With no leaders, concurrent writes can be a problem once again.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Synchronous or Asynchronous Replication
           <ul class="list-bullet">
             <li>When accepting a write, do you tell the client right away after writing it locally, and then send the writes to the replicas, or do you wait until all replicas have acknowledged the write to respond to the client?</li>
@@ -197,19 +171,15 @@ updated: 2022-06-10
                   <ul class="list-bullet">
                     <li>This way the client can be assured that the write has been saved on more than replica, while maintaining some speed.</li>
                     <li>It does bring back the read-your-writes problem though.</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+                  </ul>                </li>
+              </ul>            </li>
             <li>Asynchronous allows higher write throughput but the client has to be prepared that its reads may not reflect what it just wrote.
               <ul class="list-bullet">
                 <li>In a large-scale leaderless system, some systems are set up so that each client only communicates with a single node so that it will always read its own writes.</li>
                 <li>Also in the case of a leader failure, some writes that were not yet replicated may be lost.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>&quot;chain replication&quot; is one variant of replication that is mostly synchronous but still provides good performance.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Consistency Models
           <ul class="list-bullet">
             <li>Read-your-writes
@@ -220,64 +190,53 @@ updated: 2022-06-10
                   <ul class="list-bullet">
                     <li>You can work around this by keeping track of what you’ve actually changed and requesting reads for those items from the leader.</li>
                     <li>Sending a timestamp (preferably a logical or hybrid clock) and ensuring that the read is served by a replica that is up to date with that timestamp works too, when the database makes it possible.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Cross-device read consistency can be an issue too, like when the same user is using a laptop and phone to access the application at the same time.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Monotonic reads
               <ul class="list-bullet">
                 <li>When reads are spread across multiple different replicas, it’s possible for the reads to actually go backwards in time if the later reads go to a replica that is farther behind in syncing to the leader.</li>
                 <li>Monotonic read guarantees avoid this, so a user will never see a state older than what a previous query returned. This is a stronger guarantee than eventual consistency, but weaker than strong consistency.</li>
                 <li>Making sure that all reads for a user go to the same replica can prevent this.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Causality
               <ul class="list-bullet">
                 <li>Causality violations can happen when replicating from multiple sources, and the replication lag is different between them.</li>
                 <li>In this case you may see writes that were made in response to a write that you don’t see yet. For example, a comment with a missing parent.</li>
                 <li>Ensuring causality is known as “consistent prefix reads”. Writes are seen in the same order that they actually took place.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Of course, how much you care about all these things determines how much you care about replication lag.</li>
             <li>Distributed transactions are one way to get around this. They are difficult to implement correctly but it can be done.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Adding New Followers
           <ul class="list-bullet">
             <li>Since the new follower probably starts with no data, you need a way to bootstrap it while still keeping things consistent.</li>
             <li>Usually this is done by the follower requesting a snapshot of the state. The leader sends this snapshot along with the position in the log that the snapshot represents.
               <ul class="list-bullet">
                 <li>Many databases have a way to take a snapshot like this that is consistent in time, but without needing to lock the entire database.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Once the follower has received the snapshot, it then asks the leader to send it all writes that have taken place since that position in the log.</li>
             <li>Finally it catches up with the leader and can replicate normally.</li>
             <li>Practically, the steps involved in this vary quite a lot between databases. Some make it really easy while others involve a lot of complex steps.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Outages
           <ul class="list-bullet">
             <li>The follower keeps track of its position in the replication log, and so when a node reboots or the follower restarts for some reason, it can just request a catch-up from that location.</li>
             <li>When a leader fails, there needs to be a way to &quot;failover&quot; to a new leader.
               <ul class="list-bullet">
                 <li>This can happen manually, where a person chooses a new node to be leader, or it can happen automatically.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Choosing a new leader
               <ul class="list-bullet">
                 <li>Normally there&#39;s some sort of heartbeat between the replicas, and so when a heartbeat is missing for too long it is assumed to be dead. It&#39;s also usually possible to tell the leader to give up its leader status so that it can go down for maintenance.
                   <ul class="list-bullet">
                     <li>Choice of heartbeat timeout is a hard problem. Too long and the system remains unwritable in a failure situation. Too short and you may bounce around leaders too often.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>Choosing a new leader can involve either a decentralized election process or a controller node previously chosen to be the one that elects leaders. Generally the replica with the latest position in the log is the new leader.</li>
                 <li>Clients then need to reroute to the new leader, and if the old leader node comes back up and is still in leader more, it needs a way to realize that it is not the leader anymore.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>In a network partition case, it can be tricky to synchronize the writes received by the old leader and the new leader during the partition. Often the old leader just loses its writes but this isn&#39;t a great solution.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Implementing Replication
           <ul class="list-bullet">
             <li>Statement-based replication involves the leader sending each write command in (roughly) its original form to the followers. This can cause issues with any nondeterministic part of the statement.
@@ -285,37 +244,30 @@ updated: 2022-06-10
                 <li>Does it call a function that generates a timestamp, a UUID, or a random number?</li>
                 <li>Anything with autoincrementing column needs to ensure that operations all happen in the same order too even if they wouldn&#39;t otherwise interact.</li>
                 <li>These problems end up being tricky to solve completely and spawn a ton of edge cases, so this isn&#39;t used so much anymore.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Write-ahead log shipping
               <ul class="list-bullet">
                 <li>Since many databases are using a WAL anyway, one way is to just ship the WAL entries to the followers.</li>
                 <li>The main downside of this method is that the WAL often describes the data on a very low level, and so it&#39;s difficult or impossible to ship updates between replicas using different storage engines or software versions.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Logical Replication
               <ul class="list-bullet">
                 <li>This uses a special data format for replication that describes writes at (usually) the row level. Since this is not linked to a particular version or data format, it&#39;s easier to deal with version mismatches, and makes upgrades easier.</li>
                 <li>Logical replication is also nice because it allows external programs to act as followers and do things like database write metrics, change capture, auditing, and so on.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Trigger-Based Replication
               <ul class="list-bullet">
                 <li>This involves triggers set up by the database administrator, for when you need special logic to handle the replication. Usually this is not what you want, since it&#39;s slower and more bug-prone than other methods, but it can be handy in special cases.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Consistency and Consensus
       <ul class="list-bullet">
         <li>It’s useful to define certain guarantees, build a system that implements those guarantees, and then allow applications that rely on them to be built on top of that system.
           <ul class="list-bullet">
             <li>e.g. in ACID databases, the transaction abstracts over a bunch of different desired properties: atomicity, fault tolerance, etc.</li>
             <li>The same technique applies in the distributed world.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>In distributed applications, the big questions are around consensus and consistency, so we can build an abstraction around that into our database.</li>
         <li>Part of building these abstractions is deciding what limitations and levels of guarantees they will have.</li>
         <li>Eventual consistency
@@ -323,16 +275,14 @@ updated: 2022-06-10
             <li>Guaranteed that if you stop writing to a key, eventually, all nodes will have the same value.</li>
             <li>Technically there’s no bound on how long that will take though, and you won’t necessarily even read your own writes.</li>
             <li>This is also a model that requires careful use by the application. It’s easy to make certain assumptions that hold in testing but fall apart under heavy load.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Linearizability
           <ul class="list-bullet">
             <li>Often known as strong consistency. This basically makes the system appear as if it’s not distributed. Any read from any node will only ever get the latest write to any node, just as if there was only a single copy of the data.</li>
             <li>Writes are not considered complete until they’ve replicated to all other nodes.
               <ul class="list-bullet">
                 <li>Specifically, before the write completes, all read operations will return the old value, and after the write completes, all reads will return the new value.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Note that this doesn’t make any guarantees about the ordering of concurrent writes and reads. Only that the view of time always moves forward. Once a value is read, no other reads will see the old value again.</li>
             <li>Some models explicitly drop this guarantee in certain cases. Snapshot isolation, for example, is not strictly linearizable because a client in a transaction will not see writes that come in after the transaction begins.</li>
             <li>Compare-and-set operations are useful primitives here too. Set a value only if the existing value is equal to some other expected value; otherwise return an error.</li>
@@ -344,37 +294,31 @@ updated: 2022-06-10
                 <li>Any time when there might be more than one way for information to pass between nodes.
                   <ul class="list-bullet">
                     <li>e.g. Uploading a file to a storage service and enqueueing a task to work on that file.</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+                  </ul>                </li>
+              </ul>            </li>
             <li>Implementing Linearizability
               <ul class="list-bullet">
                 <li>Single-leader systems can be linearizable when you read from the leader (and assuming that your idea of which node is the leader is actually correct).</li>
                 <li>Consensus algorithms are always linearizable because they take extra effort to do so.</li>
                 <li>Multi-leader replication is not linearizable since multiple leaders can process a write to the same key.</li>
                 <li>Leaderless systems are usually not linearizable. Strict quorum systems where read repair is performed before the read returns and writes also achieve quorum consensus mostly achieve it; this has significant performance implications though and still doesn&#39;t permit compare-and-set.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>CAP Theorem
               <ul class="list-bullet">
                 <li>While this is usually phrased as &quot;any two of consistency, availability, or partition tolerance,&quot; this isn&#39;t a helpful definition.</li>
                 <li>A CP or AP system can achieve both consistency and availability when there is no partition if it&#39;s designed for it, so the real question is: in a network partition, does the system retain consistency or does it remain available?</li>
                 <li>CAP also is a narrow set of concerns: linearizability during network partitions. It&#39;s a good starting point, but in real systems you also have network delays, disappearing nodes (from crashes, etc.), and other concerns.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Linearizability is also rarer than one might think. Even per-core caches and other performance optimizations can make memory access in a single computer non-linearizable without explicit synchronization.</li>
             <li>Likewise, in a network-distributed system linearizability can be slow, and so it&#39;s often dropped or limited to retain good system performance.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Ordering Guarantees
           <ul class="list-bullet">
             <li>The primary purpose of ordering guarantees is preserving causality. To some approximation we don&#39;t really care about ordering of two events that aren&#39;t causally linked.
               <ul class="list-bullet">
                 <li>Systems that obey causality are called <strong class="font-bold">causally consistent</strong>.</li>
                 <li>Causality defines a partial order, not a total order. Concurrent operations are not comparable.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Because linearizability defines a total ordering over events, it also preserves causality.</li>
             <li>But in many cases, causal consistency is really what you want and linearizability is overkill. This is good news, since causal consistency can be implemented with much higher performance.</li>
             <li>Version vectors are one way of tracking causality across the system. For each write, the system also sends the last version of the key that it knew about, and this lets the system determine which write to apply in the case of concurrent writes.</li>
@@ -384,24 +328,20 @@ updated: 2022-06-10
               <ul class="list-bullet">
                 <li>Reliable delivery -- every message is seen by every node</li>
                 <li>Totally ordered delivery -- Messages arrive in the same order</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>This basically puts you in the CP style of system, where you handle network partitions by not allowing writes until they heal.</li>
             <li>Linearizable compare-and-set operations can be built upon a total order broadcast, for example by using it as an append-only log.
               <ul class="list-bullet">
                 <li>Writing a value becomes appending a message to the log.</li>
                 <li>Then you read the incoming log messages until you see your own message again.</li>
                 <li>If you saw another message writing to that key before your own message, then you lost and consider your write failed. Otherwise your write succeeded.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>This works because all node see messages in the same order.</li>
             <li>You can perform linearizable reads in a somewhat similar fashion. Since the log is asynchronous, you don&#39;t always know if you&#39;re up to date, but if you send a message out to the log, when you see that message come back then you know that you&#39;re up to date as of the time that you sent the message. Some logs also let you do a synchronous sideband query of what the latest position is, so then you just have to wait until you see the message with that position arrive.</li>
             <li>Conversely, total order broadcast can also be implemented on top of a linearizable increment-and-set register. For each message that you want to send, increment the register, and then attach the returned number to your message.</li>
             <li>Both this type of register and total order broadcast end up being different forms of the same consensus algorithm.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li><div>Highlights
   <ul class="list-bullet">
     <li>Note that a fault is not the same as a failure [2]. A fault is usually defined as one component of the system deviating from its spec, whereas a failure is when the system as a whole stops providing the required service to the user. (<a href="https://readwise.io/to_kindle?action=open&amp;asin=B06XPJML5D&amp;location=253">Location 253</a>)</li>
@@ -421,8 +361,6 @@ updated: 2022-06-10
     <li>An advantage of B-trees is that each key exists in exactly one place in the index, whereas a log-structured storage engine may have multiple copies of the same key in different segments. This aspect makes B-trees attractive in databases that want to offer strong transactional semantics: in many relational databases, transaction isolation is implemented using locks on ranges of keys, and in a B-tree index, those locks can be directly attached to the tree (<a href="https://readwise.io/to_kindle?action=open&amp;asin=B06XPJML5D&amp;location=2273">Location 2273</a>)</li>
     <li>A compromise between a clustered index (storing all row data within the index) and a nonclustered index (storing only references to the data within the index) is known as a covering index or index with included columns, which stores some of a table’s columns within the index (<a href="https://readwise.io/to_kindle?action=open&amp;asin=B06XPJML5D&amp;location=2316">Location 2316</a>)</li>
   </ul>
-
 </div></li>
   </ul>
-
 

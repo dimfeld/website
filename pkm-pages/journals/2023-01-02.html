@@ -6,13 +6,11 @@ updated: 2023-01-03
 ---
 
 
-  <ul class="list-document">
     
-    <li>Did various cleanup on Perceive over the weekend, and cleaned up the HTML parsing which had previously been removing a lot of spaces between words. Since a lot of the data comes from the browsing history and similar online sources, I added a command to allow reprocessing all the data without downloading it again.</li>
-    <li>This brought about an unexpected issue. I ended up with a data processing pipeline deadlock where all the Rayon thread pool&#39;s threads were waiting on blocking channel sends. Then a different stage later in the pipeline which also used Rayon was unable to get any threads to do anything, and so no progress was made.</li>
-    <li>Attaching with the debugger was very useful here. I had my suspicions, mostly from eliminating pretty much every other potential cause, but looking at the call stacks of all the different threads made it very obvious.</li>
-    <li>Fortunately the solution was easy. It turns out Rayon lets you create separate thread pools, and so I did exactly that to remove contention. A couple hours of debugging, and only a couple minutes to make the fix.</li>
+    <p>Did various cleanup on Perceive over the weekend, and cleaned up the HTML parsing which had previously been removing a lot of spaces between words. Since a lot of the data comes from the browsing history and similar online sources, I added a command to allow reprocessing all the data without downloading it again.</p>
+    <p>This brought about an unexpected issue. I ended up with a data processing pipeline deadlock where all the Rayon thread pool&#39;s threads were waiting on blocking channel sends. Then a different stage later in the pipeline which also used Rayon was unable to get any threads to do anything, and so no progress was made.</p>
+    <p>Attaching with the debugger was very useful here. I had my suspicions, mostly from eliminating pretty much every other potential cause, but looking at the call stacks of all the different threads made it very obvious.</p>
+    <p>Fortunately the solution was easy. It turns out Rayon lets you create separate thread pools, and so I did exactly that to remove contention. A couple hours of debugging, and only a couple minutes to make the fix.</p>
 
-  </ul>
 
 

@@ -12,43 +12,36 @@ updated: 2022-06-10
     <li>Consistency
       <ul class="list-bullet">
         <li>Elements on the page should be globally and locally consistent. State associated with a button should update in all the appropriate places when the button is clicked.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Responsiveness
       <ul class="list-bullet">
         <li>Smooth scrolling</li>
         <li>Visual indicators for delays greater than 100ms</li>
         <li>Page layout shouldn’t jump around when loading</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Latency
       <ul class="list-bullet">
         <li>How do we gracefully handle latency without a bunch of loading spinners all the time?</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Navigation
       <ul class="list-bullet">
         <li>Navigation should be local to the thing clicked. Clicking a tab should not modify the UI outside of the set of tabs. When going between states, remember the details of the previous state so that the user doesn’t have to set it up again every time he goes back and forth.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Staleness
       <ul class="list-bullet">
         <li>Navigation can be enhanced by using a local cache, but this brings its own issues.</li>
         <li>What about the most recent changes made, which may affect cached data?</li>
         <li>How does local cache interact with fetched data?</li>
         <li>How do local changes update global data?</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Entropy
       <ul class="list-bullet">
         <li>How do we deal with combinatorics explosions of states as the UI grows? UI output should be easy to predict.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Priority
       <ul class="list-bullet">
         <li>What appears on top of what?</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Accessibility
       <ul class="list-bullet">
         <li>Not everyone is using a mouse</li>
@@ -56,33 +49,27 @@ updated: 2022-06-10
         <li>Screen readers</li>
         <li>Poor vision</li>
         <li>Contrast</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Internationalization
       <ul class="list-bullet">
         <li>Support multiple languages while retaining</li>
         <li>Responsiveness</li>
         <li>Low latency</li>
         <li>Ease of updating</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Delivery
       <ul class="list-bullet">
         <li>Initial code payload vs. later latency when downloading further packages.</li>
         <li>Idle-until-urgent is a nice paradigm here.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Resilience
       <ul class="list-bullet">
         <li>How does the application respond to bugs?</li>
         <li>Exceptions should be relatively self-contained. A bug in rendering one item shouldn’t cause others to fail.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Abstraction
       <ul class="list-bullet">
         <li>How do we properly share common code between different parts of the application? When are two UI components similar enough that we should combine them into a single component?</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

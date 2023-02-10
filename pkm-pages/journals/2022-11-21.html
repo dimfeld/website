@@ -6,12 +6,10 @@ updated: 2022-11-21
 ---
 
 
-  <ul class="list-document">
     
-    <li><a href="/notes/projects_pic_store">Pic Store</a> image uploading is all working now, but I ran into issues with actually setting up a CDN to back it. I initially wanted to use Backblaze B2 as the object store, which is set up to work with Cloudflare CDN. But Cloudflare want you to switch your whole domain over to them for it to work, and I don&#39;t want to switch my whole DNS setup over since I&#39;m using Vercel.</li>
-    <li>DigitalOcean also prefers that you switch your nameservers to them, but they do offer an alternative option, if you supply your own SSL certificate.</li>
-    <li>So today&#39;s free time will be spent building a small utility that talks to LetsEncrypt, Vercel DNS, and DigitalOcean CDN to handle generating the certificate and installing it. There are a few Rust crates that handle the ACME protocol already, so hopefully it should be quick project. I&#39;ll write up a small article once it&#39;s done.</li>
+    <p><a href="/notes/projects_pic_store">Pic Store</a> image uploading is all working now, but I ran into issues with actually setting up a CDN to back it. I initially wanted to use Backblaze B2 as the object store, which is set up to work with Cloudflare CDN. But Cloudflare want you to switch your whole domain over to them for it to work, and I don&#39;t want to switch my whole DNS setup over since I&#39;m using Vercel.</p>
+    <p>DigitalOcean also prefers that you switch your nameservers to them, but they do offer an alternative option, if you supply your own SSL certificate.</p>
+    <p>So today&#39;s free time will be spent building a small utility that talks to LetsEncrypt, Vercel DNS, and DigitalOcean CDN to handle generating the certificate and installing it. There are a few Rust crates that handle the ACME protocol already, so hopefully it should be quick project. I&#39;ll write up a small article once it&#39;s done.</p>
 
-  </ul>
 
 

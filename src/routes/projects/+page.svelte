@@ -61,7 +61,7 @@
   }
 </script>
 
-<article class="m-4 self-center sm:mx-16">
+<article class="prose m-4 self-center sm:mx-16">
   <p class="font-serif">
     For the first half of my career, most of my work has been in proprietary
     code bases. I'm steadily growing my open source contributions, and the more
@@ -69,7 +69,7 @@
   </p>
 
   {#each projects as project}
-    <div class="mt-4 flex flex-col space-y-4 sm:flex-row sm:space-y-0">
+    <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0">
       <h1 class="block sm:hidden">
         <a href={project.link}>{project.name}</a>
         <a href={project.repo || project.link}>(Source)</a>
