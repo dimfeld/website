@@ -7,7 +7,7 @@ updated: 2022-06-10
 
 
   <ul class="list-bullet">
-    <li><span class="text-xl">Incremental Execution</span>
+    <li><h2>Incremental Execution</h2>
       <ul class="list-bullet">
         <li>Using incremental execution for realtime machine learning
           <ul class="list-bullet">
@@ -15,8 +15,7 @@ updated: 2022-06-10
             <li>The data ends up in separate columns in the same row as the unstructured data, with confidence values for each one.</li>
             <li>Their UI then lets you do corrections which feed back into the model and immediately recalculate values from it.</li>
             <li>This then feeds into incremental materialized views that update only the parts which need updating.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Incremental stream processing with Differential Datalog.
           <ul class="list-bullet">
             <li><a href="https://github.com/vmware/differential-datalog">https://github.com/vmware/differential-datalog</a></li>
@@ -24,33 +23,26 @@ updated: 2022-06-10
             <li>For better performance they wanted to have queries that update incrementally, on only the data that has changed.</li>
             <li>On top of Datalog, they added more data types such as structs and collections, and fragments of imperative code as well.</li>
             <li>They’re compiling DDLog to use differential dataflow for the compute engine, and are now working on their own compute engine.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Airtable
       <ul class="list-bullet">
         <li>GUI vs SQL</li>
         <li>No need for extra join table for many-to-many relationships. It&#39;s handled in the background
           <ul class="list-bullet">
             <li>probably by all relationships being many to many internally? Or just array fields maybe, but then the hiding ofthe implementation is the point.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>The nice thing about Airtable is that the GUI primitives turn into a cheap business logic without much effort and no real GUI-building required.</li>
         <li>Unlike a spreadsheet, you&#39;re still using database concepts such as actual relations between rows in tables and uniqueness constraints, which makes things more scalable and prevents the all-too-familiar gigantic unmaintainable Excel spreadsheet.</li>
         <li>You can add triggers to perform certain tasks in the database when changing certain pieces of data.
           <ul class="list-bullet">
             <li>The trigger scripts can be actual Javascript with access to a full API.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Ultorg: a user interface for relational databases
       <ul class="list-bullet">
         <li>This is a general purpose database application, but with better priimitives for building functionality on top of it than the normal database tool.</li>
         <li>Can show data for joins on each row.</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

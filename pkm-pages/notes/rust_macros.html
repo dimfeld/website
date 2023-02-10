@@ -11,8 +11,7 @@ updated: 2021-09-15
       <ul class="list-bullet">
         <li><a href="https://danielkeep.github.io/tlborm/book">https://danielkeep.github.io/tlborm/book</a> is a useful source of info</li>
         <li><a href="https://github.com/dtolnay/proc-macro-workshop">https://github.com/dtolnay/proc-macro-workshop</a></li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Arguments
       <ul class="list-bullet">
         <li>Macro argument types
@@ -24,8 +23,7 @@ updated: 2021-09-15
             <li><code>item</code> - A top level item (<code>use</code>, <code>struct Something{}</code>, etc.)</li>
             <li><code>tt</code> - Any token tree</li>
             <li><code>block</code> - A code block in brackets</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Argument patterns can have <code>*</code> or <code>+</code> added to it to indicate repetition.
           <ul class="list-bullet">
             <li>
@@ -39,10 +37,8 @@ updated: 2021-09-15
 <span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span>
 </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
 </span></code></pre></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Nested macros
       <ul class="list-bullet">
         <li>Macros normally can&#39;t call each other if one of the macros is used from another module.</li>
@@ -53,13 +49,11 @@ updated: 2021-09-15
 <span class="hljs-meta hljs-group hljs-rust"><span class="hljs-punctuation hljs-section hljs-group hljs-begin hljs-rust">(</span>@macro2<span class="hljs-punctuation hljs-section hljs-group hljs-end hljs-rust">)</span></span> <span class="hljs-keyword hljs-operator hljs-rust">=&gt;</span> <span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-begin hljs-rust">{</span> the nested <span class="hljs-invalid hljs-illegal hljs-rust">macro</span> <span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span>
 </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
 </span></code></pre></li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Dealing with tokens
       <ul class="list-bullet">
         <li>The <code>paste</code> crate lets you concatenate multiple identifiers into a new identifier, which is difficult to do in normal macros.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Proc Macros
       <ul class="list-bullet">
         <li>These are more powerful and are written in Rust.</li>
@@ -68,10 +62,7 @@ updated: 2021-09-15
         <li>Useful Crates
           <ul class="list-bullet">
             <li><code>syn</code> helps with parsing Rust source.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
   </ul>
-
 

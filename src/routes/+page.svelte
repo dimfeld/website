@@ -24,10 +24,10 @@
   });
 </script>
 
-<article class="m-4 self-center font-serif">
+<article class="prose m-4 self-center font-serif">
   <h1>Latest Updates</h1>
 
-  <div class="mt-2 flex flex-col gap-4">
+  <div class="mt-2 flex flex-col items-start gap-4">
     {#each latestJournals as post}
       <Journal {...post} titleElement="h2" />
     {/each}
@@ -81,7 +81,7 @@
 
   <h2>Work</h2>
 
-  <p>
+  <p class="prose">
     I'm a co-founder of
     <a href="https://www.carevoyance.com">Carevoyance</a> (acquired by
     <a href="https://www.h1.co">H1 Insights</a>), a sales acceleration tool that
@@ -90,7 +90,7 @@
     clicks.
   </p>
 
-  <p>
+  <p class="prose">
     I spend most of my time there creating new data analyses, working on the
     backend API and database systems, and developing tooling to research data
     anomalies and automate repetitive tasks. Recently I've been active on the

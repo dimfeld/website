@@ -6,15 +6,12 @@ updated: 2022-12-03
 ---
 
 
-  <ul class="list-document">
     
-    <li>Implemented job insertion on <a href="/notes/projects_effectum">Effectum</a> today. I tried to be clever at first and prepare all the queries in advance when the Queue is created, but ran into issues where prepared <code>rusqlite</code> statements are not <code>Send</code>. That&#39;s ok though. The <code>rusqlite</code> prepared statement cache is close enough.</li>
+    <p>Implemented job insertion on <a href="/notes/projects_effectum">Effectum</a> today. I tried to be clever at first and prepare all the queries in advance when the Queue is created, but ran into issues where prepared <code>rusqlite</code> statements are not <code>Send</code>. That&#39;s ok though. The <code>rusqlite</code> prepared statement cache is close enough.</p>
 
-    <li><span class="text-lg">Links</span>
+    <h3>Links</h3>
       <ul class="list-bullet">
         <li><a href="https://github.com/libsql/libsql">LibSQL</a> is a new SQLite fork. Whereas SQLite famously does not accept outside contributions, LibSQL is approaching it from a more community-based open source viewpoint. They&#39;re aiming toward some more &quot;modern&quot; features such as support of io_uring and perhaps WASM user-defined functions. We&#39;ll have to see how this turns out. SQLite&#39;s strict development process has also lead to a famously stable product, and I expect that it will be difficult to keep that same level of rigor. Still, if this picks up steam it could be quite promising.</li>
       </ul>
-    </li>
-  </ul>
 
 

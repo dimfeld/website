@@ -12,8 +12,7 @@ updated: 2021-03-19
         <li>To update the checksum of a migration when the file changed, you can recalculate the hash
           <ul class="list-bullet">
             <li><code>cat migrations/FILENAME.sql | openssl dgst -sha384 | cut -d &#39; &#39; -f 2</code></li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Then change the checksum for that row in the database: 
           <ul class="list-bullet">
             <li>
@@ -21,10 +20,7 @@ updated: 2021-03-19
 <span class="hljs-keyword hljs-other hljs-DML hljs-sql">set</span> checksum<span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span><span class="hljs-string hljs-quoted hljs-single hljs-sql"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-sql">&#39;</span><span class="hljs-constant hljs-character hljs-escape hljs-sql">\x</span>&lt;the checksum&gt;<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-sql">&#39;</span></span>
   <span class="hljs-keyword hljs-other hljs-DML hljs-sql">where</span> version <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span><span class="hljs-string hljs-quoted hljs-single hljs-sql"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-sql">&#39;</span>&lt;the version&gt;<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-sql">&#39;</span></span>;
 </span></code></pre></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
   </ul>
-
 

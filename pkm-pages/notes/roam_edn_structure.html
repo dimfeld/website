@@ -13,8 +13,7 @@ updated: 2021-01-25
       <ul class="list-bullet">
         <li>Each datom is an entry in <code>entity-attribute-value</code> (EAV) format.</li>
         <li>That is, each is a list of the format: <code>[entity-id &quot;attribute-name&quot; value tx-id]</code>, where <code>tx-id</code> is the ID of the database transaction in which the item was most recently modified.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Attributes
       <ul class="list-bullet">
         <li>Each page and block is a single entity, and each has multiple attributes. An entity can also have multiple values for a particular attribute. Generally simply mean that the attribute appears multiple times on the entity, with a different value each time.</li>
@@ -38,14 +37,12 @@ updated: 2021-01-25
  [82509 :edit/email &quot;daniel@danielmfeld.com&quot; 536905536]
  [82509 :edit/time 1610571818743 536905536]
 </span></code></pre></li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li><code>:create/email</code> - The email of the user that created this block</li>
             <li><code>:create/time</code> - A timestamp of when this block was created. Sometimes this is absent.</li>
             <li><code>:edit/email</code> - The email of the last user to edit this block</li>
             <li><code>:edit/time</code> - A timestamp of when this block was last edited</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Block-only Attributes
           <ul class="list-bullet">
             <li><code>:block/heading</code> - The heading level of the block.</li>
@@ -53,8 +50,7 @@ updated: 2021-01-25
             <li><code>:block/page</code> - The entity ID of the page that this block is in.</li>
             <li><code>:block/open</code> - If this block is expanded or collapsed</li>
             <li><code>:block/order</code> - The order that this block appears relative to its sibling blocks.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Page-only Attributes
           <ul class="list-bullet">
             <li><code>:node/title</code> - The title of the page</li>
@@ -69,8 +65,7 @@ updated: 2021-01-25
 [82511 :log/id 1610620052621 536905548] <span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The timestamp
 </span>[82511 :node/title &quot;January 14th, 2021&quot; 536905548]
 </span></code></pre></li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li><code>:entity/attrs</code> - A set of all attributes and values referenced in a page.
               <ul class="list-bullet">
                 <li>Each item in the set is a list of three maps.</li>
@@ -94,8 +89,7 @@ updated: 2021-01-25
  <span class="hljs-comment hljs-line hljs-semicolon hljs-double hljs-clojure"><span class="hljs-punctuation hljs-definition hljs-comment hljs-clojure">;;</span> The string value of the attribute
 </span> {:source [:block/uid &quot;Hg3Z0L4ap&quot;], :value &quot; The Problems With Deliberate Practice&quot;]}}
 </span></code></pre></li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li><code>:attrs/lookup</code> - I haven&#39;t looked into this much yet, but it appears to link to blocks in the page that reference attributes, and also to the attributes themselves.
               <ul class="list-bullet">
                 <li>
@@ -112,12 +106,8 @@ updated: 2021-01-25
   {:source [:block/uid &quot;RBlQZRu5V&quot;], :value &quot; https://scch.io/tutorials/deep-dive-into-css-grid-2&quot;}]
 } 536880551]
 </span></code></pre></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
   </ul>
-
 

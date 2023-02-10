@@ -10,7 +10,7 @@ updated: 2022-12-03
     <li><span><span class="font-medium text-gray-800">status:</span> <span>v0.1 released</span></span></li>
     <li><span><span class="font-medium text-gray-800">url:</span> <span><a href="https://github.com/dimfeld/effectum">https://github.com/dimfeld/effectum</a></span></span></li>
     <li>A job queue based on SQLite, which will eventually be usable either embedded as a library or standalone.</li>
-    <li><span class="text-2xl">Current Features</span>
+    <li><h1>Current Features</h1>
       <ul class="list-bullet">
         <li>Scheduled Jobs</li>
         <li>Multiple types of jobs, and workers can handle one or more types</li>
@@ -21,26 +21,22 @@ updated: 2022-12-03
         <li>Jobs can have higher &quot;weight&quot; for processing-intensive jobs for which we may want to use lower concurrency.</li>
         <li>Workers can listen only for specific types of jobs.</li>
         <li>Workers can run multiple jobs concurrently.</li>
-        <li><span class="text-xl">Handle Unexpected Process Restarts</span>
+        <li><h2>Handle Unexpected Process Restarts</h2>
           <ul class="list-bullet">
             <li>If the process crashes we want to cleanly handle jobs that had been running at the time.</li>
             <li>This involves doing a sweep for running jobs when the queue is created, and scheduling them for retries
               <ul class="list-bullet">
                 <li>Should have options to reschedule them immediately or using standard retry backoff.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>For the future server mode we&#39;ll also want the ability to not touch them and to reinstate them in the in-memory data structures as running jobs, since the workers will have been outside the queue process.
               <ul class="list-bullet">
                 <li>This will probably also work best if the worker details are persisted to the database too.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">Future Features</span>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h1>Future Features</h1>
       <ul class="list-bullet">
-        <li><span class="text-xl">Examples</span>
+        <li><h2>Examples</h2>
           <ul class="list-bullet">
             <li>Create example programs that demonstrate actual usage of the library.</li>
             <li><input type="checkbox" readonly="true" checked /> Simple example</li>
@@ -49,35 +45,29 @@ updated: 2022-12-03
             <li><input type="checkbox" readonly="true"  /> Graceful shutdown</li>
             <li><input type="checkbox" readonly="true"  /> Checkpoint functionality</li>
             <li><input type="checkbox" readonly="true"  /> Expired jobs retry</li>
-          </ul>
-        </li>
-        <li><span class="text-xl">Cancellation and Modification of Pending Jobs</span>
+          </ul>        </li>
+        <li><h2>Cancellation and Modification of Pending Jobs</h2>
           <ul class="list-bullet">
             <li>Disallow this for jobs that are already running, but otherwise jobs should be able to be cancelled, rescheduled, or otherwise modified.</li>
-          </ul>
-        </li>
-        <li><span class="text-xl">Recurring Jobs</span>
+          </ul>        </li>
+        <li><h2>Recurring Jobs</h2>
           <ul class="list-bullet">
             <li>A job template will be added to the database, which will have all the same fields as a normal job except that it will not be scheduled.</li>
             <li>For this job, a corresponding entry will be added to <code>recurring_jobs</code> with a cron-like spec. A task in the queue will then automatically schedule the jobs for the appropriate times.</li>
-          </ul>
-        </li>
-        <li><span class="text-xl">Server Mode</span>
+          </ul>        </li>
+        <li><h2>Server Mode</h2>
           <ul class="list-bullet">
             <li>If you need to scale up, ability to run the queue as its own server.</li>
             <li>This should present the same (or nearly the same) interface as the local mode, to make it easy to switch from one to the other.</li>
             <li>Workers will be remote processes and communicate to the server over gRPC (maybe normal REST too?)
               <ul class="list-bullet">
                 <li>Use long polling or gRPC streaming here for workers that wait for pending jobs?</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">Database Structures</span>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h1>Database Structures</h1>
       <ul class="list-bullet">
-        <li><span class="text-xl">Base Data</span>
+        <li><h2>Base Data</h2>
           <ul class="list-bullet">
             <li>This is stored in the <code>jobs</code> table.</li>
             <li>Fields
@@ -87,35 +77,29 @@ updated: 2022-12-03
                 <li>job type
                   <ul class="list-bullet">
                     <li>Used to filter which workers will try to run this job.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>job priority
                   <ul class="list-bullet">
                     <li>Higher priority jobs will go first when multiple jobs can be run.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>weight
                   <ul class="list-bullet">
                     <li>How much this job counts against a worker&#39;s concurrency limit. Can be increased for jobds that require heavy computation.</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>job status
                   <ul class="list-bullet">
                     <li>Active
                       <ul class="list-bullet">
                         <li>For Active jobs, status resolves to Pending or Running depending on if the job is currently assigned to a worker in <code>active_jobs</code></li>
-                      </ul>
-                    </li>
+                      </ul>                    </li>
                     <li>Success</li>
                     <li>Failed</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>recurrence id (for recurring tasks)</li>
                 <li>Original &quot;run at&quot; time
                   <ul class="list-bullet">
                     <li>job that should run immediately will have this set to now</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>payload</li>
                 <li>payload from last checkpoint</li>
                 <li>current try</li>
@@ -123,28 +107,23 @@ updated: 2022-12-03
                 <li>retry backoff spec
                   <ul class="list-bullet">
                     <li>Backoff initial time, multiplier, and randomization factor</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>time job was added</li>
                 <li>job timeout
                   <ul class="list-bullet">
                     <li>Default expiration time when starting the task is (now + timeout)</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>heartbeat expiration increment
                   <ul class="list-bullet">
                     <li>When receiving a heartbeat, the new expiration will be max of current expiration and (now + expiration increment)</li>
                     <li>This can be 0 to have a strict timeout, regardless of heartbeat</li>
-                  </ul>
-                </li>
+                  </ul>                </li>
                 <li>started at time</li>
                 <li>finished at time</li>
                 <li>run info (info about each failure for failed runs, info about success from a successful run)</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li><span class="text-xl">Active Jobs</span>
+              </ul>            </li>
+          </ul>        </li>
+        <li><h2>Active Jobs</h2>
           <ul class="list-bullet">
             <li>This is information specific to jobs which are running or waiting to run</li>
             <li>job id</li>
@@ -154,48 +133,40 @@ updated: 2022-12-03
             <li>run at time</li>
             <li>started at time</li>
             <li>expiration time for currently running jobs</li>
-          </ul>
-        </li>
-        <li><span class="text-xl">Recurring Job Spec</span>
+          </ul>        </li>
+        <li><h2>Recurring Job Spec</h2>
           <ul class="list-bullet">
             <li>Not supported yet, this is on the roadmap.</li>
             <li>recurrence id</li>
             <li>base data job id
               <ul class="list-bullet">
                 <li>When starting a recurring job, the row from the jobs table will be copied to a new job with a new id</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>schedule</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">In-Memory Data Structures and Tasks</span>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h1>In-Memory Data Structures and Tasks</h1>
       <ul class="list-bullet">
         <li>Track &quot;next&quot; job run time for each job type</li>
         <li>List of clients that can run for each job type
           <ul class="list-bullet">
             <li>When a job becomes available, all the workers are notified, and then those that are currently waiting for a new job will try to grab one.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Database Writer
           <ul class="list-bullet">
             <li>Instead of each task writing to the SQLite database, write access is run from a single thread, which communicates with the rest of the world using a channel. Results are returned through a oneshot associated with each request.</li>
             <li>This is uniquely well suited to SQLite due to its &quot;single writer at a time&quot; policy. Databases with true MVCC wouldn&#39;t be as well served here.</li>
             <li>But the real benefit is that this allows batching of independent requests that come in near the same time, which increases the maximum throughput of the queue by 10x-20x depending on the details.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">Job Runners</span>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h1>Job Runners</h1>
       <ul class="list-bullet">
         <li>Each job has a name and a runner function. The runner function is a normal async function which takes the current job and a context object (for database pools and so on).</li>
         <li>Every job runner for a particular worker has the same type for its context.</li>
         <li>Internally, the runner function is wrapped in some other code which manages things like spawning a task and handling the job completion, and also removing some of the need to explicitly deal with the unique <code>Future</code> type returned from each different async function.</li>
         <li>Eventually there will probably be a proc macro that can automatically create a full runner from the function, but for now you have to create it manually. It&#39;s just a. single line of code though, so not too bad.</li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">Job Workers</span>
+      </ul>    </li>
+    <li><h1>Job Workers</h1>
       <ul class="list-bullet">
         <li>Workers run independently of each other, and are linked to the queue primarily by the notification channels that indicate when new jobs become available.</li>
         <li>The worker runs a loop that waits for pending jobs if it has enough capacity to run them, and otherwise just waits for one of its own jobs to finish.</li>
@@ -205,13 +176,10 @@ updated: 2022-12-03
             <li>Jobs with weight &gt; 1 will also count more against the max concurrency.
               <ul class="list-bullet">
                 <li>e.g. an encoding job that uses a lot of CPU might have a higher weight than smaller tasks like sending an email.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">Algorithms</span>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h1>Algorithms</h1>
       <ul class="list-bullet">
         <li>Running a pending task
           <ul class="list-bullet">
@@ -225,39 +193,29 @@ updated: 2022-12-03
                 <li>Or find the row first, and wait to delete once it succeeds
                   <ul class="list-bullet">
                     <li>This might work better if we&#39;re taking a batch of rows at a time, especially since we may run out of waiting clients for a particular task type.</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><span class="text-2xl">Queue Internal Tasks</span>
+                  </ul>                </li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h1>Queue Internal Tasks</h1>
       <ul class="list-bullet">
         <li>Move pending jobs to running when they reach their &quot;run at&quot; time.
           <ul class="list-bullet">
             <li>This moves jobs in batches until there aren’t any left to move, then waits until the next “run at” time to do anything else. It also needs to be updated whenever that time changes.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Sweeper for expired tasks
           <ul class="list-bullet">
             <li>Update retry data and move them from running back to pending</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Sweeper for deleting old data on successful tasks
           <ul class="list-bullet">
             <li>Optional but keeps the DB from blowing up too much.</li>
             <li>Probably have some hook to send &quot;done&quot; task data somewhere external too.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Sweeper for recurring jobs which should be scheduled or running, but are not.
           <ul class="list-bullet">
             <li>Create a new entry in pending for these (and probably log something since other mechanisms should really handle this)</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
   </ul>
-
 

@@ -72,10 +72,6 @@ class_page_embed_title = ""
 class_page_embed_content = ""
 class_attr_name = "font-medium text-gray-800"
 class_attr_value = ""
-class_heading1 = "text-2xl"
-class_heading2 = "text-xl"
-class_heading3 = "text-lg"
-class_heading4 = "font-medium"
 
 ##### Upcoming features #####
 

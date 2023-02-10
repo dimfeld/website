@@ -19,8 +19,7 @@ updated: 2022-06-10
             <li><code>serde</code> can be made to work with <code>JsValue</code> by enabling the <code>serde-serialize</code> feature of <code>wasm-bindgen</code>.
               <ul class="list-bullet">
                 <li><code>wasm-bindgen = { version = &quot;0.2&quot;, features = [&quot;serde-serialize&quot;] }</code></li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li>Then you can use <code>Serialize</code> and <code>Deserialize</code> traits as normal</li>
             <li><code>JsValue::from_serde(data)</code> will serialize a Rust type to a <code>JsValue</code>.</li>
             <li><code>val::into_serde()</code> will deserialize a value from a <code>JsValue</code> into a Rust type.</li>
@@ -29,12 +28,9 @@ updated: 2022-06-10
                 <li>The <a href="https://docs.rs/serde-wasm-bindgen">serde-wasm-bindgen</a> crate works around this by doing a direct serialization instead of an intermediary JSON step.</li>
                 <li><code>serde_wasm_bindgen::to_value(&amp;value)</code> to convert from a Rust type to a <code>JsValue</code></li>
                 <li><code>serde_wasm_bindgen::from_value(&amp;js_value)</code> to convert from a <code>JsValue</code> to a Rust type</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Errors
       <ul class="list-bullet">
         <li>Javascript Errors can be used with the <code>js_sys::Error</code> type.</li>
@@ -46,10 +42,8 @@ updated: 2022-06-10
     e
 </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
 </span></code></pre></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>wasm-pack
       <ul class="list-bullet">
         <li>This is a tool that works with <code>wasm-bindgen</code> to make it easier to publish WASM blobs.</li>
@@ -59,10 +53,8 @@ updated: 2022-06-10
           <ul class="list-bullet">
             <li><code>wasm-pack new &lt;PROJECT&gt;</code> - Create a new WASM project with Cargo.toml already set up and a skeleton source file.</li>
             <li><code>wasm-pack build</code> - Build the library. This will also install the necessary toolchain if you don&#39;t have the WASM target installed yet.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Examining output size
       <ul class="list-bullet">
         <li>Since WASM is often consumed in the browser, output size can be a concern. The <code>twiggy</code> tool can be used to show what is taking up space.</li>
@@ -72,10 +64,7 @@ updated: 2022-06-10
 # previously had just [&#39;-O4&#39;]
 wasm-opt = [&#39;-O4&#39;, &#39;-g&#39;]
 </span></code></pre></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
   </ul>
-
 

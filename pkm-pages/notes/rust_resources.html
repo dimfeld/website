@@ -17,8 +17,7 @@ updated: 2022-12-27
           <ul class="list-bullet">
             <li><code>tokio</code>, <code>async_std</code>, and <code>futures</code> are the base crates. Tokio and Async_std are sort of &quot;competing&quot; and there&#39;s still a lot of similar-but-slightly-different versions of core traits like <code>AsyncRead</code> between them.</li>
             <li><a href="https://docs.rs/tokio-util">tokio-util</a> has a lot of nice adaptors and things that makes it easier to work with streams, readers, writers, etc.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Performance and Data Processing
           <ul class="list-bullet">
             <li><a href="https://docs.rs/rayon">rayon</a> for super-easy parallelism</li>
@@ -27,16 +26,14 @@ updated: 2022-12-27
             <li><a href="https://docs.rs/smallvec">smallvec</a> when you are making a lot of mostly-small vectors and most, but not all of them, will be below a certain size.</li>
             <li><a href="http://docs.rs/arrayvec">arrayvec</a> when you are making a lot of small vectors and know that they will never exceed a certain size</li>
             <li><a href="https://docs.rs/aho-corasick">aho-corasick</a> for performing multiple substring searches at once in a larger string</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Error Handling
           <ul class="list-bullet">
             <li><a href="https://docs.rs/anyhow">anyhow</a> is great for just merging random errors together when you don&#39;t really care otherwise and just want to get the error message out and all the various errors to have the same type. (i.e. most CLI utilities)</li>
             <li><a href="https://docs.rs/eyre">eyre</a> is a fork of <code>anyhow</code> with emphasis on better error reporting
               <ul class="list-bullet">
                 <li><a href="https://lib.rs/crates/color-eyre">color-eyre</a> works with <code>eyre</code> for much nicer error reporting</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li><a href="https://docs.rs/thiserror">thiserror</a> is nice for structured error types where you want to add extra formatting or otherwise handle errors in a more detailed way.
               <ul class="list-bullet">
                 <li>Can wrap an anyhow inside a thiserror as well</li>
@@ -49,10 +46,8 @@ updated: 2022-12-27
   <span class="hljs-meta hljs-function-call hljs-js"><span class="hljs-variable hljs-function hljs-js">Other</span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">(</span>#<span class="hljs-meta hljs-brackets hljs-js"><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">[</span><span class="hljs-variable hljs-other hljs-readwrite hljs-js">from</span><span class="hljs-punctuation hljs-section hljs-brackets hljs-js">]</span></span> <span class="hljs-variable hljs-other hljs-readwrite hljs-js">anyhow</span>::<span class="hljs-support hljs-class hljs-error hljs-js">Error</span></span><span class="hljs-meta hljs-group hljs-js"><span class="hljs-punctuation hljs-section hljs-group hljs-js">)</span></span></span><span class="hljs-punctuation hljs-separator hljs-comma hljs-js">,</span>
 <span class="hljs-punctuation hljs-section hljs-block hljs-js">}</span></span>
 </span></code></pre></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>Argument Parsing
           <ul class="list-bullet">
             <li><a href="https://docs.rs/clap">clap</a> lets you define command-line arguments declaratively, with options and subcommands.
@@ -79,18 +74,15 @@ updated: 2022-12-27
 </span><span class="hljs-meta hljs-block hljs-rust"><span class="hljs-punctuation hljs-section hljs-block hljs-end hljs-rust">}</span></span></span>
 
 </span></code></pre></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+              </ul>            </li>
+          </ul>        </li>
         <li>CLI
           <ul class="list-bullet">
             <li><code>rustyline</code> for readline-like behavior</li>
             <li><code>dialoguer</code> for prompts</li>
             <li><code>indicatif</code> for progress indicators</li>
             <li><code>clap</code> can also be used to create a REPL. See <a href="https://github.com/dimfeld/perceive/blob/master/crates/perceive-cli/repl.rs">https://github.com/dimfeld/perceive/blob/master/crates/perceive-cli/repl.rs</a> for an example.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Database
           <ul class="list-bullet">
             <li><code>sqlx</code> for connecting to a database and running queries.
@@ -99,25 +91,21 @@ updated: 2022-12-27
                 <li>You can derive <code>sqlx::FromRow</code> on structs to read query results into a structure.</li>
                 <li>Supports a bunch of different async runtimes and all the popular SQL databases.</li>
                 <li>Supports compile-time query validation and result type generation with the <code>query!</code> macro. Or <code>query_as!</code> to use an existing type.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li><code>diesel</code> for a full-fledged ORM if that&#39;s your style. I&#39;ve been using this recently and it&#39;s quite nice. (See <a href="/notes/diesel_rust_orm">Diesel Rust ORM</a>)</li>
             <li><code>sea_orm</code> is another up-and-coming ORM, built on async and with more attempt to provide database-agnostic behavior at runtime.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Image Handling
           <ul class="list-bullet">
             <li><code>image</code> for general image loading and running filters</li>
             <li><code>pix</code> is another option. Haven&#39;t tried it though.
               <ul class="list-bullet">
                 <li>It works with <code>footile</code> to do plotter-style image manipulation</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li><code>ab_glyph</code> and <code>glyph_brush_layout</code> for text rendering</li>
             <li><code>resvg</code> for rendering SVG, and <code>usvg</code> for parsing SVG source</li>
             <li><code>tiny-skia</code> for drawing. <code>resvg</code> uses this internally</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Miscellaneous
           <ul class="list-bullet">
             <li><a href="https://docs.rs/nom">nom</a> for building parsers</li>
@@ -125,8 +113,7 @@ updated: 2022-12-27
             <li><a href="https://docs.rs/syntect">syntect</a> for syntax highlighting
               <ul class="list-bullet">
                 <li>I&#39;ve heard that <a href="https://tree-sitter.github.io/tree-sitter/syntax-highlighting">tree-sitter</a> is good for this too but haven&#39;t tried it.</li>
-              </ul>
-            </li>
+              </ul>            </li>
             <li><a href="https://docs.rs/handlebars">handlebars</a>, <a href="https://docs.rs/liquid">liquid</a>, and <a href="https://docs.rs/tera">tera</a> are popular libraries for text templates.</li>
             <li><a href="https://docs.rs/delegate">delegate</a> for delegating method calls to the same method on an internal field.</li>
             <li><a href="https://crates.io/crates/ouroboros">ouroboros</a> for allowing members of a structure to reference other owned members in the structure, with some additional methods to build and borrow the data.</li>
@@ -136,34 +123,26 @@ updated: 2022-12-27
               <ul class="list-bullet">
                 <li><a href="https://docs.rs/bumpalo/latest/bumpalo/">bumpalo</a> skips calling <code>Drop</code> but allows mixed types of allocations in an arena.</li>
                 <li><a href="https://docs.rs/typed-arena/latest/typed_arena/">typed-arena</a> calls <code>Drop</code> but is limited to allocating objects of one type per arena.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Learning
       <ul class="list-bullet">
         <li><a href="https://doc.rust-lang.org/book/">The Official Book</a></li>
         <li><a href="https://rust-unofficial.github.io/too-many-lists/">Learning Rust with too many Linked Lists</a>
           <ul class="list-bullet">
             <li>This gets into more advanced usage than you&#39;ll usually need, but this is what really helped the ownership model click for me. I read it a few years ago so it&#39;s quite possible that there are better options now.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li><a href="https://github.com/rust-lang/rustlings">https://github.com/rust-lang/rustlings</a>
           <ul class="list-bullet">
             <li>Exercises for learning Rust</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Debugging
       <ul class="list-bullet">
         <li>Use the CodeLLDB extension in VS Code</li>
         <li>For vim, <a href="https://alpha2phi.medium.com/setting-up-neovim-for-rust-debugging-termdebug-and-vimspector-df749e1ba47c">https://alpha2phi.medium.com/setting-up-neovim-for-rust-debugging-termdebug-and-vimspector-df749e1ba47c</a> walks through the process of setting up CodeLLDB with the Vimspector plugin.</li>
         <li>In unit tests use <code>cargo test -- --nocapture</code> to show anything the tests write to stdout</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

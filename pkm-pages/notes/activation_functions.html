@@ -14,8 +14,7 @@ updated: 2021-02-12
         <li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>x</mi></mrow></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">1 / (1 + e^{-x})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0213em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7713em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></li>
         <li>This is the most commonly taught activation function, but it&#39;s not commonly seen in real systems, except sometimes at the output stage of a single-output network.</li>
         <li>The small range of the derivative reduces its usefulness, especially as more layers are added.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li id="c0c20b2a-4a97-463c-8888-a3ae200c8506">ReLU
       <ul class="list-bullet">
         <li>Rectified Linear Unit</li>
@@ -28,31 +27,25 @@ updated: 2021-02-12
             <li>Similar to biological neuron in that it&#39;s fixed until some minimum activation.</li>
             <li>Fast to compute</li>
             <li>No problems with <a href="/notes/vanishing_gradient_problem">Vanishing Gradient Problem</a>, since it doesn&#39;t saturate.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>Disadvantages:
           <ul class="list-bullet">
             <li>We can end up with ReLUs that are always inactive. If we get too many of these it hurts the performance of the network.
               <ul class="list-bullet">
                 <li>This is called the “dying ReLU” problem.</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>Leaky ReLU
       <ul class="list-bullet">
         <li>This addresses the dying ReLU problem by using a slightly negative slope for values below 0.</li>
         <li>Output is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mtext> if </mtext><mi>y</mi><mo>&gt;</mo><mn>0</mn><mo separator="true">,</mo><mi>a</mi><mi>y</mi><mtext> for </mtext><mi>y</mi><mo>&lt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">{y} \text{ if } y &gt; 0, ay \text { for } y &lt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span><span class="mord text"><span class="mord"> if </span></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord text"><span class="mord"> for </span></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>. Usually <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mn>0.01</mn></mrow><annotation encoding="application/x-tex">a = 0.01</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.01</span></span></span></span>.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>Softplus
       <ul class="list-bullet">
         <li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mi>l</mi><mi>o</mi><mi>g</mi><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><msup><mi>e</mi><mi>x</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y = log(1 + e^x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></li>
         <li>This looks kind of like a ReLU but increases with a smooth curve instead of abruptly changing the slope at 0.</li>
-      </ul>
-    </li>
+      </ul>    </li>
     <li>ArgMax
       <ul class="list-bullet">
         <li>The raw output values in a network aren’t always between 0 and 1, especially with multiple outputs and more complex networks. </li>
@@ -60,10 +53,8 @@ updated: 2021-02-12
           <ul class="list-bullet">
             <li>Big downside here is that we can’t backpropagate a network with an ArgMax. </li>
             <li>Also if two highest outputs are pretty close, we don’t see that.</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
+          </ul>        </li>
+      </ul>    </li>
     <li>SoftMax
       <ul class="list-bullet">
         <li>Softmax attempts to solve the backpropagation problem faced by ArgMax.</li>
@@ -71,12 +62,9 @@ updated: 2021-02-12
         <li>This transforms all the output values to a range within 0 to 1, and with the sum of the values equal to 1.
           <ul class="list-bullet">
             <li>This is kind of like a probability but shouldn’t actually be used as one.</li>
-          </ul>
-        </li>
+          </ul>        </li>
         <li>We can then take the derivatives of these values to use them for gradient descent.</li>
         <li>It’s common to use ArgMax for running in production but SoftMax for training.</li>
-      </ul>
-    </li>
+      </ul>    </li>
   </ul>
-
 

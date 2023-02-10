@@ -11,16 +11,16 @@
   $: link = journalLink(id);
 </script>
 
-<div class="content mb-12 px-4 font-serif sm:px-0">
+<div class="mb-12 px-4 font-serif sm:px-0">
   <article class="pkm-page" {id}>
     <div class="mb-4 leading-tight">
-      <svelte:element this={titleElement} class="font-sanserif inline">
+      <svelte:element this={titleElement} class="inline font-sans">
         {title}
       </svelte:element>
       <a href={link}>🔗</a>
     </div>
 
-    <div class="content no-indent">
+    <div class="content prose">
       {@html content}
     </div>
   </article>

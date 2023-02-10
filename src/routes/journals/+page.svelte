@@ -4,7 +4,7 @@
   export let data: PageData;
 </script>
 
-<div class="mt-2 flex w-full flex-col justify-center gap-8">
+<div class="prose mt-2 flex w-full flex-col items-stretch gap-8">
   {#each data.journals as post}
     <Journal {...post} />
   {/each}
