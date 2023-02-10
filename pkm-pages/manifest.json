@@ -709,9 +709,9 @@
     "title": "Web Scrapers",
     "uid": ""
   },
-  "pkm-pages/writing/intro_to_geojson.html": {
-    "slug": "/writing/intro_to_geojson",
-    "title": "Intro to GeoJSON",
+  "pkm-pages/writing/introduction_to_geojson.html": {
+    "slug": "/writing/introduction_to_geojson",
+    "title": "Introduction to GeoJSON",
     "uid": ""
   }
 }
