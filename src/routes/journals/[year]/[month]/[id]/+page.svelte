@@ -5,6 +5,6 @@
   export let data: PageData;
 </script>
 
-<div class="pt-2">
+<div class="prose pt-2">
   <Journal {...data.post} showFooter />
 </div>
