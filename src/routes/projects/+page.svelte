@@ -1,4 +1,8 @@
 <script>
+  import { getContext } from 'svelte';
+  let titleStore = getContext('title');
+  $titleStore = 'Projects';
+
   const projects = [
     {
       name: 'Ergo',
