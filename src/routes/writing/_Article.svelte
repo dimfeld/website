@@ -7,7 +7,6 @@
   export let type;
   export let content;
   export let showFooter = true;
-  export let indentTopLevel = true;
   export let titleElement = 'h1';
 
   import ArticleFooter from '$lib/ArticleFooter.svelte';

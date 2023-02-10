@@ -74,6 +74,18 @@ export const postSources: Source[] = [
       import.meta.glob('../../posts/*.html', { as: 'raw', eager: true })
     ),
   },
+  {
+    ext: 'html',
+    type: 'post',
+    files: stripGlobbedPrefix(
+      '../../pkm-pages/writing/',
+      import.meta.glob('../../pkm-pages/writing/*.html', {
+        as: 'raw',
+        eager: true,
+      })
+    ),
+    source: 'pkm',
+  },
 ];
 
 export const noteSources: Source[] = [
