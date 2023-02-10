@@ -51,8 +51,9 @@ convert_json $@
 <pre><code><span class="hljs-text hljs-plain">SRC := $(wildcard *.pptx)
 OUT := $(SRC:.pptx=.json)
 all: $(OUT)
+
 %.json: %.pptx
-compile.sh $&lt; &gt; $@
+	compile.sh $&lt; &gt; $@
 </span></code></pre></li>
           </ul>        </li>
       </ul>    </li>
