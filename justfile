@@ -10,4 +10,4 @@ pkm:
 
 # Watch the Logseq directory for changes and run the exporter whenever something changes
 watch-pkm:
-  watchlist ~/logseq -- export-logseq-notes
+  watchlist ~/logseq -- export-logseq-notes --safe-write
