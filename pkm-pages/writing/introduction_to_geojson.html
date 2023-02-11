@@ -2,7 +2,7 @@
 title: "Introduction to GeoJSON"
 tags: Geodata
 date: 2023-01-10
-updated: 2023-02-10
+updated: 2023-02-11
 draft: true
 cta: geobook
 series: Working with Geographic Data
@@ -91,7 +91,6 @@ series: Working with Geographic Data
 </picture>
 </p>
 
-
     <p><h2>Making Geometries More Useful </h2></p>
         <p>A geometry on its own is just a shape, with no way to tell anything more useful about it. You almost always want to add some kind of information to it, and GeoJSON solves this with the Feature type. A Feature wraps a geometry and allows you add any metadata you want.</p>
         <p><pre><code><span class="hljs-source hljs-json"><span class="hljs-meta hljs-structure hljs-dictionary hljs-json"><span class="hljs-punctuation hljs-section hljs-dictionary hljs-begin hljs-json">{</span>
@@ -113,7 +112,7 @@ series: Working with Geographic Data
 </span><span class="hljs-punctuation hljs-section hljs-dictionary hljs-end hljs-json">}</span></span>
 </span></code></pre></p>
         <p>The <code>id</code> property is optional but can be useful for linking a Feature back to a particular object in a database, or something similar.</p>
-        <p>There is no defined schema for <code>properties</code> here &emdash; you can put any JSON object inside there.</p>
+        <p>There is no defined schema for <code>properties</code> here &mdash; cyou can put any JSON object inside there.</p>
 
     <p><h2>Groups of Objects </h2></p>
         <p>When you want to group multiple Features together, you can use a FeatureCollection, which just contains an array of Features.</p>
@@ -151,20 +150,21 @@ series: Working with Geographic Data
   <span class="hljs-punctuation hljs-section hljs-array hljs-end hljs-json">]</span></span>
 </span><span class="hljs-punctuation hljs-section hljs-dictionary hljs-end hljs-json">}</span></span>
 </span></code></pre></p>
-        <p><strong class="font-bold">08:53</strong> 
+        <p>
 <picture>
   <source srcset="https://images.imfeld.dev/blog/geojson-geometrycollection_1676018882698_0-w650-AYY6gp6_mUDvFAOHUPtGKQ.webp" type="image/webp" width="650" height="649" />
   <source srcset="https://images.imfeld.dev/blog/geojson-geometrycollection_1676018882698_0-w650-AYY6gp6_mUDvFAOHUPtGKQ.avif" type="image/avif" width="650" height="649" />
   <source srcset="https://images.imfeld.dev/blog/geojson-geometrycollection_1676018882698_0-w650-AYY6gp6_mUDvFAOHUPtGKQ.jpg" type="image/jpg" width="650" height="649" />
   <img src="https://images.imfeld.dev/blog/geojson-geometrycollection_1676018882698_0-w650-AYY6gp6_mUDvFAOHUPtGKQ.jpg" alt="geojson-geometrycollection.jpeg" width="650" height="649" />
 </picture>
- l</p>
+</p>
 
 
     <p><h2>Polygons </h2></p>
-        <p>Polygons are one of the most used geometries used in GeoJSON, but they bring in additional complexity. Polygons are commonly found when drawing boundaries around geographic regions or other areas. There is no limit on the number of points in a polygon. It can be as simple as a triangle or complex enough to follow the exact contours of a shoreline.</p>
-        <p>Polygons do come with a few restrictions. Unlike a LineString, a Polygon must be explicitly closed. The first and last points in the Polygon must be identical for it to be valid.</p>
+        <p>Polygons are commonly found when drawing boundaries around geographic regions or other areas. These are one of the most used geometries used in GeoJSON, but they bring in additional complexity.</p>
+        <p>Unlike a LineString, a Polygon must be explicitly closed. The first and last points in the Polygon must be identical for it to be valid.</p>
         <p>Furthermore, the points in a polygon must be in counterclockwise order. This rule makes it simpler for renderers to figure out which side of the polygon is the outside vs. the inside, without needing to do additional calculations.</p>
+        <p>There is no limit on the number of segments in a polygon. It can be as simple as a triangle or complex enough to follow the exact contours of a shoreline.</p>
         <p>The first LineString above would be represented like this:</p>
         <p><pre><code><span class="hljs-source hljs-json"><span class="hljs-meta hljs-structure hljs-dictionary hljs-json"><span class="hljs-punctuation hljs-section hljs-dictionary hljs-begin hljs-json">{</span>
   <span class="hljs-meta hljs-structure hljs-dictionary hljs-key hljs-json"><span class="hljs-string hljs-quoted hljs-double hljs-json"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-json">&quot;</span>type<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-json">&quot;</span></span></span><span class="hljs-meta hljs-structure hljs-dictionary hljs-value hljs-json"><span class="hljs-punctuation hljs-separator hljs-dictionary hljs-key-value hljs-json">:</span> <span class="hljs-string hljs-quoted hljs-double hljs-json"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-json">&quot;</span>Polygon<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-json">&quot;</span></span><span class="hljs-punctuation hljs-separator hljs-dictionary hljs-pair hljs-json">,</span></span>
