@@ -16,9 +16,9 @@ updated: 2021-03-19
         <li>Then change the checksum for that row in the database: 
           <ul class="list-bullet">
             <li>
-<pre><code><span class="hljs-source hljs-sql"><span class="hljs-keyword hljs-other hljs-DML hljs-sql">update</span> _sqlx_migrations 
-	<span class="hljs-keyword hljs-other hljs-DML hljs-sql">set</span> checksum<span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span><span class="hljs-string hljs-quoted hljs-single hljs-sql"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-sql">&#39;</span><span class="hljs-constant hljs-character hljs-escape hljs-sql">\x</span>&lt;the checksum&gt;<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-sql">&#39;</span></span>
-  <span class="hljs-keyword hljs-other hljs-DML hljs-sql">where</span> version <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span><span class="hljs-string hljs-quoted hljs-single hljs-sql"><span class="hljs-punctuation hljs-definition hljs-string hljs-begin hljs-sql">&#39;</span>&lt;the version&gt;<span class="hljs-punctuation hljs-definition hljs-string hljs-end hljs-sql">&#39;</span></span>;
+<pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">update</span> _sqlx_migrations 
+	<span class="sy-keyword sy-other sy-DML sy-sql">set</span> checksum<span class="sy-keyword sy-operator sy-comparison sy-sql">=</span><span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span><span class="sy-constant sy-character sy-escape sy-sql">\x</span>&lt;the checksum&gt;<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>
+  <span class="sy-keyword sy-other sy-DML sy-sql">where</span> version <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span><span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>&lt;the version&gt;<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>;
 </span></code></pre></li>
           </ul>        </li>
       </ul>    </li>

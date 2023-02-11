@@ -14,13 +14,13 @@ updated: 2022-10-02
     <li>Bulk Loading
       <ul class="list-bullet">
         <li>When bulk loading data, the following settings can improve write performance significantly. Most of these settings should absolutely not be used in other scenarios or you can&#39;t recreate the entire database in the event of a crash, as they trade away all the the safety guarantees in exchange for faster writes.</li>
-        <li><pre><code><span class="hljs-source hljs-sql">PRAGMA journal_mode <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> OFF;
-PRAGMA page_size <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> <span class="hljs-constant hljs-numeric hljs-sql">16384</span>; <span class="hljs-comment hljs-line hljs-double-dash hljs-sql"><span class="hljs-punctuation hljs-definition hljs-comment hljs-sql">--</span> if using the zstd VFS extension
-</span>PRAGMA synchronous <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> <span class="hljs-constant hljs-numeric hljs-sql">0</span>;
-PRAGMA auto_vacuum <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> NONE;
-PRAGMA cache_size <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> <span class="hljs-keyword hljs-operator hljs-math hljs-sql">-</span><span class="hljs-constant hljs-numeric hljs-sql">10485760</span>;
-PRAGMA locking_mode <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> EXCLUSIVE;
-PRAGMA temp_store <span class="hljs-keyword hljs-operator hljs-comparison hljs-sql">=</span> MEMORY;
+        <li><pre><code><span class="sy-source sy-sql">PRAGMA journal_mode <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> OFF;
+PRAGMA page_size <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-constant sy-numeric sy-sql">16384</span>; <span class="sy-comment sy-line sy-double-dash sy-sql"><span class="sy-punctuation sy-definition sy-comment sy-sql">--</span> if using the zstd VFS extension
+</span>PRAGMA synchronous <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-constant sy-numeric sy-sql">0</span>;
+PRAGMA auto_vacuum <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> NONE;
+PRAGMA cache_size <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-keyword sy-operator sy-math sy-sql">-</span><span class="sy-constant sy-numeric sy-sql">10485760</span>;
+PRAGMA locking_mode <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> EXCLUSIVE;
+PRAGMA temp_store <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> MEMORY;
 </span></code></pre></li>
       </ul>    </li>
   </ul>

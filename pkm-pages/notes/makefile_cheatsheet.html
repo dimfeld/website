@@ -19,7 +19,7 @@ updated: 2021-04-20
         <li>Dependencies work the same way.</li>
         <li>The indented lines after a target are the commands to run.</li>
         <li>
-<pre><code><span class="hljs-text hljs-plain">all: $(wildcard *.json)
+<pre><code><span class="sy-text sy-plain">all: $(wildcard *.json)
 convert_json $@
 </span></code></pre></li>
         <li>A target can use double colons <code>file::</code> to allow defining the target multiple times. Otherwise this is an error.</li>
@@ -48,7 +48,7 @@ convert_json $@
         <li>But you still need a way to set up the main target, and so something like this usually works well:
           <ul class="list-bullet">
             <li>
-<pre><code><span class="hljs-text hljs-plain">SRC := $(wildcard *.pptx)
+<pre><code><span class="sy-text sy-plain">SRC := $(wildcard *.pptx)
 OUT := $(SRC:.pptx=.json)
 all: $(OUT)
 
