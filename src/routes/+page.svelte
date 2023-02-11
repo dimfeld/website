@@ -7,7 +7,7 @@
   import NewsletterSignup from '$lib/components/NewsletterSignup.svelte';
 
   export let data: PageData;
-  $: ({ latestPost, latestNote, latestJournals, lastCreatedNote } = data);
+  $: ({ latestPosts, latestNotes, latestJournals, lastCreatedNote } = data);
 
   getContext('title').set('');
 
@@ -25,6 +25,28 @@
 </script>
 
 <article class="prose m-4 self-center px-2 font-serif">
+  <h1 class="mb-0">Recent Writing</h1>
+  <ul>
+    {#each latestPosts as post}
+      <li>
+        <a href="writing/{post.id}" data-sveltekit-preload-data>{post.title}</a>
+      </li>
+    {/each}
+    <li><a href="/writing" data-sveltekit-preload-data>All Posts</a></li>
+  </ul>
+
+  <h1 class="mb-0">Notebook</h1>
+  <ul>
+    {#if !latestNotes.find((n) => n.id === lastCreatedNote.id)}
+      <li><a href="/notes/{lastCreatedNote.id}">{lastCreatedNote.title}</a></li>
+    {/if}
+
+    {#each latestNotes as note}
+      <li><a href="notes/{note.id}">{note.title}</a></li>
+    {/each}
+    <li><a href="/notes" data-sveltekit-preload-data>All Notes</a></li>
+  </ul>
+
   <h1>Latest Updates</h1>
 
   <div class="mt-2 flex flex-col items-start gap-4">
@@ -35,49 +57,21 @@
 
   <p>
     <a
-      data-sveltekit-prefetch
+      data-sveltekit-preload-data
       href="/journals#{data.nextJournal}"
       class="font-medium">
       See more daily updates...
     </a>
   </p>
 
-  <p class="mt-8">
-    In addition to these short updates, I sometimes write longer articles too.
-    My latest is {#if latestPost.frontPageSummary}
-      <a use:annotate={annotationOptions} href="writing/{latestPost.id}"
-        >{latestPost.title}</a
-      >, about {latestPost.frontPageSummary}.
-    {:else}
-      <a use:annotate={annotationOptions} href="writing/{latestPost.id}"
-        >{latestPost.title}</a
-      >.
-    {/if}
-  </p>
-
-  <p>
-    I also host my
-    <a data-sveltekit-prefetch href="notes">notes</a>
-    here publicly, in hopes that some readers will be educated and others can help
-    fill in the gaps. {#if lastCreatedNote.id !== latestNote.id}
-      <a href="notes/{lastCreatedNote.id}">{lastCreatedNote.title}</a>
-      is the newest note and
-      <a href="notes/{latestNote.id}">{latestNote.title}</a>
-      was updated most recently.
-    {:else}
-      The newest note is
-      <a href="notes/{latestNote.id}">{latestNote.title}</a>.
-    {/if}
-  </p>
-
   <p class="mt-4">
-    And if you like what you've read, please consider subscribing to my
+    If you like what you've read here, please consider subscribing to my
     weekly-ish newsletter, where I announce new articles and share other
     interesting things I've found.
     <NewsletterSignup />
   </p>
 
-  <h1>About Me</h1>
+  <h1 id="aboutme">About Me</h1>
 
   <h2>Work</h2>
 

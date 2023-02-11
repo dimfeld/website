@@ -9,22 +9,23 @@ import { maxBy } from 'lodash-es';
 import sorter from 'sorters';
 
 export async function load() {
-  let posts = readAllSources(postSources);
-  let notes = readAllSources(noteSources);
+  const dateSorter = sorter({ value: 'date', descending: true });
+  let posts = readAllSources(postSources).sort(dateSorter);
+  let notes = readAllSources(noteSources).sort(dateSorter);
   let journals = readAllSources(journalSources);
 
-  let latestPost = maxBy(posts, (post) => post.date);
-  let latestNote = maxBy(notes, (note) => note.updated || note.date);
+  let latestPosts = posts.slice(0, 3);
+  let latestNotes = notes
+    .sort(sorter({ value: (p) => p.updated || p.date }))
+    .slice(0, 3);
   let lastCreatedNote = maxBy(notes, 'date');
 
-  let sortedJournals = journals.sort(
-    sorter({ value: (p) => p.date, descending: true })
-  );
+  let sortedJournals = journals.sort(dateSorter);
 
   const NUM_JOURNALS = 3;
   return {
-    latestPost: stripContent(latestPost),
-    latestNote: stripContent(latestNote),
+    latestPosts: latestPosts.map(stripContent),
+    latestNotes: latestNotes.map(stripContent),
     latestJournals: sortedJournals.slice(0, NUM_JOURNALS),
     nextJournal: sortedJournals[NUM_JOURNALS]?.id,
     lastCreatedNote: stripContent(lastCreatedNote),
