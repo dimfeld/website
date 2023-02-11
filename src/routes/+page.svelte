@@ -24,7 +24,7 @@
   });
 </script>
 
-<article class="prose m-4 self-center font-serif">
+<article class="prose m-4 self-center px-2 font-serif">
   <h1>Latest Updates</h1>
 
   <div class="mt-2 flex flex-col items-start gap-4">

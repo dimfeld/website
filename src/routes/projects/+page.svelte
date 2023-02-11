@@ -65,7 +65,7 @@
   }
 </script>
 
-<article class="prose m-4 self-center sm:mx-16">
+<article class="prose m-4 self-center px-2 sm:mx-16">
   <p class="font-serif">
     For the first half of my career, most of my work has been in proprietary
     code bases. I'm steadily growing my open source contributions, and the more
