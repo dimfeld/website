@@ -1,6 +1,7 @@
 @import './fonts.css';
 @import 'highlight.js/styles/vs.css';
 @import './katex.css';
+@import './syntect.css';
 
 @tailwind base;
 @tailwind components;

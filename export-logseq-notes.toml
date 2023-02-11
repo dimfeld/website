@@ -14,7 +14,7 @@ extension = "html"
 
 # When performing syntax highlighting, prefix the classes with
 # this string. This is optional.
-highlight_class_prefix = "hljs-"
+highlight_class_prefix = "sy-"
 
 
 ##### Tags Output ####

@@ -17,12 +17,12 @@ updated: 2022-11-16
             <li>An array field works better, but it shares a lot of the downsides with the comma-separated string method: complicated indexes, harder to query and join against.</li>
             <li>The best way is to use an intersection table
               <ul class="list-bullet">
-                <li><pre><code><span class="hljs-source hljs-sql"><span class="hljs-meta hljs-create hljs-sql"><span class="hljs-keyword hljs-other hljs-create hljs-sql">CREATE</span> <span class="hljs-keyword hljs-other hljs-sql">TABLE</span> <span class="hljs-entity hljs-name hljs-function hljs-sql">PaperAuthors</span></span> (
-  paper_id BIGITN <span class="hljs-keyword hljs-other hljs-DDL hljs-create hljs-II hljs-sql">NOT NULL</span>,
-  author_id <span class="hljs-storage hljs-type hljs-sql">BIGINT</span> <span class="hljs-keyword hljs-other hljs-DDL hljs-create hljs-II hljs-sql">NOT NULL</span>,
-  <span class="hljs-storage hljs-modifier hljs-sql">PRIMARY KEY</span>(paper_id, author_id),
-  <span class="hljs-storage hljs-modifier hljs-sql">FOREIGN KEY</span>(paper_id) <span class="hljs-storage hljs-modifier hljs-sql">REFERENCES</span> Papers(paper_id),
-  <span class="hljs-storage hljs-modifier hljs-sql">FOREIGN KEY</span>(author_id) <span class="hljs-storage hljs-modifier hljs-sql">REFERENCES</span> Authors(author_id)
+                <li><pre><code><span class="sy-source sy-sql"><span class="sy-meta sy-create sy-sql"><span class="sy-keyword sy-other sy-create sy-sql">CREATE</span> <span class="sy-keyword sy-other sy-sql">TABLE</span> <span class="sy-entity sy-name sy-function sy-sql">PaperAuthors</span></span> (
+  paper_id BIGITN <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">NOT NULL</span>,
+  author_id <span class="sy-storage sy-type sy-sql">BIGINT</span> <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">NOT NULL</span>,
+  <span class="sy-storage sy-modifier sy-sql">PRIMARY KEY</span>(paper_id, author_id),
+  <span class="sy-storage sy-modifier sy-sql">FOREIGN KEY</span>(paper_id) <span class="sy-storage sy-modifier sy-sql">REFERENCES</span> Papers(paper_id),
+  <span class="sy-storage sy-modifier sy-sql">FOREIGN KEY</span>(author_id) <span class="sy-storage sy-modifier sy-sql">REFERENCES</span> Authors(author_id)
 );
 </span></code></pre></li>
                 <li>This also makes it easy to add metadata on a relationship, such as the date it was created or who added the entry.</li>
