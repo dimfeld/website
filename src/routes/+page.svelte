@@ -38,11 +38,16 @@
   <h1 class="mb-0">Notebook</h1>
   <ul>
     {#if !latestNotes.find((n) => n.id === lastCreatedNote.id)}
-      <li><a href="/notes/{lastCreatedNote.id}">{lastCreatedNote.title}</a></li>
+      <li>
+        <a href="/notes/{lastCreatedNote.id}" data-sveltekit-preload-data
+          >{lastCreatedNote.title}</a>
+      </li>
     {/if}
 
     {#each latestNotes as note}
-      <li><a href="notes/{note.id}">{note.title}</a></li>
+      <li>
+        <a href="notes/{note.id}" data-sveltekit-preload-data>{note.title}</a>
+      </li>
     {/each}
     <li><a href="/notes" data-sveltekit-preload-data>All Notes</a></li>
   </ul>
