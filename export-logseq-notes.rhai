@@ -9,6 +9,25 @@ let autotags = #{
 let site_category = page.get_attr_first("site-category");
 let public_attr = page.get_attr_first("public") == "true";
 
+fn process_html_attrs(block) {
+  let wrap_el = block.get_attr_first("wrap-el");
+  if !wrap_el.is_empty() {
+    block.wrapper_element = wrap_el;
+  }
+
+  let content_el = block.get_attr_first("content-el");
+  if !content_el.is_empty() {
+    block.content_element = content_el;
+  }
+
+  let classes = block.get_attr("wrap-class");
+  if !classes.is_empty() {
+    block.classlist = classes;
+  }
+
+  return block;
+}
+
 if page.is_journal {
   page.url_base = "/journals";
   page.path_base = "pkm-pages/journals";
@@ -51,13 +70,17 @@ if page.is_journal {
   page.url_base = "/writing";
   page.path_base = "pkm-pages/writing";
 
-  each_block(1, |block, depth| {
+  each_block(9999, |block, depth| {
     if depth == 0 {
       block.view_type = ViewType::Document;
-    } else if block.contents.starts_with("Contents") {
-      block.include = BlockInclude::OnlyChildren;
+    } else if depth == 1 {
+      if block.contents.starts_with("Contents") {
+        block.include = BlockInclude::OnlyChildren;
+      } else {
+        block.include = BlockInclude::Exclude;
+      }
     } else {
-      block.include = BlockInclude::Exclude;
+      return process_html_attrs(block)
     }
   });
 } else {
