@@ -7,14 +7,14 @@ updated: 2022-12-29
 
 
     
-    <p><h2>Torch on M1 GPU</h2></p>
+    <h2>Torch on M1 GPU</h2>
     <p>It was a bit tricky getting <code>rust-bert</code> to work on the M1 GPU. The issue, apparently, is that pytorch JIT models not trained for MPS (the macOS GPU framework) can not be directly loaded on MPS. But it does work to load them and then convert them to MPS.</p>
     <p>But it turns out there&#39;s an easy solution. After loading the <code>VarStore</code> on the CPU device, it&#39;s just a matter of <code>var_store.set_device(tch::Device::Mps)</code> and then you&#39;re running on the GPU!</p>
     <p>In my initial tests with an M1 Pro, this is about 2-3x as fast as running on CPU/AMX. This took the time to scan and index my Logseq database (~1000 documents) down to 6 seconds. Curious if this would have been 3 seconds on an M1 Max, but I didn&#39;t spend the extra $400 a couple years ago to find out now. :)</p>
-    <p><h2>Switching Models</h2></p>
+    <h2>Switching Models</h2>
     <p>The <code>MiniLmL12V2</code> model that I started out with is trained more for &quot;sentence similarity&quot; than for searching longer documents, and it shows. I switched the model to <code>msmarco-bert-base-dot-v5</code>, which is supposed to work a lot better for semantic search, and indeed the search results improved immensely. The import process takes a lot longer (40 seconds for ~1000 documents), but that&#39;s still not bad. That GPU inference is pulling its weight.</p>
     <p>These models aren&#39;t automatically supported by <code>rust-bert</code>, but the instructions on how to download and use other models worked great, and this one is similar enough to the existing sentence embedding pipeline that I didn&#39;t have to change much.</p>
-    <p><h2>Search Highlighting</h2></p>
+    <h2>Search Highlighting</h2>
     <p>Finally, I implemented search result highlighting, so that you get not only the title of the found document, but a snippet of text from the document relevant to the query. I&#39;m now using two models in the program at once. The primary model used for the search is still a BERT-based model, and handles the full document encoding.</p>
     <p>The BERT model is powerful but relatively slow, so for highlighting, I used the <code>MiniLmL6V2</code> model, which is both much faster and focused on small strings of text.</p>
     <p>Then for each matching document, I tokenize it, break the list of tokens into overlapping chunks, and encode each chunk with the model. Finally, I also encode the original query, take a dot product between the two results, and the highest dot product for each document is the best-matching chunk.</p>
