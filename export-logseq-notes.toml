@@ -45,7 +45,10 @@ omit_attributes = [
   "progress",
   "Progress",
   "tags",
-  "Tags"
+  "Tags",
+  "wrap-el",
+  "content-el",
+  "wrap-class"
 ]
 
 
