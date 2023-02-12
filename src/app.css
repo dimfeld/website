@@ -136,6 +136,11 @@ html {
     display: block;
     @apply my-4;
   }
+
+  .code-and-image {
+    display: block;
+    @apply my-4;
+  }
 }
 
 @screen sm {
@@ -162,6 +167,26 @@ html {
 
 @screen md {
   html {
+    .code-and-image {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      place-items: start stretch;
+      width: 95vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: max(-47.5vw, -70ch);
+      margin-right: max(-47.5vw, -70ch);
+      max-width: 140ch;
+      gap: 1rem;
+    }
+
+    .code-and-image > *,
+    .code-and-image img,
+    .code-and-image picture {
+      margin: 0;
+    }
+
     .side-by-side {
       display: grid;
       grid-template-columns: minmax(30%, 60ch) minmax(70%, 1fr);
