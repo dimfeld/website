@@ -25,49 +25,59 @@
 </script>
 
 <article class="prose m-4 self-center px-2 font-serif">
-  <h1 class="mb-0">Recent Writing</h1>
-  <ul>
-    {#each latestPosts as post}
-      <li>
-        <a href="writing/{post.id}" data-sveltekit-preload-data>{post.title}</a>
-      </li>
-    {/each}
-    <li><a href="/writing" data-sveltekit-preload-data>All Posts</a></li>
-  </ul>
+  <div class="grid-cols-2 md:grid">
+    <section>
+      <h1 class="mb-0">Recent Writing</h1>
+      <ul class="mt-2">
+        {#each latestPosts as post}
+          <li>
+            <a href="writing/{post.id}" data-sveltekit-preload-data
+              >{post.title}</a>
+          </li>
+        {/each}
+        <li><a href="/writing" data-sveltekit-preload-data>All Posts</a></li>
+      </ul>
+    </section>
 
-  <h1 class="mb-0">Notebook</h1>
-  <ul>
-    {#if !latestNotes.find((n) => n.id === lastCreatedNote.id)}
-      <li>
-        <a href="/notes/{lastCreatedNote.id}" data-sveltekit-preload-data
-          >{lastCreatedNote.title}</a>
-      </li>
-    {/if}
+    <section>
+      <h1 class="mb-0">Notebook</h1>
+      <ul class="mt-2">
+        {#if !latestNotes.find((n) => n.id === lastCreatedNote.id)}
+          <li>
+            <a href="/notes/{lastCreatedNote.id}" data-sveltekit-preload-data
+              >{lastCreatedNote.title}</a>
+          </li>
+        {/if}
 
-    {#each latestNotes as note}
-      <li>
-        <a href="notes/{note.id}" data-sveltekit-preload-data>{note.title}</a>
-      </li>
-    {/each}
-    <li><a href="/notes" data-sveltekit-preload-data>All Notes</a></li>
-  </ul>
-
-  <h1>Latest Updates</h1>
-
-  <div class="mt-2 flex flex-col items-start gap-4">
-    {#each latestJournals as post}
-      <Journal {...post} titleElement="h2" />
-    {/each}
+        {#each latestNotes as note}
+          <li>
+            <a href="notes/{note.id}" data-sveltekit-preload-data
+              >{note.title}</a>
+          </li>
+        {/each}
+        <li><a href="/notes" data-sveltekit-preload-data>All Notes</a></li>
+      </ul>
+    </section>
   </div>
 
-  <p>
-    <a
-      data-sveltekit-preload-data
-      href="/journals#{data.nextJournal}"
-      class="font-medium">
-      See more daily updates...
-    </a>
-  </p>
+  <section>
+    <h1>Latest Updates</h1>
+
+    <div class="mt-2 flex flex-col items-start gap-4">
+      {#each latestJournals as post}
+        <Journal {...post} titleElement="h2" />
+      {/each}
+    </div>
+
+    <p>
+      <a
+        data-sveltekit-preload-data
+        href="/journals#{data.nextJournal}"
+        class="font-medium">
+        See more daily updates...
+      </a>
+    </p>
+  </section>
 
   <p class="mt-4">
     If you like what you've read here, please consider subscribing to my
