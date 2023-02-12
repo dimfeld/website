@@ -181,6 +181,18 @@ html {
       gap: 1rem;
     }
 
+    .code-and-image > *:first-child {
+      place-self: start end;
+    }
+
+    .code-and-image > *:last-child {
+      place-self: start start;
+    }
+
+    .code-and-image > pre {
+      min-width: 21rem;
+    }
+
     .code-and-image > *,
     .code-and-image img,
     .code-and-image picture {
