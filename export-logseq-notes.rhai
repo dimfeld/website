@@ -8,6 +8,14 @@ let autotags = #{
 
 let site_category = page.get_attr_first("site-category");
 let public_attr = page.get_attr_first("public") == "true";
+let publish_title = page.get_attr_first("publish-title");
+if !publish_title.is_empty() {
+  page.title = publish_title;
+  page.url_name = to_slug(publish_title);
+} else if page.title.starts_with("Writing/") {
+  page.title = page.title.sub_string("Writing/".len);
+  page.url_name = to_slug(page.title);
+}
 
 fn process_html_attrs(block) {
   let wrap_el = block.get_attr_first("wrap-el");
