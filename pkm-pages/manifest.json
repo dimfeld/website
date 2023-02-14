@@ -309,6 +309,11 @@
     "title": "2023-02-11",
     "uid": ""
   },
+  "pkm-pages/journals/2023-02-13.html": {
+    "slug": "/journals/2023_02_13",
+    "title": "2023-02-13",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -717,6 +722,11 @@
   "pkm-pages/writing/introduction_to_geojson.html": {
     "slug": "/writing/introduction_to_geojson",
     "title": "Introduction to GeoJSON",
+    "uid": ""
+  },
+  "pkm-pages/writing/loading_geographic_data_in_a_format_you_can_actually_use.html": {
+    "slug": "/writing/loading_geographic_data_in_a_format_you_can_actually_use",
+    "title": "Loading Geographic Data in a Format You Can Actually Use",
     "uid": ""
   }
 }
