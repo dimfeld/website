@@ -1,24 +1,171 @@
 ---
 title: "Loading Geographic Data in a Format You Can Actually Use"
 tags: Geodata
-date: 2023-02-13
-updated: 2023-02-14
-draft: true
+date: 2023-02-17
+updated: 2023-02-17
+draft: false
 cta: geobook
 series: Working with Geographic Data
 ---
 
 
     
-    <p>Intro</p>
-    <p>Data formats</p>
-        <p>ESRI Shapefile</p>
-        <p>TIGER Shapefile</p>
-        <p>KML</p>
-        <p>TIGER Lines/Edges and related DBF files</p>
-        <p>OpenStreetMap</p>
+    <p>Geographic data often comes in specialized formats which are not seen elsewhere. Like much else in this world, it can seem intimidating at first, but once you understand it a whole world is opened up. Let&#39;s take a look.</p>
+    <h2>Data formats </h2>
+        <h3>Shapefile </h3>
+            <p>Out of all these formats, shapefiles are the one you&#39;ll encounter the most and so we&#39;ll focus on them the most.</p>
+            <p>Shapefiles were invented in the early 1990s by ESRI one of the most well-known makes of geographic information system (GIS) software. These files were also adopted by the US government and many other sources, so they are a very useful format to be aware of.</p>
+            <p>A shapefile consists of a few different files, which are differentiated by their extension.</p>
+                <p>The <code>.shp</code> file holds the actual geometries for each shape in the shapefile. The format is binary but the set of shape types supported roughly overlaps with the set of shapes supported by GeoJSON. You&#39;ll find that this overlap occurs for most formats.</p>
+                <p>The <code>.dbf</code> file holds attributes for each feature. This is a format for the dBase database, which is rarely encountered nowadays, but was popular in the early &#39;90s when the shapefile format was invented.</p>
+                <p>The <code>.shx</code> file  provides a quick lookup to a location of a particular shape inside the SHP file. This can be useful for seeking to a particular shape in a shapefile, but is generally not needed for conversion purposes.</p>
+                <p>The optional <code>.prj</code> file contains information about what type of projection the data is in. I&#39;ll briefly cover projections and coordinate systems later in this article.</p>
+                <p>There are other auxiliary files which may be included with a shapefile set. These are mostly just other ways of indexing the data which are not useful when converting data away from the shapefile format, but the <a href="https://en.wikipedia.org/wiki/Shapefile">Wikipedia page</a> describes them all if you&#39;re curious.</p>
 
-    <p>Loading ESRI Shapefiles</p>
+            <p>You probably will not have to deal with these individual files yourself. Shapefile importers do the work of combining the shapes from the <code>shp</code> with the attributes in the <code>dbf</code> and writing them out all together.</p>
+            Shapefiles for different regions can be found all over the internet. If you have a specific region in mind, government-related websites and universities are often a good place to look. For more general needs, here are a few of the best sources:
+              <ul class="list-bullet">
+                <li><a href="https://datacatalog.worldbank.org/search/dataset/0038272/World-Bank-Official-Boundaries">The World Bank</a> provides shapefiles for every country.</li>
+                <li><a href="https://hub.arcgis.com/search?collection=Dataset">ArcGIS Hub</a> is one of the best sources for shapefiles for international use.</li>
+                <li>The <a href="https://www.census.gov/geographies/mapping-files.html">US Census</a> publishes detailed shapefiles for every region in the USA.</li>
+              </ul>
+            <p>Many shapefile datasets require attribution, so be sure to comply with the terms when publishing your maps.</p>
+
+        <h3>US Census </h3>
+            <p>If you&#39;re making maps in the USA, this is one of the best data sources. The US Census Bureau not only publishes demographic information on the USA, but also detailed mapping data covering the entire country.</p>
+            <p>These are provided in shapefile format, but have their own section here because if you&#39;re making a map that covers the USA, this is some of the most useful data.</p>
+            <h4>TIGER/Line Shapefiles</h4>
+                <p>The <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html">TIGER/Line Shapefiles</a> dataset has the most detail.</p>
+                <p>It includes detail down to the road and street level, and can be used to create just about any map of the USA that you want. PostgreSQL/PostGIS also has facilities to use this data for geocoding, the process of converting between addresses and latitude/longitude coordinates.</p>
+
+            <h4>Cartographic Boundaries</h4>
+                <p>If you don&#39;t need the TIGER/Line dataset&#39;s extreme level of detail &mdash; and you usually don&#39;t &mdash; the <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html">Cartographic Boundary Shapefiles</a> are for you. These are much smaller datasets, but still include shapes for all the different types of regions in the USA, from states down to block groups.</p>
+                <p>These shapefiles come in three different scales, or levels of detail.</p>
+                <p>There are a lot of types of regions here. Counties and states are a good place to start since people are familiar with them.</p>
+                <p>Core Based Statistical Areas (CBSAs) are also a good choice, as they are formed around regions in which people actually live, as opposed to county boundaries which don&#39;t always relate to actual population distributions. CBSAs do not cover the whole country though &mdash; each one is centered around an urban center with at least 10,000 people, so many rural areas will not be included.</p>
+                <p>Finally, Zip Code Tabulation Areas (ZCTAs) are mostly (but not exactly) like zip codes. ZIP codes generally have weird shapes since they&#39;re just designed for use by the Postal Service, but they can be useful if you need more granular shapes for regions that the average US resident is familiar with.</p>
+
+            <p>I&#39;ll cover the various types of regions and how each one is actually defined in a later article in this series.</p>
+
+        <h3>KML </h3>
+            <p>Keyhole Markup Language (KML) is an XML-based format which was invented for Google Earth. Most sources of KML also publish the same data in shapefile format, so you won&#39;t need it too often.</p>
+            <p>KML tends to compress a bit better than shapefiles, but the uncompressed files are much larger.</p>
+
+        <h3>OpenStreetMap </h3>
+            <p><a href="https://www.openstreetmap.org/">OpenStreetMap</a> format is used by the organization of the same name. You generally won&#39;t encounter this data anywhere except from OpenStreetMap, but it&#39;s an excellent source of data if you have global mapping needs at a fine level of detail.</p>
+            <p>I won&#39;t cover importing their data in this post, but the <a href="https://wiki.openstreetmap.org/wiki/Downloading_data">OpenStreetMap Wiki</a> has a good guide.</p>
+
+
+    <h2>Loading Shapefiles </h2>
+        <h3>Projections and Coordinate Systems </h3>
+            <p>Projections are a complex topic worth an article (or more!) unto themselves, but put simply, a projection defines how to translate between latitude/longitude coordinates and actual points on the screen.</p>
+            <p>Fortunately, once you&#39;ve identified the projection, you don&#39;t really have to deal with it yourself &mdash; if you identify the projection properly, then geography libraries such as PostGIS will do the hard work for you.</p>
+            <p>Many projections have an &quot;SRID&quot; registered with the <a href="https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset">EPSG registry</a>, and so this ID is what you&#39;ll need when loading.</p>
+            <p>GeoJSON uses SRID 4326, which which maps to the WGS84 spatial reference system for describing our not-quite-spherical Earth.</p>
+            <p>US Census shapefiles use SRID 4296, which indicates the NAD83 coordinate system. This is close to WGS84 but has a few small differences, and specifically accounts for North American tectonic plate movement over time. It differs from WGS84 by a few feet, which means that for most applications the difference is negligible.</p>
+            <p>Many projections not only reference a coordinate system, but define specific methods for translating to a 2D map. These may attempt to depict the entire Earth while making reasonable tradeoffs about the distortions that necessarily come with that translation. Other projections are designed just for specific areas and purposes, such as accurately representing all the neighborhoods in a particular state.</p>
+            <p>In these cases it&#39;s especially important to get the right SRID for the projection, since the data will look totally wrong otherwise. Fortunately, pasting the contents of the <code>.prj</code> file into Google usually brings up the answer if you aren&#39;t sure.</p>
+
+        <h3>PostgresSQL </h3>
+            <p>PostGIS includes the <code>shp2pgsql</code> utility, which will read in a shapefile and dump out SQL to load it into a PostgreSQL database. It has various options on how to add the data, but the default is to create a table with one column for each of the attributes in the <code>.dbf</code> file, and a column named <code>geom</code> to hold the shape itself.</p>
+            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> shp2pgsql<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>h <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Show all the options</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span></span><span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Omitted for brevity</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span>
+<span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> shp2pgsql <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell">  -</span>s</span> 4296 <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Set the SRID \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-D <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Output in dump format, faster to insert \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-I <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Generate an index on the geometry </span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">cb_2021_us_cbsa_500k.shp</span></span> <span class="sy-keyword sy-operator sy-logical sy-pipe sy-shell">|</span> <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> US Census CBSA shapes \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span>    <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">psql</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>d</span> <span class="sy-meta sy-group sy-expansion sy-parameter sy-shell"><span class="sy-punctuation sy-definition sy-variable sy-shell">$</span><span class="sy-variable sy-other sy-readwrite sy-shell">DATABASE_URL</span></span></span>
+</span></code></pre>
+            <p>If we look at the generated SQL instead of piping it directly into <code>psql</code>, we see something like this.</p>
+            <pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">SET</span> CLIENT_ENCODING TO UTF8;
+<span class="sy-keyword sy-other sy-DML sy-sql">SET</span> STANDARD_CONFORMING_STRINGS TO <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span>;
+<span class="sy-keyword sy-other sy-LUW sy-sql">BEGIN</span>;
+<span class="sy-meta sy-create sy-sql"><span class="sy-keyword sy-other sy-create sy-sql">CREATE</span> <span class="sy-keyword sy-other sy-sql">TABLE</span> &quot;<span class="sy-entity sy-name sy-function sy-sql">cb_2021_us_cbsa_500k</span>&quot;</span> (gid <span class="sy-storage sy-type sy-sql">serial</span>,
+  <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>csafp<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> <span class="sy-storage sy-type sy-sql">varchar</span>(<span class="sy-constant sy-numeric sy-sql">3</span>),
+  <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>cbsafp<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> <span class="sy-storage sy-type sy-sql">varchar</span>(<span class="sy-constant sy-numeric sy-sql">5</span>),
+  <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>affgeoid<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> <span class="sy-storage sy-type sy-sql">varchar</span>(<span class="sy-constant sy-numeric sy-sql">14</span>),
+  <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>geoid<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> <span class="sy-storage sy-type sy-sql">varchar</span>(<span class="sy-constant sy-numeric sy-sql">5</span>),
+  <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>name<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> <span class="sy-storage sy-type sy-sql">varchar</span>(<span class="sy-constant sy-numeric sy-sql">100</span>),
+  <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>namelsad<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> <span class="sy-storage sy-type sy-sql">varchar</span>(<span class="sy-constant sy-numeric sy-sql">100</span>),
+  <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>lsad<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> <span class="sy-storage sy-type sy-sql">varchar</span>(<span class="sy-constant sy-numeric sy-sql">2</span>),
+  <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>aland<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> float8,
+  <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>awater<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> float8);
+<span class="sy-meta sy-alter sy-sql"><span class="sy-keyword sy-other sy-create sy-sql">ALTER</span> <span class="sy-keyword sy-other sy-table sy-sql">TABLE</span> </span><span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>cb_2021_us_cbsa_500k<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> ADD <span class="sy-storage sy-modifier sy-sql">PRIMARY KEY</span> (gid);
+<span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> AddGeometryColumn(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span><span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>,<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>cb_2021_us_cbsa_500k<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>,<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>geom<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>,<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>4296<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>,<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>MULTIPOLYGON<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>,<span class="sy-constant sy-numeric sy-sql">2</span>);
+COPY <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>cb_2021_us_cbsa_500k<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> (<span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>csafp<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>,<span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>cbsafp<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>,<span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>affgeoid<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>,<span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>geoid<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>,<span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>name<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>,<span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>namelsad<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>,<span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>lsad<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>,<span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>aland<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>,<span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>awater<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>,geom) <span class="sy-keyword sy-other sy-DML sy-sql">FROM</span> stdin;
+   ... many lines of data here
+<span class="sy-meta sy-create sy-sql"><span class="sy-keyword sy-other sy-create sy-sql">CREATE</span> <span class="sy-keyword sy-other sy-sql">INDEX</span> <span class="sy-entity sy-name sy-function sy-sql">ON</span></span> <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>cb_2021_us_cbsa_500k<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span> USING GIST (<span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>geom<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>);
+<span class="sy-keyword sy-other sy-LUW sy-sql">COMMIT</span>;
+ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&quot;</span>cb_2021_us_cbsa_500k<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&quot;</span></span>;
+
+</span></code></pre>
+
+        <h3>SQLite </h3>
+            <p>Spatialite, a geography extension for SQLite, also includes <a href="https://www.gaia-gis.it/fossil/spatialite-tools/index">tools for loading shapefiles</a>. Their loader tool is called, appropriately enough, <code>spatialite_tool</code>.</p>
+            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">spatialite_tool</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell">  -</span>i <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Import mode \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-shp</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> cb_2021_us_cbsa_500k <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Name of the shapefile (without extension) \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-d</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> db.sqlite <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Database file to write into \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-t</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> cbsas <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Table in the database to create \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-s</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> 4296 <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> The SRID \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">--charset</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> utf8 <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Character encoding in the DBF. Use utf8 if not sure.</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span></span></code></pre>
+            <p>Spatialite seems sparsely documented and I&#39;ve barely used it, but the <a href="http://www.gaia-gis.it/gaia-sins/spatialite-cookbook-5/cookbook_topics.01.html">cookbook</a> is a good starting point. Once you have it set up, the SQL functions for querying the data have a lot of overlap with PostGIS.</p>
+
+        <h3>GeoJSON </h3>
+            <p>Depending on your needs, you may just convert y our data to GeoJSON and use it directly in your application. This usually isn&#39;t the best way to go, but it is definitely the simplest, especially if you haven&#39;t set up a database.</p>
+            <p>If you&#39;re most comfortable in an NPM-based workflow, the <a href="https://www.npmjs.com/package/shapefile">shapefile</a> package includes a command named <code>shp2json</code> that will read a shapefile and output a <code>FeatureCollection</code> containing all the data.</p>
+            <p>Wrapping everything in a <code>FeatureCollection</code> is nice for use in Javascript where you can just parse the entire thing as a single JSON object. You can also pass the <code>-n</code> option to skip the <code>FeatureCollection</code> and write each Feature on its own line, as <a href="http://ndjson.org/">newline-delimited JSON</a>.</p>
+            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> npm<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>g</span> install shapefile</span>
+
+<span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Write each Feature on its own line</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> shp2json<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>n</span> cb_2021_us_county_20m.shp <span class="sy-keyword sy-operator sy-assignment sy-redirection sy-shell">&gt;</span> counties.ndjson</span>
+
+<span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Write to a FeatureCollection</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> shp2json cb_2021_us_county_20m.shp <span class="sy-keyword sy-operator sy-assignment sy-redirection sy-shell">&gt;</span> counties.json</span>
+</span></code></pre>
+            <p>If you prefer Rust binaries, <a href="https://crates.io/crates/geoq">geoq</a> is a good solution to converting shapefiles into GeoJSON.</p>
+            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Requires nightly Rust, as of this writing.</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> cargo +nightly install geoq</span>
+
+<span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Write each Feature on its own line</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> geoq shp cb_2021_us_county_20m.shp <span class="sy-keyword sy-operator sy-assignment sy-redirection sy-shell">&gt;</span> counties.ndjson</span>
+
+<span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Writing to a FeatureCollection requires piping through</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span><span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> another geoq command.</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> geoq shp cb_2021_us_county_20m.shp</span> <span class="sy-keyword sy-operator sy-logical sy-pipe sy-shell">|</span> <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span>    <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">geoq</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> gj fc <span class="sy-keyword sy-operator sy-assignment sy-redirection sy-shell">&gt;</span> counties.json</span>
+
+</span></code></pre>
+
+
+    <h2>Loading Other Formats </h2>
+        <h3>ogr2ogr</h3>
+            <p>The open-source GDAL package provides a tool named <a href="https://gdal.org/programs/ogr2ogr.html">`ogr2ogr`</a> which can convert from and to almost any format. It&#39;s a little more awkward to use and has a lot of options, but if you encounter some unusual format it can probably convert it.</p>
+            <p>Generally it&#39;s worth using dedicated tools for the job though, as <code>ogr2ogr</code>&#39;s generalist nature can cause some quirks.</p>
+            <p><code>ogr2ogr</code> also appears to be the tool of choice for loading data into the MySQL database.</p>
+
+        <h3>Loading GeoJSON into the Database</h3>
+            <p>Sometimes you come across data that is already in GeoJSON format, but you want to load it into your database. While you can just use a <code>jsonb</code> column, this doesn&#39;t work well if you need to actually manipulate or filter the shapes with SQL.</p>
+            <p>This is one good use case for <code>ogr2ogr</code> and since GeoJSON always uses the WGS84 coordinate system, you won&#39;t have to worry about projection issues causing problems. <code>ogr2ogr</code> can write directly into the database.</p>
+            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> ogr2ogr <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell">  -</span>f</span> <span class="sy-string sy-quoted sy-double sy-shell"><span class="sy-punctuation sy-definition sy-string sy-begin sy-shell">&quot;</span>PostgreSQL<span class="sy-punctuation sy-definition sy-string sy-end sy-shell">&quot;</span></span> <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span>  PG:<span class="sy-string sy-quoted sy-double sy-shell"><span class="sy-punctuation sy-definition sy-string sy-begin sy-shell">&quot;</span>dbname=your-database-name user=your-username password=password<span class="sy-punctuation sy-definition sy-string sy-end sy-shell">&quot;</span></span> <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span>  data.json <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell">  -</span>nln</span> table-name-to-create</span>
+</span></code></pre>
+            <p>If you don&#39;t mind doing your load in two parts, you can also load the GeoJSON data into a temporary table, then use the <code>ST_GeomFromGeoJSON</code> function to convert the data and write it into another table. You&#39;ll have to unpack the Feature attributes into columns manually though.</p>
+
+        <h3>KML</h3>
+            <p>The easiest thing to do with KML is just convert it into a shapefile or GeoJSON, and then load the resulting data into your application using one of the above methods.</p>
+            <p>As I mentioned above, most sources of KML also provide shapefiles, but if you have to deal with KML, <code>ogr2ogr</code> or the <a href="https://github.com/tmcw/togeojson-cli">togeojson</a> utility are good ways to handle it.</p>
+
+
+    <h3>Moving On</h3>
+        <p>Now that you know how to load geographic data, how do you actually use it? The next article in this series will start to answer that question.</p>
+
 
 
 
