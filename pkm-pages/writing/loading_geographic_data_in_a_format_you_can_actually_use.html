@@ -10,7 +10,8 @@ series: Working with Geographic Data
 
 
     
-    <p>Geographic data often comes in specialized formats which are not seen elsewhere. Like much else in this world, it can seem intimidating at first, but with a little but of knowledge you can do quite a lot. Let&#39;s take a look.</p>
+    <p>In <a href="/writing/introduction_to_geojson">the previous article</a> we covered the GeoJSON format, which is the most common format encountered when working with geographic data in Javascript.</p>
+    <p>But geographic data often comes in specialized formats which are not seen elsewhere. Like much else in this world, it can seem intimidating at first, but with a little but of knowledge you can do quite a lot. Let&#39;s take a look.</p>
     <h2>Shapefiles </h2>
         <p>Shapefiles are the most common format for geographic data. They were invented in the early 1990s by ESRI, one of the most well-known makers of geographic information system (GIS) software. This format has since been adopted by most other publishers of geographic data.</p>
         A shapefile set consists of a few different files, which are differentiated by their extension.
@@ -70,8 +71,8 @@ series: Working with Geographic Data
             <p>Projections are a complex topic worth an article (or more!) unto themselves, but put simply, a projection defines how to translate between latitude/longitude coordinates and actual points on the screen.</p>
             <p>Fortunately, once you&#39;ve identified the projection, you don&#39;t really have to deal with it yourself &mdash; if you identify the projection properly, then geography libraries such as PostGIS will do the hard work for you.</p>
             <p>Many projections have an &quot;SRID&quot; registered with the <a href="https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset">EPSG registry</a>, and so this ID is what you&#39;ll need when loading.</p>
-            <p>GeoJSON uses SRID 4326, which which maps to the WGS84 spatial reference system for describing our not-quite-spherical Earth.</p>
-            <p>US Census shapefiles use SRID 4296, which indicates the NAD83 coordinate system. This is close to WGS84 but has a few small differences, and specifically accounts for North American tectonic plate movement over time. It differs from WGS84 by a few feet, which means that for most applications the difference is negligible.</p>
+            <p>GeoJSON uses SRID <code>4326</code>, which maps to the WGS84 spatial reference system for describing our not-quite-spherical Earth.</p>
+            <p>US Census shapefiles use SRID <code>4296</code>, which indicates the NAD83 coordinate system. This is close to WGS84 but has a few small differences, and specifically accounts for North American tectonic plate movement over time. It differs from WGS84 by a few feet, which means that for most applications the difference is negligible.</p>
             <p>Many projections not only reference a coordinate system, but define specific methods for translating to a 2D map. These may attempt to depict the entire Earth while making reasonable tradeoffs about the distortions that necessarily come with that translation. Other projections are designed just for specific areas and purposes, such as accurately representing all the neighborhoods in a particular state.</p>
             <p>In these cases it&#39;s especially important to get the right SRID for the projection, since the data will look totally wrong otherwise. Fortunately, pasting the contents of the <code>.prj</code> file into Google usually brings up the answer if you aren&#39;t sure.</p>
 
@@ -141,7 +142,7 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
             <p>Spatialite seems sparsely documented and I&#39;ve barely used it, but the <a href="http://www.gaia-gis.it/gaia-sins/spatialite-cookbook-5/cookbook_topics.01.html">cookbook</a> is a good starting point. Once you have it set up, the SQL functions for querying the data have a lot of overlap with PostGIS.</p>
 
         <h3>GeoJSON </h3>
-            <p>Depending on your needs, you may just convert y our data to GeoJSON and use it directly in your application. This usually isn&#39;t the best way to go, but it is definitely the simplest, especially if you haven&#39;t set up a database.</p>
+            <p>Depending on your needs, you may just convert your data to GeoJSON and use it directly in your application. This usually isn&#39;t the best way to go, but it is definitely the simplest, especially if you haven&#39;t set up a database.</p>
             <p>If you&#39;re most comfortable in an NPM-based workflow, the <a href="https://www.npmjs.com/package/shapefile">shapefile</a> package includes a command named <code>shp2json</code> that will read a shapefile and output a <code>FeatureCollection</code> containing all the data.</p>
             <p>Wrapping everything in a <code>FeatureCollection</code> is nice for use in Javascript where you can just parse the entire thing as a single JSON object. You can also pass the <code>-n</code> option to skip the <code>FeatureCollection</code> and write each Feature on its own line, as <a href="http://ndjson.org/">newline-delimited JSON</a>.</p>
             <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> npm<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>g</span> install shapefile</span>
