@@ -55,26 +55,55 @@ module.exports = {
             h1: {
               color: theme('colors.teal.900'),
               fontWeight: 500,
-              fontSize: theme('fontSize.3xl'),
+              fontSize: theme('fontSize.3xl')[0],
               fontFamily: theme('fontFamily.sans').join(', '),
+              marginTop: '1rem',
+              marginBottom: '1rem',
             },
             h2: {
               color: theme('colors.teal.900'),
               fontWeight: 500,
-              fontSize: theme('fontSize.2xl'),
+              fontSize: theme('fontSize.2xl')[0],
               fontFamily: theme('fontFamily.sans').join(', '),
+              marginTop: '1rem',
+              marginBottom: '1rem',
             },
             h3: {
               color: theme('colors.teal.900'),
               fontWeight: 500,
-              fontSize: theme('fontSize.xl'),
+              fontSize: theme('fontSize.xl')[0],
               fontFamily: theme('fontFamily.sans').join(', '),
+              marginTop: '0.8rem',
+              marginBottom: '0.8rem',
             },
             h4: {
               color: theme('colors.teal.900'),
               fontWeight: 500,
-              fontSize: theme('fontSize.lg'),
+              fontSize: theme('fontSize.lg')[0],
               fontFamily: theme('fontFamily.sans').join(', '),
+              marginTop: '0.6rem',
+              marginBottom: '0.6rem',
+            },
+            'article h1': {
+              fontSize: theme('fontSize.4xl')[0],
+            },
+            'article h2': {
+              fontSize: theme('fontSize.3xl')[0],
+            },
+            'article h3': {
+              fontSize: theme('fontSize.2xl')[0],
+            },
+            'article h4': {
+              fontSize: theme('fontSize.xl')[0],
+            },
+            'article h2 + *': {
+              marginTop: '0',
+            },
+            'article h3 + *': {
+              marginTop: '0',
+            },
+            'article h4 + *': {
+              marginTop: '0',
             },
             blockquote: {
               marginLeft: '-0.5rem',
@@ -87,7 +116,7 @@ module.exports = {
             },
             pre: {
               fontFamily: theme('fontFamily.mono').join(', '),
-              fontSize: theme('fontSize.base'),
+              fontSize: theme('fontSize.base')[0],
               boxDecorationBreak: 'clone',
               backgroundColor: theme('colors.gray.200'),
               borderColor: theme('colors.gray.300'),

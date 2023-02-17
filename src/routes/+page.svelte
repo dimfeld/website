@@ -24,7 +24,7 @@
   });
 </script>
 
-<article class="prose m-4 self-center px-2 font-serif">
+<main class="prose m-4 self-center px-2 font-serif">
   <div class="grid-cols-2 md:grid">
     <section>
       <h1 class="mb-0">Recent Writing</h1>
@@ -165,4 +165,4 @@
     as well as all code examples are licensed under the
     <a href="https://choosealicense.com/licenses/mit/">MIT license</a>.
   </p>
-</article>
+</main>
