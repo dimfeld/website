@@ -1,35 +1,17 @@
-<script>
-  import get from 'just-safe-get';
-  import sorter from 'sorters';
+<script lang="ts">
+  import { searchContext } from '$lib/search';
   import { getContext } from 'svelte';
   import PostList from '../_PostList.svelte';
-  import { filterText } from './_filters.ts';
-  const notes = getContext('noteList');
-  const noteLookup = getContext('noteLookup');
-  const tags = getContext('tags');
-  const activeTag = getContext('activeTag');
-  const search = getContext('search');
+
+  const { activePosts } = searchContext();
   getContext('title').set('Notes');
-
-  const sortField = 'date';
-  let activeNotes = notes;
-  $: {
-    activeNotes = notes;
-    if ($activeTag) {
-      activeNotes = get(tags, [$activeTag, 'posts'], [])
-        .map((id) => noteLookup[id])
-        .sort(sorter({ value: sortField, descending: true }));
-    }
-
-    activeNotes = filterText(activeNotes, $search);
-  }
 </script>
 
 <svelte:head>
   <meta name="Description" content="Notes by Daniel Imfeld" />
 </svelte:head>
 
-<PostList base="notes" posts={activeNotes} useUpdatedDate={true} />
+<PostList base="notes" posts={$activePosts} useUpdatedDate={true} />
 
 <div class="mt-8 text-center sm:hidden">
   <a href="/rss/notes.xml">Notes RSS Feed</a>

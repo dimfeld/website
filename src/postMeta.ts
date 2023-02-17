@@ -1,4 +1,4 @@
-import type { Post } from '$lib/readPosts';
+import type { PostInfo } from '$lib/readPosts';
 
 export const statuses = [
   {
@@ -18,7 +18,7 @@ export const statuses = [
   },
 ];
 
-export function cardImageUrl(post: Post, absolute: boolean) {
+export function cardImageUrl(post: PostInfo, absolute: boolean) {
   let imageUrl = post.cardImage;
   if (!imageUrl) {
     return;
