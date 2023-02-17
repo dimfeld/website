@@ -48,7 +48,8 @@ omit_attributes = [
   "Tags",
   "wrap-el",
   "content-el",
-  "wrap-class"
+  "wrap-class",
+  "note"
 ]
 
 
