@@ -4,7 +4,7 @@ import { postSources, lookupContent } from '$lib/readPosts';
 import md from '$lib/markdown';
 
 export const load: PageServerLoad = async ({ params }) => {
-  let post = await lookupContent(postSources, params.id);
+  let post = lookupContent(postSources, params.id);
   if (!post) {
     throw error(404, 'not found');
   }

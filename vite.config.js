@@ -58,7 +58,7 @@ export default {
       },
       handleHotUpdate(ctx) {
         let m =
-          /(notes|posts|pkm-pages\/notes|pkm-pages\/journals)\/(.*)\.(md|html)$/.exec(
+          /(notes|posts|pkm-pages\/notes|pkm-pages\/journals|pkm-pages\/writing)\/(.*)\.(md|html)$/.exec(
             ctx.file
           );
         if (m) {
@@ -68,6 +68,8 @@ export default {
             contentType = 'notes';
           } else if (contentType === 'pkm-pages/journals') {
             contentType = 'journals';
+          } else if (contentType === 'pkm-pages/writing') {
+            contentType = 'writing';
           } else if (contentType === 'posts') {
             contentType = 'writing';
           }
