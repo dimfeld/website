@@ -1,8 +1,8 @@
 ---
 title: "Loading Geographic Data in a Format You Can Actually Use"
 tags: Geodata
-date: 2023-02-17
-updated: 2023-02-17
+date: 2023-02-18
+updated: 2023-02-18
 draft: false
 cta: geobook
 series: Working with Geographic Data
@@ -11,18 +11,19 @@ series: Working with Geographic Data
 
     
     <p>In <a href="/writing/introduction_to_geojson">the previous article</a> we covered the GeoJSON format, which is the most common format encountered when working with geographic data in Javascript.</p>
-    <p>But geographic data often comes in specialized formats which are not seen elsewhere. Like much else in this world, it can seem intimidating at first, but with a little but of knowledge you can do quite a lot. Let&#39;s take a look.</p>
-    <h2>Shapefiles </h2>
-        <p>Shapefiles are the most common format for geographic data. They were invented in the early 1990s by ESRI, one of the most well-known makers of geographic information system (GIS) software. This format has since been adopted by most other publishers of geographic data.</p>
-        A shapefile set consists of a few different files, which are differentiated by their extension.
-          <ul class="list-bullet">
-            <li>The <code>.shp</code> file holds the actual geometries for each shape in the shapefile. The format is binary but the set of shape types supported roughly overlaps with the set of shapes supported by GeoJSON. You&#39;ll find that this overlap occurs for most formats.</li>
-            <li>The <code>.dbf</code> file holds attributes for each feature. This is a dBase database file, which is rarely encountered nowadays, but was popular in the early 1990s when the shapefile format was invented.</li>
-            <li>The <code>.shx</code> file  provides a quick lookup to a location of a particular shape inside the SHP file. This can be useful for seeking to a particular shape in a shapefile, but is generally not needed for conversion purposes.</li>
-            <li>The optional <code>.prj</code> file contains information about what type of projection the data is in. This assists map renderers in displaying the data, and is crucial when converting it into another format. I&#39;ll describe more about projections later in this post.</li>
-          </ul>
-        <p>Looking at a download from the US Census, we see these files.</p>
-        <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> ls<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>l</span></span>
+    <p>But geographic data often comes in specialized formats which are not seen elsewhere. Like much else in this world, it can seem intimidating at first, but with a little bit of knowledge you can do quite a lot. Let&#39;s take a look.</p>
+    <h2>Data Formats</h2>
+        <h3>Shapefiles </h3>
+            <p>Shapefiles are the most common format for publishing geographic data. They were invented in the early 1990s by ESRI, a well-known maker of geographic information system (GIS) software. This format has since been adopted by most other publishers of geographic data.</p>
+            A shapefile set consists of a few different files, which are differentiated by their extension.
+              <ul class="list-bullet">
+                <li>The <code>.shp</code> file holds the actual geometries for each shape in the shapefile. The format is binary but the set of shape types supported roughly overlaps with the set of shapes supported by GeoJSON. You&#39;ll find that this overlap occurs for most formats.</li>
+                <li>The <code>.dbf</code> file holds attributes for each feature, such as the name or a numeric identifier. This is a dBase database file, which is rarely encountered nowadays, but was popular in the early 1990s when the shapefile format was invented.</li>
+                <li>The <code>.shx</code> file  provides a quick lookup to a location of a particular shape inside the <code>.shp</code> file. This can be useful for seeking to a particular shape in a shapefile, but is generally not needed for conversion purposes.</li>
+                <li>The optional <code>.prj</code> file contains information about what type of projection the data is in. This assists map renderers in displaying the data, and is crucial when converting it into another format. I&#39;ll discuss projections in a later section.</li>
+              </ul>
+            <p>Looking at a download from the US Census, we see these files.</p>
+            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> ls<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>l</span></span>
 <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">.rw-rw----</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell">    5 dimfeld  8 Apr  2022 cb_2021_us_cbsa_500k.cpg</span>
 <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">.rw-rw----</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> 243k dimfeld  8 Apr  2022 cb_2021_us_cbsa_500k.dbf</span>
 <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">.rw-rw----</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell">  165 dimfeld  8 Apr  2022 cb_2021_us_cbsa_500k.prj</span>
@@ -32,55 +33,70 @@ series: Working with Geographic Data
 <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">.rw-rw----</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> 7.6k dimfeld  8 Apr  2022 cb_2021_us_cbsa_500k.shx</span>
 
 </span></code></pre>
-        <p>In addition to the file types mentioned above, you can see there are other auxiliary files which may be included with a shapefile set. These are mostly just other ways of indexing or describing the data, and are not useful when converting data away from the shapefile format, but the <a href="https://en.wikipedia.org/wiki/Shapefile">Wikipedia page</a> describes them all if you&#39;re curious.</p>
-        <p>You probably will not have to deal with these individual files yourself. Shapefile importers do the work of combining the shapes from the <code>shp</code> with the attributes in the <code>dbf</code> and writing them out all together.</p>
-        Shapefiles for different regions can be found all over the internet. If you have a specific region in mind, government-related websites and universities are often a good place to look. For more general needs, here are a few of the best sources:
-          <ul class="list-bullet">
-            <li><a href="https://datacatalog.worldbank.org/search/dataset/0038272/World-Bank-Official-Boundaries">The World Bank</a> provides shapefiles for every country.</li>
-            <li><a href="https://hub.arcgis.com/search?collection=Dataset">ArcGIS Hub</a> is one of the best sources for shapefiles for international use.</li>
-            <li>The <a href="https://www.census.gov/geographies/mapping-files.html">US Census</a> publishes detailed shapefiles for every region in the USA.</li>
-          </ul>
-        <p>Many shapefile datasets require attribution, and some place limits on commercial use, so be sure to comply with the terms when publishing your maps.</p>
+            <p>In addition to the file types mentioned above, you can see there are other auxiliary files which may be included with a shapefile set. These are mostly just other ways of indexing or describing the data, and are not useful when converting data away from the shapefile format, but the <a href="https://en.wikipedia.org/wiki/Shapefile">Wikipedia page</a> describes them all if you&#39;re curious.</p>
+            <p>You probably will not have to deal with these individual files yourself. Shapefile importers do the work of combining the shapes from the <code>.shp</code> with the attributes in the <code>.dbf</code> and writing them out all together.</p>
+            Shapefiles for different regions can be found all over the internet. If you have a specific region in mind, government-related websites and universities are often a good place to look. For more general needs, here are a few of the best sources:
+              <ul class="list-bullet">
+                <li><a href="https://datacatalog.worldbank.org/search/dataset/0038272/World-Bank-Official-Boundaries">The World Bank</a> provides shapefiles for every country.</li>
+                <li><a href="https://hub.arcgis.com/search?collection=Dataset">ArcGIS Hub</a> is one of the best sources for shapefiles for international use.</li>
+                <li>The <a href="https://www.census.gov/geographies/mapping-files.html">US Census</a> publishes detailed shapefiles for every region in the USA.</li>
+              </ul>
+            <p>Many shapefile datasets require attribution, and some place limits on commercial use, so be sure to comply with the terms when publishing your maps.</p>
 
-    <h2>US Census </h2>
-        <p>If you&#39;re making maps in the USA, this is one of the best data sources. The US Census Bureau not only publishes demographic information on the USA, but also detailed mapping data covering the entire country.</p>
-        <h3>TIGER/Line Shapefiles</h3>
-            <p>The <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html">TIGER/Line Shapefiles</a> dataset has detail down to the road and street level, and can be used to create just about any map of the USA that you want.</p>
-            <p>PostgreSQL/PostGIS also has <a href="https://postgis.net/docs/Extras.html#Tiger_Geocoder">facilities to use this data for geocoding</a>, which is the process of converting between addresses and latitude/longitude coordinates. If you want to load this data, your best bet is to use the <a href="https://postgis.net/docs/Loader_Generate_Script.html">scripts provided by PostGIS</a>.</p>
+        <h3>US Census </h3>
+            <p>If you&#39;re making maps in the USA, this is one of the best data sources. The US Census Bureau not only publishes demographic information on the USA, but also detailed mapping data covering the entire country.</p>
+            <h3>TIGER/Line Shapefiles</h3>
+                <p>The <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html">TIGER/Line Shapefiles</a> dataset has detail down to the road and street level, and can be used to create just about any map of the USA that you want.</p>
+                <p>PostgreSQL/PostGIS also has <a href="https://postgis.net/docs/Extras.html#Tiger_Geocoder">facilities to use this data for geocoding</a>, which is the process of converting between addresses and latitude/longitude coordinates. If you want to load this data, your best bet is to use the <a href="https://postgis.net/docs/Loader_Generate_Script.html">scripts provided by PostGIS</a>.</p>
+                <p>For most applications, you don&#39;t actually need this level of data, and if you want to show streets in your map it&#39;s much simpler to use a tile layer &mdash; the background layer of the map &mdash; that includes them. We&#39;ll discuss doing this in a later article.</p>
 
-        <h3>Cartographic Boundaries</h3>
-            <p>If you don&#39;t need the TIGER/Line dataset&#39;s extreme level of detail &mdash; and you usually don&#39;t &mdash; the <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html">Cartographic Boundary Shapefiles</a> are for you. These are much smaller datasets which come in three different scales, or levels of detail.</p>
-            <p>These shapefiles cover many different types of regions that the census works with, from states down to block groups. Counties and states are a good place to start since people are familiar with them.</p>
-            <p>Core Based Statistical Areas (CBSAs) are less well-known, but also a good choice for some applications. They are formed around regions in which people actually live, as opposed to county boundaries which don&#39;t always relate to actual population distributions. CBSAs do not cover the whole country though &mdash; each one is placed around an urban center with at least 10,000 people, so many rural areas will not be included.</p>
-            <p>Finally, ZIP Code Tabulation Areas (ZCTAs) are mostly &mdash; but not exactly &mdash; like ZIP codes. ZIP codes sometimes have weird shapes for mapping since they&#39;re just designed for use by the Postal Service, but they can be useful if you need more granular shapes for regions and also want to use something that the average non-GIS expert is familiar with.</p>
+            <h3>Cartographic Boundaries</h3>
+                <p>If you don&#39;t need the TIGER/Line dataset&#39;s extreme level of detail, the <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html">Cartographic Boundary Shapefiles</a> are for you. These are much smaller datasets which show region boundaries in the USA, and come in three different scales, or levels of detail.</p>
+                <p>These shapefiles cover many different types of regions that the census works with, from states down to block groups. Counties and states are a good place to start since people are familiar with them.</p>
+                <p>Core Based Statistical Areas (CBSAs) are less well-known, but also a good choice for some applications. They are formed around regions in which people actually live, as opposed to county boundaries which don&#39;t always relate to actual population distributions. CBSAs do not cover the whole country though. Each one is placed around an urban center with at least 10,000 people, so many rural areas will not be inside a CBSA.</p>
+                <p>Finally, ZIP Code Tabulation Areas (ZCTAs) are mostly &mdash; but not exactly &mdash; like ZIP codes. ZIP codes sometimes have weird shapes for mapping since they&#39;re just designed for use by the Postal Service, but they can be useful if you need more granular shapes for regions that cover the entire country, and also want to use something that the average non-GIS expert is familiar with.</p>
 
-        <p>I&#39;ll cover the various types of US regions and how each one is actually defined in a later article in this series.</p>
+            <p>I&#39;ll cover the various types of US regions and how each one is actually defined in a later article in this series.</p>
 
-    <h2>KML </h2>
-        <p>Keyhole Markup Language (KML) is an XML-based format which was invented for Google Earth. Most sources of KML also publish the same data in shapefile format, so you won&#39;t need it too often.</p>
-        <p>KML tends to compress a bit better than shapefiles, but the uncompressed files are much larger.</p>
+        <h3>KML </h3>
+            <p>Keyhole Markup Language (KML) is an XML-based format which was invented for Google Earth. Most sources of KML also publish the same data in shapefile format, so you won&#39;t need it too often.</p>
+            <p>KML tends to compress a bit better than shapefiles, but the uncompressed files are much larger. Regardless, it&#39;s usually an intermediate format unless you&#39;re working with Google Earth, so you won&#39;t often have to deal with KML.</p>
 
-    <h2>OpenStreetMap </h2>
-        <p><a href="https://www.openstreetmap.org/">OpenStreetMap</a> format is used by the organization of the same name. You generally won&#39;t encounter this data anywhere except from OpenStreetMap, but it&#39;s an excellent source of data if you have global mapping needs at a fine level of detail.</p>
-        <p>I won&#39;t cover importing their data in this post, but the <a href="https://wiki.openstreetmap.org/wiki/Downloading_data">OpenStreetMap Wiki</a> has a good guide.</p>
+        <h3>GPS Data </h3>
+            <p>GPS data comes in many formats. GPX is one of the most common and is based on XML. Garmin&#39;s FIT format is also popular, especially in fitness-centered applications.</p>
+            <p>Geographic data is usually not published in these formats, but you are likely to encounter it if you create an application that lets users upload GPS data from their own activity.</p>
+
+        <h3>OpenStreetMap </h3>
+            <p>The <a href="https://www.openstreetmap.org/">OpenStreetMap</a> format is used by the organization of the same name. You generally won&#39;t encounter this data anywhere except from OpenStreetMap, but it&#39;s an excellent source if you need global mapping at a fine level of detail.</p>
+            <p>Like the US Census TIGER/Line dataset, it is extremely large and detailed. But if you do need this level of detail in a smaller region than the whole Earth, there are ways to create smaller regional extracts.</p>
+            <p>I won&#39;t cover importing their data in this post, but the <a href="https://wiki.openstreetmap.org/wiki/Downloading_data">OpenStreetMap Wiki</a> has a good guide.</p>
+
+
+    <h2>Coordinate Systems and Projections </h2>
+        <p>Before loading the data, it helps to have a basic understanding of projections.</p>
+        <p>Coordinate systems and projections are a complex topic worth an article (or more!) unto themselves, but put simply, a projection defines how to translate between latitude/longitude coordinates and actual points on the two-dimensional map.</p>
+        <p>Many coordinate systems and projections have an &quot;SRID&quot; registered with the <a href="https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset">EPSG registry</a>, and you&#39;ll need this ID when loading your data.</p>
+        <p>Fortunately, once you&#39;ve identified the projection, you don&#39;t really have to deal with the details or math yourself &mdash; if you set the proper SRID, geography libraries such as PostGIS will do this hard work for you.</p>
+        <h4>Coordinate Systems</h4>
+            <p>Some SRIDs only reference coordinate systems. A coordinate system (or spatial reference system) indicates how latitude/longitude coordinates translate to exact spots on our not-quite-spherical Earth.</p>
+            <p>GeoJSON uses SRID <code>4326</code>, which is for the <a href="https://epsg.io/4326">WGS84</a> spatial reference system. This is one of the most widely-used coordinate systems.</p>
+            <p>US Census shapefiles use SRID <code>4269</code>, which indicates the <a href="https://epsg.io/4269">NAD83</a> coordinate system. This is close to WGS84 but has a few small differences, and specifically accounts for North American tectonic plate movement over time. It differs from WGS84 by a few feet, which means that for most applications the difference is negligible.</p>
+
+        <h4>Projections </h4>
+            <p>Coordinate systems by themselves do not define a particular projection; that is, they don&#39;t define a way to translate from coordinates to a 2D map.</p>
+            <p>That&#39;s where projections come in. These may attempt to depict the entire Earth while making reasonable tradeoffs about the distortions that necessarily come with that translation. <a href="https://en.wikipedia.org/wiki/Mercator_projection">Mercator</a>, <a href="https://en.wikipedia.org/wiki/Albers_projection">Albers</a>, and <a href="https://en.wikipedia.org/wiki/Goode_homolosine_projection">Goode</a> are common examples of these types of projections.</p>
+            <p>Other projections are designed for smaller areas. For example, the <a href="https://epsg.io/32618">UTM18 projection</a> (SRID <code>32618</code>) is specifically designed to accurately portray areas in the northern hemisphere, between 72 and 78 degrees West.</p>
+            <p>When you have data that uses one of these projections, the points are not in longitude/latitude coordinates, but have been pre-converted to the locations where they would show up on a map or screen.</p>
+            <p>This means that it&#39;s especially important to get the right SRID for the projection, since the data will look totally wrong otherwise. Fortunately, pasting the contents of the <code>.prj</code> file into Google usually brings up the answer if you aren&#39;t sure.</p>
+
 
     <h2>Loading Shapefiles </h2>
-        <p>Most mapping software used by GIS professionals will support shapefiles natively. Most of the software used by application developers will not, so we need to transfer it into a more suitable format.</p>
-        <p>To do that, we&#39;ll first take a small detour for a basic understanding of projections.</p>
-        <h3>Projections and Coordinate Systems </h3>
-            <p>Projections are a complex topic worth an article (or more!) unto themselves, but put simply, a projection defines how to translate between latitude/longitude coordinates and actual points on the screen.</p>
-            <p>Fortunately, once you&#39;ve identified the projection, you don&#39;t really have to deal with it yourself &mdash; if you identify the projection properly, then geography libraries such as PostGIS will do the hard work for you.</p>
-            <p>Many projections have an &quot;SRID&quot; registered with the <a href="https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset">EPSG registry</a>, and so this ID is what you&#39;ll need when loading.</p>
-            <p>GeoJSON uses SRID <code>4326</code>, which maps to the WGS84 spatial reference system for describing our not-quite-spherical Earth.</p>
-            <p>US Census shapefiles use SRID <code>4296</code>, which indicates the NAD83 coordinate system. This is close to WGS84 but has a few small differences, and specifically accounts for North American tectonic plate movement over time. It differs from WGS84 by a few feet, which means that for most applications the difference is negligible.</p>
-            <p>Many projections not only reference a coordinate system, but define specific methods for translating to a 2D map. These may attempt to depict the entire Earth while making reasonable tradeoffs about the distortions that necessarily come with that translation. Other projections are designed just for specific areas and purposes, such as accurately representing all the neighborhoods in a particular state.</p>
-            <p>In these cases it&#39;s especially important to get the right SRID for the projection, since the data will look totally wrong otherwise. Fortunately, pasting the contents of the <code>.prj</code> file into Google usually brings up the answer if you aren&#39;t sure.</p>
-
+        <p>GIS professionals tend to use mapping software with native support for shapefiles. Web application developers usually do not, so we need to transfer it into a more suitable format.</p>
         <h3>PostgresSQL </h3>
-            <p>PostGIS includes the <code>shp2pgsql</code> utility, which will read in a shapefile and dump out SQL to load it into a PostgreSQL database. It has various options on how to add the data, but the default is to create a table with one column for each of the attributes in the <code>.dbf</code> file, and a column named <code>geom</code> to hold the shape itself.</p>
-            <p>First, you&#39;ll need to install PostGIS and enable it in your database, if you haven&#39;t already. The PostGIS website has <a href="https://postgis.net/workshops/postgis-intro/installation.html">easy-to-follow installation instructions for both Windows and Mac</a>.</p>
-            <p>On Mac you can also use the <a href="https://brew.sh/">Homebrew package manager</a> if you prefer. or just install <a href="https://postgresapp.com/downloads.html">Postgres.app</a> and <a href="https://postgresapp.com/documentation/cli-tools.html">set up its CLI tools</a>.</p>
-            <p>Once you have it installed you can create your database and enable the PostGIS extension.</p>
+            <p>PostGIS includes the <code>shp2pgsql</code> utility, which will read in a shapefile and dump out SQL to load it into a PostgreSQL database. It has various options on how to add the data, but the default is to create a new table with one column for each of the attributes in the <code>.dbf</code> file, and a column named <code>geom</code> to hold the shape itself.</p>
+            <p>First, you&#39;ll need to install PostGIS and enable it in your database, if you haven&#39;t already. The PostGIS website has <a href="https://postgis.net/workshops/postgis-intro/installation.html">easy-to-follow installation instructions for both Windows and Mac</a>. On Linux/Unix the system package manager should have everything you need.</p>
+            <p>On Mac you can also use the <a href="https://brew.sh/">Homebrew package manager</a>, or just install <a href="https://postgresapp.com/downloads.html">Postgres.app</a> and <a href="https://postgresapp.com/documentation/cli-tools.html">set up its CLI tools</a>.</p>
+            <p>Once you have PostgreSQL and PostGIS installed, you can create your database and enable the PostGIS extension.</p>
             <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> psql<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>d</span> postgres</span>
 <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">psql</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> (14.7 (Homebrew</span><span class="sy-meta sy-function-call sy-shell"></span><span class="sy-meta sy-post-cmd sy-shell">)</span><span class="sy-meta sy-function-call sy-shell"></span><span class="sy-meta sy-post-cmd sy-shell">)</span>
 <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">Type</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> <span class="sy-string sy-quoted sy-double sy-shell"><span class="sy-punctuation sy-definition sy-string sy-begin sy-shell">&quot;</span>help<span class="sy-punctuation sy-definition sy-string sy-end sy-shell">&quot;</span></span> for help.</span>
@@ -95,13 +111,14 @@ series: Working with Geographic Data
 <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">Time:</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> 1638.587 ms (00:01.639</span><span class="sy-meta sy-function-call sy-shell"></span><span class="sy-meta sy-post-cmd sy-shell">)</span>
 </span></code></pre>
             <p>With this done, you can load your data.</p>
-            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> shp2pgsql<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>h <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Show all the options</span><span class="sy-comment sy-line sy-number-sign sy-shell">
-</span></span></span><span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Omitted for brevity</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> shp2pgsql<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>h</span></span>
+<span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Shows all the options</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span><span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Omitted for brevity</span><span class="sy-comment sy-line sy-number-sign sy-shell">
 </span>
 <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> shp2pgsql <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
 </span><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell">  -</span>s</span> 4296 <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Set the SRID \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
 </span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-D <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Output in dump format, faster to insert \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
-</span></span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-I <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Generate an index on the geometry </span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-I <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Generate an index on the geometry \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
 </span></span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">cb_2021_us_cbsa_500k.shp</span></span> <span class="sy-keyword sy-operator sy-logical sy-pipe sy-shell">|</span> <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> US Census CBSA shapes \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
 </span>    <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">psql</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>d</span> geodataapp</span>
 </span></code></pre>
@@ -131,7 +148,7 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
 
         <h3>SQLite </h3>
             <p>Spatialite, a geography extension for SQLite, also includes <a href="https://www.gaia-gis.it/fossil/spatialite-tools/index">tools for loading shapefiles</a>. Their loader tool is called, appropriately enough, <code>spatialite_tool</code>.</p>
-            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">spatialite_tool</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> spatialite_tool <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
 </span><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell">  -</span>i <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Import mode \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
 </span></span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-shp</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> cb_2021_us_cbsa_500k <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Name of the shapefile (without extension) \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
 </span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-d</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> db.sqlite <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Database file to write into \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
@@ -142,9 +159,9 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
             <p>Spatialite seems sparsely documented and I&#39;ve barely used it, but the <a href="http://www.gaia-gis.it/gaia-sins/spatialite-cookbook-5/cookbook_topics.01.html">cookbook</a> is a good starting point. Once you have it set up, the SQL functions for querying the data have a lot of overlap with PostGIS.</p>
 
         <h3>GeoJSON </h3>
-            <p>Depending on your needs, you may just convert your data to GeoJSON and use it directly in your application. This usually isn&#39;t the best way to go, but it is definitely the simplest, especially if you haven&#39;t set up a database.</p>
+            <p>Depending on your needs, you may just convert your data to GeoJSON and use it directly in your application. This mostly precludes using your database to filter on the shapes, but it is definitely the simplest way, especially if you haven&#39;t set up a database.</p>
             <p>If you&#39;re most comfortable in an NPM-based workflow, the <a href="https://www.npmjs.com/package/shapefile">shapefile</a> package includes a command named <code>shp2json</code> that will read a shapefile and output a <code>FeatureCollection</code> containing all the data.</p>
-            <p>Wrapping everything in a <code>FeatureCollection</code> is nice for use in Javascript where you can just parse the entire thing as a single JSON object. You can also pass the <code>-n</code> option to skip the <code>FeatureCollection</code> and write each Feature on its own line, as <a href="http://ndjson.org/">newline-delimited JSON</a>.</p>
+            <p>Wrapping everything in a <code>FeatureCollection</code> is nice for use in Javascript where you can just parse the entire thing as a single JSON object. You can also pass the <code>-n</code> option to skip the <code>FeatureCollection</code> and write each <code>Feature</code> on its own line, as <a href="http://ndjson.org/">newline-delimited JSON</a>.</p>
             <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> npm<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>g</span> install shapefile</span>
 
 <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Write each Feature on its own line</span><span class="sy-comment sy-line sy-number-sign sy-shell">
@@ -169,8 +186,8 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
 
 
     <h2>Loading Other Formats </h2>
-        <h3>ogr2ogr</h3>
-            <p>The open-source GDAL package provides a tool named <a href="https://gdal.org/programs/ogr2ogr.html">`ogr2ogr`</a> which can convert from and to almost any format. It&#39;s a little more awkward to use and has a lot of options, but if you encounter some unusual format it can probably convert it.</p>
+        <h3>Using ogr2ogr</h3>
+            <p>The open-source GDAL package provides a tool named <a href="https://gdal.org/programs/ogr2ogr.html">ogr2ogr</a> which can convert from and to almost any format. It&#39;s a little more awkward to use and has a lot of options, but if you encounter some unusual format it can probably convert it.</p>
             <p>Generally it&#39;s worth using dedicated tools for the job though, as <code>ogr2ogr</code>&#39;s generalist nature can cause some quirks.</p>
             <p><code>ogr2ogr</code> also appears to be the tool of choice for loading data into the MySQL database.</p>
 
@@ -186,12 +203,16 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
             <p>If you don&#39;t mind doing your load in two parts, you can also load the GeoJSON data into a temporary table, then use the <code>ST_GeomFromGeoJSON</code> function to convert the data and write it into another table. You&#39;ll have to unpack the Feature attributes into columns manually though.</p>
 
         <h3>KML</h3>
-            <p>The easiest thing to do with KML is just convert it into a shapefile or GeoJSON, and then load the resulting data into your application using one of the above methods.</p>
+            <p>The easiest thing to do with KML is just convert it into a shapefile or GeoJSON, and then load the resulting data into your application.</p>
             <p>As I mentioned above, most sources of KML also provide shapefiles, but if you have to deal with KML, <code>ogr2ogr</code> or the <a href="https://github.com/tmcw/togeojson-cli">togeojson</a> utility are good ways to handle it.</p>
+
+        <h3>GPS Data</h3>
+            <p>GPS formats are easily handled using <a href="https://www.gpsbabel.org/">GPSBabel</a>, which can convert to both GeoJSON and shapefile format. GPSBabel supports reading GPX, FIT, and many other formats used by GPS devices.</p>
 
 
     <h2>Next Steps</h2>
         <p>Now that you know how to load geographic data, how do you actually use it? The next article in this series will start to answer that question.</p>
+        <p>Also, many thanks to <a href="https://www.twitter.com/techniq35">Sean Lynch</a> for feedback on this article&#39;s initial draft.</p>
 
 
 
