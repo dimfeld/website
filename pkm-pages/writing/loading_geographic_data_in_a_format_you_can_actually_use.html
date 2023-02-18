@@ -59,32 +59,32 @@ series: Working with Geographic Data
             <p>I&#39;ll cover the various types of US regions and how each one is actually defined in a later article in this series.</p>
 
         <h3>KML </h3>
-            <p>Keyhole Markup Language (KML) is an XML-based format which was invented for Google Earth. Most sources of KML also publish the same data in shapefile format, so you won&#39;t need it too often.</p>
-            <p>KML tends to compress a bit better than shapefiles, but the uncompressed files are much larger. Regardless, it&#39;s usually an intermediate format unless you&#39;re working with Google Earth, so you won&#39;t often have to deal with KML.</p>
+            <p>Keyhole Markup Language (KML) is an XML-based format which was invented for Google Earth. KML tends to compress a bit better than shapefiles, but the uncompressed files are much larger.</p>
+            <p>Most sources of KML also publish the same data in shapefile format, so you won&#39;t often need to work with it.</p>
 
         <h3>GPS Data </h3>
             <p>GPS data comes in many formats. GPX is one of the most common and is based on XML. Garmin&#39;s FIT format is also popular, especially in fitness-centered applications.</p>
             <p>Geographic data is usually not published in these formats, but you are likely to encounter it if you create an application that lets users upload GPS data from their own activity.</p>
 
         <h3>OpenStreetMap </h3>
-            <p>The <a href="https://www.openstreetmap.org/">OpenStreetMap</a> format is used by the organization of the same name. You generally won&#39;t encounter this data anywhere except from OpenStreetMap, but it&#39;s an excellent source if you need global mapping at a fine level of detail.</p>
-            <p>Like the US Census TIGER/Line dataset, it is extremely large and detailed. But if you do need this level of detail in a smaller region than the whole Earth, there are ways to create smaller regional extracts.</p>
+            <p>The <a href="https://www.openstreetmap.org/">OpenStreetMap</a> format is used by the organization of the same name. You generally won&#39;t encounter this data anywhere except from OpenStreetMap, but it&#39;s an excellent source if you need global mapping with features down to the street level.</p>
+            <p>Like the US Census TIGER/Line dataset, it is extremely large. But if you do need this level of detail in a smaller region than the whole Earth, there are ways to create smaller regional extracts.</p>
             <p>I won&#39;t cover importing their data in this post, but the <a href="https://wiki.openstreetmap.org/wiki/Downloading_data">OpenStreetMap Wiki</a> has a good guide.</p>
 
 
     <h2>Coordinate Systems and Projections </h2>
         <p>Before loading the data, it helps to have a basic understanding of projections.</p>
         <p>Coordinate systems and projections are a complex topic worth an article (or more!) unto themselves, but put simply, a projection defines how to translate between latitude/longitude coordinates and actual points on the two-dimensional map.</p>
-        <p>Many coordinate systems and projections have an &quot;SRID&quot; registered with the <a href="https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset">EPSG registry</a>, and you&#39;ll need this ID when loading your data.</p>
+        <p>Many projections have an &quot;SRID&quot; registered with the <a href="https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset">EPSG registry</a>, and you&#39;ll need this ID when loading your data.</p>
         <p>Fortunately, once you&#39;ve identified the projection, you don&#39;t really have to deal with the details or math yourself &mdash; if you set the proper SRID, geography libraries such as PostGIS will do this hard work for you.</p>
         <h4>Coordinate Systems</h4>
             <p>Some SRIDs only reference coordinate systems. A coordinate system (or spatial reference system) indicates how latitude/longitude coordinates translate to exact spots on our not-quite-spherical Earth.</p>
-            <p>GeoJSON uses SRID <code>4326</code>, which is for the <a href="https://epsg.io/4326">WGS84</a> spatial reference system. This is one of the most widely-used coordinate systems.</p>
+            <p>GeoJSON uses the <a href="https://epsg.io/4326">WGS84</a> spatial reference system, which has SRID <code>4326</code>. This is one of the most widely-used coordinate systems.</p>
             <p>US Census shapefiles use SRID <code>4269</code>, which indicates the <a href="https://epsg.io/4269">NAD83</a> coordinate system. This is close to WGS84 but has a few small differences, and specifically accounts for North American tectonic plate movement over time. It differs from WGS84 by a few feet, which means that for most applications the difference is negligible.</p>
 
         <h4>Projections </h4>
-            <p>Coordinate systems by themselves do not define a particular projection; that is, they don&#39;t define a way to translate from coordinates to a 2D map.</p>
-            <p>That&#39;s where projections come in. These may attempt to depict the entire Earth while making reasonable tradeoffs about the distortions that necessarily come with that translation. <a href="https://en.wikipedia.org/wiki/Mercator_projection">Mercator</a>, <a href="https://en.wikipedia.org/wiki/Albers_projection">Albers</a>, and <a href="https://en.wikipedia.org/wiki/Goode_homolosine_projection">Goode</a> are common examples of these types of projections.</p>
+            <p>Coordinate systems by themselves do not define a particular projection; that is, they don&#39;t specify a way to translate from coordinates to a 2D map.</p>
+            <p>This is where projections come in. Some attempt to depict the entire Earth while making reasonable tradeoffs about the distortions that necessarily come with that translation. <a href="https://en.wikipedia.org/wiki/Mercator_projection">Mercator</a>, <a href="https://en.wikipedia.org/wiki/Albers_projection">Albers</a>, and <a href="https://en.wikipedia.org/wiki/Goode_homolosine_projection">Goode</a> are common examples of these types of projections.</p>
             <p>Other projections are designed for smaller areas. For example, the <a href="https://epsg.io/32618">UTM18 projection</a> (SRID <code>32618</code>) is specifically designed to accurately portray areas in the northern hemisphere, between 72 and 78 degrees West.</p>
             <p>When you have data that uses one of these projections, the points are not in longitude/latitude coordinates, but have been pre-converted to the locations where they would show up on a map or screen.</p>
             <p>This means that it&#39;s especially important to get the right SRID for the projection, since the data will look totally wrong otherwise. Fortunately, pasting the contents of the <code>.prj</code> file into Google usually brings up the answer if you aren&#39;t sure.</p>
@@ -94,7 +94,7 @@ series: Working with Geographic Data
         <p>GIS professionals tend to use mapping software with native support for shapefiles. Web application developers usually do not, so we need to transfer it into a more suitable format.</p>
         <h3>PostgresSQL </h3>
             <p>PostGIS includes the <code>shp2pgsql</code> utility, which will read in a shapefile and dump out SQL to load it into a PostgreSQL database. It has various options on how to add the data, but the default is to create a new table with one column for each of the attributes in the <code>.dbf</code> file, and a column named <code>geom</code> to hold the shape itself.</p>
-            <p>First, you&#39;ll need to install PostGIS and enable it in your database, if you haven&#39;t already. The PostGIS website has <a href="https://postgis.net/workshops/postgis-intro/installation.html">easy-to-follow installation instructions for both Windows and Mac</a>. On Linux/Unix the system package manager should have everything you need.</p>
+            <p>First, you&#39;ll need to install PostGIS and enable it in your database, if you haven&#39;t already. The PostGIS website has <a href="https://postgis.net/workshops/postgis-intro/installation.html">installation instructions for both Windows and Mac</a>. On Linux/Unix the system package manager should have everything you need.</p>
             <p>On Mac you can also use the <a href="https://brew.sh/">Homebrew package manager</a>, or just install <a href="https://postgresapp.com/downloads.html">Postgres.app</a> and <a href="https://postgresapp.com/documentation/cli-tools.html">set up its CLI tools</a>.</p>
             <p>Once you have PostgreSQL and PostGIS installed, you can create your database and enable the PostGIS extension.</p>
             <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> psql<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>d</span> postgres</span>
@@ -159,9 +159,9 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
             <p>Spatialite seems sparsely documented and I&#39;ve barely used it, but the <a href="http://www.gaia-gis.it/gaia-sins/spatialite-cookbook-5/cookbook_topics.01.html">cookbook</a> is a good starting point. Once you have it set up, the SQL functions for querying the data have a lot of overlap with PostGIS.</p>
 
         <h3>GeoJSON </h3>
-            <p>Depending on your needs, you may just convert your data to GeoJSON and use it directly in your application. This mostly precludes using your database to filter on the shapes, but it is definitely the simplest way, especially if you haven&#39;t set up a database.</p>
+            <p>Depending on your needs, you may just convert your data to GeoJSON and use it directly in your application. This makes it harder to filter and aggregate the shapes inside the database, but it is definitely the simplest way, especially if you haven&#39;t set up a database.</p>
             <p>If you&#39;re most comfortable in an NPM-based workflow, the <a href="https://www.npmjs.com/package/shapefile">shapefile</a> package includes a command named <code>shp2json</code> that will read a shapefile and output a <code>FeatureCollection</code> containing all the data.</p>
-            <p>Wrapping everything in a <code>FeatureCollection</code> is nice for use in Javascript where you can just parse the entire thing as a single JSON object. You can also pass the <code>-n</code> option to skip the <code>FeatureCollection</code> and write each <code>Feature</code> on its own line, as <a href="http://ndjson.org/">newline-delimited JSON</a>.</p>
+            <p>Wrapping everything in a <code>FeatureCollection</code> is nice because you can just parse the entire thing as a single JSON object. You can also pass the <code>-n</code> option to skip the <code>FeatureCollection</code> and write each <code>Feature</code> on its own line, as <a href="http://ndjson.org/">newline-delimited JSON</a>.</p>
             <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> npm<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>g</span> install shapefile</span>
 
 <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Write each Feature on its own line</span><span class="sy-comment sy-line sy-number-sign sy-shell">
@@ -189,7 +189,7 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
         <h3>Using ogr2ogr</h3>
             <p>The open-source GDAL package provides a tool named <a href="https://gdal.org/programs/ogr2ogr.html">ogr2ogr</a> which can convert from and to almost any format. It&#39;s a little more awkward to use and has a lot of options, but if you encounter some unusual format it can probably convert it.</p>
             <p>Generally it&#39;s worth using dedicated tools for the job though, as <code>ogr2ogr</code>&#39;s generalist nature can cause some quirks.</p>
-            <p><code>ogr2ogr</code> also appears to be the tool of choice for loading data into the MySQL database.</p>
+            <p>If you&#39;re using MySQL, <code>ogr2ogr</code> also appears to be the tool of choice for loading geographic data.</p>
 
         <h3>Loading GeoJSON into the Database</h3>
             <p>Sometimes you come across data that is already in GeoJSON format, but you want to load it into your database. While you can just use a <code>jsonb</code> column, this doesn&#39;t work well if you need to actually manipulate or filter the shapes with SQL.</p>
@@ -207,7 +207,7 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
             <p>As I mentioned above, most sources of KML also provide shapefiles, but if you have to deal with KML, <code>ogr2ogr</code> or the <a href="https://github.com/tmcw/togeojson-cli">togeojson</a> utility are good ways to handle it.</p>
 
         <h3>GPS Data</h3>
-            <p>GPS formats are easily handled using <a href="https://www.gpsbabel.org/">GPSBabel</a>, which can convert to both GeoJSON and shapefile format. GPSBabel supports reading GPX, FIT, and many other formats used by GPS devices.</p>
+            <p><a href="https://www.gpsbabel.org/">GPSBabel</a> is a versatile tool for converting GPS data.  It supports reading GPX, FIT, and many other formats, and can write to both shapefile and GeoJSON.</p>
 
 
     <h2>Next Steps</h2>
