@@ -38,7 +38,13 @@ module.exports = {
               textDecoration: 'none',
               '&:hover': {
                 textDecoration: 'underline',
+                textDecorationColor: theme('colors.teal.700'),
               },
+            },
+            'article a': {
+              textDecoration: 'underline',
+              textDecorationStyle: 'dotted',
+              textDecorationColor: theme('colors.teal.600'),
             },
             'li > h1': {
               marginBottom: '0.25rem',
