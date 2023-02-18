@@ -29,13 +29,13 @@
 </script>
 
 <div
-  class="post-list flex flex-col items-stretch sm:mt-4 sm:grid
-  sm:max-w-7xl sm:justify-center sm:gap-8 sm:px-4 xl:gap-x-12">
+  class="post-list flex flex-col items-stretch md:mt-4 md:grid
+  md:max-w-7xl md:justify-center md:gap-8 md:px-4 xl:gap-x-12">
   {#each posts as post (post.id)}
     <div
       animate:flip={{ duration: 300 }}
       class="flex flex-1 flex-col border-b border-teal-100
-      p-2 sm:rounded-sm sm:border sm:border-teal-100 sm:shadow-md">
+      p-2 md:rounded-sm md:border md:border-teal-100 md:shadow-md">
       {#if post.cardImage}
         <div class="post-bg" style={backgroundImage(post)} />
       {/if}
@@ -80,9 +80,9 @@
     filter: var(--post-bg-filter, brightness(155%) saturate(200%));
   }
 
-  @screen sm {
+  @screen md {
     .post-list {
-      grid-template-columns: repeat(auto-fill, 275px);
+      grid-template-columns: repeat(auto-fill, 240px);
     }
   }
 
