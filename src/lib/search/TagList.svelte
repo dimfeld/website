@@ -1,20 +1,22 @@
-<script>
-  import { createEventDispatcher, getContext } from 'svelte';
-  export let currentPost = null;
+<script lang="ts">
+  import type { PostInfo } from '$lib/readPosts';
+  import { searchContext } from '$lib/search';
+  import { createEventDispatcher } from 'svelte';
+
+  export let currentPost: PostInfo | null = null;
+  export let postType: string;
+  export let baseUrl: string;
 
   const dispatch = createEventDispatcher();
 
-  const search = getContext('search');
-  const activeTag = getContext('activeTag');
-  const tagList = getContext('tagList');
-  const noteLookup = getContext('noteLookup');
+  const { search, activeTag, postLookup, tagList } = searchContext();
 
-  $: tags = tagList.map((t) => {
+  $: tagElements = tagList.map((t) => {
     let count = t.posts.length;
     if ($search) {
       let searchValue = $search.toLowerCase();
       count = t.posts.reduce((acc, postId) => {
-        let post = noteLookup[postId];
+        let post = postLookup.get(postId);
         if (post && post.title.toLowerCase().includes(searchValue)) {
           return acc + 1;
         } else {
@@ -47,17 +49,17 @@
 
 <nav class="flex flex-col">
   <a
-    href="/notes"
+    href={baseUrl}
     on:click={() => dispatch('change', '')}
     class={!$activeTag && !currentPost
       ? selectedDivClasses
       : unselectedDivClasses}>
-    <span class="truncate group-hover:underline">All Notes</span>
+    <span class="truncate group-hover:underline">All {postType}s</span>
   </a>
-  {#each tags as tag (tag.id)}
+  {#each tagElements as tag (tag.id)}
     <a
-      href="/notes?tag={tag.id}"
-      aria-roledescription="Notes tagged {tag.id}"
+      href="{baseUrl}?tag={tag.id}"
+      aria-roledescription="{postType}s tagged {tag.id}"
       on:click={() => dispatch('change', tag.id)}
       class="mt-1 {tag.selected ? selectedDivClasses : unselectedDivClasses}">
       <span class="truncate group-hover:underline">{tag.label}</span>

@@ -23,7 +23,7 @@ interface PostAttributes {
 
 export type PostType = 'post' | 'note' | 'journal';
 
-export interface Post {
+export interface PostInfo {
   id: string;
   format: 'md' | 'html';
   type: PostType;
@@ -36,10 +36,12 @@ export interface Post {
   frontPageSummary?: string;
   cardType?: string;
   cardImage?: string;
-  content: string;
+  cardImageFilter?: string;
   confidence?: string;
   status_code?: string;
 }
+
+export type Post = PostInfo & { content: string };
 
 export interface Source {
   ext: 'md' | 'html';
@@ -228,7 +230,7 @@ export function readAllSources(sources: Source[]): Post[] {
   return posts.flatMap((s) => s).filter(Boolean) as Post[];
 }
 
-export function stripContent(p: Post) {
+export function stripContent(p: Post): PostInfo {
   let { content, ...rest } = p;
   return rest;
 }
