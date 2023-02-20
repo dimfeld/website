@@ -188,7 +188,15 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
     <h2>Loading Other Formats </h2>
         <h3>Using ogr2ogr</h3>
             <p>The open-source GDAL package provides a tool named <a href="https://gdal.org/programs/ogr2ogr.html">ogr2ogr</a> which can convert from and to almost any format. It&#39;s a little more awkward to use and has a lot of options, but if you encounter some unusual format it can probably convert it.</p>
-            <p>Generally it&#39;s worth using dedicated tools for the job though, as <code>ogr2ogr</code>&#39;s generalist nature can cause some quirks.</p>
+            <p>Generally it&#39;s worth using dedicated tools for the job though, as <code>ogr2ogr</code>&#39;s generalist nature can cause some quirks. One big exception is when your data is in an unusual projection and you&#39;re converting to GeoJSON.</p>
+            <p>Most shapefile conversion tools will not reproject the data, but <code>ogr2ogr</code> has options to do just that.</p>
+            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">ogr2ogr</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell">  -</span>s_srs</span> <span class="sy-string sy-quoted sy-double sy-shell"><span class="sy-punctuation sy-definition sy-string sy-begin sy-shell">&quot;</span>EPSG:3857<span class="sy-punctuation sy-definition sy-string sy-end sy-shell">&quot;</span></span> <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Projection to convert from (3857 is Mercator) \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-t_srs</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> <span class="sy-string sy-quoted sy-double sy-shell"><span class="sy-punctuation sy-definition sy-string sy-begin sy-shell">&quot;</span>WGS84<span class="sy-punctuation sy-definition sy-string sy-end sy-shell">&quot;</span></span> <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Projection to convert to \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">-f</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> GeoJSON <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Format to conver to \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">output.json <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Output destination \</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span></span>  <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">shapes.shp <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Input file</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span></span></span></code></pre>
             <p>If you&#39;re using MySQL, <code>ogr2ogr</code> also appears to be the tool of choice for loading geographic data.</p>
 
         <h3>Loading GeoJSON into the Database</h3>
@@ -212,7 +220,7 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
 
     <h2>Next Steps</h2>
         <p>Now that you know how to load geographic data, how do you actually use it? The next article in this series will start to answer that question.</p>
-        <p>Also, many thanks to <a href="https://www.twitter.com/techniq35">Sean Lynch</a> for feedback on this article&#39;s initial draft.</p>
+        <p>Also, many thanks to <a href="https://www.twitter.com/techniq35">Sean Lynch</a> for feedback on this article&#39;s initial draft, and to <a href="https://twitter.com/bramus">Bramus</a> for the tip about ogr2ogr&#39;s ability to convert between projections.</p>
 
 
 
