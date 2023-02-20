@@ -324,6 +324,11 @@
     "title": "2023-02-17",
     "uid": ""
   },
+  "pkm-pages/journals/2023-02-19.html": {
+    "slug": "/journals/2023_02_19",
+    "title": "2023-02-19",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -727,6 +732,11 @@
   "pkm-pages/notes/web_scrapers.html": {
     "slug": "/notes/web_scrapers",
     "title": "Web Scrapers",
+    "uid": ""
+  },
+  "pkm-pages/writing/first_class_svelte_support_for_maplibre.html": {
+    "slug": "/writing/first_class_svelte_support_for_maplibre",
+    "title": "First Class Svelte Support for MapLibre",
     "uid": ""
   },
   "pkm-pages/writing/introduction_to_geojson.html": {

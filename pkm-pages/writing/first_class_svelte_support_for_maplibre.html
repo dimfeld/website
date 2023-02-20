@@ -1,0 +1,71 @@
+---
+title: "First Class Svelte Support for MapLibre"
+tags: MapLibre, Svelte
+date: 2023-02-20
+updated: 2023-02-20
+draft: true
+cta: geobook
+series: Working with Geographic Data
+---
+
+
+    
+    <h1>Creating the Map</h1>
+        <p>Instantiating a map is a lot like any other Javascript component. You create an HTML element and pass it to MapLibre.</p>
+        <pre><code><span class="sy-text sy-plain">&lt;script lang=&quot;ts&quot;&gt;
+  const { map: mapInstance } = createMapContext();
+  $: map = $mapInstance;
+
+  function createMap(element: HTMLDivElement) {
+    $mapInstance = new maplibre.Map({
+      container: element,
+      style: &#39;https://basemaps.cartocdn.com/gl/positron-gl-style/style.json&#39;,
+      center,
+      zoom,
+      minZoom,
+      maxZoom,
+      interactive,
+      preserveDrawingBuffer,
+      maxBounds,
+      bounds,
+    });
+
+    $mapInstance.on(&#39;load&#39;, (e) =&gt; {
+      loaded = true;
+      dispatch(&#39;load&#39;, { map: $mapInstance });
+    });
+
+    return {
+      destroy() {
+        $mapInstance?.remove();
+        $mapInstance = null;
+      },
+    };
+  }
+
+&lt;/script&gt;
+
+&lt;div class={classNames} use:createMap&gt;
+  {#if $mapInstance &amp;&amp; loaded}
+    &lt;slot /&gt;
+  {/if}
+&lt;/div&gt;
+
+&lt;style&gt;
+  div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+&lt;/style&gt;
+</span></code></pre>
+
+    <p>Map context</p>
+    <p>Adding event handlers</p>
+    <p>Updating state</p>
+    <p>Markers</p>
+
+
+
