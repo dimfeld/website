@@ -2,7 +2,7 @@
 title: "Loading Geographic Data in a Format You Can Actually Use"
 tags: Geodata
 date: 2023-02-18
-updated: 2023-02-18
+updated: 2023-02-25
 draft: false
 cta: geobook
 series: Working with Geographic Data
@@ -159,8 +159,8 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
             <p>Spatialite seems sparsely documented and I&#39;ve barely used it, but the <a href="http://www.gaia-gis.it/gaia-sins/spatialite-cookbook-5/cookbook_topics.01.html">cookbook</a> is a good starting point. Once you have it set up, the SQL functions for querying the data have a lot of overlap with PostGIS.</p>
 
         <h3>GeoJSON </h3>
-            <p>Depending on your needs, you may just convert your data to GeoJSON and use it directly in your application. This makes it harder to filter and aggregate the shapes inside the database, but it is definitely the simplest way, especially if you haven&#39;t set up a database.</p>
-            <p>If you&#39;re most comfortable in an NPM-based workflow, the <a href="https://www.npmjs.com/package/shapefile">shapefile</a> package includes a command named <code>shp2json</code> that will read a shapefile and output a <code>FeatureCollection</code> containing all the data.</p>
+            <p>Depending on your needs, you may just convert your data to GeoJSON and use it directly in your application. This makes it harder to filter and aggregate the shapes inside a database, but it is definitely the simplest way, especially if you haven&#39;t set up a database.</p>
+            <p>The <a href="https://www.npmjs.com/package/shapefile">shapefile</a> NPM package includes a command named <code>shp2json</code> that will read a shapefile and output a <code>FeatureCollection</code> containing all the data.</p>
             <p>Wrapping everything in a <code>FeatureCollection</code> is nice because you can just parse the entire thing as a single JSON object. You can also pass the <code>-n</code> option to skip the <code>FeatureCollection</code> and write each <code>Feature</code> on its own line, as <a href="http://ndjson.org/">newline-delimited JSON</a>.</p>
             <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> npm<span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell"> -</span>g</span> install shapefile</span>
 
@@ -170,19 +170,9 @@ ANALYZE <span class="sy-string sy-quoted sy-double sy-sql"><span class="sy-punct
 <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Write to a FeatureCollection</span><span class="sy-comment sy-line sy-number-sign sy-shell">
 </span><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> shp2json cb_2021_us_county_20m.shp <span class="sy-keyword sy-operator sy-assignment sy-redirection sy-shell">&gt;</span> counties.json</span>
 </span></code></pre>
-            <p>If you prefer Rust binaries, <a href="https://crates.io/crates/geoq">geoq</a> is a good solution to converting shapefiles into GeoJSON.</p>
-            <pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Requires nightly Rust, as of this writing.</span><span class="sy-comment sy-line sy-number-sign sy-shell">
-</span><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> cargo +nightly install geoq</span>
-
-<span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Write each Feature on its own line</span><span class="sy-comment sy-line sy-number-sign sy-shell">
-</span><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> geoq shp cb_2021_us_county_20m.shp <span class="sy-keyword sy-operator sy-assignment sy-redirection sy-shell">&gt;</span> counties.ndjson</span>
-
-<span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> Writing to a FeatureCollection requires piping through</span><span class="sy-comment sy-line sy-number-sign sy-shell">
-</span><span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> another geoq command.</span><span class="sy-comment sy-line sy-number-sign sy-shell">
-</span><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">$</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> geoq shp cb_2021_us_county_20m.shp</span> <span class="sy-keyword sy-operator sy-logical sy-pipe sy-shell">|</span> <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
-</span>    <span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">geoq</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> gj fc <span class="sy-keyword sy-operator sy-assignment sy-redirection sy-shell">&gt;</span> counties.json</span>
-
-</span></code></pre>
+            <aside class="note">
+                <p>Previous versions of this article mentioned another tool for converting shapefiles to GeoJSON, but I&#39;ve since found that it doesn&#39;t handle some types of polygons properly, and so I&#39;ve removed the paragraph.</p>
+</aside>
 
 
     <h2>Loading Other Formats </h2>
