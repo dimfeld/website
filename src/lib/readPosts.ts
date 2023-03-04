@@ -181,13 +181,6 @@ function processPost(
   if (attributes.draft) {
     let suppress = process.env.NODE_ENV === 'production';
 
-    if (attributes.draft_branch) {
-      console.dir({
-        attributes,
-        ref: process.env.VERCEL_GIT_COMMIT_REF,
-      });
-    }
-
     if (
       attributes.draft_branch &&
       attributes.draft_branch === process.env.VERCEL_GIT_COMMIT_REF
