@@ -744,6 +744,11 @@
     "title": "WebGL Resources",
     "uid": ""
   },
+  "pkm-pages/writing/administrative_and_statistical_regions_in_geospatial_analysis.html": {
+    "slug": "/writing/administrative_and_statistical_regions_in_geospatial_analysis",
+    "title": "Administrative and Statistical Regions in Geospatial Analysis",
+    "uid": ""
+  },
   "pkm-pages/writing/first_class_svelte_support_for_maplibre.html": {
     "slug": "/writing/first_class_svelte_support_for_maplibre",
     "title": "First Class Svelte Support for MapLibre",
@@ -757,11 +762,6 @@
   "pkm-pages/writing/loading_geographic_data_in_a_format_you_can_actually_use.html": {
     "slug": "/writing/loading_geographic_data_in_a_format_you_can_actually_use",
     "title": "Loading Geographic Data in a Format You Can Actually Use",
-    "uid": ""
-  },
-  "pkm-pages/writing/what_are_adminstrative_regions.html": {
-    "slug": "/writing/what_are_adminstrative_regions",
-    "title": "What are Adminstrative Regions?",
     "uid": ""
   }
 }

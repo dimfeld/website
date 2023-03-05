@@ -1,11 +1,6 @@
 import frontMatter from 'front-matter';
 import uniq from 'just-unique';
 import * as path from 'path';
-import globFn from 'glob';
-import { promisify } from 'util';
-import { promises as fs } from 'fs';
-
-const glob = promisify(globFn);
 
 interface PostAttributes {
   title: string;
@@ -19,6 +14,7 @@ interface PostAttributes {
   confidence?: string;
   status_code?: string;
   draft?: boolean;
+  draft_branch?: string;
 }
 
 export type PostType = 'post' | 'note' | 'journal';
@@ -182,8 +178,19 @@ function processPost(
   data: string
 ): Omit<Post, 'format' | 'type'> | null {
   let { attributes, body } = frontMatter<PostAttributes>(data);
-  if (attributes.draft && process.env.NODE_ENV === 'production') {
-    return null;
+  if (attributes.draft) {
+    let suppress = process.env.NODE_ENV === 'production';
+
+    if (
+      attributes.draft_branch &&
+      attributes.draft_branch === process.env.VERCEL_GIT_COMMIT_REF
+    ) {
+      suppress = false;
+    }
+
+    if (suppress) {
+      return null;
+    }
   }
 
   let metadataTags = (attributes.tags || '')

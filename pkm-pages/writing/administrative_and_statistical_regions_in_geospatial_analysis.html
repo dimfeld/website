@@ -1,0 +1,74 @@
+---
+title: "Administrative and Statistical Regions in Geospatial Analysis"
+tags: Geodata
+date: 2023-03-01
+updated: 2023-03-01
+draft: false
+draft_branch: post-administrative-regions
+cta: geobook
+series: Working with Geographic Data
+---
+
+
+    
+    <p>In the previous article we looked at <a href="/writing/loading_geographic_data_in_a_format_you_can_actually_use">loading and converting data for use in a web application</a>. Now it&#39;s time to cover some of the structure of this data, and different types of regions that you might want to use.</p>
+    <p>As you start to work with international mapping data, you&#39;ll notice that region fields tend to be named generic things like <code>admin2</code>. This seems odd at first, but it is done with good reason. In this article we&#39;ll look at how administrative boundaries differ and are represented in mapping data, and then look at various types of official and unofficial regions used in the United States.</p>
+    <h2>Worldwide values </h2>
+        <p>Most countries divide their regions into multiple levels. These official divisions of countries are called administrative regions or administrative divisions. Administrative divisions are distinguished by level, and each one corresponds to the level of the division in a country, irrespective of how it compares to that of other countries.</p>
+        <p>There are usually up to four administrative region levels, but both the structure and the names of the region types varies by country. The first level usually corresponds to states, provinces, and so on. The second level may be counties or districts, in countries that use them. The third level may be cities. This isn&#39;t a hard and fast rule though &mdash; it&#39;s very much dependent on how a particular country divides itself up.</p>
+        <p>In mapping data these levels are usually designated <code>admin0</code> for the country, <code>admin1</code> for the first level of divisions, <code>admin2</code> for the second level, and so on. Again, the exact meaning of these is particular to the country.</p>
+        <p>Canada has ten provinces, each of which has a different way of splitting itself up.</p>
+        <p>Iceland has one of the simpler region structures. Its level one division is 64 municipalities that cover the country, and there are no further official levels.</p>
+        <p>The Philippines uses four levels of division. The first level is just called the &quot;region&quot;, and the second level consists of provinces or districts, and also &quot;independent cities&quot; which are geographically located inside a province but don’t officially belong to it. The third level then consists of cities and municipalities inside provinces, and the fourth level is the <em class="italic">barangay</em>, which is something like a neighborhood but with its own small government.</p>
+        <p>Independent cities usually go straight from the level two city to the level four <em class="italic">barangay</em>, so map creators will often just fill in a level three division which has the same name and size as the city.</p>
+        <p>All this is to say that administrative divisions vary widely as you look at different places around the world. So the simple numbering of divisions was done with good reason and makes it much easier to use the data without needing to handle each country&#39;s peculiarities right away.</p>
+        <p>Each region will have a unique ID that identifies it in addition to the name, for continuity across name changes and to help when joining to other data. The ID values for a country&#39;s regions are often managed by that country&#39;s government, so different sources of geographic data can all share the same set of IDs.</p>
+
+    <h2>Unofficial Divisions </h2>
+        <p>Administrative divisions reflect political boundaries, but there are many unofficial types of divisions used as well. I live in the United States, so I&#39;ll use it for these example, but most other countries have their own versions of these ideas.</p>
+        <p>The USA is officially divided into states, counties, and cities and towns. Some states have variations, such as Virginia&#39;s independent cities, which sit within counties but are not actually part of those counties.</p>
+        <p>Mapping with administrative regions is useful both because they reflect meaningful governmental boundaries and because people living in those areas are familiar with them, but they aren&#39;t always convenient for statistical analysis.</p>
+        <p>In the San Francisco Bay Area, you can drive through three counties in less than an hour with no clear delineation between them. The towns of Palo Alto and Mountain View are in separate counties, but you wouldn&#39;t know it without a map.</p>
+        <p>So what other kinds of regions do we have?</p>
+        <h3>Census Regions </h3>
+            <p>Beyond the administrative divisions, the US Census maintains additional breakdowns. These are useful for research and statistical purposes both because they correspond more to areas where people actually live, and because they update occasionally as population patterns shift throughout the country.</p>
+            <p>At the highest level, the Census splits the USA into four regions, each consisting of a group of states, and each region is further split into two or three divisions.</p>
+            <p>Metropolitan Statistical Areas (MSAs) are centered around an urban area with at least 50,000 people. These areas commonly encompass more than one city, such as the Los Angeles-Long Beach-Anaheim MSA, and also include surrounding areas from where people commute.</p>
+            <p>
+<picture>
+  <source srcset="https://images.imfeld.dev/blog/LaLongBeachMSA_1677818616455_0-w650-AYaotj50-3toIaZTUP3IYw.avif" type="image/avif" width="650" height="388" />
+  <source srcset="https://images.imfeld.dev/blog/LaLongBeachMSA_1677818616455_0-w650-AYaotj50-3toIaZTUP3IYw.webp" type="image/webp" width="650" height="388" />
+  <source srcset="https://images.imfeld.dev/blog/LaLongBeachMSA_1677818616455_0-w650-AYaotj50-3toIaZTUP3IYw.png" type="image/png" width="650" height="388" />
+  <img src="https://images.imfeld.dev/blog/LaLongBeachMSA_1677818616455_0-w650-AYaotj50-3toIaZTUP3IYw.png" alt="LaLongBeachMSA.png" width="650" height="388" />
+</picture>
+</p>
+            <p>Large MSAs are sometimes split into Metropolitan Divisions as well, when there is a primary core of at least 2.5 million people and additional smaller cores in the same general area.</p>
+            <p>A Micropolitan Statistical Area (sometimes abbreviated μSA) is similar, but covers urban areas with between 10,000 and 50,000 people.</p>
+            <p>Metropolitan and Micropolitan Statistical Areas together are called Core-Based Statistical Areas, or CBSAs. Many rural areas of the USA are not  in any CBSA, due to the lower limit of 10,000 people on Micropolitan areas.</p>
+            <p>There are also 172 Combined Statistical Areas in the USA, which are groups of adjacent CBSAs. The New York–Newark CSA, pictured below, is comprised of seven individual CBSAs.</p>
+            <p>
+<picture>
+  <source srcset="https://images.imfeld.dev/blog/New_York_Combined_Metro_Area_1677818334917_0-w650-AYaotj50VtE9NLGMMn7B0Q.avif" type="image/avif" width="650" height="596" />
+  <source srcset="https://images.imfeld.dev/blog/New_York_Combined_Metro_Area_1677818334917_0-w650-AYaotj50VtE9NLGMMn7B0Q.webp" type="image/webp" width="650" height="596" />
+  <source srcset="https://images.imfeld.dev/blog/New_York_Combined_Metro_Area_1677818334917_0-w650-AYaotj50VtE9NLGMMn7B0Q.png" type="image/png" width="650" height="596" />
+  <img src="https://images.imfeld.dev/blog/New_York_Combined_Metro_Area_1677818334917_0-w650-AYaotj50VtE9NLGMMn7B0Q.png" alt="New_York_Combined_Metro_Area.png" width="650" height="596" />
+</picture>
+</p>
+            <p>At the local level, the US Census divides counties into Census Tracts, which are not administrative divisions, but sized to contain between 1,200 to 8,000 people each. These regions&#39; boundaries are relatively stable to enable better statistical comparison over time, but they do occasionally change in response to drastic population shifts. Tracts are further divided into block groups, areas of between roughly 600 to 3,000 people.</p>
+            <p>The Census publishes <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html">shapefiles for all of these region types</a>, but they use <a href="https://www.census.gov/library/reference/code-lists/ansi.html">FIPS code</a> labels such as <code>STATEFP</code> instead of the <code>admin</code> labels used by data designed to span multiple countries.</p>
+
+        <h3>ZIP Codes </h3>
+            <p>ZIP Codes are a complex topic unto themselves. We think of them as areas, but a ZIP code is actually just a collection of mail delivery routes or links to a primary mail distribution center, and does not officially represent an actual area.</p>
+            <p>This presents a challenge since ZIP codes are used for a lot of other purposes in which they do need to represent areas, so the US Census has created the <a href="https://www.census.gov/programs-surveys/geography/guidance/geo-areas/zctas.html">ZIP Code Tabulation Area (ZCTA)</a> as a solution. They mostly are the same as ZIP codes, but there are a few differences.</p>
+            <p>ZCTAs are defined by the most frequently occurring ZIP code in a census block group. A block group occasionally will more than one ZIP code covering it, so a small amount of addresses in the country may be in a ZCTA that does not match the actual ZIP code. ZCTAs can also be expanded to cover small areas that have no ZIP code, and there may not be a ZCTA for &quot;unique&quot; ZIP codes which are assigned to a single large institution or building.</p>
+
+        <h3>Other Region Types</h3>
+            <p>Healthcare researchers commonly use geographic data in their work, and the <a href="https://data.dartmouthatlas.org/">Dartmouth Atlas of Health</a> has created their own set of divisions in the USA. They split the country into 306 Healthcare Referral Regions (HRRs), which group people by where they tend to go for more complex procedures and surgery, and 3,436 Healthcare Service Areas (HSAs), which group together populations by where they receive hospitalizations.</p>
+            <p>School districts are valuable in researching children&#39;s education. Their boundaries often reflect social and political divisions, and the correlations between measures in a school district and other economic or social measures can yield valuable insights.</p>
+            <p>Legislative districts are another common mapping case. These determine who represents a particular geographic area in a branch of the government, and are often a source of controversy as they are continually redrawn in ways that shift the balance of power toward one party or another.</p>
+
+        <p>With all this in mind, you should start to feel more comfortable looking at geographic data files. Later in this article series, we&#39;ll look at using the region data to display useful insights in a web application.</p>
+
+
+
+

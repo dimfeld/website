@@ -3,7 +3,8 @@ title: "{{replace title "/" " - "}}"
 tags: {{join tags ", "}}
 date: {{#if attrs.created}}{{attrs.created}}{{else}}{{format_time "%Y-%m-%d" created_time}}{{/if}}
 updated: {{#if attrs.updated}}{{attrs.updated}}{{else}}{{format_time "%Y-%m-%d" edited_time}}{{/if}}{{#if attrs.draft}}
-draft: {{attrs.draft}}{{/if}}{{#if attrs.cta}}
+draft: {{attrs.draft}}{{/if}}{{#if attrs.draft_branch}}
+draft_branch: {{attrs.draft_branch}}{{/if}}{{#if attrs.cta}}
 cta: {{attrs.cta}}{{/if}}{{#if attrs.series}}
 series: {{attrs.series}}{{/if}}
 ---
