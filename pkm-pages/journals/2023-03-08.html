@@ -1,0 +1,17 @@
+---
+title: "2023-03-08"
+tags: 
+date: 2023-03-08
+updated: 2023-03-09
+---
+
+
+    
+    <p>As procrastination for writing my book, I wrote a Neovim plugin to generate word counts per section in a document.</p>
+    <p>Neovim lets you use an <code>extmark</code> on a position to add virtual text. So the idea was to set an <code>extmark</code> on each header line with the word count, but I didn&#39;t quite figure out how the <code>extmark</code> actually moves around with the text. It feels somewhat unintuitive, but there are probably some subtleties that I haven&#39;t figured out yet.</p>
+    <p>Instead of dealing with that, instead I set up my plugin as a &quot;decoration provider.&quot; This lets you just set an ephemeral <code>extmark</code> which only lasts for the draw cycle, and then next time a line is redrawn you just create it again (or not).  This ended up being a bit more code, but much simpler since I now only have to track the word count and where the headers are, and not worry about if an <code>extmark</code> is still on the right line or not.</p>
+    <p>Overall Lua feels nice, if rather barebones. I&#39;m definitely missing the functional programming idioms afforded by most modern languages. But the NeoVim APIs are very easy to use.</p>
+    <p>If you&#39;re interested in using this, you can <a href="https://github.com/dimfeld/section-wordcount.nvim">get it on Github</a>.</p>
+
+
+
