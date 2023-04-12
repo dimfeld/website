@@ -128,7 +128,7 @@ devDependencies:
     version: 1.15.4(svelte@3.58.0)(vite@4.0.2)
   '@sveltejs/svelte-repl':
     specifier: github:dimfeld/svelte-repl
-    version: github.com/dimfeld/svelte-repl/63babd8bb54a41f86ed949057ffecf92da0b27c6
+    version: github.com/dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e
   '@tailwindcss/forms':
     specifier: ^0.5.2
     version: 0.5.2(tailwindcss@3.0.24)
@@ -763,7 +763,7 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       '@jridgewell/set-array': 1.1.2
-      '@jridgewell/sourcemap-codec': 1.4.14
+      '@jridgewell/sourcemap-codec': 1.4.15
       '@jridgewell/trace-mapping': 0.3.18
     dev: true
 
@@ -779,6 +779,10 @@ packages:
 
   /@jridgewell/sourcemap-codec@1.4.14:
     resolution: {integrity: sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==}
+    dev: true
+
+  /@jridgewell/sourcemap-codec@1.4.15:
+    resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
     dev: true
 
   /@jridgewell/trace-mapping@0.3.18:
@@ -2629,6 +2633,10 @@ packages:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
     dev: true
 
+  /graceful-fs@4.2.11:
+    resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+    dev: true
+
   /graceful-fs@4.2.4:
     resolution: {integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==}
     dev: true
@@ -2992,7 +3000,7 @@ packages:
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.6
     dev: true
 
   /just-camel-case@6.0.1:
@@ -3077,7 +3085,7 @@ packages:
     resolution: {integrity: sha1-eUfkIUmvgNaWy/eXvKq8/h/inKg=}
     engines: {node: '>=4'}
     dependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       parse-json: 2.2.0
       pify: 2.3.0
       strip-bom: 3.0.0
@@ -5280,8 +5288,8 @@ packages:
     resolution: {integrity: sha512-aIVecm5ucOzwhtKbl0zkfg0ZSOUR9c2da0k8cIc9umjjzkvVCWUUX/UHZ1CLPsv4wmJLqt0aWeLB7p9n9JDwYQ==}
     dev: true
 
-  github.com/dimfeld/svelte-repl/63babd8bb54a41f86ed949057ffecf92da0b27c6:
-    resolution: {tarball: https://codeload.github.com/dimfeld/svelte-repl/tar.gz/63babd8bb54a41f86ed949057ffecf92da0b27c6}
+  github.com/dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e:
+    resolution: {tarball: https://codeload.github.com/dimfeld/svelte-repl/tar.gz/5fe0794961938629a193f41cc49b6d63fd62196e}
     name: '@sveltejs/svelte-repl'
     version: 0.3.0
     dependencies:
