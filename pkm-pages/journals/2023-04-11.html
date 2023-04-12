@@ -1,0 +1,30 @@
+---
+title: "2023-04-11"
+tags: 
+date: 2023-04-11
+updated: 2023-04-12
+---
+
+
+    
+    <p>fast.ai released part 2 of their <a href="https://course.fast.ai/">Practical Deep Learning for Coders</a> free course. This one covers building a model like Stable Diffusion from scratch. I’m looking forward to going through it, since the foundations needed to implement the techniques are said to apply to many other types of models, but a more important lesson jumped out at me here.</p>
+    <p>Instead of starting with the foundations of transformers, attention, autoencoders, and so on, the course adopts a top-down method of learning. In this style you start by introducing the full solution to a problem, proceed from there to examine the component parts of the solution. If you’re ever been reading a book or taking a course, and have had trouble figuring out <strong class="font-bold">why</strong> or <strong class="font-bold">how</strong> a particular chapter’s content is useful, you can probably see why this style of learning would be helpful.</p>
+    Starting with a full solution leaves some things unexplained or fuzzy at first, but I think it has a few advantages.
+      <ul class="list-bullet">
+        <li>It’s clear how new concepts fit into the bigger picture, because they can be introduced in the context of the initial, full example.</li>
+        <li>Having a working example also helps with suggesting ways to explore the new concepts that might otherwise be presented in a vacuum, instead of just promising that it will all come together later.</li>
+        <li>It makes it easier to jump right in and get something working right away, and for those who like to experiment, lets them start doing so more quickly.</li>
+      </ul>
+    <p>I’ve been thinking about top-down learning so much because it applies directly to the spatial data book I’ve been writing.</p>
+    <p>After seeing how the fast.ai course is structured, this week I added a new chapter right at the beginning of the book. This new chapter is a working example that quickly introduces GeoJSON and D3 and presents a very simple web page that renders a map.</p>
+    <p><img alt="Simple Country Boundary Map" src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9115c2ba-d18d-476f-b98f-155f5af41cbf_1066x856.png" /></p>
+    <p>This map is nothing special — just some country boundaries and a few points — but serves a very important purpose by incorporating most of the concepts explored in more detail later in the book.</p>
+    <p>There are a lot of foundational concepts to cover when starting out with spatial data: the structure of GeoJSON, how to find and load spatial data into your application, and more. Now the reader can go into these foundational chapters with some idea of what’s actually going on, instead of having to wait until the last quarter of the book to make something they can actually see on the screen.</p>
+    <p>Aside from this new chapter, I’ve been updating the “Types of Map Visualization” chapter. This had been a very quick overview, but now I’ve been adding more examples and more pitfalls for each of the types of maps. The chapter will probably be three as long as it had been, but I expect that it will be much more useful and hopefully provide some guidance through what can be a tricky process even for seasoned data visualization practitioners.</p>
+
+    <h3>Links</h3>
+      <ul class="list-bullet">
+        <li><a href="https://www.geoffreylitt.com/2023/03/25/llm-end-user-programming.html">Malleable software in the Age of LLMs</a> by Geoffrey Litt looks forward to how LLMs may bring software development to the masses, not so much in the sense of replacing existing software developers, but in making it much easier for non-technical people to create small one-off applications to solve specific applications. Worth some time to read and think about.</li>
+      </ul>
+
+
