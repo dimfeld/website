@@ -81,10 +81,11 @@
 
   <p class="mt-4">
     If you like what you've read here, please consider subscribing to my
-    weekly-ish newsletter, where I announce new articles and share other
-    interesting things I've found.
-    <NewsletterSignup />
+    weekly-ish newsletter, where I write short essays, announce new articles,
+    and share other interesting things I've found.
   </p>
+
+  <NewsletterSignup />
 
   <h1 id="aboutme">About Me</h1>
 

@@ -12,8 +12,9 @@
   </p>
 
   <p>
-    Please also consider subscribing to my weekly-ish newsletter, where I
-    announce new articles and share other interesting things I've found.
+    Please also consider subscribing to my weekly-ish newsletter, where I write
+    short essays, announce new articles, and share other interesting things I've
+    found.
   </p>
   <NewsletterSignup />
 </footer>
