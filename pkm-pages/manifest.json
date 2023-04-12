@@ -764,6 +764,11 @@
     "title": "Administrative and Statistical Regions in Geospatial Analysis",
     "uid": ""
   },
+  "pkm-pages/writing/are_llms_databases.html": {
+    "slug": "/writing/are_llms_databases",
+    "title": "Are LLMs Databases?",
+    "uid": ""
+  },
   "pkm-pages/writing/first_class_svelte_support_for_maplibre.html": {
     "slug": "/writing/first_class_svelte_support_for_maplibre",
     "title": "First Class Svelte Support for MapLibre",

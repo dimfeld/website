@@ -1,0 +1,20 @@
+---
+title: "Are LLMs Databases?"
+tags: 
+date: 2023-04-11
+updated: 2023-04-11
+draft: false
+---
+
+
+    
+    <p>Are LLMs Databases? This topic has been hot recently, and it&#39;s an interesting question, if only because it helps us to think more deeply about what the LLM is actually doing.</p>
+    <p>The argument in favor of this, from what I&#39;ve seen, is that LLMs, like databases, take in a query and return some data related to the query, just like a database. But the metaphor falls apart under closer examination.</p>
+    <p>Databases let you write queries with an expected result. LLMs sort of do this, but the query parsing is unpredictable even when you set temperature to 0. Databases have a way to query and or aggregate for exactly what you want, whereas LLMs do not.</p>
+    <p>Most significantly, LLMs will invent results instead of returning an empty set.</p>
+    <p>Much of this is because the LLM doesn&#39;t actually store individual records. It has only sets of probabilities, given a string of tokens, for what the next token should be. While some argue that these connections are database-like, I would counter that <em class="italic">tokens</em> are not the actual unit of information that the user cares about.</p>
+    <p>At best, an LLM could be thought of as a database which is lossily compressed. The data goes in, is translated into a smaller form, and then records can be pulled back out but with a loss of precision. Even this metaphor doesn&#39;t describe them well though. Lossy compression is usually applied on images, audio, or time-series data older than a certain date. But in this case, the nature of the compression is understood, and the quality of the reconstructed output is well-characterized. This is not the case for LLMs.</p>
+    <p>Others have argued that LLMs are better thought of as &quot;reasoning engines&quot; than as databases. This is better, partially because it comes closer to describing the behavior, but also because it is a term without decades of prior art to compare with.</p>
+
+
+
