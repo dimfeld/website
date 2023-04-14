@@ -779,6 +779,11 @@
     "title": "Are LLMs Databases?",
     "uid": ""
   },
+  "pkm-pages/writing/creating_a_custom_command_bar_in_neovim.html": {
+    "slug": "/writing/creating_a_custom_command_bar_in_neovim",
+    "title": "Creating a Custom Command Bar in Neovim",
+    "uid": ""
+  },
   "pkm-pages/writing/first_class_svelte_support_for_maplibre.html": {
     "slug": "/writing/first_class_svelte_support_for_maplibre",
     "title": "First Class Svelte Support for MapLibre",
