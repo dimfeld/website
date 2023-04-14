@@ -1,9 +1,8 @@
 <iframe
   src="https://imfeld.substack.com/embed"
-  width="480"
   height="320"
   title="Newsletter Signup"
-  class="mx-auto rounded-md border border-gray-300 bg-white"
+  class="mx-auto w-full max-w-[480px] rounded-md border border-gray-300 bg-white"
   frameborder="0"
   scrolling="no" />
 <!--
