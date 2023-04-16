@@ -1,0 +1,190 @@
+---
+title: "PostgreSQL Row Level Security"
+tags: 
+date: 2023-04-16
+updated: 2023-04-16
+---
+
+
+  <ul class="list-bullet">
+    <li>RLS effectively lets you add extra WHERE conditions to any SQL query. This can go in both directions &mdash; it applies to SELECT, UPDATE, INSERT, and DELETE.</li>
+    <li>The advantage of this is that you don&#39;t need to remember to add these checks into every query in your application. Likewise for when you are updating your auth model &mdash; just change the relevant policies and it all takes effect.</li>
+    <li><h2>Syntax and Basic Usage</h2>
+      <ul class="list-bullet">
+        <li><pre><code><span class="sy-source sy-sql">CREATE POLICY name <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> table_name
+    [ <span class="sy-keyword sy-other sy-alias sy-sql">AS</span> { PERMISSIVE | RESTRICTIVE } ]
+    [ FOR { ALL | <span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> | <span class="sy-keyword sy-other sy-DML sy-sql">INSERT</span> | <span class="sy-keyword sy-other sy-DML sy-sql">UPDATE</span> | <span class="sy-keyword sy-other sy-DML sy-sql">DELETE</span> } ]
+    [ TO { role_name | PUBLIC | CURRENT_ROLE | <span class="sy-support sy-function sy-scalar sy-sql">CURRENT_USER</span> | <span class="sy-support sy-function sy-scalar sy-sql">SESSION_USER</span> } [, ...] ]
+    [ USING ( using_expression ) ]
+    [ <span class="sy-keyword sy-other sy-DML sy-sql">WITH</span> <span class="sy-storage sy-modifier sy-sql">CHECK</span> ( check_expression ) ]
+</span></code></pre></li>
+        <li>The <code>USING</code> clause applies on reads, and the <code>WITH CHECK</code> clause applies to writes. If both <code>USING</code> and <code>WITH CHECK</code> could apply to the policy, <code>WITH CHECK</code> can be omitted to use the same clause specified in <code>USING</code>.</li>
+        <li>RLS uses a &quot;default deny&quot; policy. You must add extra checks to get any data out of it.</li>
+        <li>Types of operations and which they use:
+          <ul class="list-bullet">
+            <li>SELECT - USING</li>
+            <li>INSERT - WITH CHECK</li>
+            <li>UPDATE - USING and WITH CHECK
+              <ul class="list-bullet">
+                <li>The USING clause determines if you can see the row to update it, and the WITH CHECK applies to what you&#39;re trying to write to the row.</li>
+              </ul>            </li>
+            <li>DELETE - USING
+              <ul class="list-bullet">
+                <li>This means that you may need a separate policy for DELETE unless you want the user to be able to delete anything they can read.</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>These clauses can be pretty much anything that can go in a WHERE clause, including function calls. Note that <code>USING (true)</code> is the way to make an RLS policy that always allows access (e.g. for admin roles).</li>
+        <li><h3>Permissive and Restrictive</h3>
+          <ul class="list-bullet">
+            <li>RLS policies can be permissive (the default) or restrictive. For the set of policies that apply to an operation, at least one permissive policy (if any exist) must pass, and all of the restrictive policies must pass.</li>
+            <li>In SQL terms, this is <code>(permissive1 OR permissive2) AND restrictive1 AND restrictive2</code>.</li>
+          </ul>        </li>
+        <li>RLS policies and normal role GRANTs will both be checked.
+          <ul class="list-bullet">
+            <li>If you have DELETE granted but the RLS denies a DELETE, then you can&#39;t delete it.</li>
+            <li>If RLS allows you to delete a row but your role doesn&#39;t have the permission GRANTed on the table, then you can&#39;t delete it.</li>
+          </ul>        </li>
+        <li>A very simple policy would be something like this.</li>
+        <li><pre><code><span class="sy-source sy-sql">CREATE POLICY p <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> thetable
+	FOR <span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span>
+	USING (user_id <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-support sy-function sy-scalar sy-sql">current_user</span>);
+<span class="sy-meta sy-alter sy-sql"><span class="sy-keyword sy-other sy-create sy-sql">ALTER</span> <span class="sy-keyword sy-other sy-table sy-sql">TABLE</span> </span>thetable ENABLE ROW LEVEL SECURITY;
+<span class="sy-comment sy-line sy-double-dash sy-sql"><span class="sy-punctuation sy-definition sy-comment sy-sql">--</span> Or to force RLS for table owners too.
+</span><span class="sy-meta sy-alter sy-sql"><span class="sy-keyword sy-other sy-create sy-sql">ALTER</span> <span class="sy-keyword sy-other sy-table sy-sql">TABLE</span> </span>thetable FORCE ROW LEVEL SECURITY;
+</span></code></pre></li>
+        <li>As in the above, RLS <strong class="font-bold">must</strong> be explicitly enabled on the table.</li>
+        <li>This would let you select any rows that match the current user, and not modify the table at all.</li>
+        <li>Policy names apply per table, so you can reuse the same name across tables.</li>
+      </ul>    </li>
+    <li><h2>Managing Users and Roles</h2>
+      <ul class="list-bullet">
+        <li>Most sample uses of RLS check against <code>current_user</code> &mdash; that is, actual database users and roles. But this sucks.</li>
+        <li>There are a lot of reasons that you don&#39;t want to coopt your database&#39;s role management to manage your app&#39;s users as well.
+          <ul class="list-bullet">
+            <li>It doesn&#39;t scale. Postgres isn&#39;t designed to have thousands of roles</li>
+            <li>Roles are global in the entire Postgres system, not scoped to a particular database.</li>
+            <li>There&#39;s no good built-in place to store metadata about a database user, so you still need a <code>users</code> table anyway.</li>
+            <li>GRANTing permissions becomes a lot more complicated and error-prone.</li>
+            <li>Using <code>current_user</code> in your policy checks requires you to set <code>security_invoker = on</code> on any view so that its checks permissions as your DB user, instead of the user that created the view. This option is new in PostgreSQL v15.</li>
+          </ul>        </li>
+        <li>Fortunately you don&#39;t have to. PostgreSQL allows you to set runtime variables with almost name you want, and use these in policies. The only restriction is that it must have a period, such as <code>myapp.user</code>, to separate its namespace from the main runtime settings.</li>
+        <li><pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">SET</span> LOCAL <span class="sy-constant sy-other sy-database-name sy-sql">myapp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">user</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>12345<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>;
+<span class="sy-keyword sy-other sy-DML sy-sql">SET</span> LOCAL <span class="sy-constant sy-other sy-database-name sy-sql">myapp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">roles</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>aa,bb,cc<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>;
+
+<span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>), current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.roles<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>);
+</span></code></pre></li>
+        <li>When doing this, be sure to use <code>SET LOCAL</code> and do everything inside a transaction, or add configuration to your Postgres connection pool to clear these variables when the connection is recycled. This will prevent user and role settings from leaking across requests.</li>
+      </ul>    </li>
+    <li><h2>Role-Based Access Control</h2>
+      <ul class="list-bullet">
+        <li>The fastest way is to just have a column for each permission type that holds the user or roles with that permission. Then you can just set a variable with the current roles, as above, and have the policy check it directly against the relevant column in each row.</li>
+        <li>A GIN index on the role array columns will make it fast to check.</li>
+        <li>This works well for a simple system but there are a bunch of potential reasons to not do it. You may need a more expressive system with multiple types of permissions, or maybe you have objects with many distinct roles and worry about the implications of putting too many IDs into each row, or maybe it just chafes at your normalized database design sense.</li>
+        <li>In that case, you&#39;ll probably have something like a table of object permissions, which links each role to what it can do to an object. An RLS policy can handle that as well:</li>
+        <li><pre><code><span class="sy-source sy-sql">CREATE POLICY userdata <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> the_objects
+	TO webapp_dbrole
+	USING (
+      owner <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>) <span class="sy-keyword sy-other sy-DML sy-sql">OR</span>
+      EXISTS (
+    	<span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> <span class="sy-constant sy-numeric sy-sql">1</span>
+    	<span class="sy-keyword sy-other sy-DML sy-sql">FROM</span> role_permissions rp
+    	<span class="sy-keyword sy-other sy-DML sy-sql">WHERE</span> 
+      		<span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">object_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>
+        	<span class="sy-keyword sy-other sy-DML sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(
+              regexp_split_to_array(current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.roles<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>), <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>,<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>))
+    ))
+    <span class="sy-keyword sy-other sy-DML sy-sql">WITH</span> <span class="sy-storage sy-modifier sy-sql">CHECK</span> (
+      owner <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>) <span class="sy-keyword sy-other sy-DML sy-sql">OR</span>
+      EXISTS (
+    	<span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> <span class="sy-constant sy-numeric sy-sql">1</span>
+        <span class="sy-keyword sy-other sy-DML sy-sql">FROM</span> role_permissions rp
+      	<span class="sy-keyword sy-other sy-DML sy-sql">WHERE</span>
+	    	<span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">object_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>
+        	<span class="sy-keyword sy-other sy-DML sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(
+              regexp_split_to_array(current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.roles<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>), <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>,<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>))
+      		<span class="sy-keyword sy-other sy-DML sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">action</span> <span class="sy-keyword sy-other sy-data-integrity sy-sql">IN</span> (<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>write<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>, <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>admin<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>)
+    ));
+
+CREATE POLICY delete_userdata <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> the_objects
+	<span class="sy-keyword sy-other sy-alias sy-sql">AS</span> restrictive
+    FOR <span class="sy-keyword sy-other sy-DML sy-sql">DELETE</span>
+	TO webapp_dbrole
+    USING (
+      owner <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>) <span class="sy-keyword sy-other sy-DML sy-sql">OR</span>
+      EXISTS (
+    	<span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> <span class="sy-constant sy-numeric sy-sql">1</span>
+        <span class="sy-keyword sy-other sy-DML sy-sql">FROM</span> role_permissions rp
+      	<span class="sy-keyword sy-other sy-DML sy-sql">WHERE</span>
+	    	<span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">object_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>
+        	<span class="sy-keyword sy-other sy-DML sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(
+              regexp_split_to_array(current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.roles<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>), <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>,<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>))
+      		<span class="sy-keyword sy-other sy-DML sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">action</span> <span class="sy-keyword sy-other sy-data-integrity sy-sql">IN</span> (<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>write<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>, <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>admin<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>)
+    ));
+</span></code></pre></li>
+        <li>Note that the second policy for <code>DELETE</code> has the same <code>USING</code> clause as the first policy&#39;s <code>WITH CHECK</code> clause. It is also set as <code>restrictive</code>, which ensures that the DELETE policy must be passed; just passing the all-operations policy is not enough.</li>
+        <li>With a setup like this, any <code>list</code> operation that does something naive like <code>SELECT * FROM the_objects ORDER BY created DESC LIMIT 50</code> will probably end up needing to sequential scan the objects table. But you can write those in a way that is more aware of the permissions model to regain performance.</li>
+        <li><pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">SELECT DISTINCT</span> <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> (<span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>) the_objects.<span class="sy-keyword sy-operator sy-star sy-sql">*</span>
+	<span class="sy-keyword sy-other sy-DML sy-sql">FROM</span> role_permissions rp
+    <span class="sy-keyword sy-other sy-DML sy-sql">JOIN</span> the_objects <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">object_id</span> <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> <span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>
+    <span class="sy-keyword sy-other sy-DML sy-sql">WHERE</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(regexp_split_to_array(current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.roles<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>), <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>,<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>))
+    <span class="sy-keyword sy-other sy-DML sy-sql">ORDER BY</span> created <span class="sy-keyword sy-other sy-order sy-sql">DESC</span>
+    <span class="sy-keyword sy-other sy-DML sy-sql">LIMIT</span> <span class="sy-constant sy-numeric sy-sql">50</span>
+    
+</span></code></pre></li>
+        <li>While we give up the simplicity of RLS here, we can retain it for any other operations where we know in advance exactly which objects we want to look at. Also, the security guarantees of RLS still apply here, so even if the query has an error it can&#39;t return any rows that it should not return.</li>
+      </ul>    </li>
+    <li><h2>Pitfalls and Considerations</h2>
+      <ul class="list-bullet">
+        <li><h3>Infinite Recursion</h3>
+          <ul class="list-bullet">
+            <li>A table can not reference itself, directly or indirectly, in an RLS policy. This will appear to work when you create the policy, but fail at query time with an infinite recursion error. This can come up most often when writing RLS policies on the user/role/etc. tables themselves.</li>
+            <li>Sometimes the best way to work around this is a view. As mentioned earlier, views run by default in the context of the user that created the view, so you can use them to bypass RLS in specific cases.</li>
+            <li>Of course, this needs to be used with care. A good practice is for all of these views to do checks similar to what you have in your RLS policies.</li>
+          </ul>        </li>
+        <li><h3>Performance</h3>
+          <ul class="list-bullet">
+            <li>Each RLS policy implicitly adds more WHERE conditions, and this can cause performance issues, especially since these extra WHERE conditions are not obvious when writing the queries in the client application. <code>EXPLAIN</code> will help here, but note that you must run the queries as a &quot;normal&quot; user. Superusers always bypass RLS.</li>
+            <li>Performance can also be an issue on <code>list</code> operations, as noted above. Writing these differently to avoid a sequential scan can help.</li>
+          </ul>        </li>
+        <li><h3>Management</h3>
+          <ul class="list-bullet">
+            <li>Stored procedures and similar methods of computing in the database have become less popular nowadays, and for good reason. While the performance can be nice, it is much more difficult to manage these, use source control, and so on. The same applies for RLS policies,</li>
+            <li>You can pay a big price if you use RLS policies for too many things. Too many conflicting policies for different needs can get hard to manage and kill performance. I would recommend using this mainly for actual security purposes, and enforcing business logic some other way.</li>
+            <li>RLS is not supported on materialized views as of the current version 15.</li>
+          </ul>        </li>
+        <li><h3>Security Holes</h3>
+          <ul class="list-bullet">
+            <li>The <code>DELETE</code> operations feels like a write, but it uses the <code>USING</code> clause, so you could inadvertently set up a policy in which a user can delete any row they can read, even if they can&#39;t update it. Set up a separate policy for <code>DELETE</code> and make sure to set it <code>restrictive</code>.</li>
+            <li>If you&#39;re using parent and child tables, RLS policies only apply to the one that is queried. An RLS policy that exists only on a child table will not be used when querying the parent table.</li>
+            <li>RLS will not work properly with pgbouncer in statement pooling mode; you will likely return rows for the wrong users and it may only happen in production when multiple people are hitting the app at once. You must use at least transaction pooled mode, with transactions in your application, to ensure that the <code>SET</code> variables only apply to the queries you&#39;re about to run.</li>
+          </ul>        </li>
+        <li><h3>Runtime Considerations</h3>
+          <ul class="list-bullet">
+            <li>You must make sure that the variables for the current user, role, etc. do not get leaked between sessions. This can be best done by unsetting them in the &quot;recycle&quot; function of your postgres connection pool, or by always using <code>SET LOCAL</code> and doing everything within a transaction.</li>
+            <li>RLS will not apply if you connect as a superuser. It will not apply if you connect as the same user that owns the table, unless you use <code>ALTER TABLE thetable FORCE ROW LEVEL SECURITY</code>.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Previous Approaches for Security</h2>
+      <ul class="list-bullet">
+        <li>These were described in a talk at the PGConfig 2015 conference.</li>
+        <li><h3>Security Barriers and Views</h3>
+          <ul class="list-bullet">
+            <li>Postgres has security barrier views which allow you to lock down a table and add extra permissions to a view for actual access. The security barrier helps prevent pushdown on functions past the securing WHERE clauses, which would let functions potentially see rows that they were not supposed to see.</li>
+            <li>Postgres also has a feature that would actually let you insert a row into a view, when the view is so simple that it&#39;s obvious how to do so on the underlying table. Security barriers also have a WITH CHECK option to add security on these rows, to make sure that any row inserted would actually be visible in the view the user was inserting to.</li>
+          </ul>        </li>
+        <li><h3>MultiSchema</h3>
+          <ul class="list-bullet">
+            <li>Each tenant gets a schema (or database) that has its own set of tables. The application then chooses the schema based on the customer.</li>
+            <li>This makes migrations a hassle. Your migration system needs to be aware of this, and if you don&#39;t always make changes through the migration system, then it&#39;s easy to for the schemas to get out of sync.</li>
+            <li>Any query that might need to query across tenants (internal analytics, data migrations, etc.) is a nightmare to write. Partitioned tables can help there.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>References</h2>
+      <ul class="list-bullet">
+        <li><a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html">PostgreSQL: Documentation: 15: 5.8. Row Security Policies</a></li>
+        <li><a href="https://cazzer.medium.com/designing-the-most-performant-row-level-security-strategy-in-postgres-a06084f31945">Designing the most performant Row Level Security schema in Postgres | by Caleb Brewer | Medium</a></li>
+        <li><a href="https://www.cybertec-postgresql.com/en/view-permissions-and-row-level-security-in-postgresql/">View permissions and row-level security in PostgreSQL - CYBERTEC</a></li>
+        <li><a href="https://www.youtube.com/watch?v=__NKfEfvYuI">PGConfig 2015 Presentation (Youtube)</a></li>
+      </ul>    </li>
+  </ul>
+

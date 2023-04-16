@@ -574,6 +574,11 @@
     "title": "Position:sticky for table headers",
     "uid": ""
   },
+  "pkm-pages/notes/postgresql_row_level_security.html": {
+    "slug": "/notes/postgresql_row_level_security",
+    "title": "PostgreSQL Row Level Security",
+    "uid": ""
+  },
   "pkm-pages/notes/programming_courses.html": {
     "slug": "/notes/programming_courses",
     "title": "Programming Courses",
