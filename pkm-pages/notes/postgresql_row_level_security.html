@@ -158,9 +158,6 @@ CREATE POLICY delete_userdata <span class="sy-keyword sy-other sy-DDL sy-create 
             <li>The <code>DELETE</code> operations feels like a write, but it uses the <code>USING</code> clause, so you could inadvertently set up a policy in which a user can delete any row they can read, even if they can&#39;t update it. Set up a separate policy for <code>DELETE</code> and make sure to set it <code>restrictive</code>.</li>
             <li>If you&#39;re using parent and child tables, RLS policies only apply to the one that is queried. An RLS policy that exists only on a child table will not be used when querying the parent table.</li>
             <li>RLS with <code>SET</code> or <code>SET LOCAL</code> will not work properly with pgbouncer in statement pooling mode; you will likely return rows for the wrong users and it may only happen in production when multiple people are hitting the app at once. You must use session pooling mode, or use transaction pooling mode with transactions in your application when accessing data, to ensure that the <code>SET</code> variables only apply to the queries you&#39;re about to run.</li>
-          </ul>        </li>
-        <li><h3>Runtime Considerations</h3>
-          <ul class="list-bullet">
             <li>You must make sure that the variables for the current user, role, etc. do not get leaked between sessions. This can be best done by unsetting them in the &quot;recycle&quot; function of your postgres connection pool, or by always using <code>SET LOCAL</code> and doing everything within a transaction.</li>
             <li>RLS will not apply if you connect as a superuser. It will not apply if you connect as the same user that owns the table, unless you use <code>ALTER TABLE thetable FORCE ROW LEVEL SECURITY</code>.</li>
           </ul>        </li>
