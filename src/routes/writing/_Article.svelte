@@ -71,7 +71,7 @@
     {/if}
   </div>
 
-  <div class="content">
+  <div class="content" class:note={type === 'note'}>
     {@html content}
   </div>
 

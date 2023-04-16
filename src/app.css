@@ -38,9 +38,15 @@ html {
     }
   }
 
-  article .content.no-indent > ul,
-  article .content.no-indent > ol {
+  article .content.note > ul,
+  article .content.note > ol {
     @apply ml-0 pl-4;
+  }
+
+  @media (max-width: 640px) {
+    article .content.note ul {
+      padding-left: 1em;
+    }
   }
 
   article p > img:only-child {
