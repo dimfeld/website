@@ -62,7 +62,6 @@ updated: 2023-04-16
         <li>Most sample uses of RLS check against <code>current_user</code> &mdash; that is, actual database users and roles. But this sucks.</li>
         <li>There are a lot of reasons that you don&#39;t want to coopt your database&#39;s role management to manage your app&#39;s users as well.
           <ul class="list-bullet">
-            <li>It doesn&#39;t scale. Postgres isn&#39;t designed to have thousands of roles</li>
             <li>Roles are global in the entire Postgres system, not scoped to a particular database.</li>
             <li>There&#39;s no good built-in place to store metadata about a database user, so you still need a <code>users</code> table anyway.</li>
             <li>GRANTing permissions becomes a lot more complicated and error-prone.</li>
