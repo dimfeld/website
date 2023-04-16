@@ -156,7 +156,7 @@ CREATE POLICY delete_userdata <span class="sy-keyword sy-other sy-DDL sy-create 
           <ul class="list-bullet">
             <li>The <code>DELETE</code> operations feels like a write, but it uses the <code>USING</code> clause, so you could inadvertently set up a policy in which a user can delete any row they can read, even if they can&#39;t update it. Set up a separate policy for <code>DELETE</code> and make sure to set it <code>restrictive</code>.</li>
             <li>If you&#39;re using parent and child tables, RLS policies only apply to the one that is queried. An RLS policy that exists only on a child table will not be used when querying the parent table.</li>
-            <li>RLS will not work properly with pgbouncer in statement pooling mode; you will likely return rows for the wrong users and it may only happen in production when multiple people are hitting the app at once. You must use at least transaction pooled mode, with transactions in your application, to ensure that the <code>SET</code> variables only apply to the queries you&#39;re about to run.</li>
+            <li>RLS with <code>SET</code> or <code>SET LOCAL</code> will not work properly with pgbouncer in statement pooling mode; you will likely return rows for the wrong users and it may only happen in production when multiple people are hitting the app at once. You must use session pooling mode, or use transaction pooling mode with transactions in your application when accessing data, to ensure that the <code>SET</code> variables only apply to the queries you&#39;re about to run.</li>
           </ul>        </li>
         <li><h3>Runtime Considerations</h3>
           <ul class="list-bullet">
