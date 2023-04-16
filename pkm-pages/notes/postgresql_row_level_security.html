@@ -36,8 +36,9 @@ updated: 2023-04-16
         <li>These clauses can be pretty much anything that can go in a WHERE clause, including function calls. Note that <code>USING (true)</code> is the way to make an RLS policy that always allows access (e.g. for admin roles).</li>
         <li><h3>Permissive and Restrictive</h3>
           <ul class="list-bullet">
-            <li>RLS policies can be permissive (the default) or restrictive. For the set of policies that apply to an operation, at least one permissive policy (if any exist) must pass, and all of the restrictive policies must pass.</li>
+            <li>RLS policies can be permissive (the default) or restrictive. For the set of policies that apply to an operation, at least one permissive policy must pass, and all of the restrictive policies must pass.</li>
             <li>In SQL terms, this is <code>(permissive1 OR permissive2) AND restrictive1 AND restrictive2</code>.</li>
+            <li>Note that there must be at least one permissive policy for anything to work.</li>
           </ul>        </li>
         <li>RLS policies and normal role GRANTs will both be checked.
           <ul class="list-bullet">
