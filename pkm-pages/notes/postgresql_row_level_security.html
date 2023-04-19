@@ -2,7 +2,7 @@
 title: "PostgreSQL Row Level Security"
 tags: Database, SQL
 date: 2023-04-16
-updated: 2023-04-16
+updated: 2023-04-17
 ---
 
 
@@ -67,7 +67,7 @@ updated: 2023-04-16
             <li>GRANTing permissions becomes a lot more complicated and error-prone.</li>
             <li>Using <code>current_user</code> in your policy checks requires you to set <code>security_invoker = on</code> on any view so that its checks permissions as your DB user, instead of the user that created the view. This option is new in PostgreSQL v15.</li>
           </ul>        </li>
-        <li>Fortunately you don&#39;t have to. PostgreSQL allows you to set runtime variables with almost name you want, and use these in policies. The only restriction is that it must have a period, such as <code>myapp.user</code>, to separate its namespace from the main runtime settings.</li>
+        <li>Fortunately you don&#39;t have to. PostgreSQL allows you to set runtime variables with almost any name you want, and use these in policies. The only restriction is that the name must have a period, such as <code>myapp.user</code>, to separate its namespace from the main runtime settings.</li>
         <li><pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">SET</span> LOCAL <span class="sy-constant sy-other sy-database-name sy-sql">myapp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">user</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>12345<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>;
 <span class="sy-keyword sy-other sy-DML sy-sql">SET</span> LOCAL <span class="sy-constant sy-other sy-database-name sy-sql">myapp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">roles</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>aa,bb,cc<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>;
 
