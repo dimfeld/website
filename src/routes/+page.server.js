@@ -16,7 +16,7 @@ export async function load() {
 
   let latestPosts = posts.slice(0, 3);
   let latestNotes = notes
-    .sort(sorter({ value: (p) => p.updated || p.date }))
+    .sort(sorter({ value: (p) => p.updated || p.date, descending: true }))
     .slice(0, 3);
   let lastCreatedNote = maxBy(notes, 'date');
 
