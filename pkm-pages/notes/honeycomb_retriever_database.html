@@ -1,0 +1,38 @@
+---
+title: "Honeycomb Retriever Database"
+tags: 
+date: 2023-04-22
+updated: 2023-04-23
+---
+
+
+  <ul class="list-bullet">
+    <li>This is the data query system that <a href="https://honeycomb.io">Honeycomb</a> uses to store and search data really quickly.</li>
+    <li>Lambdas have really low latency to S3</li>
+    <li>Issues that come up with Lambdas
+      <ul class="list-bullet">
+        <li>Can only have 1000 lambdas running at once</li>
+        <li>The limit increases automatically if you&#39;re using a lot for a long time, but they tend to have their lambdas only run for a second or two.</li>
+        <li>You can get the burst limit raised a bit but not too much.</li>
+        <li>Waiting for lambdas to start because of the burst limit becomes an issue.</li>
+        <li>6MB return limit on Lambda. They get around this by passing large inputs and outputs between Lambdas in S3.</li>
+      </ul>    </li>
+    <li>Data is chunked by timestamp</li>
+    <li>No secondary indexes (this is primarily to enable high write speeds)</li>
+    <li>Filters are pushed down to the lambdas and run on each row.</li>
+    <li>Running essentially a map-reduce style system.</li>
+    <li>Notable quotes from Honeycomb&#39;s Book on Observability
+      <ul class="list-bullet">
+        <li><blockquote>But serverless functions and cloud object storage aren&#39;t 100% reliable. In practice, the latency at the tails of the distribution of invocation time can be significant orders of magnitude higher than the median time. That last 5% to 10% of results may take tens of seconds to return, or may never complete. In the Retriever implementation, we use impatience to return results in a timely manner. Once 90% of the requests to process segments have completed, the remaining 10% are re-requested, without canceling the still-pending requests. The parallel attempts race each other, with whichever returns first being used to populate the query result. Even if it is 10% more expensive to always retry the slowest 10% of subqueries, a different read attempt against the cloud provider&#39;s backend will likely perform faster than a &quot;stuck&quot; query blocked on S3, or network I/O that may never finish before it times out.</blockquote></li>
+        <li><blockquote>What happens if someone attempts to group results by a high-cardinality field? How can you still return accurate values without running out of memory? The simplest solution is to fan out the reduce step by assigning reduce workers to handle only a proportional subset of the possible groups. For instance, you could follow the pattern Chord does by creating a hash of the group and looking up the hash correspondence in a ring covering the keyspace.</blockquote></li>
+      </ul>    </li>
+    <li>They have a complex well-designed ingest system as well, which is described in the PDF link at the bottom, but which I haven&#39;t described here.</li>
+    <li>Sources
+      <ul class="list-bullet">
+        <li><a href="https://www.dataengineeringpodcast.com/honeycomb-data-infrastructure-with-sam-stokes-episode-20/">https://www.dataengineeringpodcast.com/honeycomb-data-infrastructure-with-sam-stokes-episode-20/</a></li>
+        <li><a href="https://www.infoq.com/podcasts/aws-lambda-custom-database-retriever/">https://www.infoq.com/podcasts/aws-lambda-custom-database-retriever/</a></li>
+        <li><a href="https://www.honeycomb.io/blog/secondary-storage-to-just-storage">https://www.honeycomb.io/blog/secondary-storage-to-just-storage</a></li>
+        <li><a href="https://em360tech.com/sites/default/files/2023-01/Honeycomb-OReilly-Book-on-Observability-Engineering.pdf">https://em360tech.com/sites/default/files/2023-01/Honeycomb-OReilly-Book-on-Observability-Engineering.pdf</a> (Chapter 16)</li>
+      </ul>    </li>
+  </ul>
+
