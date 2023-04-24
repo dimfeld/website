@@ -2,7 +2,7 @@
 title: "PostgreSQL Row Level Security"
 tags: Database, SQL
 date: 2023-04-16
-updated: 2023-04-17
+updated: 2023-04-24
 ---
 
 
@@ -74,6 +74,7 @@ updated: 2023-04-17
 <span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>), current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.roles<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>);
 </span></code></pre></li>
         <li>When doing this, be sure to use <code>SET LOCAL</code> and do everything inside a transaction, or add configuration to your Postgres connection pool to clear these variables when the connection is recycled. This will prevent user and role settings from leaking across requests.</li>
+        <li>One good way to set these variables is to provide a stored procedure in the database, which will do the appropriate queries and set the relevant variables. This allows you to use database migrations for these queries, so that the policies, the database tables, the queries to set them, and the variable values all stay in sync.</li>
       </ul>    </li>
     <li><h2>Role-Based Access Control</h2>
       <ul class="list-bullet">

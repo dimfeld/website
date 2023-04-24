@@ -1,0 +1,60 @@
+---
+title: "Data Retrieval Application Manager"
+tags: Projects
+date: 2023-04-24
+updated: 2023-04-24
+---
+
+
+  <ul class="list-bullet">
+    <li>This is a planned project, not started yet.</li>
+    <li>This will be a library for OLAP-style data analysis servers
+      <ul class="list-bullet">
+        <li>Handle loading databases, database aliases, and so on</li>
+        <li>Expose HTTP endpoints</li>
+        <li>Eventually, add clustering and sharding features too</li>
+      </ul>    </li>
+    <li>Features
+      <ul class="list-bullet">
+        <li>Add database from S3
+          <ul class="list-bullet">
+            <li>Each database is a directory in cloud storage</li>
+          </ul>        </li>
+        <li>Add database with only some metadata downloaded and the rest on S3?</li>
+        <li>Delete database from disk</li>
+        <li>Get stats on loaded databases</li>
+        <li>Database aliases
+          <ul class="list-bullet">
+            <li>Get aliases</li>
+            <li>Add alias</li>
+            <li>Delete alias</li>
+          </ul>        </li>
+        <li>Query code can create endpoints to run queries against the database.</li>
+        <li>Automatic backup and restore of configuration</li>
+      </ul>    </li>
+    <li>Features V2 - Clustering
+      <ul class="list-bullet">
+        <li>Sync aliases across all members of the cluster</li>
+        <li>With one command, have all members of the graph download a database.</li>
+        <li>Database sharding
+          <ul class="list-bullet">
+            <li>The large data which would be distributed between shards</li>
+            <li>Also some global data which could be replicated to all database servers</li>
+            <li>Server has the ability to query which shards are on which cluster members.</li>
+            <li>Analysis code can run against all the shards on a server (or specific shards) and optionally run a reduce step across those shards.</li>
+            <li>Requires a smart client that can request the analysis on all the appropriate server instances and shards. V3 will make this better.</li>
+          </ul>        </li>
+        <li>Ensure that the cluster as a whole has at least N copies of a database.
+          <ul class="list-bullet">
+            <li>Update this when cluster members join/leave.</li>
+          </ul>        </li>
+        <li>Track which cluster members have which databases</li>
+        <li>Query for which cluster members contain a database.</li>
+        <li>When cluster members join, bring them up to date, possibly by reclustering.</li>
+      </ul>    </li>
+    <li>Features V3 - Transparent clustering
+      <ul class="list-bullet">
+        <li>Queries can be sent to a single member, which will handle sending the appropriate queries to the other servers and reducing all the steps together.</li>
+      </ul>    </li>
+  </ul>
+
