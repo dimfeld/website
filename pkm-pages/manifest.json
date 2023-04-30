@@ -549,6 +549,11 @@
     "title": "Activation Functions",
     "uid": ""
   },
+  "pkm-pages/notes/ml_augmenting_ux_with_llms.html": {
+    "slug": "/notes/ml_augmenting_ux_with_llms",
+    "title": "Augmenting UX with LLMs",
+    "uid": ""
+  },
   "pkm-pages/notes/ml_vanishing_gradient_problem.html": {
     "slug": "/notes/ml_vanishing_gradient_problem",
     "title": "Vanishing Gradient Problem",

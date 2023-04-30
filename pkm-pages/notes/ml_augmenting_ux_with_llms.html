@@ -1,0 +1,56 @@
+---
+title: "Augmenting UX with LLMs"
+tags: Machine Learning
+date: 2023-04-30
+updated: 2023-04-30
+---
+
+
+  <ul class="list-bullet">
+    <li>Chat-only interfaces kind of suck for things that aren&#39;t actually chat.
+      <ul class="list-bullet">
+        <li>Even if your model can answer any question it&#39;s less useful if the user still has to think of every single question.</li>
+        <li>Lots of typing involved and this can feel unncessary.</li>
+        <li>Can even make it harder to run the LLM if you need to get out structured intents.</li>
+      </ul>    </li>
+    <li>How can we do better?</li>
+    <li>Augmenting traditional interfaces with LLMs and chat, rather than always making chat the main method of interaction.</li>
+    <li><h2>Generative Interfaces Beyond Chat</h2>
+      <ul class="list-bullet">
+        <li><a href="https://www.youtube.com/watch?v=rd-J3hmycQs">Youtube Link</a></li>
+        <li>Talk by Linus Lee on April 13, 2023 at LLMs in Production Conference</li>
+        <li>In an application we have all sorts of context beyond what&#39;s provided directly in the chat. Having to type the entire context into the chat box like you do with ChatGPT is inconvenient when the app can provide a lot of that context.</li>
+        <li>e.g. a spreadsheet has the spreadsheet data itself but also the selected cell.
+          <ul class="list-bullet">
+            <li>Using things like the current selection as context into the chat helps</li>
+            <li>&quot;Sum column A into this cell&quot;</li>
+          </ul>        </li>
+        <li>AI&#39;s observations
+          <ul class="list-bullet">
+            <li>Omniscience - AI knows the full state of the app</li>
+            <li>Call by name - Ability to explicitly mention objects by a name in the chat</li>
+            <li>Literal mention - dragging objects (files, contacts, paragraphs, etc.) into the prompt box, which are then turned into the appropriate identifier when sending them to the LLM</li>
+            <li>Model-Generated Context Menu - Similar to the right click context menu. But given the selected thing, have the model figure out the most likely things and present more advanced options than a normal context menu.</li>
+            <li>Dot-driven programming - similar to code/CLI autocomplete where you have some kind of trigger key to popup options</li>
+          </ul>        </li>
+        <li>Can use the model both to do actions, and to suggest possible actions.</li>
+        <li>Most of these basically boil down to a &quot;verb the noun&quot; phrase</li>
+        <li>Closing the feedback loop
+          <ul class="list-bullet">
+            <li>Respond with a range of outputs (not always convenient, but useful when you can)</li>
+            <li>&quot;Shopping&quot; over &quot;creation&quot; &mdash; Selecting from a list of objects is easier than requiring the user to invent an option</li>
+            <li>Interactive Components &mdash; Model responds not just with text but with widgets that are prefilled with the answer but have other traditional UI controls to tweak the options
+              <ul class="list-bullet">
+                <li>e.g. &quot;What&#39;s the weather in NY this weekend&quot; returns a weather widget prefilled with the location and date, but user can use date controls or other stuff to change the location without having to interface solely through the LLM.</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>Avoid the &quot;blank page state.&quot; Better to suggest options for the user to get them started.</li>
+        <li>Full chat as an escape hatch rather than the default.</li>
+      </ul>    </li>
+    <li><h2>Demos</h2>
+      <ul class="list-bullet">
+        <li><a href="https://twitter.com/eugeneyan/status/1652463942822957056?s=61&amp;t=4Fw6uG_u389I1nIeLsKcsw">LLM Librarian demo</a> by Eugene Yan</li>
+        <li><a href="https://share.cleanshot.com/56p4ct8K">Potluck + AI Demo</a> by Geoffrey Litt</li>
+      </ul>    </li>
+  </ul>
+
