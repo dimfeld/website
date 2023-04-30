@@ -123,6 +123,13 @@ if page.is_journal {
     "note-export"
   ];
 
+  let remove_prefix = [
+    "full-title:",
+    "category:",
+    "Highlights first synced",
+    "New highlights added"
+  ];
+
   each_block(9999, |block, depth| {
     let tags = block.tags;
     if !exclude && tags.some(|t| t in exclude_tags) {
@@ -134,8 +141,7 @@ if page.is_journal {
     // Add all the hashtags seen in the content.
     page.add_tags(tags);
 
-    if block.contents.starts_with("Highlights first synced") ||
-          block.contents.starts_with("New highlights added") {
+    if remove_prefix.some(|prefix| block.contents.starts_with(prefix)) {
       block.include = BlockInclude::Exclude;
     }
   });
@@ -159,8 +165,15 @@ if page.is_journal {
           page.add_tag("Articles")
         } else if t == "Projects" {
           page.add_tag("Projects")
+        } else if t == "ML" {
+          page.add_tag("Machine Learning")
         }
       }
+    }
+
+    if page.tags.contains("ML") {
+      page.remove_tag("ML");
+      page.add_tag("Machine Learning");
     }
 
     let omit_tags = [

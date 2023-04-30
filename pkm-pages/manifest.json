@@ -379,11 +379,6 @@
     "title": "ACID Database Semantics",
     "uid": ""
   },
-  "pkm-pages/notes/activation_functions.html": {
-    "slug": "/notes/activation_functions",
-    "title": "Activation Functions",
-    "uid": ""
-  },
   "pkm-pages/notes/adam_wathan_on_nailing_your_first_launch.html": {
     "slug": "/notes/adam_wathan_on_nailing_your_first_launch",
     "title": "Adam Wathan on Nailing your First Launch",
@@ -547,6 +542,16 @@
   "pkm-pages/notes/mistakes_to_avoid_when_learning_jobs_to_be_done.html": {
     "slug": "/notes/mistakes_to_avoid_when_learning_jobs_to_be_done",
     "title": "Mistakes to Avoid when Learning Jobs to be Done",
+    "uid": ""
+  },
+  "pkm-pages/notes/ml_activation_functions.html": {
+    "slug": "/notes/ml_activation_functions",
+    "title": "Activation Functions",
+    "uid": ""
+  },
+  "pkm-pages/notes/ml_vanishing_gradient_problem.html": {
+    "slug": "/notes/ml_vanishing_gradient_problem",
+    "title": "Vanishing Gradient Problem",
     "uid": ""
   },
   "pkm-pages/notes/new_directions_in_cloud_programming.html": {
@@ -772,11 +777,6 @@
   "pkm-pages/notes/useful_svelte_components.html": {
     "slug": "/notes/useful_svelte_components",
     "title": "Useful Svelte Components",
-    "uid": ""
-  },
-  "pkm-pages/notes/vanishing_gradient_problem.html": {
-    "slug": "/notes/vanishing_gradient_problem",
-    "title": "Vanishing Gradient Problem",
     "uid": ""
   },
   "pkm-pages/notes/variable_neighborhood_search.html": {

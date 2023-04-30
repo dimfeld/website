@@ -1,8 +1,8 @@
 ---
 title: "Activation Functions"
 tags: Machine Learning
-date: 2021-02-12
-updated: 2021-02-12
+date: 2023-04-30
+updated: 2023-04-30
 ---
 
 
@@ -26,7 +26,7 @@ updated: 2021-02-12
           <ul class="list-bullet">
             <li>Similar to biological neuron in that it&#39;s fixed until some minimum activation.</li>
             <li>Fast to compute</li>
-            <li>No problems with <a href="/notes/vanishing_gradient_problem">Vanishing Gradient Problem</a>, since it doesn&#39;t saturate.</li>
+            <li>No problems with <a href="/notes/ml_vanishing_gradient_problem">Vanishing Gradient Problem</a>, since it doesn&#39;t saturate.</li>
           </ul>        </li>
         <li>Disadvantages:
           <ul class="list-bullet">
@@ -48,10 +48,10 @@ updated: 2021-02-12
       </ul>    </li>
     <li>ArgMax
       <ul class="list-bullet">
-        <li>The raw output values in a network aren’t always between 0 and 1, especially with multiple outputs and more complex networks. </li>
+        <li>The raw output values in a network aren’t always between 0 and 1, especially with multiple outputs and more complex networks.</li>
         <li>ArgMax is a way to simplify interpreting the results. It sets the largest value of all the outputs to 1 and the others to 0.
           <ul class="list-bullet">
-            <li>Big downside here is that we can’t backpropagate a network with an ArgMax. </li>
+            <li>Big downside here is that we can’t backpropagate a network with an ArgMax.</li>
             <li>Also if two highest outputs are pretty close, we don’t see that.</li>
           </ul>        </li>
       </ul>    </li>
@@ -62,6 +62,7 @@ updated: 2021-02-12
         <li>This transforms all the output values to a range within 0 to 1, and with the sum of the values equal to 1.
           <ul class="list-bullet">
             <li>This is kind of like a probability but shouldn’t actually be used as one.</li>
+            <li>It takes the higher values and boosts them, while negatively boosting the lower values.</li>
           </ul>        </li>
         <li>We can then take the derivatives of these values to use them for gradient descent.</li>
         <li>It’s common to use ArgMax for running in production but SoftMax for training.</li>
