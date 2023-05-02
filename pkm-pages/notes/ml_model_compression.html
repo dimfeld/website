@@ -1,0 +1,32 @@
+---
+title: "Model Compression"
+tags: Machine Learning
+date: 2023-05-02
+updated: 2023-05-02
+---
+
+
+  <ul class="list-bullet">
+    <li><h2>Quantization</h2>
+      <ul class="list-bullet">
+        <li>Just compressing the weights down to smaller sizes. FP16 -&gt; fp8/int8, or even 4 bits.</li>
+      </ul>    </li>
+    <li><h2>Pruning</h2>
+      <ul class="list-bullet">
+        <li>A lot of work has gone into model pruning, the idea that a large portion of the weights in a trained model are redundant or value-less and thus can be completely removed. This makes the model smaller and faster.</li>
+        <li>Fine-tuning post-prune can help to recover some of the lost accuracy that may come from pruning.</li>
+        <li><a href="https://sparsezoo.neuralmagic.com/">SparseZoo</a> is a repository of pre-pruned models.</li>
+        <li>Papers
+          <ul class="list-bullet">
+            <li>[[1803.03635] The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks](<a href="https://arxiv.org/abs/1803.03635">https://arxiv.org/abs/1803.03635</a>)</li>
+            <li>[[2007.12223] The Lottery Ticket Hypothesis for Pre-trained BERT Networks](<a href="https://arxiv.org/abs/2007.12223">https://arxiv.org/abs/2007.12223</a>)</li>
+            <li>[[2211.03013] Robust Lottery Tickets for Pre-trained Language Models](<a href="https://arxiv.org/abs/2211.03013">https://arxiv.org/abs/2211.03013</a>)</li>
+          </ul>        </li>
+        <li>Commercial Offerings
+          <ul class="list-bullet">
+            <li><a href="https://www.mosaicml.com/">MosaicML</a></li>
+            <li><a href="https://neuralmagic.com/">Software-Delivered AI - Neural Magic</a></li>
+          </ul>        </li>
+      </ul>    </li>
+  </ul>
+

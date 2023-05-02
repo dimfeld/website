@@ -554,6 +554,11 @@
     "title": "Augmenting UX with LLMs",
     "uid": ""
   },
+  "pkm-pages/notes/ml_model_compression.html": {
+    "slug": "/notes/ml_model_compression",
+    "title": "Model Compression",
+    "uid": ""
+  },
   "pkm-pages/notes/ml_vanishing_gradient_problem.html": {
     "slug": "/notes/ml_vanishing_gradient_problem",
     "title": "Vanishing Gradient Problem",
