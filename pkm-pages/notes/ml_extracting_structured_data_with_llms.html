@@ -1,0 +1,27 @@
+---
+title: "Extracting Structured Data with LLMs"
+tags: Machine Learning
+date: 2023-04-30
+updated: 2023-05-02
+---
+
+
+  <ul class="list-bullet">
+    <li>Is it useful to finetune a smaller LLM for structured data extraction?</li>
+    <li><h2>Code</h2>
+      <ul class="list-bullet">
+        <li><a href="https://github.com/1rgs/jsonformer">https://github.com/1rgs/jsonformer</a> looks like the most promising option so far if you don&#39;t need to run against a prepackaged service like OpenAI.</li>
+        <li><a href="https://github.com/kyang6/llmparser">https://github.com/kyang6/llmparser</a></li>
+        <li><a href="https://python.langchain.com/en/latest/modules/indexes/retrievers/examples/self_query_retriever.html">LangChain SelfQueryRetriever</a></li>
+      </ul>    </li>
+    <li><h2>Prompting</h2>
+      <ul class="list-bullet">
+        <li>Most examples are using few-shot prompts to achieve this.</li>
+        <li><a href="https://twitter.com/goodside/status/1564437905497628674">https://twitter.com/goodside/status/1564437905497628674</a></li>
+        <li>Eugene Yan <a href="https://twitter.com/eugeneyan/status/1636366239873515521">tweet</a>
+          <ul class="list-bullet">
+            <li><blockquote>I&#39;ve found LLMs to reliably return structured data via API by adding the system prompt: &quot;Respond in the format of a JSON array [{key: value}, {key: value}]&quot; Having an &quot;unsure&quot; option also reduces hallucination and indicates uncertainty.</blockquote></li>
+          </ul>        </li>
+      </ul>    </li>
+  </ul>
+
