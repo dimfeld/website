@@ -1,0 +1,36 @@
+---
+title: "Model Architectures"
+tags: Machine Learning
+date: 2023-05-03
+updated: 2023-05-03
+---
+
+
+  <ul class="list-bullet">
+    <li>GPT
+      <ul class="list-bullet">
+        <li>This refers to the original Generative Pretrained model. Most of the below models would also fall roughly under the GPT category.</li>
+        <li>GPT models (like most of the models below) are made up of transformers.</li>
+        <li>The big breakthrough from the paper was around its 2-step training regimen
+          <ul class="list-bullet">
+            <li>First, generating a base model from unsupervised training on a large corpus of various text.</li>
+            <li>Then, finetuning the base model for specific tasks in a later step.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li>BERT
+      <ul class="list-bullet">
+        <li>BERT models differ from the earlier GPT models in that their attention layers look at all tokens in the context instead of just the tokens that came earlier. This improves sentence-level comprehension.</li>
+        <li>BERT is trained in two ways:
+          <ul class="list-bullet">
+            <li>Cloze deletion</li>
+            <li>Given a sentence, predict the next sentence.</li>
+          </ul>        </li>
+        <li>BERT tends to be good at classification, question answering, sentiment analysis.</li>
+      </ul>    </li>
+    <li>BART
+      <ul class="list-bullet">
+        <li>BART model training takes a sentence, corrupts the sentence, and then trains the model to learn the corrected sentence.</li>
+        <li>It tends to outperform BERT on longer passages, tasks such as summarization and text generation. It also tends to be better with noisy text as it has been trained specifically to handle that.</li>
+      </ul>    </li>
+  </ul>
+

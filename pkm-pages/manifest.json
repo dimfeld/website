@@ -559,6 +559,11 @@
     "title": "Extracting Structured Data with LLMs",
     "uid": ""
   },
+  "pkm-pages/notes/ml_model_architectures.html": {
+    "slug": "/notes/ml_model_architectures",
+    "title": "Model Architectures",
+    "uid": ""
+  },
   "pkm-pages/notes/ml_model_compression.html": {
     "slug": "/notes/ml_model_compression",
     "title": "Model Compression",
