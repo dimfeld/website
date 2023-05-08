@@ -2,7 +2,7 @@
 title: "Model Architectures"
 tags: Machine Learning
 date: 2023-05-03
-updated: 2023-05-03
+updated: 2023-05-08
 ---
 
 
@@ -26,11 +26,13 @@ updated: 2023-05-03
             <li>Cloze deletion</li>
             <li>Given a sentence, predict the next sentence.</li>
           </ul>        </li>
+        <li>Notably, BERT&#39;s decoder is not autoregressive. That is, while GPT models use the generated output so far when determining the next word, BERT generates the entire output only from the input. Since it is trained on next sentence prediction and cloze deletion this works well, but limits BERT to shorter output.</li>
         <li>BERT tends to be good at classification, question answering, sentiment analysis.</li>
       </ul>    </li>
     <li>BART
       <ul class="list-bullet">
         <li>BART model training takes a sentence, corrupts the sentence, and then trains the model to learn the corrected sentence.</li>
+        <li>BART does use an autoregressive decoder, so it is better at generating longer outputs.</li>
         <li>It tends to outperform BERT on longer passages, tasks such as summarization and text generation. It also tends to be better with noisy text as it has been trained specifically to handle that.</li>
       </ul>    </li>
   </ul>
