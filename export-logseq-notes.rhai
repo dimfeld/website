@@ -3,7 +3,9 @@ let autotags = #{
   "rust": "rust",
   "ml": "Machine Learning",
   "machine learning": "Machine Learning",
-  "ergo": "ergo"
+  "ergo": "ergo",
+  "svelte": "Svelte",
+  "sveltekit": "Svelte"
 };
 
 let site_category = page.get_attr_first("site-category");
