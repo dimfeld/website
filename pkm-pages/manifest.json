@@ -883,5 +883,10 @@
     "slug": "/writing/loading_geographic_data_in_a_format_you_can_actually_use",
     "title": "Loading Geographic Data in a Format You Can Actually Use",
     "uid": ""
+  },
+  "pkm-pages/writing/plausibleio_custom_urls_with_sveltekit.html": {
+    "slug": "/writing/plausibleio_custom_urls_with_sveltekit",
+    "title": "Plausible.io Custom URLs with SvelteKit",
+    "uid": ""
   }
 }

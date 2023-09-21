@@ -2,7 +2,7 @@
 title: "Creating a Custom Command Bar in Neovim"
 tags: 
 date: 2023-04-14
-updated: 2023-04-14
+updated: 2023-09-21
 draft: false
 ---
 
@@ -32,14 +32,14 @@ draft: false
     name <span class="sy-keyword sy-operator sy-lua">=</span> <span class="sy-string sy-quoted sy-single sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&#39;</span>Organize imports<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&#39;</span></span>, 
     category <span class="sy-keyword sy-operator sy-lua">=</span> <span class="sy-string sy-quoted sy-double sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&quot;</span>LS<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&quot;</span></span>, 
     action <span class="sy-keyword sy-operator sy-lua">=</span> <span class="sy-keyword sy-control sy-lua">function</span>() 
-      vim.fn.CocAction(<span class="sy-string sy-quoted sy-single sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&#39;</span>runCommand<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&#39;</span></span>, <span class="sy-string sy-quoted sy-single sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&#39;</span>editor.action.organizeImport<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&#39;</span></span>)
+      vim.fn.CocActionAsync(<span class="sy-string sy-quoted sy-single sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&#39;</span>runCommand<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&#39;</span></span>, <span class="sy-string sy-quoted sy-single sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&#39;</span>editor.action.organizeImport<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&#39;</span></span>)
     <span class="sy-keyword sy-control sy-lua">end</span>
   },
   { 
     name <span class="sy-keyword sy-operator sy-lua">=</span> <span class="sy-string sy-quoted sy-single sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&#39;</span>Format document<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&#39;</span></span>,
     category <span class="sy-keyword sy-operator sy-lua">=</span> <span class="sy-string sy-quoted sy-double sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&quot;</span>LS<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&quot;</span></span>,
     action <span class="sy-keyword sy-operator sy-lua">=</span> <span class="sy-keyword sy-control sy-lua">function</span>()
-      vim.fn.CocAction(<span class="sy-string sy-quoted sy-single sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&#39;</span>runCommand<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&#39;</span></span>, <span class="sy-string sy-quoted sy-single sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&#39;</span>editor.action.formatDocument<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&#39;</span></span>)
+      vim.fn.CocActionAsync(<span class="sy-string sy-quoted sy-single sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&#39;</span>runCommand<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&#39;</span></span>, <span class="sy-string sy-quoted sy-single sy-lua"><span class="sy-punctuation sy-definition sy-string sy-begin sy-lua">&#39;</span>editor.action.formatDocument<span class="sy-punctuation sy-definition sy-string sy-end sy-lua">&#39;</span></span>)
     <span class="sy-keyword sy-control sy-lua">end</span>
   },
   { 
@@ -49,6 +49,7 @@ draft: false
   },
 }
 </span></code></pre>
+    <p>Note that just using <code>CocAction</code> will cause the command to be run to completion before the picker closes. This can cause issues with certain commands and so <code>CocActionAsync</code> works much better.</p>
     <h2>Formatting</h2>
     <p>The picker in the screenshot above has two columns: the command&#39;s name and category. We can use the <code>entry_display</code> module to help with this formatting. It does not autosize columns though, so  first we need to find our column widths.</p>
     <p>This code snippet figures out the longest command name. (The <code>#</code> operator returns the length of a string.)</p>
@@ -128,6 +129,7 @@ vim.keymap.set(<span class="sy-string sy-quoted sy-double sy-lua"><span class="s
     <h2>Next Steps</h2>
     <p>We covered just the basics here, but there&#39;s a lot of opportunity for more advanced functionality.</p>
     <p>By moving more of this code inside the <code>showCommandBar</code> function, you could customize the commands based on aspects of the current buffer, such as showing certain commands only for certain file types.</p>
+    <p>My current full implementation of this technique can be <a href="https://github.com/dimfeld/dotfiles/blob/master/nvim/.config/nvim/lua/config/telescope.lua">found on Github</a>.</p>
     <p>If you build any other cool functionality around this, I&#39;d love to hear it!</p>
 
 
