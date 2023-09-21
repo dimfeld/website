@@ -1,0 +1,36 @@
+---
+title: "Extracting Contacts from an iOS backup"
+tags: 
+date: 2023-09-21
+updated: 2023-09-21
+---
+
+
+  <ul class="list-bullet">
+    <li>This is tricky since the format is not well-documented and there are a bunch of files with just random hexadecimal strings as names.</li>
+    <li>On Mac, the backups are stored at <code>~/Library/Application Support/MobileSync/Backup</code>. For some reason the contents of this directory aren&#39;t visible from the terminal, but are in Finder. If you copy the backup into another directory then you can use the backup in Terminal as well.</li>
+    <li><h2>Extracting Contacts</h2>
+      <ul class="list-bullet">
+        <li>The address book file is in the backup at <code>31/31bb7ba8914766d4ba40d6dfb6113c8b614be442</code>. This is a SQLite3 database.</li>
+        <li>The main tables you care about here are <code>ABPerson</code> and <code>ABMultiValue</code>. To do a simple extraction of names and phone/email you can use a query like this.
+          <ul class="list-bullet">
+            <li><pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">select</span> <span class="sy-constant sy-other sy-database-name sy-sql">ABPerson</span>.<span class="sy-constant sy-other sy-table-name sy-sql">last</span>, <span class="sy-constant sy-other sy-database-name sy-sql">ABPerson</span>.<span class="sy-constant sy-other sy-table-name sy-sql">first</span>, <span class="sy-constant sy-other sy-database-name sy-sql">ABMultiValue</span>.<span class="sy-constant sy-other sy-table-name sy-sql">value</span>
+<span class="sy-keyword sy-other sy-DML sy-sql">from</span> ABPerson,ABMultiValue
+<span class="sy-keyword sy-other sy-DML sy-sql">where</span> <span class="sy-constant sy-other sy-database-name sy-sql">ABMultiValue</span>.<span class="sy-constant sy-other sy-table-name sy-sql">record_id</span><span class="sy-keyword sy-operator sy-comparison sy-sql">=</span><span class="sy-constant sy-other sy-database-name sy-sql">ABPerson</span>.<span class="sy-constant sy-other sy-table-name sy-sql">ROWID</span> <span class="sy-keyword sy-other sy-DML sy-sql">order by</span> Last, First
+</span></code></pre></li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Locating Files</h2>
+      <ul class="list-bullet">
+        <li>The <code>Manifest.db</code> is a database of all the files. You can run a query like this to find a file.
+          <ul class="list-bullet">
+            <li><pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> fileID, relativePath
+<span class="sy-keyword sy-other sy-DML sy-sql">FROM</span> Files
+<span class="sy-keyword sy-other sy-DML sy-sql">WHERE</span> relativePath <span class="sy-keyword sy-other sy-DML sy-sql">like</span> <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>%Address%<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>;
+</span></code></pre></li>
+          </ul>        </li>
+        <li>From there, the first two digits of the <code>fileId</code> indicate the directory to look into, and the entire fileId is then the filename in that directory.</li>
+        <li>The <a href="https://pypi.org/project/iOSbackup/">pypi page for the iOSbackup Python package</a> also has a list of commonly needed files and their fileID values.</li>
+      </ul>    </li>
+  </ul>
+

@@ -489,6 +489,11 @@
     "title": "Embedding V8 in Rust",
     "uid": ""
   },
+  "pkm-pages/notes/extracting_contacts_from_an_ios_backup.html": {
+    "slug": "/notes/extracting_contacts_from_an_ios_backup",
+    "title": "Extracting Contacts from an iOS backup",
+    "uid": ""
+  },
   "pkm-pages/notes/first_row_per_group_in_postgresql.html": {
     "slug": "/notes/first_row_per_group_in_postgresql",
     "title": "First Row per Group in PostgreSQL",
