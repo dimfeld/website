@@ -11,7 +11,7 @@ draft: false
     <p><a href="https://plausible.io">Plausible Analytics</a> has a feature which lets you use custom URLs to help avoid adblockers and get better counts. Plausible is committed to respecting privacy, so I feel this is OK to do. (And they <a href="https://plausible.io/docs/proxy/introduction">address the topic here</a>).</p>
     <p>This site is built with SvelteKit and hosted on Vercel, and so none of the normal methods documented by Plausible work with this particular combination. But it&#39;s pretty simple to get going. Everything you see here except for the Vercel-specific edge function configuration will apply to other hosts too.</p>
     <p>We need two routes: one for the script itself, and another route to proxy events. I chose to place both of these routes under the <code>/plas</code> path.</p>
-    <p>First, the path for the script itself.</p>
+    <p>First, the route for fetching the script itself.</p>
     <pre><code><span class="sy-source sy-js"><span class="sy-comment sy-line sy-double-slash sy-js"><span class="sy-punctuation sy-definition sy-comment sy-js">//</span> src/routes/plas/script.js/+server.ts
 </span>
 <span class="sy-meta sy-export sy-js"><span class="sy-keyword sy-control sy-import-export sy-js">export</span> <span class="sy-storage sy-type sy-js">const</span> <span class="sy-variable sy-other sy-readwrite sy-js">config</span> <span class="sy-keyword sy-operator sy-assignment sy-js">=</span> <span class="sy-meta sy-object-literal sy-js"><span class="sy-punctuation sy-section sy-block sy-js">{</span>
@@ -24,7 +24,7 @@ draft: false
 <span class="sy-punctuation sy-section sy-block sy-js">}</span></span>
 </span></code></pre>
     <p>This has a bit of configuration to run this route as an edge function, and then it just performs its own request for the actual Plausible script.</p>
-    <p>Next, you need a route for the Plausible script to send events to. This is similar to the previous script, but it also passes the relevant headers and body from the client through to Plausible.</p>
+    <p>Next, you need a route for the Plausible script to send events to. This is similar to the previous route, but it also passes the relevant headers and body from the client through to Plausible.</p>
     <pre><code><span class="sy-source sy-js"><span class="sy-comment sy-line sy-double-slash sy-js"><span class="sy-punctuation sy-definition sy-comment sy-js">//</span> src/routes/plas/event/+server.ts
 </span>
 <span class="sy-meta sy-export sy-js"><span class="sy-keyword sy-control sy-import-export sy-js">export</span> <span class="sy-storage sy-type sy-js">const</span> <span class="sy-variable sy-other sy-readwrite sy-js">config</span> <span class="sy-keyword sy-operator sy-assignment sy-js">=</span> <span class="sy-meta sy-object-literal sy-js"><span class="sy-punctuation sy-section sy-block sy-js">{</span>
