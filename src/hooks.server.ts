@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import { Handle } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
   const response = await resolve(event);
@@ -10,7 +10,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   // Tell Vercel to cache everything forever.
   // Vercel's CDN will clear everything on redeploy so we don't have to worry about invalidation.
-  response.headers.set('Cache-Control', 'max-age=300, s-maxage=2592000');
+  if (!event.request.url.includes('/plas/')) {
+    response.headers.set('Cache-Control', 'max-age=300, s-maxage=2592000');
+  }
 
   return response;
 };

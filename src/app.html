@@ -11,9 +11,15 @@
 
     %sveltekit.head%
 
-    <script async defer data-domain="imfeld.dev" src="https://plas.imfeld.dev/js/index.js"></script>
+    <script
+      async
+      defer
+      data-domain="imfeld.dev"
+      data-api="/plas/event"
+      src="/plas/script.js"
+    ></script>
   </head>
-  <body class="bg-gray-50 m-0 box-border leading-snug">
+  <body class="m-0 box-border bg-gray-50 leading-snug">
     %sveltekit.body%
   </body>
 </html>
