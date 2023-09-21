@@ -374,6 +374,31 @@
     "title": "2023-04-18",
     "uid": ""
   },
+  "pkm-pages/journals/2023-09-14.html": {
+    "slug": "/journals/2023_09_14",
+    "title": "2023-09-14",
+    "uid": ""
+  },
+  "pkm-pages/journals/2023-09-15.html": {
+    "slug": "/journals/2023_09_15",
+    "title": "2023-09-15",
+    "uid": ""
+  },
+  "pkm-pages/journals/2023-09-17.html": {
+    "slug": "/journals/2023_09_17",
+    "title": "2023-09-17",
+    "uid": ""
+  },
+  "pkm-pages/journals/2023-09-19.html": {
+    "slug": "/journals/2023_09_19",
+    "title": "2023-09-19",
+    "uid": ""
+  },
+  "pkm-pages/journals/2023-09-20.html": {
+    "slug": "/journals/2023_09_20",
+    "title": "2023-09-20",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -502,6 +527,11 @@
   "pkm-pages/notes/how_to_read_a_book_the_ultimate_guide_by_mortimer_adler.html": {
     "slug": "/notes/how_to_read_a_book_the_ultimate_guide_by_mortimer_adler",
     "title": "How to Read a Book: The Ultimate Guide by Mortimer Adler",
+    "uid": ""
+  },
+  "pkm-pages/notes/huggingface_transformers.html": {
+    "slug": "/notes/huggingface_transformers",
+    "title": "Huggingface Transformers",
     "uid": ""
   },
   "pkm-pages/notes/hybrid_logical_clock.html": {

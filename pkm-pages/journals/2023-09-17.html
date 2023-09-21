@@ -1,0 +1,14 @@
+---
+title: "2023-09-17"
+tags: 
+date: 2023-09-17
+updated: 2023-09-21
+---
+
+
+    
+    <p>After some Python dependency hassles, I ended up using NVIDIA&#39;s <a href="https://huggingface.co/nvidia/stt_en_fastconformer_ctc_large">FastConformer CTC</a> model for the speech-to-text side of Buzzy. It works great and is roughly 8x faster than Whisper when running without a GPU.</p>
+    <p>On the speech generation side, I ended up using <a href="https://mycroft.ai/mimic-3/">Mycroft&#39;s Mimic 3</a>. There are a number of different voices to choose from, and some sound better than others, but it&#39;s super fast and the quality is more than acceptable. I found that many of the voices sound better if you use a <code>lengthScale</code> of 1.2 to slow it down a bit.</p>
+
+
+

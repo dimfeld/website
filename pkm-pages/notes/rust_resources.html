@@ -2,7 +2,7 @@
 title: "Rust Resources"
 tags: Rust
 date: 2021-02-13
-updated: 2022-12-27
+updated: 2023-06-10
 ---
 
 
@@ -89,10 +89,11 @@ updated: 2022-12-27
               <ul class="list-bullet">
                 <li>Contains connection pools, migration support and all that.</li>
                 <li>You can derive <code>sqlx::FromRow</code> on structs to read query results into a structure.</li>
+                <li>Derive <code>sqlx::Type</code> on enums to translate them to strings (or Postgres types)</li>
                 <li>Supports a bunch of different async runtimes and all the popular SQL databases.</li>
                 <li>Supports compile-time query validation and result type generation with the <code>query!</code> macro. Or <code>query_as!</code> to use an existing type.</li>
               </ul>            </li>
-            <li><code>diesel</code> for a full-fledged ORM if that&#39;s your style. I&#39;ve been using this recently and it&#39;s quite nice. (See <a href="/notes/diesel_rust_orm">Diesel Rust ORM</a>)</li>
+            <li><code>diesel</code> for a full-fledged ORM if that&#39;s your style. I&#39;ve been using this recently and it&#39;s nice, with the usual caveats around having to fall back to raw SQL to do more complex queries. (See <a href="/notes/diesel_rust_orm">Diesel Rust ORM</a>)</li>
             <li><code>sea_orm</code> is another up-and-coming ORM, built on async and with more attempt to provide database-agnostic behavior at runtime.</li>
           </ul>        </li>
         <li>Image Handling
@@ -115,6 +116,7 @@ updated: 2022-12-27
                 <li>I&#39;ve heard that <a href="https://tree-sitter.github.io/tree-sitter/syntax-highlighting">tree-sitter</a> is good for this too but haven&#39;t tried it.</li>
               </ul>            </li>
             <li><a href="https://docs.rs/handlebars">handlebars</a>, <a href="https://docs.rs/liquid">liquid</a>, and <a href="https://docs.rs/tera">tera</a> are popular libraries for text templates.</li>
+            <li><a href="https://docs.rs/opendal/latest/opendal/">opendal</a> and <a href="https://docs.rs/object_store/latest/object_store/">object_store</a> for abstracting IO operations over different storage such as local disk and various cloud storage services.</li>
             <li><a href="https://docs.rs/delegate">delegate</a> for delegating method calls to the same method on an internal field.</li>
             <li><a href="https://crates.io/crates/ouroboros">ouroboros</a> for allowing members of a structure to reference other owned members in the structure, with some additional methods to build and borrow the data.</li>
             <li><a href="https://docs.rs/tempfile/latest/tempfile/index.html">tempfile</a> for managing temporary files that will automatically clean themselves up</li>

@@ -5,6 +5,18 @@
 
   const projects = [
     {
+      name: 'Buzzy',
+      repo: 'https://www.github.com/dimfeld/buzzy',
+      link: 'https://www.github.com/dimfeld/buzzy',
+      text: `Buzzy is an AI companion for children. My kids love talking to Alexa but it frequently doesn't understand questions, so this is an attempt to do something better.`,
+    },
+    {
+      name: 'Smelter',
+      repo: 'https://www.github.com/dimfeld/smelter',
+      link: 'https://www.github.com/dimfeld/smelter',
+      text: `Smelter is a data processing framework designed to harness serverless workers. Imagine thousands of Lambdas processing hundreds of GBs of files in S3 with low latency`,
+    },
+    {
       name: 'Ergo',
       repo: 'https://www.github.com/dimfeld/ergo',
       link: 'https://www.github.com/dimfeld/ergo',
@@ -15,7 +27,7 @@
       name: 'Perceive',
       repo: 'https://www.github.com/dimfeld/perceive',
       link: 'https://www.github.com/dimfeld/perceive',
-      text: `In early development, Perceive is a semantic search experiment, with a goal to catalog your files, browser history, and more, and make them all searchable through a single interface that understands what you mean, even if the right words aren't there.`,
+      text: `Perceive was a semantic search experiment, with a goal to catalog your files, browser history, and more, and make them all searchable through a single interface that understands what you mean, even if the right words aren't there.`,
     },
     {
       name: 'Effectum',
