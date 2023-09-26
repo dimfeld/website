@@ -674,6 +674,11 @@
     "title": "Programming Courses",
     "uid": ""
   },
+  "pkm-pages/notes/projects_buzzy.html": {
+    "slug": "/notes/projects_buzzy",
+    "title": "Buzzy",
+    "uid": ""
+  },
   "pkm-pages/notes/projects_data_retrieval_application_manager.html": {
     "slug": "/notes/projects_data_retrieval_application_manager",
     "title": "Data Retrieval Application Manager",
@@ -832,6 +837,11 @@
   "pkm-pages/notes/tiago_forte_on_writing_book_summaries.html": {
     "slug": "/notes/tiago_forte_on_writing_book_summaries",
     "title": "Tiago Forte on Writing Book Summaries",
+    "uid": ""
+  },
+  "pkm-pages/notes/time_series_forecasting_libraries.html": {
+    "slug": "/notes/time_series_forecasting_libraries",
+    "title": "Time Series Forecasting Libraries",
     "uid": ""
   },
   "pkm-pages/notes/transactionally_staged_job_drain_queues.html": {

@@ -9,12 +9,13 @@
       repo: 'https://www.github.com/dimfeld/buzzy',
       link: 'https://www.github.com/dimfeld/buzzy',
       text: `Buzzy is an AI companion for children. My kids love talking to Alexa but it frequently doesn't understand questions, so this is an attempt to do something better.`,
+      notes: '/notes/projects_buzzy',
     },
     {
       name: 'Smelter',
       repo: 'https://www.github.com/dimfeld/smelter',
       link: 'https://www.github.com/dimfeld/smelter',
-      text: `Smelter is a data processing framework designed to harness serverless workers. Imagine thousands of Lambdas processing hundreds of GBs of files in S3 with low latency`,
+      text: `Smelter is a data processing framework designed to harness serverless workers. Imagine thousands of Lambdas processing hundreds of GBs of files in S3 with low latency.`,
     },
     {
       name: 'Ergo',
@@ -22,24 +23,28 @@
       link: 'https://www.github.com/dimfeld/ergo',
       text: `Ergo is a low-code task engine built with Rust and Svelte. Think IFTTT or Zapier, but the task behavior is customizable through Javascript and tasks can be represented as state machines or as a DAG. Future work will involve task templates that take an easy configuration and internally compile down to state machines.`,
       image: 'ergo-logo-small.png',
+      notes: '/notes/projects_ergo',
     },
     {
       name: 'Perceive',
       repo: 'https://www.github.com/dimfeld/perceive',
       link: 'https://www.github.com/dimfeld/perceive',
       text: `Perceive was a semantic search experiment, with a goal to catalog your files, browser history, and more, and make them all searchable through a single interface that understands what you mean, even if the right words aren't there.`,
+      notes: '/notes/projects_perceive',
     },
     {
       name: 'Effectum',
       repo: 'https://www.github.com/dimfeld/effectum',
       link: 'https://www.github.com/dimfeld/effectum',
       text: `Effectum is a SQLite-based task queue, designed to be embedded into Rust applications. Future work will allow running it as a standalone server as well, so that it can start simple and then scale up.`,
+      notes: '/notes/projects_effectum',
     },
     {
       name: 'Pic Store',
       repo: 'https://www.github.com/dimfeld/pic-store',
       link: 'https://www.github.com/dimfeld/pic-store',
       text: `This is an "image CDN" application which will take uploaded images, resize and reencode them in desired formats, and store them on a CDN for use on the web. I originally wrote Effectum to power this project. (Better name pending?)`,
+      notes: '/notes/projects_pic_store',
     },
     {
       name: 'Logseq Note Exporter',
@@ -84,13 +89,14 @@
     substantial ones will show up here.
   </p>
 
-  {#each projects as project}
-    <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0">
-      <h1 class="block sm:hidden">
-        <a href={project.link}>{project.name}</a>
-        <a href={project.repo || project.link}>(Source)</a>
-      </h1>
-      <!--
+  <section class="flex flex-col gap-8">
+    {#each projects as project}
+      <div class="flex flex-col gap-4 sm:flex-row">
+        <h1 class="block sm:hidden">
+          <a href={project.link}>{project.name}</a>
+          <a href={project.repo || project.link}>(Source)</a>
+        </h1>
+        <!--
       <div
         class="flex w-full flex-none flex-col items-stretch justify-center sm:block sm:w-48">
         {#if project.image}
@@ -101,15 +107,19 @@
         {/if}
       </div>
       -->
-      <div class="flex flex-col">
-        <h2 class="hidden sm:block">
-          <a href={project.link}>{project.name}</a>
-          <a href={project.repo || project.link}>(Source)</a>
-        </h2>
-        <p class="mt-0">{@html project.text}</p>
+        <div class="flex flex-col">
+          <h2 class="hidden sm:block">
+            <a href={project.link}>{project.name}</a>
+            <a href={project.repo || project.link}>(Source)</a>
+          </h2>
+          <p class="my-0">{@html project.text}</p>
+          {#if project.notes}
+            <p class="mt-2 mb-0"><a href={project.notes}>Notes</a></p>
+          {/if}
+        </div>
       </div>
-    </div>
-  {/each}
+    {/each}
+  </section>
 
   <h2>Other Minor Projects</h2>
   <ul>
