@@ -1,0 +1,100 @@
+---
+title: "Perceive"
+tags: Projects
+date: 2022-12-21
+updated: 2023-09-27
+---
+
+
+  <ul class="list-bullet">
+    <li>This project was an experiment from December 2022, in indexing a bunch of personal data and performing semantic search on it via embedding similarity. Everything on the backend was done in Rust just to make it hard. :)</li>
+    <li>Tauri app
+      <ul class="list-bullet">
+        <li>Loading bar for initial load</li>
+        <li>Search field</li>
+        <li>real-time search as you type (without highlighting)</li>
+        <li>ability to select different sources, source categories</li>
+      </ul>    </li>
+    <li><span><span class="font-medium text-gray-800">Asymmetric Search
+collapsed:</span> <span>true</span></span>
+      <ul class="list-bullet">
+        <li>This is useful when we have an asymmetric query, where the queries are short but the corpuses to be matched are long.</li>
+        <li>Probably not worrying about this for now, maybe later</li>
+        <li><a href="https://www.sbert.net/examples/applications/retrieve_rerank/README.html">https://www.sbert.net/examples/applications/retrieve_rerank/README.html</a></li>
+        <li>Use tokenizer: <a href="https://docs.rs/rust-bert/latest/rust_bert/pipelines/sentence_embeddings/struct.SentenceEmbeddingsTokenizerConfigResources.html#associatedconstant.ALL_MINI_LM_L12_V2">https://docs.rs/rust-bert/latest/rust_bert/pipelines/sentence_embeddings/struct.SentenceEmbeddingsTokenizerConfigResources.html#associatedconstant.ALL_MINI_LM_L12_V2</a>
+          <ul class="list-bullet">
+            <li>Possible additional config? <a href="https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-12-v2/blob/main/tokenizer_config.json">https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-12-v2/blob/main/tokenizer_config.json</a></li>
+            <li>The conversion process might include all this, not sure.</li>
+          </ul>        </li>
+        <li>Implementing a CrossEncoder
+          <ul class="list-bullet">
+            <li><a href="https://www.sbert.net/examples/applications/cross-encoder/README.html">https://www.sbert.net/examples/applications/cross-encoder/README.html</a></li>
+            <li><a href="https://github.com/UKPLab/sentence-transformers/blob/master/sentence_transformers/cross_encoder/CrossEncoder.py">https://github.com/UKPLab/sentence-transformers/blob/master/sentence_transformers/cross_encoder/CrossEncoder.py</a></li>
+            <li>We do a normal vector compare to get a top N, and the re-sort that results list with the CrossEncoder, which creates an encoding of the large result and the query together, and then gets the top score from each one.</li>
+            <li>ChatGPT code which is wrong but illustrative (This might be a bi-encoder though?)
+              <ul class="list-bullet">
+                <li><pre><code><span class="sy-source sy-rust"><span class="sy-keyword sy-other sy-rust">use</span> <span class="sy-meta sy-path sy-rust">rust_bert<span class="sy-punctuation sy-accessor sy-rust">::</span></span><span class="sy-meta sy-path sy-rust">bert<span class="sy-punctuation sy-accessor sy-rust">::</span></span><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-begin sy-rust">{</span>BertConfig<span class="sy-punctuation sy-separator sy-rust">,</span> BertModel</span><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-end sy-rust">}</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+
+<span class="sy-comment sy-line sy-double-slash sy-rust"><span class="sy-punctuation sy-definition sy-comment sy-rust">//</span> Define the base encoder architecture
+</span><span class="sy-storage sy-type sy-rust">let</span> config <span class="sy-keyword sy-operator sy-rust">=</span> <span class="sy-meta sy-path sy-rust">BertConfig<span class="sy-punctuation sy-accessor sy-rust">::</span></span>from_pretrained<span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span><span class="sy-string sy-quoted sy-double sy-rust"><span class="sy-punctuation sy-definition sy-string sy-begin sy-rust">&quot;</span>bert-base-uncased<span class="sy-punctuation sy-definition sy-string sy-end sy-rust">&quot;</span></span></span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+<span class="sy-storage sy-type sy-rust">let</span> encoder <span class="sy-keyword sy-operator sy-rust">=</span> <span class="sy-meta sy-path sy-rust">BertModel<span class="sy-punctuation sy-accessor sy-rust">::</span></span>new<span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span><span class="sy-keyword sy-operator sy-rust">&amp;</span>config</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+
+<span class="sy-comment sy-line sy-double-slash sy-rust"><span class="sy-punctuation sy-definition sy-comment sy-rust">//</span> Define the input and output layers for the CrossEncoder
+</span><span class="sy-storage sy-type sy-rust">let</span> input1 <span class="sy-keyword sy-operator sy-rust">=</span> input_tensor1.<span class="sy-support sy-function sy-rust">into_bert_input</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span><span class="sy-keyword sy-operator sy-rust">&amp;</span>config<span class="sy-punctuation sy-separator sy-rust">,</span> <span class="sy-constant sy-language sy-rust">false</span></span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+<span class="sy-storage sy-type sy-rust">let</span> input2 <span class="sy-keyword sy-operator sy-rust">=</span> input_tensor2.<span class="sy-support sy-function sy-rust">into_bert_input</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span><span class="sy-keyword sy-operator sy-rust">&amp;</span>config<span class="sy-punctuation sy-separator sy-rust">,</span> <span class="sy-constant sy-language sy-rust">false</span></span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+<span class="sy-storage sy-type sy-rust">let</span> <span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span>output1<span class="sy-punctuation sy-separator sy-rust">,</span> <span class="sy-keyword sy-operator sy-rust">_</span></span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span> <span class="sy-keyword sy-operator sy-rust">=</span> encoder.<span class="sy-support sy-function sy-rust">forward</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span><span class="sy-keyword sy-operator sy-rust">&amp;</span>input1</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span>.<span class="sy-support sy-function sy-rust">unwrap</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span></span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+<span class="sy-storage sy-type sy-rust">let</span> <span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span>output2<span class="sy-punctuation sy-separator sy-rust">,</span> <span class="sy-keyword sy-operator sy-rust">_</span></span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span> <span class="sy-keyword sy-operator sy-rust">=</span> encoder.<span class="sy-support sy-function sy-rust">forward</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span><span class="sy-keyword sy-operator sy-rust">&amp;</span>input2</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span>.<span class="sy-support sy-function sy-rust">unwrap</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span></span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+
+<span class="sy-comment sy-line sy-double-slash sy-rust"><span class="sy-punctuation sy-definition sy-comment sy-rust">//</span> Define the comparison layer
+</span><span class="sy-storage sy-type sy-rust">let</span> comparison <span class="sy-keyword sy-operator sy-rust">=</span> output1.<span class="sy-support sy-function sy-rust">dot</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span><span class="sy-keyword sy-operator sy-rust">&amp;</span>output2</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+
+<span class="sy-comment sy-line sy-double-slash sy-rust"><span class="sy-punctuation sy-definition sy-comment sy-rust">//</span> Define the model
+</span><span class="sy-storage sy-type sy-rust">let</span> model <span class="sy-keyword sy-operator sy-rust">=</span> Model <span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-begin sy-rust">{</span>
+    encoder<span class="sy-punctuation sy-separator sy-rust">:</span> encoder<span class="sy-punctuation sy-separator sy-rust">,</span>
+    comparison<span class="sy-punctuation sy-separator sy-rust">:</span> comparison<span class="sy-punctuation sy-separator sy-rust">,</span>
+</span><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-end sy-rust">}</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+</span></code></pre></li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>SBERT provides pre-trained cross encoder models from the MS MARCO dataset
+          <ul class="list-bullet">
+            <li><a href="https://www.sbert.net/docs/pretrained_cross-encoders.html">https://www.sbert.net/docs/pretrained_cross-encoders.html</a></li>
+            <li>Data at <a href="https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-12-v2/tree/main">https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-12-v2/tree/main</a></li>
+            <li>Need to convert the model weights and see what else needs to happen for this to work.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li>rust-bert on M1
+      <ul class="list-bullet">
+        <li>1. The latest published version of the <code>rust-bert</code> crate is using <code>tch-rs </code>0.8, but you need to use at least 0.10 instead. The git version already uses the newest version, so you can just set that in your  Cargo.toml: <code>rust-bert = { git = &quot;[github.com/guillaume-be/rust-b](https://github.com/guillaume-be/rust-bert.git)&quot; }</code></li>
+        <li>2. You need to install pytorch manually. The simplest method is to just install it globally via Homebrew or pip3, though a more robust method would be to install a local copy in a python venv or something, and reference it from there.</li>
+        <li>3. Set the LIBTORCH environment variable to wherever you have libtorch installed. With the homebrew method this is <code>LIBTORCH=/opt/homebrew/opt/pytorch</code></li>
+        <li>4. Tell the linker where to find it in your Cargo config.</li>
+      </ul>    </li>
+    <li><h1>Initial Sprint Reflections</h1>
+      <ul class="list-bullet">
+        <li>Still much easier to do ML stuff in Python, though rust-bert was hugely useful in implementing a lot of this</li>
+        <li>Setting up libtorch</li>
+        <li>Web scraping browser history is kind of a hassle
+          <ul class="list-bullet">
+            <li>Lots of pages require authentication</li>
+            <li>Github really hates it, even for public pages</li>
+            <li>Content extraction for HTML
+              <ul class="list-bullet">
+                <li>Readability works well, rust port needs some work</li>
+                <li>In the future would probably run a sidecar that hosts the up-to-date JS version</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>Rayon thread pool exhaustion</li>
+        <li>Model choice matters a lot</li>
+        <li>Running bulk inference without GPU support is still slow for the larger models.</li>
+        <li>ndarray is great</li>
+        <li>Future work
+          <ul class="list-bullet">
+            <li>Better article scraping</li>
+            <li>ML model feedback</li>
+            <li>More integrations</li>
+            <li>OpenAI integration to allow running on less powerful systems</li>
+          </ul>        </li>
+      </ul>    </li>
+  </ul>
+
