@@ -909,6 +909,11 @@
     "title": "First Class Svelte Support for MapLibre",
     "uid": ""
   },
+  "pkm-pages/writing/how_svelte_5_runes_will_fix_long_standing_svelte_bugs.html": {
+    "slug": "/writing/how_svelte_5_runes_will_fix_long_standing_svelte_bugs",
+    "title": "How Svelte 5 Runes will Fix Long-Standing Svelte Bugs",
+    "uid": ""
+  },
   "pkm-pages/writing/introduction_to_geojson.html": {
     "slug": "/writing/introduction_to_geojson",
     "title": "Introduction to GeoJSON",

@@ -7,8 +7,7 @@
 <footer class="prose">
   <p>
     Thanks for reading! If you have any questions or comments, please send me a
-    note on <a href="https://www.twitter.com/dimfeld">Twitter</a>
-    or <a rel="me" href={contact.mastodon}>Mastodon</a>.
+    note on <a href="https://www.twitter.com/dimfeld">Twitter</a>.
   </p>
 
   <p>
