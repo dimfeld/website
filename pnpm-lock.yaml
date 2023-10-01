@@ -75,20 +75,20 @@ dependencies:
     specifier: ~4.17.21
     version: 4.17.21
   markdown-it:
-    specifier: ^11.0.0
-    version: 11.0.0
+    specifier: ^12.3.2
+    version: 12.3.2
   markdown-it-abbr:
     specifier: ^1.0.4
     version: 1.0.4
   markdown-it-anchor:
     specifier: ^5.2.5
-    version: 5.3.0(markdown-it@11.0.0)
+    version: 5.3.0(markdown-it@12.3.2)
   markdown-it-footnote:
     specifier: ^3.0.2
     version: 3.0.2
   markdown-it-toc-done-right:
     specifier: ^4.1.0
-    version: 4.1.0(markdown-it-anchor@5.3.0)(markdown-it@11.0.0)
+    version: 4.1.0(markdown-it-anchor@5.3.0)(markdown-it@12.3.2)
   pkg-dir:
     specifier: ^4.2.0
     version: 4.2.0
@@ -132,7 +132,7 @@ devDependencies:
     version: 1.15.4(svelte@3.58.0)(vite@4.0.2)
   '@sveltejs/svelte-repl':
     specifier: github:dimfeld/svelte-repl
-    version: github.com/dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e
+    version: git/github.com+dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e
   '@tailwindcss/forms':
     specifier: ^0.5.2
     version: 0.5.2(tailwindcss@3.0.24)
@@ -1408,6 +1408,10 @@ packages:
     dependencies:
       sprintf-js: 1.0.3
 
+  /argparse@2.0.1:
+    resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
+    dev: false
+
   /array-includes@3.1.1:
     resolution: {integrity: sha512-c2VXaCHl7zPsvpkFsw4nxvFie4fh1ur9bpcgsVkIjqn0H/Xwdg+7fv3n2r/isyS8EBj5b06M9kHyZuIr4El6WQ==}
     engines: {node: '>= 0.4'}
@@ -2056,7 +2060,7 @@ packages:
     resolution: {integrity: sha512-2/xPb3ORsQ42nHYiSunXkDjPLBaEj/xTwUO4B7XCZQTRk7EBtTOPaygh10YAAh2OI1Qrp6NWfpAhzswj0ydt9g==}
     dependencies:
       domelementtype: 2.0.1
-      entities: 2.0.3
+      entities: 2.2.0
     dev: false
 
   /dom-serializer@1.3.2:
@@ -2143,13 +2147,12 @@ packages:
     resolution: {integrity: sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==}
     dev: false
 
-  /entities@2.0.3:
-    resolution: {integrity: sha512-MyoZ0jgnLvB2X3Lg5HqpFmn1kybDiIfEQmKzTb5apr51Rb+T3KdmMiqa70T+bhGnyv7bQ6WMj2QMHpGMmlrUYQ==}
+  /entities@2.1.0:
+    resolution: {integrity: sha512-hCx1oky9PFrJ611mf0ifBLBRW8lUUVRlFolb5gWRfIELabBlbp9xZvrqZLZAs+NxFnbfQoeGd8wDkygjg7U85w==}
     dev: false
 
   /entities@2.2.0:
     resolution: {integrity: sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==}
-    dev: true
 
   /error-ex@1.3.2:
     resolution: {integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==}
@@ -3336,34 +3339,34 @@ packages:
     resolution: {integrity: sha1-1mtTZFIcuz3Yqlna37ovtoZcj9g=}
     dev: false
 
-  /markdown-it-anchor@5.3.0(markdown-it@11.0.0):
+  /markdown-it-anchor@5.3.0(markdown-it@12.3.2):
     resolution: {integrity: sha512-/V1MnLL/rgJ3jkMWo84UR+K+jF1cxNG1a+KwqeXqTIJ+jtA8aWSHuigx8lTzauiIjBDbwF3NcWQMotd0Dm39jA==}
     peerDependencies:
       markdown-it: '*'
     dependencies:
-      markdown-it: 11.0.0
+      markdown-it: 12.3.2
     dev: false
 
   /markdown-it-footnote@3.0.2:
     resolution: {integrity: sha512-JVW6fCmZWjvMdDQSbOT3nnOQtd9iAXmw7hTSh26+v42BnvXeVyGMDBm5b/EZocMed2MbCAHiTX632vY0FyGB8A==}
     dev: false
 
-  /markdown-it-toc-done-right@4.1.0(markdown-it-anchor@5.3.0)(markdown-it@11.0.0):
+  /markdown-it-toc-done-right@4.1.0(markdown-it-anchor@5.3.0)(markdown-it@12.3.2):
     resolution: {integrity: sha512-UhD2Oj6cZV3ycYPoelt4hTkwKIK3zbPP1wjjdpCq7UGtWQOFalDFDv1s2zBYV6aR2gMs/X8kpJcOYsQmUbiXDw==}
     peerDependencies:
       markdown-it: ^10.0.0
       markdown-it-anchor: ^5.2.5
     dependencies:
-      markdown-it: 11.0.0
-      markdown-it-anchor: 5.3.0(markdown-it@11.0.0)
+      markdown-it: 12.3.2
+      markdown-it-anchor: 5.3.0(markdown-it@12.3.2)
     dev: false
 
-  /markdown-it@11.0.0:
-    resolution: {integrity: sha512-+CvOnmbSubmQFSA9dKz1BRiaSMV7rhexl3sngKqFyXSagoA3fBdJQ8oZWtRy2knXdpDXaBw44euz37DeJQ9asg==}
+  /markdown-it@12.3.2:
+    resolution: {integrity: sha512-TchMembfxfNVpHkbtriWltGWc+m3xszaRD0CZup7GFFhzIgQqxIfn3eGj1yZpfuflzPvfkt611B2Q/Bsk1YnGg==}
     hasBin: true
     dependencies:
-      argparse: 1.0.10
-      entities: 2.0.3
+      argparse: 2.0.1
+      entities: 2.1.0
       linkify-it: 3.0.2
       mdurl: 1.0.1
       uc.micro: 1.0.6
@@ -3380,7 +3383,7 @@ packages:
     dev: true
 
   /mdurl@1.0.1:
-    resolution: {integrity: sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=}
+    resolution: {integrity: sha512-/sKlQJCBYVY9Ers9hqzKou4H6V5UWc/M59TH2dvkt+84itfnq7uFOMLpOiOS4ujvHP4etln18fmIxA5R5fll0g==}
     dev: false
 
   /memorystream@0.3.1:
@@ -5508,8 +5511,8 @@ packages:
       yaml: 2.3.2
     dev: true
 
-  github.com/dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e:
-    resolution: {tarball: https://codeload.github.com/dimfeld/svelte-repl/tar.gz/5fe0794961938629a193f41cc49b6d63fd62196e}
+  git/github.com+dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e:
+    resolution: {commit: 5fe0794961938629a193f41cc49b6d63fd62196e, repo: git@github.com:dimfeld/svelte-repl.git, type: git}
     name: '@sveltejs/svelte-repl'
     version: 0.3.0
     dependencies:
