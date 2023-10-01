@@ -129,10 +129,10 @@ devDependencies:
     version: 2.4.1(@sveltejs/kit@1.15.4)
   '@sveltejs/kit':
     specifier: ~1.15.4
-    version: 1.15.4(svelte@3.58.0)(vite@4.0.2)
+    version: 1.15.4(svelte@3.58.0)(vite@4.0.5)
   '@sveltejs/svelte-repl':
     specifier: github:dimfeld/svelte-repl
-    version: github.com/dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e
+    version: git/github.com+dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e
   '@tailwindcss/forms':
     specifier: ^0.5.2
     version: 0.5.2(tailwindcss@3.0.24)
@@ -254,8 +254,8 @@ devDependencies:
     specifier: ^4.7.2
     version: 4.7.2
   vite:
-    specifier: ^4.0.2
-    version: 4.0.2(@types/node@16.11.38)
+    specifier: ^4.0.5
+    version: 4.0.5(@types/node@16.11.38)
   zx:
     specifier: ^7.2.3
     version: 7.2.3
@@ -926,7 +926,7 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^1.5.0
     dependencies:
-      '@sveltejs/kit': 1.15.4(svelte@3.58.0)(vite@4.0.2)
+      '@sveltejs/kit': 1.15.4(svelte@3.58.0)(vite@4.0.5)
       '@vercel/nft': 0.22.1
       esbuild: 0.16.9
     transitivePeerDependencies:
@@ -934,7 +934,7 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit@1.15.4(svelte@3.58.0)(vite@4.0.2):
+  /@sveltejs/kit@1.15.4(svelte@3.58.0)(vite@4.0.5):
     resolution: {integrity: sha512-m+Tid9nbtFawmiu85lDlal0AQ7UeuV48UsuKMe06QLr3ntMQSUzIPqyswNRZqFrar6NhVTUXQ0aO61M3U4MWpQ==}
     engines: {node: ^16.14 || >=18}
     hasBin: true
@@ -943,7 +943,7 @@ packages:
       svelte: ^3.54.0
       vite: ^4.0.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 2.0.2(svelte@3.58.0)(vite@4.0.2)
+      '@sveltejs/vite-plugin-svelte': 2.0.2(svelte@3.58.0)(vite@4.0.5)
       '@types/cookie': 0.5.1
       cookie: 0.5.0
       devalue: 4.3.0
@@ -957,12 +957,12 @@ packages:
       svelte: 3.58.0
       tiny-glob: 0.2.9
       undici: 5.20.0
-      vite: 4.0.2(@types/node@16.11.38)
+      vite: 4.0.5(@types/node@16.11.38)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte@2.0.2(svelte@3.58.0)(vite@4.0.2):
+  /@sveltejs/vite-plugin-svelte@2.0.2(svelte@3.58.0)(vite@4.0.5):
     resolution: {integrity: sha512-xCEan0/NNpQuL0l5aS42FjwQ6wwskdxC3pW1OeFtEKNZwRg7Evro9lac9HesGP6TdFsTv2xMes5ASQVKbCacxg==}
     engines: {node: ^14.18.0 || >= 16}
     peerDependencies:
@@ -975,8 +975,8 @@ packages:
       magic-string: 0.27.0
       svelte: 3.58.0
       svelte-hmr: 0.15.1(svelte@3.58.0)
-      vite: 4.0.2(@types/node@16.11.38)
-      vitefu: 0.2.4(vite@4.0.2)
+      vite: 4.0.5(@types/node@16.11.38)
+      vitefu: 0.2.4(vite@4.0.5)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2235,7 +2235,7 @@ packages:
     resolution: {integrity: sha512-ogtf+5AB/O+nM6DIeBUNr2fuT7ot9Qg/1harBfBtaP13ekEWFQEEMP94BCB7zaNW3gyY+8SHYF00rnqYwXKWOA==}
     dependencies:
       debug: 2.6.9
-      resolve: 1.22.0
+      resolve: 1.22.1
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3579,7 +3579,7 @@ packages:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}
     dependencies:
       hosted-git-info: 2.8.9
-      resolve: 1.22.0
+      resolve: 1.22.1
       semver: 5.7.1
       validate-npm-package-license: 3.0.4
     dev: true
@@ -5260,8 +5260,8 @@ packages:
     resolution: {integrity: sha512-/juG65kTL4Cy2su4P8HjtkTxk6VmJDiOPBufWniqQ6wknac6jNiXS9vU+hO3wgusiyqWlzTbVHi0dyJqRONg3w==}
     dev: true
 
-  /vite@4.0.2(@types/node@16.11.38):
-    resolution: {integrity: sha512-QJaY3R+tFlTagH0exVqbgkkw45B+/bXVBzF2ZD1KB5Z8RiAoiKo60vSUf6/r4c2Vh9jfGBKM4oBI9b4/1ZJYng==}
+  /vite@4.0.5(@types/node@16.11.38):
+    resolution: {integrity: sha512-7m87RC+caiAxG+8j3jObveRLqaWA/neAdCat6JAZwMkSWqFHOvg8MYe5fAQxVBRAuKAQ1S6XDh3CBQuLNbY33w==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -5294,7 +5294,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitefu@0.2.4(vite@4.0.2):
+  /vitefu@0.2.4(vite@4.0.5):
     resolution: {integrity: sha512-fanAXjSaf9xXtOOeno8wZXIhgia+CZury481LsDaV++lSvcU2R9Ch2bPh3PYFyoHW+w9LqAeYRISVQjUIew14g==}
     peerDependencies:
       vite: ^3.0.0 || ^4.0.0
@@ -5302,7 +5302,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 4.0.2(@types/node@16.11.38)
+      vite: 4.0.5(@types/node@16.11.38)
     dev: true
 
   /web-streams-polyfill@3.2.1:
@@ -5508,8 +5508,8 @@ packages:
       yaml: 2.3.2
     dev: true
 
-  github.com/dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e:
-    resolution: {tarball: https://codeload.github.com/dimfeld/svelte-repl/tar.gz/5fe0794961938629a193f41cc49b6d63fd62196e}
+  git/github.com+dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e:
+    resolution: {commit: 5fe0794961938629a193f41cc49b6d63fd62196e, repo: git@github.com:dimfeld/svelte-repl.git, type: git}
     name: '@sveltejs/svelte-repl'
     version: 0.3.0
     dependencies:
