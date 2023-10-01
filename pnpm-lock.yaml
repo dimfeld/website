@@ -132,7 +132,7 @@ devDependencies:
     version: 1.15.4(svelte@3.58.0)(vite@4.0.2)
   '@sveltejs/svelte-repl':
     specifier: github:dimfeld/svelte-repl
-    version: github.com/dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e
+    version: git@github.com+dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e
   '@tailwindcss/forms':
     specifier: ^0.5.2
     version: 0.5.2(tailwindcss@3.0.24)
@@ -1998,7 +1998,7 @@ packages:
     dependencies:
       acorn-node: 1.8.2
       defined: 1.0.0
-      minimist: 1.2.5
+      minimist: 1.2.8
     dev: true
 
   /devalue@4.3.0:
@@ -3108,7 +3108,7 @@ packages:
     resolution: {integrity: sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==}
     hasBin: true
     dependencies:
-      minimist: 1.2.5
+      minimist: 1.2.8
     dev: true
 
   /json5@2.2.3:
@@ -3445,10 +3445,6 @@ packages:
       brace-expansion: 1.1.11
     dev: true
 
-  /minimist@1.2.5:
-    resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
-    dev: true
-
   /minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
     dev: true
@@ -3472,7 +3468,7 @@ packages:
     resolution: {integrity: sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==}
     hasBin: true
     dependencies:
-      minimist: 1.2.5
+      minimist: 1.2.8
     dev: true
 
   /mkdirp@1.0.4:
@@ -5164,7 +5160,7 @@ packages:
     dependencies:
       '@types/json5': 0.0.29
       json5: 1.0.1
-      minimist: 1.2.5
+      minimist: 1.2.8
       strip-bom: 3.0.0
     dev: true
 
@@ -5508,8 +5504,8 @@ packages:
       yaml: 2.3.2
     dev: true
 
-  github.com/dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e:
-    resolution: {tarball: https://codeload.github.com/dimfeld/svelte-repl/tar.gz/5fe0794961938629a193f41cc49b6d63fd62196e}
+  git@github.com+dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e:
+    resolution: {commit: 5fe0794961938629a193f41cc49b6d63fd62196e, repo: git@github.com:dimfeld/svelte-repl.git, type: git}
     name: '@sveltejs/svelte-repl'
     version: 0.3.0
     dependencies:
