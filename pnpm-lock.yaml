@@ -132,7 +132,7 @@ devDependencies:
     version: 1.15.4(svelte@3.58.0)(vite@4.0.2)
   '@sveltejs/svelte-repl':
     specifier: github:dimfeld/svelte-repl
-    version: github.com/dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e
+    version: git@github.com+dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e
   '@tailwindcss/forms':
     specifier: ^0.5.2
     version: 0.5.2(tailwindcss@3.0.24)
@@ -3611,7 +3611,7 @@ packages:
       minimatch: 3.0.4
       pidtree: 0.3.1
       read-pkg: 3.0.0
-      shell-quote: 1.7.2
+      shell-quote: 1.8.1
       string.prototype.padend: 3.1.0
     dev: true
 
@@ -4716,8 +4716,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /shell-quote@1.7.2:
-    resolution: {integrity: sha512-mRz/m/JVscCrkMyPqHc/bczi3OQHkLTqXHEFu0zDhK/qfv3UcOA4SVmRCLmos4bhjr9ekVQubj/R7waKapmiQg==}
+  /shell-quote@1.8.1:
+    resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
     dev: true
 
   /signal-exit@3.0.3:
@@ -5508,8 +5508,8 @@ packages:
       yaml: 2.3.2
     dev: true
 
-  github.com/dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e:
-    resolution: {tarball: https://codeload.github.com/dimfeld/svelte-repl/tar.gz/5fe0794961938629a193f41cc49b6d63fd62196e}
+  git@github.com+dimfeld/svelte-repl/5fe0794961938629a193f41cc49b6d63fd62196e:
+    resolution: {commit: 5fe0794961938629a193f41cc49b6d63fd62196e, repo: git@github.com:dimfeld/svelte-repl.git, type: git}
     name: '@sveltejs/svelte-repl'
     version: 0.3.0
     dependencies:
