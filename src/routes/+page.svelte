@@ -65,7 +65,7 @@
 
     <div class="mt-2 flex flex-col items-start gap-4">
       {#each latestJournals as post}
-        <Journal {...post} titleElement="h2" />
+        <Journal {...post} />
       {/each}
     </div>
 

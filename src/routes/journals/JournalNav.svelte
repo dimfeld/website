@@ -19,22 +19,24 @@
     'December',
   ];
 
-  $: yearSections = Object.entries(counts).map(([year, monthCounts]) => {
-    let months = Object.entries(monthCounts)
-      .sort(sorter({ value: (d) => d[0], descending: true }))
-      .map(([month, count]) => {
-        return {
-          month,
-          monthName: monthNames[+month - 1],
-          count,
-        };
-      });
+  $: yearSections = Object.entries(counts)
+    .map(([year, monthCounts]) => {
+      let months = Object.entries(monthCounts)
+        .sort(sorter({ value: (d) => d[0], descending: true }))
+        .map(([month, count]) => {
+          return {
+            month,
+            monthName: monthNames[+month - 1],
+            count,
+          };
+        });
 
-    return {
-      year,
-      months,
-    };
-  });
+      return {
+        year,
+        months,
+      };
+    })
+    .sort(sorter({ value: 'year', descending: true }));
 </script>
 
 <nav class="p-4">

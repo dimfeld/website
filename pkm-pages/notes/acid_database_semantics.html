@@ -7,7 +7,7 @@ updated: 2022-09-26
 
 
   <ul class="list-bullet">
-    <li><h1>Atomicity</h1>
+    <li><h2>Atomicity</h2>
       <ul class="list-bullet">
         <li>Changes within a transaction are all-or-nothing.</li>
         <li>This lets you make multiple changes without having to handle failure at each point.</li>
@@ -16,13 +16,13 @@ updated: 2022-09-26
             <li>When there are multiple versions of a tuple active at once, for ongoing transactions, it tracks each one and then as transactions commit these tuples become inactive and are later emptied out during vacuuming.</li>
           </ul>        </li>
       </ul>    </li>
-    <li><h1>Consistency</h1>
+    <li><h2>Consistency</h2>
       <ul class="list-bullet">
         <li>Each transaction leaves the database in a valid state.</li>
         <li>There&#39;s no way to violate a <code>unique</code> constraint, for example.</li>
         <li>You can take advantage of this through <code>unique</code> constraints and also through <code>serializable</code> isolation level transaction.</li>
       </ul>    </li>
-    <li><h1>Isolation</h1>
+    <li><h2>Isolation</h2>
       <ul class="list-bullet">
         <li>Transactions work on snapshots and two transactions executing at the same time don&#39;t interfere with each other.</li>
         <li>There are a few different levels of isolation which exhibit different interaction phenomena.</li>
@@ -78,7 +78,7 @@ updated: 2022-09-26
             <li>Sequential scans greatly increase the risk of serialization failures, so queries should use index scans whenever possible.</li>
           </ul>        </li>
       </ul>    </li>
-    <li><h1>Durability</h1>
+    <li><h2>Durability</h2>
       <ul class="list-bullet">
         <li>Committed transactions can not be lost. Instead of fsyncing all the time, this is often implemented using a WAL which is faster to write to, and that allows recovery of any committed data in the canonical data store that was lost in a crash or unexpected reboot.</li>
       </ul>    </li>

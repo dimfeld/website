@@ -5,7 +5,7 @@
   export let id: string;
   export let title: string;
   export let content: string;
-  export let titleElement = 'h1';
+  export let titleElement = 'h2';
   export let showFooter = false;
 
   $: link = journalLink(id);

@@ -8,7 +8,7 @@ updated: 2023-05-15
 
   <ul class="list-bullet">
     <li><span><span class="font-medium text-gray-800">source:</span> <span><a href="https://huggingface.co/learn/nlp-course/chapter0/1?fw=pt">https://huggingface.co/learn/nlp-course/chapter0/1?fw=pt</a></span></span></li>
-    <li><h1>Pipelines</h1>
+    <li><h2>Pipelines</h2>
       <ul class="list-bullet">
         <li><pre><code><span class="sy-source sy-python"><span class="sy-meta sy-statement sy-import sy-python"><span class="sy-keyword sy-control sy-import sy-from sy-python">from</span></span><span class="sy-meta sy-statement sy-import sy-python"><span class="sy-meta sy-import-source sy-python"> <span class="sy-meta sy-import-path sy-python"><span class="sy-meta sy-import-name sy-python">transformers</span></span> <span class="sy-meta sy-statement sy-import sy-python"><span class="sy-keyword sy-control sy-import sy-python">import</span></span></span></span><span class="sy-meta sy-statement sy-import sy-python"></span><span class="sy-meta sy-statement sy-import sy-python"> <span class="sy-meta sy-generic-name sy-python">pipeline</span></span>
 
@@ -26,7 +26,7 @@ updated: 2023-05-15
 <span class="sy-meta sy-function-call sy-python"><span class="sy-meta sy-qualified-name sy-python"><span class="sy-variable sy-function sy-python">unmasker</span></span><span class="sy-punctuation sy-section sy-arguments sy-begin sy-python">(</span><span class="sy-meta sy-function-call sy-arguments sy-python"><span class="sy-meta sy-string sy-python"><span class="sy-string sy-quoted sy-double sy-python"><span class="sy-punctuation sy-definition sy-string sy-begin sy-python">&quot;</span></span></span><span class="sy-meta sy-string sy-python"><span class="sy-string sy-quoted sy-double sy-python">This course will teach you all about &lt;mask&gt; models.<span class="sy-punctuation sy-definition sy-string sy-end sy-python">&quot;</span></span></span><span class="sy-punctuation sy-separator sy-arguments sy-python">,</span> <span class="sy-variable sy-parameter sy-python">top_k</span><span class="sy-keyword sy-operator sy-assignment sy-python">=</span><span class="sy-constant sy-numeric sy-integer sy-decimal sy-python">2</span></span><span class="sy-punctuation sy-section sy-arguments sy-end sy-python">)</span></span>
 
 </span></code></pre></li>
-        <li><h2>Pipeline Implementation</h2></li>
+        <li><h3>Pipeline Implementation</h3></li>
         <li>Each pipeline is just running the few steps needed to run a model. For example, a BERT sequence classification pipeline may do something like this:
           <ul class="list-bullet">
             <li><pre><code><span class="sy-source sy-python"><span class="sy-meta sy-statement sy-import sy-python"><span class="sy-keyword sy-control sy-import sy-from sy-python">from</span></span><span class="sy-meta sy-statement sy-import sy-python"><span class="sy-meta sy-import-source sy-python"> <span class="sy-meta sy-import-path sy-python"><span class="sy-meta sy-import-name sy-python">transformers</span></span> <span class="sy-meta sy-statement sy-import sy-python"><span class="sy-keyword sy-control sy-import sy-python">import</span></span></span></span><span class="sy-meta sy-statement sy-import sy-python"></span><span class="sy-meta sy-statement sy-import sy-python"> <span class="sy-meta sy-generic-name sy-python">AutoTokenizer</span><span class="sy-punctuation sy-separator sy-import-list sy-python">,</span> <span class="sy-meta sy-generic-name sy-python">AutoModelForSequenceClassification</span></span>
@@ -57,7 +57,7 @@ updated: 2023-05-15
 </span></span></code></pre></li>
           </ul>        </li>
       </ul>    </li>
-    <li><h1>Specific Model Types</h1>
+    <li><h2>Specific Model Types</h2>
       <ul class="list-bullet">
         <li>In addition to <code>AutoModel</code> the <code>transformers</code> library provides classes for specific model types, such as <code>BertConfig</code> and <code>BertModel</code>. In most inference-only cases <code>AutoModel</code> is fine though.</li>
         <li>When not training a model from scratch, you will usually preload a specific config.</li>
@@ -67,7 +67,7 @@ updated: 2023-05-15
         <li><code>from_pretrained</code> will also download the weights and related files, if needed.</li>
         <li>When you have performed additional training, you can use <code>model.save_pretrained(filename)</code> to save the config and the weights to disk.</li>
       </ul>    </li>
-    <li><h1>Tokenizers</h1>
+    <li><h2>Tokenizers</h2>
       <ul class="list-bullet">
         <li>Tokenizers can both go from raw text to token IDs with <code>tokenizer.tokenize</code> and <code>tokenizer.convert_tokens_to_ids</code>, and back from token IDs to words again with <code>tokenizer.decode</code>, which will both convert IDs to tokens and combine subword tokens into full words.</li>
         <li>The padding token ID can be retrieved from <code>tokenizer.pad_token_id</code>.</li>
@@ -88,7 +88,7 @@ updated: 2023-05-15
             <li><code>padding=True</code> to pad inputs to the same length</li>
           </ul>        </li>
       </ul>    </li>
-    <li><h1>Training</h1>
+    <li><h2>Training</h2>
       <ul class="list-bullet">
         <li>To train a model, you tokenize your inputs and then add an additional <code>labels</code> property which is a tensor with the expected answer for each one.</li>
         <li><pre><code><span class="sy-source sy-python"><span class="sy-meta sy-statement sy-import sy-python"><span class="sy-keyword sy-control sy-import sy-python">import</span> <span class="sy-meta sy-qualified-name sy-python"><span class="sy-meta sy-generic-name sy-python">torch</span></span></span>
