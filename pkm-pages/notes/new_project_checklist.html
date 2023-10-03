@@ -1,0 +1,63 @@
+---
+title: "New Project Checklist"
+tags: 
+date: 2023-10-03
+updated: 2023-10-03
+---
+
+
+  <ul class="list-bullet">
+    <li>A lot of this applies mostly to library projects that are more likely to draw outside contributions.</li>
+    <li><h2>General Tasks</h2>
+      <ul class="list-bullet">
+        <li>Set up a <a href="https://github.com/casey/just">justfile</a> to run common tasks
+          <ul class="list-bullet">
+            <li><pre><code><span class="sy-text sy-plain">_default:
+  @just --list
+</span></code></pre></li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>JS Projects</h2>
+      <ul class="list-bullet">
+        <li><a href="https://github.com/typicode/husky">husky</a> to install Git hooks</li>
+        <li>Set up Github PR template me</li>
+        <li><a href="https://github.com/okonet/lint-staged">lint-staged</a> to help with running prettier on commit
+          <ul class="list-bullet">
+            <li><a href="https://github.com/dimfeld/svelte-maplibre/blob/master/.lintstagedrc">Sample .lintstagedrc file</a></li>
+          </ul>        </li>
+        <li><a href="https://github.com/changesets/changesets">changesets</a> for changelog generation
+          <ul class="list-bullet">
+            <li>Add <code>@changesets/changelog-github</code> for including Github PR info in changelogs</li>
+            <li>Add these package.json scripts
+              <ul class="list-bullet">
+                <li><pre><code><span class="sy-text sy-plain">&quot;changeset&quot;: &quot;changeset&quot;,
+&quot;generate-changelog&quot;: &quot;source ghtoken; GITHUB_TOKEN=${GITHUB_TOKEN} changeset version&quot;,
+</span></code></pre></li>
+              </ul>            </li>
+            <li>Install <a href="https://github.com/apps/changeset-bot">changeset-bot</a>.</li>
+          </ul>        </li>
+        <li>ESLint: Disable some annoying rules which are enabled by common config packs
+          <ul class="list-bullet">
+            <li><pre><code><span class="sy-source sy-js"><span class="sy-entity sy-name sy-label sy-js">rules</span><span class="sy-punctuation sy-separator sy-js">:</span> <span class="sy-meta sy-block sy-js"><span class="sy-punctuation sy-section sy-block sy-js">{</span>
+    <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>prefer-const<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span>: <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>off<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span><span class="sy-punctuation sy-separator sy-comma sy-js">,</span>
+    <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>@typescript-eslint/explicit-module-boundary-types<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span>: <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>off<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span><span class="sy-punctuation sy-separator sy-comma sy-js">,</span>
+    <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>@typescript-eslint/ban-ts-comment<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span>: <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>off<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span><span class="sy-punctuation sy-separator sy-comma sy-js">,</span>
+    <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>@typescript-eslint/ban-types<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span>: <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>off<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span><span class="sy-punctuation sy-separator sy-comma sy-js">,</span>
+    <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>@typescript-eslint/no-empty-function<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span>: <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>off<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span><span class="sy-punctuation sy-separator sy-comma sy-js">,</span>
+    <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>@typescript-eslint/no-non-null-assertion<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span>: <span class="sy-string sy-quoted sy-single sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>off<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span><span class="sy-punctuation sy-separator sy-comma sy-js">,</span>
+ <span class="sy-punctuation sy-section sy-block sy-js">}</span></span>
+</span></code></pre></li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Rust Projects</h2>
+      <ul class="list-bullet">
+        <li>Set up rustfmt.toml the way I like it
+          <ul class="list-bullet">
+            <li><pre><code><span class="sy-text sy-plain">unstable_features = true # Might not need this anymore?
+edition = &quot;2021&quot;
+imports_granularity = &quot;Crate&quot;
+</span></code></pre></li>
+          </ul>        </li>
+      </ul>    </li>
+  </ul>
+

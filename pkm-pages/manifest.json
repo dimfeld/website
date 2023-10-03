@@ -424,6 +424,11 @@
     "title": "2023-09-30",
     "uid": ""
   },
+  "pkm-pages/journals/2023-10-02.html": {
+    "slug": "/journals/2023_10_02",
+    "title": "2023-10-02",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -637,6 +642,11 @@
   "pkm-pages/notes/new_directions_in_cloud_programming.html": {
     "slug": "/notes/new_directions_in_cloud_programming",
     "title": "New Directions in Cloud Programming",
+    "uid": ""
+  },
+  "pkm-pages/notes/new_project_checklist.html": {
+    "slug": "/notes/new_project_checklist",
+    "title": "New Project Checklist",
     "uid": ""
   },
   "pkm-pages/notes/nodejs_performance.html": {
