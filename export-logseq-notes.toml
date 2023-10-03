@@ -80,6 +80,9 @@ class_attr_value = ""
 # Convert -- to &emdash;
 convert_emdash = true
 
+promote_headers = true
+top_header_level = 2
+
 ##### Upcoming features #####
 
 # Write namespaced pages into nested directories.

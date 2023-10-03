@@ -39,6 +39,7 @@ fn process_html_attrs(block) {
 }
 
 if page.is_journal {
+  page.top_header_level = 3;
   page.url_base = "/journals";
   page.path_base = "pkm-pages/journals";
 
@@ -47,23 +48,31 @@ if page.is_journal {
 
   let saw_content_block = false;
   each_block(1, |block, depth| {
+    let contents = block.contents;
+    if contents.starts_with("#") {
+      let space = block.contents.index_of(" ");
+      if space >= 0 {
+        contents.crop(space + 1);
+      }
+    }
+
     if depth == 0 {
       // The top level
       block.view_type = ViewType::Document;
-    } else if block.contents == "Journal" {
+    } else if contents == "Journal" {
       block.include = BlockInclude::OnlyChildren;
       saw_content_block = true;
 
       let tags = autotag(autotags, block.id);
       page.add_tags(tags);
-    } else if block.contents == "Learning" ||
-        block.contents == "Links" {
-      if block.contents == "Learning" {
+    } else if contents == "Learning" ||
+        contents == "Links" {
+      if contents == "Learning" {
         block.view_type = ViewType::Document;
       } else {
         block.view_type = ViewType::Bullet;
       }
-      block.heading = 3;
+      block.heading = 1;
       block.include = BlockInclude::IfChildrenPresent;
       saw_content_block = true;
 

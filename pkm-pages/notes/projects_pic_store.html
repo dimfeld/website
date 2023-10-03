@@ -8,7 +8,7 @@ updated: 2022-12-03
 
   <ul class="list-bullet">
     <li>This is a project that can take image uploads, convert them to appropriate formats and sizes, and store them in some web-accessible block storage for use in websites.</li>
-    <li><h1>Goals</h1>
+    <li><h2>Goals</h2>
       <ul class="list-bullet">
         <li><input type="checkbox" readonly="true" checked /> Image Upload</li>
         <li><input type="checkbox" readonly="true" checked /> Convert and resize</li>
@@ -21,9 +21,9 @@ updated: 2022-12-03
     <li>Store image convert queue in sqlite/postgres with some adapter</li>
     <li>Store input image on disk or in blob storage while it waits to be converted</li>
     <li>Upload output to S3</li>
-    <li><h1>Tasks</h1>
+    <li><h2>Tasks</h2>
       <ul class="list-bullet">
-        <li><h2>Immediate Task List</h2>
+        <li><h3>Immediate Task List</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true" checked /> Endpoint to check by hash if an image already exists</li>
             <li><input type="checkbox" readonly="true"  /> Generate <code>&lt;picture&gt;</code> tag corresponding to the base image and its output images.</li>
@@ -32,7 +32,7 @@ updated: 2022-12-03
                 <li>This is mostly just adding the config and setting it to not do anything</li>
               </ul>            </li>
           </ul>        </li>
-        <li><h2>Side Helper Tasks</h2>
+        <li><h3>Side Helper Tasks</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true"  /> CLI app that can hash an image and get the corresponding <code>&lt;picture&gt;</code> tag or other URL for it, and upload it if needed.</li>
             <li><input type="checkbox" readonly="true"  /> Some sort of GUI version of the same, maybe even something that can be triggered straight from macOS Finder.
@@ -40,7 +40,7 @@ updated: 2022-12-03
                 <li>Good excuse to try Tauri</li>
               </ul>            </li>
           </ul>        </li>
-        <li><h2>Later Tasks</h2>
+        <li><h3>Later Tasks</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true"  /> When adding a storage location, allow testing read/write access to it</li>
             <li><input type="checkbox" readonly="true"  /> Make it possible to delete obsolete output images</li>
@@ -54,7 +54,7 @@ updated: 2022-12-03
                     <li>e.g. only generate JPEGs if the source image is also a JPEG.</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><h3>More tests</h3>
+            <li><h4>More tests</h4>
               <ul class="list-bullet">
                 <li><input type="checkbox" readonly="true"  /> Upload a base image and see that the output images get created</li>
                 <li><input type="checkbox" readonly="true" checked /> Targeted tests for each image type
@@ -75,7 +75,7 @@ updated: 2022-12-03
                   </ul>                </li>
               </ul>            </li>
           </ul>        </li>
-        <li><h2>Finished</h2>
+        <li><h3>Finished</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true" checked /> Ensure that replacing a base image properly replaces the output images</li>
             <li><input type="checkbox" readonly="true" checked /> When replacing a base image, delete the current output images associated with it.
@@ -103,7 +103,7 @@ updated: 2022-12-03
               </ul>            </li>
           </ul>        </li>
       </ul>    </li>
-    <li><h1>Codecs</h1>
+    <li><h2>Codecs</h2>
       <ul class="list-bullet">
         <li>AVIF
           <ul class="list-bullet">
@@ -130,9 +130,9 @@ updated: 2022-12-03
           </ul>        </li>
         <li><input type="checkbox" readonly="true" checked /> Currently using a modified version of sqlxmq, changed to work with Diesel. While I like the queue code, maintaining a fork like this isn&#39;t a great idea so I should find something else. (Switched to <a href="/notes/projects_effectum">Effectum</a> )</li>
       </ul>    </li>
-    <li><h2>Workflows</h2>
+    <li><h3>Workflows</h3>
       <ul class="list-bullet">
-        <li><h3>Image Upload</h3>
+        <li><h4>Image Upload</h4>
           <ul class="list-bullet">
             <li>Add base image</li>
             <li>Upload image
@@ -149,19 +149,19 @@ updated: 2022-12-03
             <li>Task queue does the conversions</li>
             <li>When they are all done, image is marked as done.</li>
           </ul>        </li>
-        <li><h3>Text Overlay</h3>
+        <li><h4>Text Overlay</h4>
           <ul class="list-bullet">
             <li>Given an existing base image</li>
           </ul>        </li>
       </ul>    </li>
-    <li><h3>Roadmap</h3>
+    <li><h4>Roadmap</h4>
       <ul class="list-bullet">
         <li>Support conversion profiles</li>
         <li>Auth key validation</li>
         <li>Permissions table</li>
         <li>Simple web UI</li>
       </ul>    </li>
-    <li><h2>Permissions Lookup</h2>
+    <li><h3>Permissions Lookup</h3>
       <ul class="list-bullet">
         <li>Each object has a linked &quot;permissioned object,&quot; which is the object on which we need to actually check that the permission is present.</li>
         <li>This means that given the roles, we need to
@@ -199,7 +199,7 @@ updated: 2022-12-03
               </ul>            </li>
           </ul>        </li>
       </ul>    </li>
-    <li><h2>Lazy Conversion</h2>
+    <li><h3>Lazy Conversion</h3>
       <ul class="list-bullet">
         <li>Might end up doing this for v2</li>
         <li>Store the raw image and convert it as requests come in. Requires a little more coordination since we may end up needing to handle concurrent requests for an image format that is currently being generated.</li>
