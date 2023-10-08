@@ -12,54 +12,54 @@ series: Working with Geographic Data
     
     <h2>Creating the Map</h2>
         <p>Instantiating a map is a lot like any other Javascript component. You create an HTML element and pass it to MapLibre.</p>
-        <pre><code><span class="sy-text sy-plain">&lt;script lang=&quot;ts&quot;&gt;
-  const { map: mapInstance } = createMapContext();
-  $: map = $mapInstance;
+        <pre><code><span class="sy-text sy-html sy-svelte"><span class="sy-meta sy-tag sy-script sy-begin sy-html"><span class="sy-punctuation sy-definition sy-tag sy-begin sy-html">&lt;</span><span class="sy-entity sy-name sy-tag sy-script sy-html">script</span></span><span class="sy-meta sy-tag sy-script sy-begin sy-html"> <span class="sy-meta sy-attribute-with-value sy-html"><span class="sy-entity sy-other sy-attribute-name sy-html">lang</span></span></span><span class="sy-meta sy-tag sy-script sy-begin sy-html"><span class="sy-meta sy-attribute-with-value sy-html"><span class="sy-punctuation sy-separator sy-key-value sy-html">=</span></span></span><span class="sy-meta sy-tag sy-script sy-begin sy-html"><span class="sy-meta sy-attribute-with-value sy-html"></span></span><span class="sy-meta sy-tag sy-script sy-begin sy-html"><span class="sy-meta sy-attribute-with-value sy-html"><span class="sy-string sy-quoted sy-double sy-html"><span class="sy-punctuation sy-definition sy-string sy-begin sy-html">&quot;</span>ts<span class="sy-punctuation sy-definition sy-string sy-end sy-html">&quot;</span></span></span><span class="sy-punctuation sy-definition sy-tag sy-end sy-html">&gt;</span></span><span class="sy-source sy-ts sy-embedded sy-html"><span class="sy-source sy-ts">
+  <span class="sy-meta sy-var sy-expr sy-ts"><span class="sy-storage sy-type sy-ts">const</span> <span class="sy-meta sy-object-binding-pattern-variable sy-ts"><span class="sy-punctuation sy-definition sy-binding-pattern sy-object sy-ts">{</span> <span class="sy-variable sy-object sy-property sy-ts">map</span><span class="sy-punctuation sy-destructuring sy-ts">:</span> <span class="sy-meta sy-definition sy-variable sy-ts"><span class="sy-variable sy-other sy-constant sy-ts">mapInstance</span></span> <span class="sy-punctuation sy-definition sy-binding-pattern sy-object sy-ts">}</span> </span><span class="sy-keyword sy-operator sy-assignment sy-ts">=</span> <span class="sy-meta sy-function-call sy-ts"><span class="sy-entity sy-name sy-function sy-ts">createMapContext</span></span><span class="sy-meta sy-brace sy-round sy-ts">(</span><span class="sy-meta sy-brace sy-round sy-ts">)</span></span><span class="sy-punctuation sy-terminator sy-statement sy-ts">;</span>
+  <span class="sy-entity sy-name sy-label sy-ts">$</span><span class="sy-punctuation sy-separator sy-label sy-ts">:</span> <span class="sy-variable sy-other sy-readwrite sy-ts">map</span> <span class="sy-keyword sy-operator sy-assignment sy-ts">=</span> <span class="sy-variable sy-other sy-readwrite sy-ts">$mapInstance</span><span class="sy-punctuation sy-terminator sy-statement sy-ts">;</span>
 
-  function createMap(element: HTMLDivElement) {
-    $mapInstance = new maplibre.Map({
-      container: element,
-      style: &#39;https://basemaps.cartocdn.com/gl/positron-gl-style/style.json&#39;,
-      center,
-      zoom,
-      minZoom,
-      maxZoom,
-      interactive,
-      preserveDrawingBuffer,
-      maxBounds,
-      bounds,
-    });
+  <span class="sy-meta sy-function sy-ts"><span class="sy-storage sy-type sy-function sy-ts">function</span> <span class="sy-meta sy-definition sy-function sy-ts"><span class="sy-entity sy-name sy-function sy-ts">createMap</span></span><span class="sy-meta sy-parameters sy-ts"><span class="sy-punctuation sy-definition sy-parameters sy-begin sy-ts">(</span><span class="sy-variable sy-parameter sy-ts">element</span><span class="sy-meta sy-type sy-annotation sy-ts"><span class="sy-keyword sy-operator sy-type sy-annotation sy-ts">:</span> <span class="sy-entity sy-name sy-type sy-ts">HTMLDivElement</span></span><span class="sy-punctuation sy-definition sy-parameters sy-end sy-ts">)</span></span> <span class="sy-meta sy-block sy-ts"><span class="sy-punctuation sy-definition sy-block sy-ts">{</span>
+    <span class="sy-variable sy-other sy-readwrite sy-ts">$mapInstance</span> <span class="sy-keyword sy-operator sy-assignment sy-ts">=</span> <span class="sy-new sy-expr sy-ts"><span class="sy-keyword sy-operator sy-new sy-ts">new</span> <span class="sy-meta sy-function-call sy-ts"><span class="sy-variable sy-other sy-object sy-ts">maplibre</span><span class="sy-punctuation sy-accessor sy-ts">.</span><span class="sy-entity sy-name sy-function sy-ts">Map</span></span><span class="sy-meta sy-brace sy-round sy-ts">(</span><span class="sy-meta sy-objectliteral sy-ts"><span class="sy-punctuation sy-definition sy-block sy-ts">{</span>
+      <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-meta sy-object-literal sy-key sy-ts">container</span></span><span class="sy-meta sy-object sy-member sy-ts"><span class="sy-meta sy-object-literal sy-key sy-ts"><span class="sy-punctuation sy-separator sy-key-value sy-ts">:</span></span> <span class="sy-variable sy-other sy-readwrite sy-ts">element</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+      <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-meta sy-object-literal sy-key sy-ts">style</span></span><span class="sy-meta sy-object sy-member sy-ts"><span class="sy-meta sy-object-literal sy-key sy-ts"><span class="sy-punctuation sy-separator sy-key-value sy-ts">:</span></span> <span class="sy-string sy-quoted sy-single sy-ts"><span class="sy-punctuation sy-definition sy-string sy-begin sy-ts">&#39;</span>https://basemaps.cartocdn.com/gl/positron-gl-style/style.json<span class="sy-punctuation sy-definition sy-string sy-end sy-ts">&#39;</span></span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+      <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-variable sy-other sy-readwrite sy-ts">center</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+      <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-variable sy-other sy-readwrite sy-ts">zoom</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+      <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-variable sy-other sy-readwrite sy-ts">minZoom</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+      <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-variable sy-other sy-readwrite sy-ts">maxZoom</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+      <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-variable sy-other sy-readwrite sy-ts">interactive</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+      <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-variable sy-other sy-readwrite sy-ts">preserveDrawingBuffer</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+      <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-variable sy-other sy-readwrite sy-ts">maxBounds</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+      <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-variable sy-other sy-readwrite sy-ts">bounds</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+    <span class="sy-punctuation sy-definition sy-block sy-ts">}</span></span><span class="sy-meta sy-brace sy-round sy-ts">)</span></span><span class="sy-punctuation sy-terminator sy-statement sy-ts">;</span>
 
-    $mapInstance.on(&#39;load&#39;, (e) =&gt; {
-      loaded = true;
-      dispatch(&#39;load&#39;, { map: $mapInstance });
-    });
+    <span class="sy-meta sy-function-call sy-ts"><span class="sy-variable sy-other sy-object sy-ts">$mapInstance</span><span class="sy-punctuation sy-accessor sy-ts">.</span><span class="sy-entity sy-name sy-function sy-ts">on</span></span><span class="sy-meta sy-brace sy-round sy-ts">(</span><span class="sy-string sy-quoted sy-single sy-ts"><span class="sy-punctuation sy-definition sy-string sy-begin sy-ts">&#39;</span>load<span class="sy-punctuation sy-definition sy-string sy-end sy-ts">&#39;</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span><span class="sy-meta sy-arrow sy-ts"> <span class="sy-meta sy-parameters sy-ts"><span class="sy-punctuation sy-definition sy-parameters sy-begin sy-ts">(</span><span class="sy-variable sy-parameter sy-ts">e</span><span class="sy-punctuation sy-definition sy-parameters sy-end sy-ts">)</span></span> </span><span class="sy-meta sy-arrow sy-ts"><span class="sy-storage sy-type sy-function sy-arrow sy-ts">=&gt;</span> <span class="sy-meta sy-block sy-ts"><span class="sy-punctuation sy-definition sy-block sy-ts">{</span>
+      <span class="sy-variable sy-other sy-readwrite sy-ts">loaded</span> <span class="sy-keyword sy-operator sy-assignment sy-ts">=</span> <span class="sy-constant sy-language sy-boolean sy-true sy-ts">true</span><span class="sy-punctuation sy-terminator sy-statement sy-ts">;</span>
+      <span class="sy-meta sy-function-call sy-ts"><span class="sy-entity sy-name sy-function sy-ts">dispatch</span></span><span class="sy-meta sy-brace sy-round sy-ts">(</span><span class="sy-string sy-quoted sy-single sy-ts"><span class="sy-punctuation sy-definition sy-string sy-begin sy-ts">&#39;</span>load<span class="sy-punctuation sy-definition sy-string sy-end sy-ts">&#39;</span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span> <span class="sy-meta sy-objectliteral sy-ts"><span class="sy-punctuation sy-definition sy-block sy-ts">{</span> <span class="sy-meta sy-object sy-member sy-ts"><span class="sy-meta sy-object-literal sy-key sy-ts">map</span></span><span class="sy-meta sy-object sy-member sy-ts"><span class="sy-meta sy-object-literal sy-key sy-ts"><span class="sy-punctuation sy-separator sy-key-value sy-ts">:</span></span> <span class="sy-variable sy-other sy-readwrite sy-ts">$mapInstance</span> </span><span class="sy-punctuation sy-definition sy-block sy-ts">}</span></span><span class="sy-meta sy-brace sy-round sy-ts">)</span><span class="sy-punctuation sy-terminator sy-statement sy-ts">;</span>
+    <span class="sy-punctuation sy-definition sy-block sy-ts">}</span></span></span><span class="sy-meta sy-brace sy-round sy-ts">)</span><span class="sy-punctuation sy-terminator sy-statement sy-ts">;</span>
 
-    return {
-      destroy() {
-        $mapInstance?.remove();
-        $mapInstance = null;
-      },
-    };
-  }
+    <span class="sy-keyword sy-control sy-flow sy-ts">return</span> <span class="sy-meta sy-objectliteral sy-ts"><span class="sy-punctuation sy-definition sy-block sy-ts">{</span>
+<span class="sy-meta sy-method sy-declaration sy-ts">      <span class="sy-meta sy-definition sy-method sy-ts"><span class="sy-entity sy-name sy-function sy-ts">destroy</span></span><span class="sy-meta sy-parameters sy-ts"><span class="sy-punctuation sy-definition sy-parameters sy-begin sy-ts">(</span><span class="sy-punctuation sy-definition sy-parameters sy-end sy-ts">)</span></span> <span class="sy-meta sy-block sy-ts"><span class="sy-punctuation sy-definition sy-block sy-ts">{</span>
+        <span class="sy-meta sy-function-call sy-ts"><span class="sy-variable sy-other sy-object sy-ts">$mapInstance</span><span class="sy-punctuation sy-accessor sy-optional sy-ts">?.</span><span class="sy-support sy-function sy-dom sy-ts">remove</span></span><span class="sy-meta sy-brace sy-round sy-ts">(</span><span class="sy-meta sy-brace sy-round sy-ts">)</span><span class="sy-punctuation sy-terminator sy-statement sy-ts">;</span>
+        <span class="sy-variable sy-other sy-readwrite sy-ts">$mapInstance</span> <span class="sy-keyword sy-operator sy-assignment sy-ts">=</span> <span class="sy-constant sy-language sy-null sy-ts">null</span><span class="sy-punctuation sy-terminator sy-statement sy-ts">;</span>
+      <span class="sy-punctuation sy-definition sy-block sy-ts">}</span></span></span><span class="sy-punctuation sy-separator sy-comma sy-ts">,</span>
+    <span class="sy-punctuation sy-definition sy-block sy-ts">}</span></span><span class="sy-punctuation sy-terminator sy-statement sy-ts">;</span>
+  <span class="sy-punctuation sy-definition sy-block sy-ts">}</span></span></span>
 
-&lt;/script&gt;
+</span></span><span class="sy-meta sy-tag sy-script sy-end sy-html"><span class="sy-punctuation sy-definition sy-tag sy-begin sy-html">&lt;/</span><span class="sy-entity sy-name sy-tag sy-script sy-html">script</span><span class="sy-punctuation sy-definition sy-tag sy-end sy-html">&gt;</span></span>
 
-&lt;div class={classNames} use:createMap&gt;
-  {#if $mapInstance &amp;&amp; loaded}
-    &lt;slot /&gt;
-  {/if}
-&lt;/div&gt;
+<span class="sy-meta sy-tag sy-block sy-any sy-html"><span class="sy-punctuation sy-definition sy-tag sy-begin sy-html">&lt;</span><span class="sy-entity sy-name sy-tag sy-block sy-any sy-html">div</span> <span class="sy-meta sy-attribute-with-value sy-class sy-html"><span class="sy-entity sy-other sy-attribute-name sy-class sy-html">class</span><span class="sy-punctuation sy-separator sy-key-value sy-html">=</span><span class="sy-meta sy-embedded sy-block sy-svelte"><span class="sy-punctuation sy-section sy-embedded sy-begin sy-svelte">{</span></span><span class="sy-meta sy-embedded sy-block sy-svelte"><span class="sy-source sy-js sy-svelte"><span class="sy-variable sy-other sy-readwrite sy-js">classNames</span></span><span class="sy-punctuation sy-section sy-embedded sy-end sy-svelte">}</span></span></span> <span class="sy-entity sy-other sy-attribute-name sy-svelte"><span class="sy-support sy-function sy-svelte">use</span><span class="sy-punctuation sy-separator sy-svelte">:</span><span class="sy-variable sy-other sy-readwrite sy-svelte">createMap</span></span><span class="sy-punctuation sy-definition sy-tag sy-end sy-html">&gt;</span></span>
+  <span class="sy-meta sy-embedded sy-block sy-svelte"><span class="sy-punctuation sy-section sy-embedded sy-begin sy-svelte">{</span><span class="sy-keyword sy-control sy-conditional sy-svelte">#if</span></span><span class="sy-meta sy-embedded sy-block sy-svelte"><span class="sy-source sy-js sy-svelte"> <span class="sy-variable sy-other sy-dollar sy-js"><span class="sy-punctuation sy-dollar sy-js">$</span>mapInstance</span> <span class="sy-keyword sy-operator sy-logical sy-js">&amp;&amp;</span> <span class="sy-variable sy-other sy-readwrite sy-js">loaded</span></span><span class="sy-punctuation sy-section sy-embedded sy-end sy-svelte">}</span></span>
+    <span class="sy-meta sy-tag sy-other sy-html"><span class="sy-punctuation sy-definition sy-tag sy-begin sy-html">&lt;</span></span><span class="sy-meta sy-tag sy-other sy-html"><span class="sy-entity sy-name sy-tag sy-other sy-html">slot</span> <span class="sy-punctuation sy-definition sy-tag sy-end sy-html">/&gt;</span></span>
+  <span class="sy-meta sy-embedded sy-block sy-svelte"><span class="sy-punctuation sy-section sy-embedded sy-begin sy-svelte">{</span><span class="sy-keyword sy-control sy-conditional sy-svelte">/if</span></span><span class="sy-meta sy-embedded sy-block sy-svelte"><span class="sy-punctuation sy-section sy-embedded sy-end sy-svelte">}</span></span>
+<span class="sy-meta sy-tag sy-block sy-any sy-html"><span class="sy-punctuation sy-definition sy-tag sy-begin sy-html">&lt;/</span><span class="sy-entity sy-name sy-tag sy-block sy-any sy-html">div</span><span class="sy-punctuation sy-definition sy-tag sy-end sy-html">&gt;</span></span>
 
-&lt;style&gt;
-  div {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-&lt;/style&gt;
+<span class="sy-meta sy-tag sy-style sy-begin sy-html"><span class="sy-punctuation sy-definition sy-tag sy-begin sy-html">&lt;</span><span class="sy-entity sy-name sy-tag sy-style sy-html">style</span></span><span class="sy-meta sy-tag sy-style sy-begin sy-html"><span class="sy-punctuation sy-definition sy-tag sy-end sy-html">&gt;</span></span>
+  <span class="sy-source sy-css sy-embedded sy-html"><span class="sy-source sy-css"><span class="sy-meta sy-selector sy-css"><span class="sy-entity sy-name sy-tag sy-css">div</span> </span><span class="sy-meta sy-property-list sy-css"><span class="sy-punctuation sy-section sy-property-list sy-css">{</span>
+    <span class="sy-meta sy-property-name sy-css"><span class="sy-support sy-type sy-property-name sy-css">position</span></span><span class="sy-punctuation sy-separator sy-key-value sy-css">:</span><span class="sy-meta sy-property-value sy-css"> </span><span class="sy-meta sy-property-value sy-css"><span class="sy-support sy-constant sy-property-value sy-css">absolute</span></span><span class="sy-punctuation sy-terminator sy-rule sy-css">;</span>
+    <span class="sy-meta sy-property-name sy-css"><span class="sy-support sy-type sy-property-name sy-css">top</span></span><span class="sy-punctuation sy-separator sy-key-value sy-css">:</span><span class="sy-meta sy-property-value sy-css"> </span><span class="sy-meta sy-property-value sy-css"><span class="sy-constant sy-numeric sy-integer sy-decimal sy-css">0</span></span><span class="sy-punctuation sy-terminator sy-rule sy-css">;</span>
+    <span class="sy-meta sy-property-name sy-css"><span class="sy-support sy-type sy-property-name sy-css">bottom</span></span><span class="sy-punctuation sy-separator sy-key-value sy-css">:</span><span class="sy-meta sy-property-value sy-css"> </span><span class="sy-meta sy-property-value sy-css"><span class="sy-constant sy-numeric sy-integer sy-decimal sy-css">0</span></span><span class="sy-punctuation sy-terminator sy-rule sy-css">;</span>
+    <span class="sy-meta sy-property-name sy-css"><span class="sy-support sy-type sy-property-name sy-css">left</span></span><span class="sy-punctuation sy-separator sy-key-value sy-css">:</span><span class="sy-meta sy-property-value sy-css"> </span><span class="sy-meta sy-property-value sy-css"><span class="sy-constant sy-numeric sy-integer sy-decimal sy-css">0</span></span><span class="sy-punctuation sy-terminator sy-rule sy-css">;</span>
+    <span class="sy-meta sy-property-name sy-css"><span class="sy-support sy-type sy-property-name sy-css">right</span></span><span class="sy-punctuation sy-separator sy-key-value sy-css">:</span><span class="sy-meta sy-property-value sy-css"> </span><span class="sy-meta sy-property-value sy-css"><span class="sy-constant sy-numeric sy-integer sy-decimal sy-css">0</span></span><span class="sy-punctuation sy-terminator sy-rule sy-css">;</span>
+</span>  <span class="sy-punctuation sy-section sy-property-list sy-css">}</span>
+</span></span><span class="sy-meta sy-tag sy-style sy-end sy-html"><span class="sy-punctuation sy-definition sy-tag sy-begin sy-html">&lt;/</span><span class="sy-entity sy-name sy-tag sy-style sy-html">style</span><span class="sy-punctuation sy-definition sy-tag sy-end sy-html">&gt;</span></span>
 </span></code></pre>
 
     <p>Map context</p>

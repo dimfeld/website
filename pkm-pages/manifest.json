@@ -943,5 +943,10 @@
     "slug": "/writing/plausibleio_custom_urls_with_sveltekit",
     "title": "Plausible.io Custom URLs with SvelteKit",
     "uid": ""
+  },
+  "pkm-pages/writing/using_websockets_with_sveltekit.html": {
+    "slug": "/writing/using_websockets_with_sveltekit",
+    "title": "Using WebSockets with SvelteKit",
+    "uid": ""
   }
 }

@@ -11,11 +11,11 @@ updated: 2023-04-24
     <li>The advantage of this is that you don&#39;t need to remember to add these checks into every query in your application. Likewise for when you are updating your auth model &mdash; just change the relevant policies and it all takes effect.</li>
     <li><h2>Syntax and Basic Usage</h2>
       <ul class="list-bullet">
-        <li><pre><code><span class="sy-source sy-sql">CREATE POLICY name <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> table_name
-    [ <span class="sy-keyword sy-other sy-alias sy-sql">AS</span> { PERMISSIVE | RESTRICTIVE } ]
+        <li><pre><code><span class="sy-source sy-sql">CREATE POLICY name ON table_name
+    [ <span class="sy-keyword sy-operator sy-assignment sy-alias sy-sql">AS</span> { PERMISSIVE | RESTRICTIVE } ]
     [ FOR { ALL | <span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> | <span class="sy-keyword sy-other sy-DML sy-sql">INSERT</span> | <span class="sy-keyword sy-other sy-DML sy-sql">UPDATE</span> | <span class="sy-keyword sy-other sy-DML sy-sql">DELETE</span> } ]
     [ TO { role_name | PUBLIC | CURRENT_ROLE | <span class="sy-support sy-function sy-scalar sy-sql">CURRENT_USER</span> | <span class="sy-support sy-function sy-scalar sy-sql">SESSION_USER</span> } [, ...] ]
-    [ USING ( using_expression ) ]
+    [ <span class="sy-keyword sy-other sy-DML sy-sql">USING</span> ( using_expression ) ]
     [ <span class="sy-keyword sy-other sy-DML sy-sql">WITH</span> <span class="sy-storage sy-modifier sy-sql">CHECK</span> ( check_expression ) ]
 </span></code></pre></li>
         <li>The <code>USING</code> clause applies on reads, and the <code>WITH CHECK</code> clause applies to writes. If both <code>USING</code> and <code>WITH CHECK</code> could apply to the policy, <code>WITH CHECK</code> can be omitted to use the same clause specified in <code>USING</code>.</li>
@@ -46,9 +46,9 @@ updated: 2023-04-24
             <li>If RLS allows you to delete a row but your role doesn&#39;t have the permission GRANTed on the table, then you can&#39;t delete it.</li>
           </ul>        </li>
         <li>A very simple policy would be something like this.</li>
-        <li><pre><code><span class="sy-source sy-sql">CREATE POLICY p <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> thetable
+        <li><pre><code><span class="sy-source sy-sql">CREATE POLICY p ON thetable
 	FOR <span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span>
-	USING (user_id <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-support sy-function sy-scalar sy-sql">current_user</span>);
+	<span class="sy-keyword sy-other sy-DML sy-sql">USING</span> (user_id <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-support sy-function sy-scalar sy-sql">current_user</span>);
 <span class="sy-meta sy-alter sy-sql"><span class="sy-keyword sy-other sy-create sy-sql">ALTER</span> <span class="sy-keyword sy-other sy-table sy-sql">TABLE</span> </span>thetable ENABLE ROW LEVEL SECURITY;
 <span class="sy-comment sy-line sy-double-dash sy-sql"><span class="sy-punctuation sy-definition sy-comment sy-sql">--</span> Or to force RLS for table owners too.
 </span><span class="sy-meta sy-alter sy-sql"><span class="sy-keyword sy-other sy-create sy-sql">ALTER</span> <span class="sy-keyword sy-other sy-table sy-sql">TABLE</span> </span>thetable FORCE ROW LEVEL SECURITY;
@@ -82,51 +82,51 @@ updated: 2023-04-24
         <li>A GIN index on the role array columns will make it fast to check.</li>
         <li>This works well for a simple system but there are a bunch of potential reasons to not do it. You may need a more expressive system with multiple types of permissions, or maybe you have objects with many distinct roles and worry about the implications of putting too many IDs into each row, or maybe it just chafes at your normalized database design sense.</li>
         <li>In that case, you&#39;ll probably have something like a table of object permissions, which links each role to what it can do to an object. An RLS policy can handle that as well:</li>
-        <li><pre><code><span class="sy-source sy-sql">CREATE POLICY userdata <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> the_objects
+        <li><pre><code><span class="sy-source sy-sql">CREATE POLICY userdata ON the_objects
 	TO webapp_dbrole
-	USING (
-      owner <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>) <span class="sy-keyword sy-other sy-DML sy-sql">OR</span>
-      EXISTS (
+	<span class="sy-keyword sy-other sy-DML sy-sql">USING</span> (
+      owner <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>) <span class="sy-keyword sy-operator sy-logical sy-sql">OR</span>
+      <span class="sy-keyword sy-operator sy-logical sy-sql">EXISTS</span> (
     	<span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> <span class="sy-constant sy-numeric sy-sql">1</span>
     	<span class="sy-keyword sy-other sy-DML sy-sql">FROM</span> role_permissions rp
     	<span class="sy-keyword sy-other sy-DML sy-sql">WHERE</span> 
       		<span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">object_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>
-        	<span class="sy-keyword sy-other sy-DML sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(
+        	<span class="sy-keyword sy-operator sy-logical sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(
               regexp_split_to_array(current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.roles<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>), <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>,<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>))
     ))
     <span class="sy-keyword sy-other sy-DML sy-sql">WITH</span> <span class="sy-storage sy-modifier sy-sql">CHECK</span> (
-      owner <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>) <span class="sy-keyword sy-other sy-DML sy-sql">OR</span>
-      EXISTS (
+      owner <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>) <span class="sy-keyword sy-operator sy-logical sy-sql">OR</span>
+      <span class="sy-keyword sy-operator sy-logical sy-sql">EXISTS</span> (
     	<span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> <span class="sy-constant sy-numeric sy-sql">1</span>
         <span class="sy-keyword sy-other sy-DML sy-sql">FROM</span> role_permissions rp
       	<span class="sy-keyword sy-other sy-DML sy-sql">WHERE</span>
 	    	<span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">object_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>
-        	<span class="sy-keyword sy-other sy-DML sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(
+        	<span class="sy-keyword sy-operator sy-logical sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(
               regexp_split_to_array(current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.roles<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>), <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>,<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>))
-      		<span class="sy-keyword sy-other sy-DML sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">action</span> <span class="sy-keyword sy-other sy-data-integrity sy-sql">IN</span> (<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>write<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>, <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>admin<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>)
+      		<span class="sy-keyword sy-operator sy-logical sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">action</span> <span class="sy-keyword sy-operator sy-logical sy-sql">IN</span> (<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>write<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>, <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>admin<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>)
     ));
 
-CREATE POLICY delete_userdata <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> the_objects
-	<span class="sy-keyword sy-other sy-alias sy-sql">AS</span> restrictive
+CREATE POLICY delete_userdata ON the_objects
+	<span class="sy-keyword sy-operator sy-assignment sy-alias sy-sql">AS</span> restrictive
     FOR <span class="sy-keyword sy-other sy-DML sy-sql">DELETE</span>
 	TO webapp_dbrole
-    USING (
-      owner <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>) <span class="sy-keyword sy-other sy-DML sy-sql">OR</span>
-      EXISTS (
+    <span class="sy-keyword sy-other sy-DML sy-sql">USING</span> (
+      owner <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.user<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>) <span class="sy-keyword sy-operator sy-logical sy-sql">OR</span>
+      <span class="sy-keyword sy-operator sy-logical sy-sql">EXISTS</span> (
     	<span class="sy-keyword sy-other sy-DML sy-sql">SELECT</span> <span class="sy-constant sy-numeric sy-sql">1</span>
         <span class="sy-keyword sy-other sy-DML sy-sql">FROM</span> role_permissions rp
       	<span class="sy-keyword sy-other sy-DML sy-sql">WHERE</span>
 	    	<span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">object_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> <span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>
-        	<span class="sy-keyword sy-other sy-DML sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(
+        	<span class="sy-keyword sy-operator sy-logical sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(
               regexp_split_to_array(current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.roles<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>), <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>,<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>))
-      		<span class="sy-keyword sy-other sy-DML sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">action</span> <span class="sy-keyword sy-other sy-data-integrity sy-sql">IN</span> (<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>write<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>, <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>admin<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>)
+      		<span class="sy-keyword sy-operator sy-logical sy-sql">AND</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">action</span> <span class="sy-keyword sy-operator sy-logical sy-sql">IN</span> (<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>write<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>, <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>admin<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>)
     ));
 </span></code></pre></li>
         <li>Note that the second policy for <code>DELETE</code> has the same <code>USING</code> clause as the first policy&#39;s <code>WITH CHECK</code> clause. It is also set as <code>restrictive</code>, which ensures that the DELETE policy must be passed; just passing the all-operations policy is not enough.</li>
         <li>With a setup like this, any <code>list</code> operation that does something naive like <code>SELECT * FROM the_objects ORDER BY created DESC LIMIT 50</code> will probably end up needing to sequential scan the objects table. But you can write those in a way that is more aware of the permissions model to regain performance.</li>
-        <li><pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">SELECT DISTINCT</span> <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> (<span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>) the_objects.<span class="sy-keyword sy-operator sy-star sy-sql">*</span>
+        <li><pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">SELECT DISTINCT</span> ON (<span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>) the_objects.<span class="sy-variable sy-language sy-star sy-sql">*</span>
 	<span class="sy-keyword sy-other sy-DML sy-sql">FROM</span> role_permissions rp
-    <span class="sy-keyword sy-other sy-DML sy-sql">JOIN</span> the_objects <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">object_id</span> <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">ON</span> <span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>
+    <span class="sy-keyword sy-other sy-DML sy-sql">JOIN</span> the_objects ON <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">object_id</span> ON <span class="sy-constant sy-other sy-database-name sy-sql">the_objects</span>.<span class="sy-constant sy-other sy-table-name sy-sql">id</span>
     <span class="sy-keyword sy-other sy-DML sy-sql">WHERE</span> <span class="sy-constant sy-other sy-database-name sy-sql">rp</span>.<span class="sy-constant sy-other sy-table-name sy-sql">role_id</span> <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span> any(regexp_split_to_array(current_setting(<span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>myapp.roles<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>), <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>,<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>))
     <span class="sy-keyword sy-other sy-DML sy-sql">ORDER BY</span> created <span class="sy-keyword sy-other sy-order sy-sql">DESC</span>
     <span class="sy-keyword sy-other sy-DML sy-sql">LIMIT</span> <span class="sy-constant sy-numeric sy-sql">50</span>

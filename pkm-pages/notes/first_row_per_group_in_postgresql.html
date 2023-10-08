@@ -9,7 +9,7 @@ updated: 2020-11-05
   <ul class="list-bullet">
     <li><a href="/notes/sql">SQL</a>  </li>
     <li>With Postgres you can use <code>DISTINCT ON</code> instead of <code>GROUP BY</code> and order by the other fields you want as well.</li>
-    <li><pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">select distinct</span> <span class="sy-keyword sy-other sy-DDL sy-create sy-II sy-sql">on</span> (model_id) <span class="sy-keyword sy-operator sy-star sy-sql">*</span>
+    <li><pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">select distinct</span> on (model_id) <span class="sy-variable sy-language sy-star sy-sql">*</span>
 <span class="sy-keyword sy-other sy-DML sy-sql">from</span> <span class="sy-constant sy-other sy-database-name sy-sql">reactive_data</span>.<span class="sy-constant sy-other sy-table-name sy-sql">models</span>
 <span class="sy-keyword sy-other sy-DML sy-sql">order by</span> model_id, major <span class="sy-keyword sy-other sy-order sy-sql">desc</span>, minor <span class="sy-keyword sy-other sy-order sy-sql">desc</span>
 
