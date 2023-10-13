@@ -145,7 +145,7 @@ if page.is_journal {
     let tags = block.tags;
     if !exclude && tags.some(|t| t in exclude_tags) {
       exclude = true;
-    } else if include == false && tags.some(|t| t in include_tags) {
+    } else if include == false && !page.title.starts_with("Highlights/") && tags.some(|t| t in include_tags) {
       include = true;
     }
 
