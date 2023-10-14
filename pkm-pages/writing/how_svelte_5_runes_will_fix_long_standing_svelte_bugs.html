@@ -36,27 +36,18 @@ draft: false
         <p>This is difficult to replicate in a simple REPL, but it happens most often with complex layouts that have a set of components and some shared state between them.</p>
         When you get lucky with the order of the compiled output statements, the process is something like this:
           <ol class="list-bullet">
-            <li><span><span class="font-medium text-gray-800">Reactive statement &quot;A&quot; runs, and calls the external function, which then updates the store.
-logseq.order-list-type:</span> <span>number</span></span></li>
-            <li>The listener in the Svelte component runs and updates <code>$store</code>, using the internal invalidate function to set the bit in the dirty bitset.
-logseq.order-list-type:: number</li>
-            <li>Reactive statement &quot;B&quot; that depends on <code>$store</code> is checked. It runs because the store was updated.
-logseq.order-list-type:: number</li>
-            <li><span><span class="font-medium text-gray-800">This cycle of running reactive code ends, so Svelte clears the bitset.
-logseq.order-list-type:</span> <span>number</span></span></li>
+            <li>Reactive statement &quot;A&quot; runs, and calls the external function, which then updates the store.</li>
+            <li>The listener in the Svelte component runs and updates <code>$store</code>, using the internal invalidate function to set the bit in the dirty bitset.</li>
+            <li>Reactive statement &quot;B&quot; that depends on <code>$store</code> is checked. It runs because the store was updated.</li>
+            <li>This cycle of running reactive code ends, so Svelte clears the bitset.</li>
           </ol>
         But if the two reactive statements are swapped, the order of events is something like this:
           <ol class="list-bullet">
-            <li>Reactive statement &quot;B&quot; that depends on <code>$store</code> is checked. It doesn&#39;t run because the store wasn&#39;t updated.
-logseq.order-list-type:: number</li>
-            <li><span><span class="font-medium text-gray-800">Reactive statement &quot;A&quot; runs, and calls the external function, which then updates the store.
-logseq.order-list-type:</span> <span>number</span></span></li>
-            <li>The listener in the Svelte component runs and updates <code>$store</code>, using the internal invalidate function to set the bit in the dirty bitset.
-logseq.order-list-type:: number</li>
-            <li><span><span class="font-medium text-gray-800">This cycle of running reactive code ends, so Svelte clears the bitset.
-logseq.order-list-type:</span> <span>number</span></span></li>
-            <li><span><span class="font-medium text-gray-800">Statement &quot;B&quot; is not immediately run again, and so the values that it computes become out of sync. 
-logseq.order-list-type:</span> <span>number</span></span></li>
+            <li>Reactive statement &quot;B&quot; that depends on <code>$store</code> is checked. It doesn&#39;t run because the store wasn&#39;t updated.</li>
+            <li>Reactive statement &quot;A&quot; runs, and calls the external function, which then updates the store.</li>
+            <li>The listener in the Svelte component runs and updates <code>$store</code>, using the internal invalidate function to set the bit in the dirty bitset.</li>
+            <li>This cycle of running reactive code ends, so Svelte clears the bitset.</li>
+            <li>Statement &quot;B&quot; is not immediately run again, and so the values that it computes become out of sync. </li>
           </ol>
         <p>Keep in mind that you have no control over the order in which A and B run, at least with regard to the store&#39;s value.</p>
         <p>The way to work around this is to wait a <code>tick</code> somewhere in the chain, so that the store&#39;s update doesn&#39;t happen until after the current reactive cycle ends. But this solution is usually only reached after a long period of tricky debugging and walking through both the compiled output and internal Svelte code to see what&#39;s happening.</p>

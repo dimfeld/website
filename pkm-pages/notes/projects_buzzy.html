@@ -2,14 +2,14 @@
 title: "Buzzy"
 tags: Projects
 date: 2023-09-07
-updated: 2023-10-13
+updated: 2023-10-14
 ---
 
 
   <ul class="list-bullet">
     <li>Experimental AI bot to talk with my kids and answer questions.</li>
     <li><a href="https://github.com/dimfeld/buzzy">https://github.com/dimfeld/buzzy</a></li>
-    <li>Short-Term Task List
+    <li><h2>Short-Term Task List</h2>
       <ul class="list-bullet">
         <li><input type="checkbox" readonly="true" checked /> set up basic ChatGPT workflow</li>
         <li><input type="checkbox" readonly="true" checked /> Voice recognition</li>
@@ -19,19 +19,15 @@ updated: 2023-10-13
         <li><input type="checkbox" readonly="true"  /> Basic intent detection</li>
         <li><input type="checkbox" readonly="true"  /> Run web searches and generate an answer from the results.</li>
         <li><input type="checkbox" readonly="true"  /> read system message from a file</li>
+        <li><input type="checkbox" readonly="true"  /> record llm pipeline actions for later analysis</li>
         <li><input type="checkbox" readonly="true"  /> Check out <a href="https://github.com/FL33TW00D/whisper-turbo">whisper-turbo</a> for in-browser voice recognition</li>
       </ul>    </li>
-    <li>System Prompt Example
+    <li><h2>System Prompt Example</h2>
       <ul class="list-bullet">
         <li>You are Buzzy, an AI bot that answers questions for children. Your answers should be appropriate for a smart six year old boy, but also don&#39;t dumb your answers down too much.</li>
       </ul>    </li>
-    <li>Ideas
+    <li><h2>Ideas</h2>
       <ul class="list-bullet">
-        <li>Use Brave Search API to do web searches to answer questions
-          <ul class="list-bullet">
-            <li>Should searches be another function, or should we run searches for anything that doesn&#39;t return another function?</li>
-            <li>Maybe also wikipedia/wikidata?</li>
-          </ul>        </li>
         <li>Do I want to do a RAG-based conversation learning/memory?</li>
         <li><input type="checkbox" readonly="true"  /> Decide whether to send back previous chat messages based on how much time has passed.</li>
         <li>Voice recognition to ask questions
@@ -83,18 +79,40 @@ updated: 2023-10-13
                   </ul>                </li>
               </ul>            </li>
           </ul>        </li>
-        <li>Intent Detection
-          <ul class="list-bullet">
-            <li><a href="https://huggingface.co/MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli">DeBERTa-v3-base-mnli-fever-anli </a> seems to work well for this at first try. Haven&#39;t really exercised it significantly yet though.</li>
-            <li>Tasks
-              <ul class="list-bullet">
-                <li>Figure out if something is a question that can be answered by searching the web and/or wikipedia</li>
-                <li>How many days until...</li>
-                <li>Show me pictures of...</li>
-              </ul>            </li>
-          </ul>        </li>
         <li>Some kind of 3D avatar that&#39;s like a dinosaur or robot or something?</li>
         <li>Scrensaver mode that does a photo carousel</li>
+      </ul>    </li>
+    <li><h2>Intent Detection</h2>
+      <ul class="list-bullet">
+        <li><a href="https://huggingface.co/MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli">DeBERTa-v3-base-mnli-fever-anli </a> seems to work well for this at first try. Haven&#39;t really exercised it significantly yet though. The creator of that model now also has <a href="https://huggingface.co/MoritzLaurer/deberta-v3-large-zeroshot-v1">deberta-v3-large-zeroshot-v1</a>.</li>
+        <li>Tasks
+          <ul class="list-bullet">
+            <li>Figure out if something is a question that can be answered by searching the web and/or wikipedia</li>
+            <li>How many days until...</li>
+            <li>Show me pictures of...</li>
+          </ul>        </li>
+        <li>When doing web search and intent , also need to detect if a query builds on the previous queries or not.
+          <ul class="list-bullet">
+            <li>&quot;No, the blue one&quot; has no context but the context is probably in the previous message.</li>
+            <li>Small models don&#39;t seem to do great on this but gpt-3.5-turbo-instruct does well.
+              <ul class="list-bullet">
+                <li><pre><code><span class="sy-text sy-plain">Assistant: {assistant&#39;s last message}
+
+User: {user&#39;s question}
+
+Does the user&#39;s question ask for clarification on the assistant&#39;s statement? Only answer yes or no.
+</span></code></pre></li>
+              </ul>            </li>
+            <li>For this we can probably just pair up the last assistant message with the latest query, since they tend to include all the necessary info again in every message. Then use GPT to create a proper search for it.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Web Search</h2>
+      <ul class="list-bullet">
+        <li>Use Brave Search API to do web searches to answer questions
+          <ul class="list-bullet">
+            <li>Should searches be an intent, or should we run searches for anything that doesn&#39;t return another intent?</li>
+            <li>Maybe also wikipedia/wikidata?</li>
+          </ul>        </li>
       </ul>    </li>
   </ul>
 
