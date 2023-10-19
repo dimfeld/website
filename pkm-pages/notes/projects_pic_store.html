@@ -2,7 +2,7 @@
 title: "Pic Store"
 tags: Projects
 date: 2022-06-11
-updated: 2022-12-03
+updated: 2023-10-17
 ---
 
 
@@ -23,25 +23,19 @@ updated: 2022-12-03
     <li>Upload output to S3</li>
     <li><h2>Tasks</h2>
       <ul class="list-bullet">
-        <li><h3>Immediate Task List</h3>
+        <li><h3>Up Next</h3></li>
+        <li><h3>Soon</h3></li>
+        <li><h3>Later</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> Endpoint to check by hash if an image already exists</li>
+            <li>Side Helper Tasks
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true"  /> CLI app that can hash an image and get the corresponding <code>&lt;picture&gt;</code> tag or other URL for it, and upload it if needed.</li>
+                <li><input type="checkbox" readonly="true"  /> Some sort of GUI version of the same, maybe even something that can be triggered straight from macOS Finder.
+                  <ul class="list-bullet">
+                    <li>Good excuse to try Tauri</li>
+                  </ul>                </li>
+              </ul>            </li>
             <li><input type="checkbox" readonly="true"  /> Generate <code>&lt;picture&gt;</code> tag corresponding to the base image and its output images.</li>
-            <li><input type="checkbox" readonly="true" checked /> Update S3 auth to support instance metadata auth method
-              <ul class="list-bullet">
-                <li>This is mostly just adding the config and setting it to not do anything</li>
-              </ul>            </li>
-          </ul>        </li>
-        <li><h3>Side Helper Tasks</h3>
-          <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> CLI app that can hash an image and get the corresponding <code>&lt;picture&gt;</code> tag or other URL for it, and upload it if needed.</li>
-            <li><input type="checkbox" readonly="true"  /> Some sort of GUI version of the same, maybe even something that can be triggered straight from macOS Finder.
-              <ul class="list-bullet">
-                <li>Good excuse to try Tauri</li>
-              </ul>            </li>
-          </ul>        </li>
-        <li><h3>Later Tasks</h3>
-          <ul class="list-bullet">
             <li><input type="checkbox" readonly="true"  /> When adding a storage location, allow testing read/write access to it</li>
             <li><input type="checkbox" readonly="true"  /> Make it possible to delete obsolete output images</li>
             <li><input type="checkbox" readonly="true"  /> Support HEIC as input format</li>
@@ -75,8 +69,13 @@ updated: 2022-12-03
                   </ul>                </li>
               </ul>            </li>
           </ul>        </li>
-        <li><h3>Finished</h3>
+        <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Update S3 auth to support instance metadata auth method
+              <ul class="list-bullet">
+                <li>This is mostly just adding the config and setting it to not do anything</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true" checked /> Endpoint to check by hash if an image already exists</li>
             <li><input type="checkbox" readonly="true" checked /> Ensure that replacing a base image properly replaces the output images</li>
             <li><input type="checkbox" readonly="true" checked /> When replacing a base image, delete the current output images associated with it.
               <ul class="list-bullet">

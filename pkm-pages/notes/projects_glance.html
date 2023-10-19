@@ -1,0 +1,264 @@
+---
+title: "Glance"
+tags: Projects
+date: 2023-09-29
+updated: 2023-10-19
+---
+
+
+  <ul class="list-bullet">
+    <li>This is a project that allows creation of a bunch of mini-apps which can do things like scrape data on some interval and push it to a dashboard which shows data from all the apps.</li>
+    <li><a href="https://github.com/dimfeld/glance">Github</a></li>
+    <li><h2>Task List</h2>
+      <ul class="list-bullet">
+        <li><h3>Up Next</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Write a simple app that always has data to show (Weather or HN API or something super basic)</li>
+            <li><input type="checkbox" readonly="true"  /> Watch app data directory</li>
+            <li><input type="checkbox" readonly="true"  /> Read items from each data file</li>
+            <li><input type="checkbox" readonly="true"  /> Render simple UI</li>
+          </ul>        </li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Create app helper library
+              <ul class="list-bullet">
+                <li>Common paths, JSON data definition, etc.</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Notifications</li>
+            <li><input type="checkbox" readonly="true"  /> Dismissible items</li>
+            <li><input type="checkbox" readonly="true"  /> Customize layout of the data items</li>
+          </ul>        </li>
+        <li><h3>Later</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Menubar App</li>
+            <li><input type="checkbox" readonly="true"  /> Item actions
+              <ul class="list-bullet">
+                <li>See <a class="block-ref" href="/notes/projects_glance#6528a6dc-beaf-462e-b58a-18bcae7407c7">Apps can define actions to be done.</a></li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Detail pages can be a web app served by the app itself</li>
+            <li><input type="checkbox" readonly="true"  /> Main Item display can be a simple chart or other viz</li>
+            <li><input type="checkbox" readonly="true"  /> Item detail can be a vega viz or something
+              <ul class="list-bullet">
+                <li>See <a class="block-ref" href="/notes/projects_glance#652e3b52-1fc2-4826-ab2e-8e8a5bfaf97a">Details</a></li>
+              </ul>            </li>
+          </ul>        </li>
+        <li><h3>Done</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Firm up designs</li>
+            <li><input type="checkbox" readonly="true" checked /> Design JSON schema for data</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Basic Design</h2>
+      <ul class="list-bullet">
+        <li>The platform has a directory, where each app can place a JSON data file.</li>
+        <li><h3>App Data Format</h3>
+          <ul class="list-bullet">
+            <li>This is a JSON file with some information about the app and its current data.</li>
+            <li>App Title</li>
+            <li>URL to reverse proxy to for detailed web UI
+              <ul class="list-bullet">
+                <li>And index page path, if applicable</li>
+              </ul>            </li>
+            <li>Data Items Array
+              <ul class="list-bullet">
+                <li>Something like this</li>
+                <li>Item UUID</li>
+                <li>Item type</li>
+                <li>Description
+                  <ul class="list-bullet">
+                    <li>This is HTML that gets injected into the page.</li>
+                  </ul>                </li>
+                <li>Chart?</li>
+                <li>Structured data
+                  <ul class="list-bullet">
+                    <li>This can be used to allow more customization of the displayed data</li>
+                  </ul>                </li>
+                <li>Notification - optional
+                  <ul class="list-bullet">
+                    <li>Notification also has a UUID so that a single item can show multiple notifications even if it already exists.</li>
+                    <li>Notification title and text</li>
+                    <li>Icon/image?</li>
+                  </ul>                </li>
+                <li>Persistent or dismissable
+                  <ul class="list-bullet">
+                    <li>Dismissable items can be closed by the user until they are updated again, if ever.</li>
+                  </ul>                </li>
+                <li id="652e3ae1-7983-4681-8826-6c711bbe94d3">Updated time</li>
+                <li id="652e3b52-1fc2-4826-ab2e-8e8a5bfaf97a">Details
+                  <ul class="list-bullet">
+                    <li>This can be a path under the reverse proxy URL, if present</li>
+                    <li>Or some defined visualization
+                      <ul class="list-bullet">
+                        <li>This will be something like a SQLite database, a set of queries to run, and maybe some Vega viz to render?</li>
+                      </ul>                    </li>
+                  </ul>                </li>
+              </ul>            </li>
+          </ul>        </li>
+        <li><h3>Backend Platform</h3>
+          <ul class="list-bullet">
+            <li>Watch the data directory</li>
+            <li>On load and when a file updates, read the file and see what the data items are</li>
+            <li>Serve a web app which shows all the data</li>
+            <li>Track things like notifications, dismissible item state, and so on.</li>
+          </ul>        </li>
+        <li><h3>UI</h3>
+          <ul class="list-bullet">
+            <li>Menubar app</li>
+            <li>More detailed page for use in a browser/phone.</li>
+            <li>Good case for some kind of microcontroller with an OLED</li>
+            <li>Should be possible to run all these on a different computer from the platform.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Apps</h2>
+      <ul class="list-bullet">
+        <li>Weather</li>
+        <li>Hurricane and weather alert status</li>
+        <li>HN and Lobste.rs top links with actions for summarization</li>
+        <li>Watch Github releases for certain projects</li>
+      </ul>    </li>
+    <li><h2>Notes</h2>
+      <ul class="list-bullet">
+        <li>V1 of this is a few components:
+          <ul class="list-bullet">
+            <li>A mini-app template project that can be forked</li>
+            <li>A main server
+              <ul class="list-bullet">
+                <li>Manage and start the mini-apps</li>
+                <li>Set environment for the mini-apps with some well-known keys:
+                  <ul class="list-bullet">
+                    <li>directory for each app to create its SQLite database and other stuff like that</li>
+                  </ul>                </li>
+                <li>Provide a way the mini-apps can call to push new data
+                  <ul class="list-bullet">
+                    <li>indicate that a notification should be shown for important stuff</li>
+                    <li>push new data to be shown when the app is opened</li>
+                    <li>some way to define how to lay out the UI for that data</li>
+                    <li>Could be HTTP endpoints that the server exposes</li>
+                    <li>Items can be persistent until the app remove them, or acknowledgeable, where the stay until the user dismisses them.</li>
+                    <li>Actually just using the filesystem would work well
+                      <ul class="list-bullet">
+                        <li>Data goes in a sqlite database</li>
+                        <li>schema file defines both visualizations and the queries to run to create the data for them.</li>
+                        <li>Server watches for changes in the schema file.</li>
+                        <li>How do we read all the data in an efficient manner?
+                          <ul class="list-bullet">
+                            <li>Having to read the dashboard databases all at once when the dashboard opens could be messy.</li>
+                            <li>OTOH it could be massively parallelized and the reads would generally be very quick, just a few rows per DB.</li>
+                            <li>In reality, having all the summary data in the JSON itself will be fine. There won&#39;t be that much data.</li>
+                          </ul>                        </li>
+                        <li>Notifications would probably still need an endpoint?
+                          <ul class="list-bullet">
+                            <li>Could have a field in the JSON that would let an app set a notification, with a UUID or something to handle idempotency.</li>
+                          </ul>                        </li>
+                      </ul>                    </li>
+                  </ul>                </li>
+                <li>A web-based UI
+                  <ul class="list-bullet">
+                    <li>Maybe both as a menu-bar app and as a normal app</li>
+                    <li>Lists and manages the mini-apps</li>
+                    <li>Displays the pushed data</li>
+                  </ul>                </li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>V2
+          <ul class="list-bullet">
+            <li>Some way for mini-apps to expose a more in-depth look into their data.
+              <ul class="list-bullet">
+                <li>Probably do this through some kind of reverse proxy that just assigns some path to proxy through to the mini-app so it can serve its own UI.</li>
+              </ul>            </li>
+            <li id="6528a6dc-beaf-462e-b58a-18bcae7407c7">Apps can define actions to be done.
+              <ul class="list-bullet">
+                <li>Each item can have its own actions</li>
+                <li>Actions have a label, maybe an icon, styling, and a way to do the action
+                  <ul class="list-bullet">
+                    <li>HTTP endpoint to hit.</li>
+                    <li>Website to visit for more details</li>
+                    <li>Command to run</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li>Auto-deploy from Git/HTTP sources?</li>
+            <li>LLM summarization of current stuff?</li>
+            <li>AI Agents which can send their status and results to the app (this probably wouldn&#39;t require any new functionality)</li>
+          </ul>        </li>
+        <li>How to run mini-apps?
+          <ul class="list-bullet">
+            <li>In some ways, it would be simplest for the app to be a single file which gets started by a worker. The file can export certain functions to deliver the relevant functionality.</li>
+            <li>A full-fledged app is much more flexible, but also somewhat harder to distribute and harder to proxy to. I think in the end this will be a better solution though.
+              <ul class="list-bullet">
+                <li>Distribution: this can be a zip file. Run bun to install deps and then start it. This also technically allows the server to be written in any language, though that adds complexity.</li>
+              </ul>            </li>
+            <li>Could just have them run separately, which would be simplest in some ways. Some apps would run persistently, but many apps would just be a cron job. The cron jobs could also be done as an internal system in the platform.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Notes from Initial Idea</h2>
+      <ul class="list-bullet">
+        <li>Perhaps what I  really want is just a way to have some kind of PaaS system for mini-apps, where each one is somewhat separate despite being hosted behind a single place. So this turns into a reverse proxy with easy-to-add upstreams at arbitrary paths, and an easy way to write servers and set up storage, manage notifications, etc.</li>
+        <li>So we have a server which handles the reverse proxy. Each mini app is hosted at a separate path on the server but otherwise runs separately.  Notifications and other actions are also endpoints in a private part of the server which the mini app can call back into.  Maybe function  as a tracing sidecar too?</li>
+        <li>How much of this could be done with off the shelf components?
+          <ul class="list-bullet">
+            <li>Consul for service registration</li>
+            <li>Vault for pulling secrets like webhook keys</li>
+            <li>Nomad for running the mini apps and pulling in the secrets into the containers</li>
+            <li>caddy or nginx for the web server, using dynamically generated templates from consul service records?</li>
+            <li>Task scheduler to poke services every so often, or should this be built in to the apps themselves?
+              <ul class="list-bullet">
+                <li>How do we manage concurrency here? Probably by just having each app that needs it manage its own queue. Could do this using effectum to make it easy.</li>
+                <li>Would it be useful to provide a shell library that could allow writing each service as just a simple function or as close as possible? I think this would be helpful. Create the database connections, pull in the proper secrets, and so on. Apps that needs more functionality could use an http router or SvelteKit or something. But a simple approach like this could potentially allow for creating mini-apps within some other UI again, perhaps even with dashboard building blocks.</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>Is there a good platform in here to experiment with AI coding solutions as well?</li>
+        <li>I think I&#39;m ending up with 2 models here:
+          <ul class="list-bullet">
+            <li>mini apps that are actually full apps</li>
+            <li>Mini apps that are actually just executable functions but with some extra functionality compared to what&#39;s there now in Ergo.</li>
+            <li>So the former is just a matter of hosting, proxy, etc.  The latter is where the design comes in.</li>
+          </ul>        </li>
+        <li>Micro apps (probably not going to do this)
+          <ul class="list-bullet">
+            <li>single function to execute the actual code</li>
+            <li>Optional schedule on which the function runs.</li>
+            <li>UI defined with simple building blocks
+              <ul class="list-bullet">
+                <li>Queries to run against the stored data, something like a stored procedure</li>
+                <li>Charts to display those queries</li>
+                <li>controls to update the parameters for the queries</li>
+                <li>A way to define all this easily, not necessarily no-code, but low-code to start, similar to Gradio</li>
+              </ul>            </li>
+            <li>compared to the current method, the function should be uploaded from a file and executed in something external like Node, Deno, or Bun.
+              <ul class="list-bullet">
+                <li>This allows for it to actually be tested and developed externally, without much fuss.</li>
+                <li>Optionally, perhaps even update these functions from a Git repository, where pushing to the master branch updates the function to be run.</li>
+                <li>Then we could just do a shebang to decide in what context it actually runs (with the inherent security problems this has? Maybe a whitelist of safe executors, and this is especially appealing with Deno and Bun(?) which have permissions systems).</li>
+                <li>Also look into WASM execution now that WASIX and similar standards are making that easier.</li>
+                <li>Provide an SQLite database path for each function so that it can implement its own persistence.</li>
+              </ul>            </li>
+            <li>An app should provide four functions: query, act, cron (optional) and buildUI.
+              <ul class="list-bullet">
+                <li>Query gets data from the database for the UI to show</li>
+                <li>Act performs actions based on button clicks</li>
+                <li>Cron, if implemented, will do scheduled data updates</li>
+                <li>buildUI shows what kind of dashboards to show</li>
+                <li>Something like this anyway. Need to figure out the relation between query and buildUI, maybe they should be merged.</li>
+              </ul>            </li>
+            <li>Application package defines:</li>
+            <li>sqlite database connection with predetermined location</li>
+            <li>Sqlite migration system</li>
+            <li>A way to define UI via code</li>
+            <li>A way to send notifications through the app host</li>
+            <li>a job queue</li>
+          </ul>        </li>
+        <li>Or... just make templates, use the template, and have a way to autodeploy them all behind an reverse proxy.
+          <ul class="list-bullet">
+            <li>The main downside of this is that it&#39;s harder to make a dashboard with status from various apps all in one.</li>
+            <li>But this could be done through a common endpoint that returns data and ui definitions.</li>
+            <li>So in this paradigm we have:
+              <ul class="list-bullet">
+                <li>server that exists independently and with its own UI</li>
+                <li>a separate dashboards app that apps can register  with</li>
+                <li>A /dashboard endpoint on each server that tells the dashboard what to display.</li>
+                <li>Or an endpoint on the dashboards app through which the servers can push data. This is probably the way to go since it doesn&#39;t enforce any particular structure for each app.</li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+  </ul>
+

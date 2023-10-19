@@ -2,25 +2,37 @@
 title: "Buzzy"
 tags: Projects
 date: 2023-09-07
-updated: 2023-10-14
+updated: 2023-10-17
 ---
 
 
   <ul class="list-bullet">
     <li>Experimental AI bot to talk with my kids and answer questions.</li>
     <li><a href="https://github.com/dimfeld/buzzy">https://github.com/dimfeld/buzzy</a></li>
-    <li><h2>Short-Term Task List</h2>
+    <li><h2>Task List</h2>
       <ul class="list-bullet">
-        <li><input type="checkbox" readonly="true" checked /> set up basic ChatGPT workflow</li>
-        <li><input type="checkbox" readonly="true" checked /> Voice recognition</li>
-        <li><input type="checkbox" readonly="true" checked /> Basic TTS</li>
-        <li><input type="checkbox" readonly="true" checked /> Websocket-based communication</li>
-        <li><input type="checkbox" readonly="true" checked /> Stream results back to client</li>
-        <li><input type="checkbox" readonly="true"  /> Basic intent detection</li>
-        <li><input type="checkbox" readonly="true"  /> Run web searches and generate an answer from the results.</li>
-        <li><input type="checkbox" readonly="true"  /> read system message from a file</li>
-        <li><input type="checkbox" readonly="true"  /> record llm pipeline actions for later analysis</li>
-        <li><input type="checkbox" readonly="true"  /> Check out <a href="https://github.com/FL33TW00D/whisper-turbo">whisper-turbo</a> for in-browser voice recognition</li>
+        <li><h3>Up Next</h3>
+          <ul class="list-bullet">
+            <li id="651362e9-deb6-439d-9b3c-c85b3356517b"><input type="checkbox" readonly="true"  /> Basic intent detection</li>
+            <li id="651362e9-2c46-420e-ba11-b311988e87ca"><input type="checkbox" readonly="true"  /> Run web searches and generate an answer from the results.</li>
+          </ul>        </li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> read system message from a file</li>
+            <li><input type="checkbox" readonly="true"  /> record llm pipeline actions for later analysis</li>
+          </ul>        </li>
+        <li><h3>Later</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Check out <a href="https://github.com/FL33TW00D/whisper-turbo">whisper-turbo</a> for in-browser voice recognition</li>
+          </ul>        </li>
+        <li><h3>Done</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> set up basic ChatGPT workflow</li>
+            <li><input type="checkbox" readonly="true" checked /> Voice recognition</li>
+            <li><input type="checkbox" readonly="true" checked /> Basic TTS</li>
+            <li><input type="checkbox" readonly="true" checked /> Websocket-based communication</li>
+            <li><input type="checkbox" readonly="true" checked /> Stream results back to client</li>
+          </ul>        </li>
       </ul>    </li>
     <li><h2>System Prompt Example</h2>
       <ul class="list-bullet">
@@ -104,6 +116,20 @@ Does the user&#39;s question ask for clarification on the assistant&#39;s statem
 </span></code></pre></li>
               </ul>            </li>
             <li>For this we can probably just pair up the last assistant message with the latest query, since they tend to include all the necessary info again in every message. Then use GPT to create a proper search for it.</li>
+            <li>Do we even need to do the detection? Will it work to just ask GPT to make a search for the query?
+              <ul class="list-bullet">
+                <li>Takes some tweaking of the prompt but this seems to work well.</li>
+                <li><pre><code><span class="sy-text sy-plain">This is an excerpt of a chat with an assistant and a user:
+
+Assistant: {assistant&#39;s last message}
+
+User: {user&#39;s question}
+
+What would be a good web search to answer the user&#39;s question? If the question is asking for clarification on the assistant&#39;s statement, then the web search should account for that. If it is a new line of questioning, then ignore the assistant&#39;s statement. Respond only with the web search and nothing else.
+
+Web search:
+</span></code></pre></li>
+              </ul>            </li>
           </ul>        </li>
       </ul>    </li>
     <li><h2>Web Search</h2>
