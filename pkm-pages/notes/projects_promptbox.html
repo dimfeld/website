@@ -1,0 +1,106 @@
+---
+title: "PromptBox"
+tags: Projects
+date: 2023-10-31
+updated: 2023-11-05
+---
+
+
+  <ul class="list-bullet">
+    <li>This utility allows maintaining libraries of LLM prompt templates which can be filled in and submitted from the command line.</li>
+    <li><a href="https://github.com/dimfeld/promptbox">Github</a></li>
+    <li>A sample prompt. Each of the options below becomes a CLI flag which can fill in the template.
+      <ul class="list-bullet">
+        <li><pre><code><span class="sy-source sy-toml"><span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">description</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>Summarize some files<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span>
+
+<span class="sy-comment sy-line sy-number-sign sy-toml"><span class="sy-punctuation sy-definition sy-comment sy-toml">#</span> This can also be template_path to read from another file.</span>
+<span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">template</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-triple sy-literal sy-block sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&#39;&#39;&#39;</span>
+Create a {{style}} summary of the below files
+which are on the topic of {{topic}}. The summary should be about {{ len }} sentences long.
+
+{% for f in file -%}
+File {{ f.filename }}:
+{{ f.contents }}
+
+
+{%- endfor %}
+<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&#39;&#39;&#39;</span></span>
+
+<span class="sy-punctuation sy-definition sy-table sy-begin sy-toml">[</span><span class="sy-meta sy-tag sy-table sy-toml"><span class="sy-entity sy-name sy-table sy-toml">model</span></span><span class="sy-punctuation sy-definition sy-table sy-end sy-toml">]</span>
+<span class="sy-comment sy-line sy-number-sign sy-toml"><span class="sy-punctuation sy-definition sy-comment sy-toml">#</span> These model options can also be defined in a config file to apply to the whole directory of templates.</span>
+<span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">model</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>gpt-3.5-turbo<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span>
+<span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">temperature</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-constant sy-numeric sy-float sy-toml">0.7</span>
+<span class="sy-comment sy-line sy-number-sign sy-toml"><span class="sy-punctuation sy-definition sy-comment sy-toml">#</span> Also supports top_p, frequency_penalty, presence_penalty, stop, and max_tokens</span>
+
+<span class="sy-punctuation sy-definition sy-table sy-begin sy-toml">[</span><span class="sy-meta sy-tag sy-table sy-toml"><span class="sy-entity sy-name sy-table sy-toml">options</span></span><span class="sy-punctuation sy-definition sy-table sy-end sy-toml">]</span>
+<span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">len</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-punctuation sy-definition sy-inline-table sy-begin sy-toml">{</span> <span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">type</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>int<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span><span class="sy-punctuation sy-separator sy-inline-table sy-toml">,</span> <span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">description</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>The length of the summary<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span><span class="sy-punctuation sy-separator sy-inline-table sy-toml">,</span> <span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">default</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-constant sy-numeric sy-integer sy-toml">4</span> <span class="sy-punctuation sy-definition sy-inline-table sy-end sy-toml">}</span>
+<span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">topic</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-punctuation sy-definition sy-inline-table sy-begin sy-toml">{</span> <span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">type</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>string<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span><span class="sy-punctuation sy-separator sy-inline-table sy-toml">,</span> <span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">description</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>The topic of the summary<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span> <span class="sy-punctuation sy-definition sy-inline-table sy-end sy-toml">}</span>
+<span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">style</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-punctuation sy-definition sy-inline-table sy-begin sy-toml">{</span> <span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">type</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>string<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span><span class="sy-punctuation sy-separator sy-inline-table sy-toml">,</span> <span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">default</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>concise<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span> <span class="sy-punctuation sy-definition sy-inline-table sy-end sy-toml">}</span>
+<span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">file</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-punctuation sy-definition sy-inline-table sy-begin sy-toml">{</span> <span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">type</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>file<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span><span class="sy-punctuation sy-separator sy-inline-table sy-toml">,</span> <span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">array</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-constant sy-language sy-toml">true</span><span class="sy-punctuation sy-separator sy-inline-table sy-toml">,</span> <span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">description</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>The files to summarize<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span> <span class="sy-punctuation sy-definition sy-inline-table sy-end sy-toml">}</span>
+</span></code></pre></li>
+      </ul>    </li>
+    <li><h2>Task List</h2>
+      <ul class="list-bullet">
+        <li><h3>Up Next</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Help output is weird and doesn&#39;t include all options</li>
+            <li><input type="checkbox" readonly="true"  /> Streaming support</li>
+            <li><input type="checkbox" readonly="true"  /> Testing
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true" checked /> stop at the top_level config</li>
+                <li><input type="checkbox" readonly="true" checked /> Resolution of model options between different configs</li>
+                <li><input type="checkbox" readonly="true" checked /> Don&#39;t require a config in every directory</li>
+                <li><input type="checkbox" readonly="true" checked /> Malformed configs raise an error</li>
+                <li><input type="checkbox" readonly="true" checked /> Malformed templates throw an error</li>
+                <li><input type="checkbox" readonly="true" checked /> templates resolved in order from the current directory</li>
+                <li><input type="checkbox" readonly="true" checked /> Look under <code>./promptbox.toml</code> and <code>./promptbox/promptbox.toml</code></li>
+                <li><input type="checkbox" readonly="true" checked /> Prompts can be in subdirectories</li>
+                <li><input type="checkbox" readonly="true"  /> Prepend</li>
+                <li><input type="checkbox" readonly="true"  /> Append</li>
+                <li><input type="checkbox" readonly="true"  /> Prepend and append</li>
+                <li><input type="checkbox" readonly="true" checked /> all types of arguments</li>
+                <li><input type="checkbox" readonly="true" checked /> Bool arguments are always optional</li>
+                <li><input type="checkbox" readonly="true" checked /> required arguments (switch from required to optional)</li>
+                <li><input type="checkbox" readonly="true" checked /> Array arguments</li>
+                <li><input type="checkbox" readonly="true"  /> make sure it works to invoke with global options and template options at the same time</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Option type to paste a file contents in, and allow wildcards for array files</li>
+            <li><input type="checkbox" readonly="true" checked /> Send request to model</li>
+            <li><input type="checkbox" readonly="true" checked /> Move the main command to be a &quot;run&quot; subcommand</li>
+            <li><input type="checkbox" readonly="true"  /> List command
+              <ul class="list-bullet">
+                <li>should also take a filter</li>
+                <li>Short mode for completion</li>
+                <li>by default print template name and description in a table</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Show command to output the information from a template</li>
+          </ul>        </li>
+        <li><h3>Later</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Save all invocations in a database</li>
+            <li><input type="checkbox" readonly="true"  /> Streaming support
+              <ul class="list-bullet">
+                <li>This uses SSE but it&#39;s data-only so easy to parse.
+                  <ul class="list-bullet">
+                    <li>Put a BufReader over the incoming data, strip the <code>data: </code> off the start of each line, emit on every double newline.</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Allow templates to reference partials in same directory</li>
+            <li><input type="checkbox" readonly="true"  /> Allow templates to reference partials in parent template directories</li>
+            <li><input type="checkbox" readonly="true"  /> Define ChatGPT functions in the prompt?</li>
+            <li><input type="checkbox" readonly="true"  /> bash/zsh Autocomplete template names</li>
+            <li><input type="checkbox" readonly="true"  /> Can we autocomplete options as well once the template name is present?</li>
+            <li><input type="checkbox" readonly="true"  /> Recall previous invocations</li>
+          </ul>        </li>
+        <li><h3>Done</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Integrate with <a href="https://github.com/jmorganca/ollama">ollama</a></li>
+            <li><input type="checkbox" readonly="true" checked /> Basic functionality</li>
+            <li><input type="checkbox" readonly="true" checked /> Define CLI options in template file</li>
+          </ul>        </li>
+      </ul>    </li>
+  </ul>
+

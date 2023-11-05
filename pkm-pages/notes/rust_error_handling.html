@@ -2,27 +2,39 @@
 title: "Rust Error Handling"
 tags: Rust
 date: 2021-05-28
-updated: 2021-05-28
+updated: 2023-11-04
 ---
 
 
   <ul class="list-bullet">
+    <li><code>error_stack</code>
+      <ul class="list-bullet">
+        <li>This is my current library of choice for error handling.</li>
+        <li>Not a full replacement for <code>thiserror</code>, but a complement to it.</li>
+        <li>Allows attaching messages to arbitrary errors. No more <code>std::io::Error</code> without the filename.</li>
+        <li>Can collecting multiple errors, useful when running concurrent tasks.</li>
+        <li>Preserves the full stack of errors as they progress between module boundaries, so you can see what actually happened, nicely pretty-printed.</li>
+        <li>To remove printing file locations in error stack, for friendlier user-facing errors:
+          <ul class="list-bullet">
+            <li><pre><code><span class="sy-source sy-rust"><span class="sy-meta sy-path sy-rust">error_stack<span class="sy-punctuation sy-accessor sy-rust">::</span></span><span class="sy-meta sy-path sy-rust">Report<span class="sy-punctuation sy-accessor sy-rust">::</span></span><span class="sy-meta sy-path sy-rust">install_debug_hook<span class="sy-punctuation sy-accessor sy-rust">::</span></span><span class="sy-meta sy-generic sy-rust"><span class="sy-punctuation sy-definition sy-generic sy-begin sy-rust">&lt;</span>Location<span class="sy-punctuation sy-definition sy-generic sy-end sy-rust">&gt;</span></span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span><span class="sy-meta sy-function sy-closure sy-rust"><span class="sy-meta sy-function sy-parameters sy-rust"><span class="sy-punctuation sy-section sy-parameters sy-begin sy-rust">|</span></span></span><span class="sy-meta sy-function sy-closure sy-rust"><span class="sy-meta sy-function sy-parameters sy-rust">_<span class="sy-punctuation sy-separator sy-rust">,</span> _<span class="sy-punctuation sy-section sy-parameters sy-end sy-rust">|</span></span> </span><span class="sy-meta sy-function sy-closure sy-rust"><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-begin sy-rust">{</span></span><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-end sy-rust">}</span></span></span></span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+</span></code></pre></li>
+          </ul>        </li>
+      </ul>    </li>
     <li><code>eyre</code> is a fork of <code>anyhow</code> focused on better error reporting</li>
     <li>Snafu
       <ul class="list-bullet">
         <li>This is a comprehensive library with a lot of options. The big advantage here is that a lot of care is taken to make rich context information easy to use.</li>
-        <li>
-<pre><code><span class="sy-source sy-rust"><span class="sy-meta sy-annotation sy-rust"><span class="sy-punctuation sy-definition sy-annotation sy-rust">#</span><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">[</span><span class="sy-variable sy-annotation sy-rust">derive</span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span></span></span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust">Debug<span class="sy-punctuation sy-separator sy-rust">,</span> Snafu</span></span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span></span><span class="sy-punctuation sy-section sy-group sy-end sy-rust">]</span></span>
+        <li><pre><code><span class="sy-source sy-rust"><span class="sy-meta sy-annotation sy-rust"><span class="sy-punctuation sy-definition sy-annotation sy-rust">#</span><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">[</span><span class="sy-variable sy-annotation sy-rust">derive</span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span></span></span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust">Debug<span class="sy-punctuation sy-separator sy-rust">,</span> Snafu</span></span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span></span><span class="sy-punctuation sy-section sy-group sy-end sy-rust">]</span></span>
 <span class="sy-meta sy-enum sy-rust"><span class="sy-storage sy-type sy-enum sy-rust">enum</span> <span class="sy-entity sy-name sy-enum sy-rust">Error</span> <span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-begin sy-rust">{</span>
 <span class="sy-meta sy-annotation sy-rust"><span class="sy-punctuation sy-definition sy-annotation sy-rust">#</span><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">[</span><span class="sy-variable sy-annotation sy-rust">snafu</span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span></span></span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-meta sy-function-call sy-rust"><span class="sy-variable sy-function sy-rust">display</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span></span></span><span class="sy-meta sy-function-call sy-rust"><span class="sy-string sy-quoted sy-double sy-rust"><span class="sy-punctuation sy-definition sy-string sy-begin sy-rust">&quot;</span>While doing {}<span class="sy-punctuation sy-definition sy-string sy-end sy-rust">&quot;</span></span><span class="sy-punctuation sy-separator sy-rust">,</span> operation</span><span class="sy-meta sy-function-call sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span></span></span></span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span></span><span class="sy-punctuation sy-section sy-group sy-end sy-rust">]</span></span>
 ErrorType <span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-begin sy-rust">{</span>
-  source<span class="sy-punctuation sy-separator sy-rust">:</span> AnError<span class="sy-punctuation sy-separator sy-rust">,</span>
-  backtrace<span class="sy-punctuation sy-separator sy-rust">:</span> Backtrace<span class="sy-punctuation sy-separator sy-rust">,</span>
-  operation<span class="sy-punctuation sy-separator sy-rust">:</span> <span class="sy-support sy-type sy-rust">String</span><span class="sy-punctuation sy-separator sy-rust">,</span>
+source<span class="sy-punctuation sy-separator sy-rust">:</span> AnError<span class="sy-punctuation sy-separator sy-rust">,</span>
+backtrace<span class="sy-punctuation sy-separator sy-rust">:</span> Backtrace<span class="sy-punctuation sy-separator sy-rust">,</span>
+operation<span class="sy-punctuation sy-separator sy-rust">:</span> <span class="sy-support sy-type sy-rust">String</span><span class="sy-punctuation sy-separator sy-rust">,</span>
 </span><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-end sy-rust">}</span></span>
 </span><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-end sy-rust">}</span></span></span>
 </span></code></pre></li>
-        <li>This generates an <code>ErrorType</code> structure that can be used to add content to an <code>AnError</code> error. <code>ErrorType</code> contains everything <strong class="font-bold">except</strong> the source and backtrace fields. This can then be used with the context trait. 
+        <li>This generates an <code>ErrorType</code> structure that can be used to add content to an <code>AnError</code> error. <code>ErrorType</code> contains everything <strong class="font-bold">except</strong> the source and backtrace fields. This can then be used with the context trait.
           <ul class="list-bullet">
             <li>The context type also uses generics parameterized with <code>Into&lt;OriginalType&gt;</code>,  so you don&#39;t have to do things like <code>to_string()</code> all over the place.</li>
           </ul>        </li>
