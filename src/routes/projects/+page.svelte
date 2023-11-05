@@ -5,6 +5,20 @@
 
   const projects = [
     {
+      name: 'PromptBox',
+      repo: 'https://www.github.com/dimfeld/promptbox',
+      link: 'https://www.github.com/dimfeld/promptbox',
+      text: `PromptBox is a command-line utility that allows maintaining libraries of LLM prompt templates, which can be filled in and submitted from the command line.`,
+      notes: '/notes/projects_promptbox',
+    },
+    {
+      name: 'Glance',
+      repo: 'https://www.github.com/dimfeld/glance',
+      link: 'https://www.github.com/dimfeld/glance',
+      text: `Glance is a project that allows creation of a bunch of mini-apps which can do things like scrape data on some interval, and push it to a dashboard which shows data from all the apps together in one place.`,
+      notes: '/notes/projects_glance',
+    },
+    {
       name: 'Buzzy',
       repo: 'https://www.github.com/dimfeld/buzzy',
       link: 'https://www.github.com/dimfeld/buzzy',
