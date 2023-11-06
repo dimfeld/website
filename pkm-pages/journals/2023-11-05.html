@@ -1,0 +1,20 @@
+---
+title: "2023-11-05"
+tags: 
+date: 2023-11-05
+updated: 2023-11-06
+---
+
+
+    
+    <p>I’ve been playing with using <a href="https://github.com/dimfeld/promptbox">PromptBox</a> for code generation given context from the repository. Having some trouble figuring out a good output format though.</p>
+    <p>I have been able to get it to output diffs, sort of. The main problem is that it loses track of how long the diff is supposed to be compared to what it puts in the header, so patch rejects it.</p>
+    <p>Maybe there’s some better way? Maybe I just need a post processing step to fix the diff or apply it some other way? I&#39;ll have to play with it some more.</p>
+    <h3>SoundQueue</h3>
+        <p>Every year I help out with the sound at my church&#39;s Christmas play. This year we&#39;re low on help, and the play is much more involved than your average Christmas play, so I find myself both running the sound board and triggering the music/effects. This was a good excuse to automate the latter task, and a good opportunity to explore <a href="https://tauri.app">Tauri</a> a bit.</p>
+        <p><a href="https://github.com/dimfeld/soundqueue">SoundQueue</a> is a small program that reads in a manifest of a bunch of sound files, and lets you easily play them one at a time with the press of the space bar, queueing up the next sound when one finishes playing. It allows custom volume and in/out points for each sound as well.</p>
+        <p>I was pretty happy with the productivity of Tauri. Despite not being too familiar with it, this app took only a few hours to make.</p>
+
+
+
+
