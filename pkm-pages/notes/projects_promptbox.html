@@ -2,7 +2,7 @@
 title: "PromptBox"
 tags: Projects
 date: 2023-10-31
-updated: 2023-11-05
+updated: 2023-11-07
 ---
 
 
@@ -43,8 +43,7 @@ File {{ f.filename }}:
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Help output is weird and doesn&#39;t include all options</li>
-            <li><input type="checkbox" readonly="true"  /> Streaming support</li>
+            <li><input type="checkbox" readonly="true"  /> Streaming support for openai</li>
             <li><input type="checkbox" readonly="true"  /> Testing
               <ul class="list-bullet">
                 <li><input type="checkbox" readonly="true" checked /> stop at the top_level config</li>
@@ -77,6 +76,11 @@ File {{ f.filename }}:
                 <li>by default print template name and description in a table</li>
               </ul>            </li>
             <li><input type="checkbox" readonly="true"  /> Show command to output the information from a template</li>
+            <li><input type="checkbox" readonly="true"  /> Support for GPT4 Vision
+              <ul class="list-bullet">
+                <li>Can <a href="https://platform.openai.com/docs/guides/vision/uploading-base-64-encoded-images">pass images in base64</a></li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Local Multimodal models?</li>
           </ul>        </li>
         <li><h3>Later</h3>
           <ul class="list-bullet">
@@ -97,9 +101,11 @@ File {{ f.filename }}:
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Streaming support for ollama</li>
             <li><input type="checkbox" readonly="true" checked /> Integrate with <a href="https://github.com/jmorganca/ollama">ollama</a></li>
             <li><input type="checkbox" readonly="true" checked /> Basic functionality</li>
             <li><input type="checkbox" readonly="true" checked /> Define CLI options in template file</li>
+            <li><input type="checkbox" readonly="true" checked /> Help output always shows openai_key (maybe due to .env?)</li>
           </ul>        </li>
       </ul>    </li>
   </ul>
