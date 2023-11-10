@@ -459,6 +459,11 @@
     "title": "2023-11-06",
     "uid": ""
   },
+  "pkm-pages/journals/2023-11-09.html": {
+    "slug": "/journals/2023_11_09",
+    "title": "2023-11-09",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -717,6 +722,11 @@
   "pkm-pages/notes/postgresql_row_level_security.html": {
     "slug": "/notes/postgresql_row_level_security",
     "title": "PostgreSQL Row Level Security",
+    "uid": ""
+  },
+  "pkm-pages/notes/preview_a_csv_in_browser.html": {
+    "slug": "/notes/preview_a_csv_in_browser",
+    "title": "Preview a CSV In-Browser",
     "uid": ""
   },
   "pkm-pages/notes/programming_courses.html": {
