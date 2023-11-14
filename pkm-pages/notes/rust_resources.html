@@ -2,7 +2,7 @@
 title: "Rust Resources"
 tags: Rust
 date: 2021-02-13
-updated: 2023-06-10
+updated: 2023-11-11
 ---
 
 
@@ -29,6 +29,7 @@ updated: 2023-06-10
           </ul>        </li>
         <li>Error Handling
           <ul class="list-bullet">
+            <li><a href="https://docs.rs/error-stack">error-stack</a> makes it easy to retain the entire stack of errors throughout execution, ensuring nothing is lost. It also allows attaching additional context to any error in the stack.</li>
             <li><a href="https://docs.rs/anyhow">anyhow</a> is great for just merging random errors together when you don&#39;t really care otherwise and just want to get the error message out and all the various errors to have the same type. (i.e. most CLI utilities)</li>
             <li><a href="https://docs.rs/eyre">eyre</a> is a fork of <code>anyhow</code> with emphasis on better error reporting
               <ul class="list-bullet">

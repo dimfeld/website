@@ -2,7 +2,7 @@
 title: "PromptBox"
 tags: Projects
 date: 2023-10-31
-updated: 2023-11-09
+updated: 2023-11-14
 ---
 
 
@@ -44,8 +44,6 @@ File {{ f.filename }}:
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true"  /> Streaming support for openai</li>
-            <li><input type="checkbox" readonly="true"  /> Append any additional positional arguments</li>
-            <li><input type="checkbox" readonly="true"  /> Append input from stdin</li>
             <li><input type="checkbox" readonly="true"  /> Testing
               <ul class="list-bullet">
                 <li><input type="checkbox" readonly="true" checked /> stop at the top_level config</li>
@@ -65,13 +63,16 @@ File {{ f.filename }}:
                 <li><input type="checkbox" readonly="true" checked /> Array arguments</li>
                 <li><input type="checkbox" readonly="true"  /> make sure it works to invoke with global options and template options at the same time</li>
                 <li><input type="checkbox" readonly="true"  /> system prompt, embedded and in separate file</li>
+                <li><input type="checkbox" readonly="true"  /> json mode</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Support for GPT4 Vision
+              <ul class="list-bullet">
+                <li>Can <a href="https://platform.openai.com/docs/guides/vision/uploading-base-64-encoded-images">pass images in base64</a></li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> Option type to paste a file contents in, and allow wildcards for array files</li>
-            <li><input type="checkbox" readonly="true" checked /> Send request to model</li>
-            <li><input type="checkbox" readonly="true" checked /> Move the main command to be a &quot;run&quot; subcommand</li>
+            <li><input type="checkbox" readonly="true"  /> Pass images to Ollama</li>
             <li><input type="checkbox" readonly="true"  /> List command
               <ul class="list-bullet">
                 <li>should also take a filter</li>
@@ -79,11 +80,6 @@ File {{ f.filename }}:
                 <li>by default print template name and description in a table</li>
               </ul>            </li>
             <li><input type="checkbox" readonly="true"  /> Show command to output the information from a template</li>
-            <li><input type="checkbox" readonly="true"  /> Support for GPT4 Vision
-              <ul class="list-bullet">
-                <li>Can <a href="https://platform.openai.com/docs/guides/vision/uploading-base-64-encoded-images">pass images in base64</a></li>
-              </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Local Multimodal models?</li>
           </ul>        </li>
         <li><h3>Later</h3>
           <ul class="list-bullet">
@@ -104,8 +100,14 @@ File {{ f.filename }}:
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Append any additional positional arguments</li>
+            <li><input type="checkbox" readonly="true" checked /> Append input from stdin</li>
+            <li><input type="checkbox" readonly="true" checked /> Support <code>format=&quot;json&quot;</code></li>
             <li><input type="checkbox" readonly="true" checked /> Streaming support for ollama</li>
             <li><input type="checkbox" readonly="true" checked /> Integrate with <a href="https://github.com/jmorganca/ollama">ollama</a></li>
+            <li><input type="checkbox" readonly="true" checked /> Option type to paste a file contents in, and allow wildcards for array files</li>
+            <li><input type="checkbox" readonly="true" checked /> Send request to model</li>
+            <li><input type="checkbox" readonly="true" checked /> Move the main command to be a &quot;run&quot; subcommand</li>
             <li><input type="checkbox" readonly="true" checked /> Basic functionality</li>
             <li><input type="checkbox" readonly="true" checked /> Define CLI options in template file</li>
             <li><input type="checkbox" readonly="true" checked /> Help output always shows openai_key (maybe due to .env?)</li>
