@@ -9,7 +9,7 @@ updated: 2021-04-01
   <ul class="list-bullet">
     <li>Useful Reading
       <ul class="list-bullet">
-        <li><span><span class="font-medium text-gray-800">[std:</span> <span>pin Documentation](<a href="https://doc.rust-lang.org/1.51.0/std/pin/index.html">https://doc.rust-lang.org/1.51.0/std/pin/index.html</a>)</span></span></li>
+        <li><a href="https://doc.rust-lang.org/1.51.0/std/pin/index.html">std::pin Documentation</a></li>
         <li><a href="https://fasterthanli.me/articles/pin-and-suffering">Pin and suffering - fasterthanli.me</a></li>
       </ul>    </li>
     <li>Pinning is useful in async because executors have references to Futures while polling. If the executor tries to use a future that was moved, then bad things happen. So the Pin keeps it in one place while the executor can poll it.</li>

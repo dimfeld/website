@@ -2,7 +2,7 @@
 title: "PromptBox"
 tags: Projects
 date: 2023-10-31
-updated: 2023-11-14
+updated: 2023-11-15
 ---
 
 
@@ -43,7 +43,8 @@ File {{ f.filename }}:
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Streaming support for openai</li>
+            <li><input type="checkbox" readonly="true"  /> Set up CI and distribution</li>
+            <li><input type="checkbox" readonly="true" checked /> Streaming support for openai<br /><span><span class="font-medium text-gray-800">completed:</span> <span>Nov 14th, 2023</span></span></li>
             <li><input type="checkbox" readonly="true"  /> Testing
               <ul class="list-bullet">
                 <li><input type="checkbox" readonly="true" checked /> stop at the top_level config</li>
@@ -83,17 +84,10 @@ File {{ f.filename }}:
           </ul>        </li>
         <li><h3>Later</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Save all invocations in a database</li>
-            <li><input type="checkbox" readonly="true"  /> Streaming support
-              <ul class="list-bullet">
-                <li>This uses SSE but it&#39;s data-only so easy to parse.
-                  <ul class="list-bullet">
-                    <li>Put a BufReader over the incoming data, strip the <code>data: </code> off the start of each line, emit on every double newline.</li>
-                  </ul>                </li>
-              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Save all invocations in a database?</li>
             <li><input type="checkbox" readonly="true"  /> Allow templates to reference partials in same directory</li>
             <li><input type="checkbox" readonly="true"  /> Allow templates to reference partials in parent template directories</li>
-            <li><input type="checkbox" readonly="true"  /> Define ChatGPT functions in the prompt?</li>
+            <li><input type="checkbox" readonly="true"  /> Define ChatGPT functions in the prompt? Probably skip this</li>
             <li><input type="checkbox" readonly="true"  /> bash/zsh Autocomplete template names</li>
             <li><input type="checkbox" readonly="true"  /> Can we autocomplete options as well once the template name is present?</li>
             <li><input type="checkbox" readonly="true"  /> Recall previous invocations</li>
