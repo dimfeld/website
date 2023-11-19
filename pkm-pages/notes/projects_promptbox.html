@@ -2,7 +2,7 @@
 title: "PromptBox"
 tags: Projects
 date: 2023-10-31
-updated: 2023-11-15
+updated: 2023-11-18
 ---
 
 
@@ -62,9 +62,6 @@ File {{ f.filename }}:
                 <li><input type="checkbox" readonly="true" checked /> Bool arguments are always optional</li>
                 <li><input type="checkbox" readonly="true" checked /> required arguments (switch from required to optional)</li>
                 <li><input type="checkbox" readonly="true" checked /> Array arguments</li>
-                <li><input type="checkbox" readonly="true"  /> make sure it works to invoke with global options and template options at the same time</li>
-                <li><input type="checkbox" readonly="true"  /> system prompt, embedded and in separate file</li>
-                <li><input type="checkbox" readonly="true"  /> json mode</li>
               </ul>            </li>
             <li><input type="checkbox" readonly="true"  /> Support for GPT4 Vision
               <ul class="list-bullet">
@@ -106,6 +103,12 @@ File {{ f.filename }}:
             <li><input type="checkbox" readonly="true" checked /> Define CLI options in template file</li>
             <li><input type="checkbox" readonly="true" checked /> Help output always shows openai_key (maybe due to .env?)</li>
           </ul>        </li>
+      </ul>    </li>
+    <li><input type="checkbox" readonly="true"  /> Template model options should override config model options
+      <ul class="list-bullet">
+        <li><input type="checkbox" readonly="true"  /> make sure it works to invoke with global options and template options at the same time</li>
+        <li><input type="checkbox" readonly="true"  /> system prompt, embedded and in separate file</li>
+        <li><input type="checkbox" readonly="true"  /> json mode</li>
       </ul>    </li>
   </ul>
 

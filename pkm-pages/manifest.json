@@ -474,6 +474,16 @@
     "title": "2023-11-16",
     "uid": ""
   },
+  "pkm-pages/journals/2023-11-17.html": {
+    "slug": "/journals/2023_11_17",
+    "title": "2023-11-17",
+    "uid": ""
+  },
+  "pkm-pages/journals/2023-11-18.html": {
+    "slug": "/journals/2023_11_18",
+    "title": "2023-11-18",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -787,6 +797,11 @@
   "pkm-pages/notes/projects_promptbox.html": {
     "slug": "/notes/projects_promptbox",
     "title": "PromptBox",
+    "uid": ""
+  },
+  "pkm-pages/notes/projects_sbbp.html": {
+    "slug": "/notes/projects_sbbp",
+    "title": "SBBP",
     "uid": ""
   },
   "pkm-pages/notes/projects_tracksome.html": {
