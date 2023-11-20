@@ -5,6 +5,13 @@
 
   const projects = [
     {
+      name: `Should've Been a Blog Post`,
+      repo: 'https://www.github.com/dimfeld/sbbp',
+      link: 'https://www.github.com/dimfeld/sbbp',
+      text: `Should've Been a Blog Post (SBBP) downloads videos from Youtube, creates a high-quality transcript, and places that transcript alongside extracted images from the video. Snarky name aside, I love reading conference talks in this tool.`,
+      notes: '/notes/projects_sbbp',
+    },
+    {
       name: 'PromptBox',
       repo: 'https://www.github.com/dimfeld/promptbox',
       link: 'https://www.github.com/dimfeld/promptbox',

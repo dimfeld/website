@@ -24,7 +24,7 @@
   });
 </script>
 
-<main class="prose m-4 self-center px-2 font-serif">
+<main class="prose mt-4 w-full self-center px-2 font-serif">
   <div class="grid-cols-2 md:grid">
     <section>
       <h1 class="mb-0">Recent Writing</h1>
@@ -92,8 +92,9 @@
   <h2>Work</h2>
 
   <p class="prose">
-    I'm a co-founder of
-    <a href="https://www.carevoyance.com">Carevoyance</a> (acquired by
+    I'm currently taking some time off, but previously I co-founded and spent
+    nine years working on
+    <a href="https://h1.co/solutions/carevoyance/">Carevoyance</a> (acquired by
     <a href="https://www.h1.co">H1 Insights</a>), a sales acceleration tool that
     analyzes healthcare data and enables healthcare sellers to zero in on their
     best prospects and generate custom reports and insights with just a few
@@ -101,16 +102,17 @@
   </p>
 
   <p class="prose">
-    I spend most of my time there creating new data analyses, working on the
+    I spent most of my time there creating new data analyses, working on the
     backend API and database systems, and developing tooling to research data
-    anomalies and automate repetitive tasks. Recently I've been active on the
-    front-end too, and have been enjoying the Svelte framework.
+    anomalies and automate repetitive tasks. I also successfully transitioned
+    the entire frontend application from AngularJS to SvelteKit.
   </p>
 
   <p>
     In the past I worked almost exclusively in C++ and various assembly
     languages. Now that I'm more in the web ecosystem, I'm mostly writing
-    Javascript for work, but I'm using Rust more and more as well.
+    Javascript for work, using Rust when I can justify it, and grudgingly
+    dealing with Python's package system for AI/ML work.
   </p>
 
   <p>
@@ -125,9 +127,10 @@
 
   <h2>Life</h2>
   <p>
-    I usually have some sort of side project going on, and my most recent
-    obsession is <a href="https://github.com/dimfeld/ergo">Ergo</a>, a low-code
-    workflow orchestrator that is still in early stages, but coming along well.
+    I usually have a few side projects going on, and I have a selection listed
+    on my <a href="/projects">projects page</a>. There you'll find a bunch of
+    data workflow stuff, a personal dashboard, an AI assistant to amuse my kids,
+    and other things in various states of done-ness.
   </p>
   <p>
     Sometimes I wish I could code all day and night, but when not hacking on
@@ -140,10 +143,8 @@
   <h2>Where to find me</h2>
   <p>
     <a href="https:///www.twitter.com/dimfeld">Twitter</a> is probably the best
-    way to contact me, and I'm trying out
-    <a rel="me" href={contact.mastodon}>Mastodon</a>
-    as well. You can also email me at <em>daniel</em> at this domain or find me
-    on
+    way to contact me. You can also email me at <em>daniel</em> at this domain
+    or find me on
     <a href="https:///www.github.com/dimfeld">Github</a>.
   </p>
 
