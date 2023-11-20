@@ -35,14 +35,14 @@ draft: false
         <p>There&#39;s also a luck factor here, since the relative placement of the two statements in the compiled code can affect if the bug occurs. I&#39;ve seen cases where trivial changes like switching how we wrote an if statement, or merging two reactive statements into one, was enough to cause the bug to occur or go away.</p>
         <p>This is difficult to replicate in a simple REPL, but it happens most often with complex layouts that have a set of components and some shared state between them.</p>
         When you get lucky with the order of the compiled output statements, the process is something like this:
-          <ol class="list-bullet">
+          <ol class="list-numbered">
             <li>Reactive statement &quot;A&quot; runs, and calls the external function, which then updates the store.</li>
             <li>The listener in the Svelte component runs and updates <code>$store</code>, using the internal invalidate function to set the bit in the dirty bitset.</li>
             <li>Reactive statement &quot;B&quot; that depends on <code>$store</code> is checked. It runs because the store was updated.</li>
             <li>This cycle of running reactive code ends, so Svelte clears the bitset.</li>
           </ol>
         But if the two reactive statements are swapped, the order of events is something like this:
-          <ol class="list-bullet">
+          <ol class="list-numbered">
             <li>Reactive statement &quot;B&quot; that depends on <code>$store</code> is checked. It doesn&#39;t run because the store wasn&#39;t updated.</li>
             <li>Reactive statement &quot;A&quot; runs, and calls the external function, which then updates the store.</li>
             <li>The listener in the Svelte component runs and updates <code>$store</code>, using the internal invalidate function to set the bit in the dirty bitset.</li>
