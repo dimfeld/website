@@ -2,14 +2,33 @@
 title: "Effectum"
 tags: Projects
 date: 2022-11-16
-updated: 2022-12-03
+updated: 2023-11-20
 ---
 
 
   <ul class="list-bullet">
     <li><span><span class="font-medium text-gray-800">status:</span> <span>v0.1 released</span></span></li>
     <li><span><span class="font-medium text-gray-800">url:</span> <span><a href="https://github.com/dimfeld/effectum">https://github.com/dimfeld/effectum</a></span></span></li>
-    <li>A job queue based on SQLite, which will eventually be usable either embedded as a library or standalone.</li>
+    <li>A job queue based on SQLite, which is embedded as a library and eventually will run standalone.</li>
+    <li><h2>Task List</h2>
+      <ul class="list-bullet">
+        <li><h3>Up Next</h3></li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Server mode: allow adding jobs remotely</li>
+            <li><input type="checkbox" readonly="true"  /> Server mode: Job workers can be in other processes</li>
+            <li><input type="checkbox" readonly="true"  /> Make it easy to launch jobs on an orchestrator (Fly Machines, AWS Lambda, etc.)</li>
+          </ul>        </li>
+        <li><h3>Later</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Example: Retries due to failure</li>
+            <li><input type="checkbox" readonly="true"  /> Example: Job priority</li>
+            <li><input type="checkbox" readonly="true"  /> Example: Graceful shutdown</li>
+            <li><input type="checkbox" readonly="true"  /> Example: Checkpoint functionality</li>
+            <li><input type="checkbox" readonly="true"  /> Example: Expired jobs retry</li>
+          </ul>        </li>
+        <li><h3>Done</h3></li>
+      </ul>    </li>
     <li><h2>Current Features</h2>
       <ul class="list-bullet">
         <li>Scheduled Jobs</li>
@@ -33,33 +52,23 @@ updated: 2022-12-03
                 <li>This will probably also work best if the worker details are persisted to the database too.</li>
               </ul>            </li>
           </ul>        </li>
-      </ul>    </li>
-    <li><h2>Future Features</h2>
-      <ul class="list-bullet">
-        <li><h3>Examples</h3>
-          <ul class="list-bullet">
-            <li>Create example programs that demonstrate actual usage of the library.</li>
-            <li><input type="checkbox" readonly="true" checked /> Simple example</li>
-            <li><input type="checkbox" readonly="true"  /> Retries due to failure</li>
-            <li><input type="checkbox" readonly="true"  /> Job priority</li>
-            <li><input type="checkbox" readonly="true"  /> Graceful shutdown</li>
-            <li><input type="checkbox" readonly="true"  /> Checkpoint functionality</li>
-            <li><input type="checkbox" readonly="true"  /> Expired jobs retry</li>
-          </ul>        </li>
-        <li><h3>Cancellation and Modification of Pending Jobs</h3>
-          <ul class="list-bullet">
-            <li>Disallow this for jobs that are already running, but otherwise jobs should be able to be cancelled, rescheduled, or otherwise modified.</li>
-          </ul>        </li>
         <li><h3>Recurring Jobs</h3>
           <ul class="list-bullet">
             <li>A job template will be added to the database, which will have all the same fields as a normal job except that it will not be scheduled.</li>
             <li>For this job, a corresponding entry will be added to <code>recurring_jobs</code> with a cron-like spec. A task in the queue will then automatically schedule the jobs for the appropriate times.</li>
           </ul>        </li>
+        <li><h3>Cancellation and Modification of Pending Jobs</h3>
+          <ul class="list-bullet">
+            <li>Disallow this for jobs that are already running, but otherwise jobs should be able to be cancelled, rescheduled, or otherwise modified.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Future Features</h2>
+      <ul class="list-bullet">
         <li><h3>Server Mode</h3>
           <ul class="list-bullet">
             <li>If you need to scale up, ability to run the queue as its own server.</li>
             <li>This should present the same (or nearly the same) interface as the local mode, to make it easy to switch from one to the other.</li>
-            <li>Workers will be remote processes and communicate to the server over gRPC (maybe normal REST too?)
+            <li>Workers will be remote processes and communicate to the server over gRPC or normal HTTP
               <ul class="list-bullet">
                 <li>Use long polling or gRPC streaming here for workers that wait for pending jobs?</li>
               </ul>            </li>

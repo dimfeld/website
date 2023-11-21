@@ -16,21 +16,29 @@ updated: 2023-11-20
     <li><a href="https://github.com/dimfeld/sbbp">Github Link</a></li>
     <li><h2>Task List</h2>
       <ul class="list-bullet">
-        <li><h3>Up Next</h3>
-          <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Allow triggering video download and processing from inside the app</li>
-            <li><input type="checkbox" readonly="true"  /> Add &quot;read&quot; state and progress tracking</li>
-          </ul>        </li>
+        <li><h3>Up Next</h3></li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true"  /> Improve reader layout</li>
+            <li><input type="checkbox" readonly="true"  /> Improve whisper accuracy for technical terms
+              <ul class="list-bullet">
+                <li>See if OpenAI&#39;s <code>prompt</code> parameter can be passed to huggingface&#39;s whisper API</li>
+              </ul>            </li>
           </ul>        </li>
         <li><h3>Later</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true"  /> Host this somewhere so I can access it over the web and add to Readwise</li>
+            <li><input type="checkbox" readonly="true"  /> Hosting: Use an actual database</li>
+            <li><input type="checkbox" readonly="true"  /> Hosting: Consider using OpenAI Whisper so I don&#39;t have to run Whisper locally</li>
+            <li><input type="checkbox" readonly="true"  /> Hosting: Do SSIM in Rust to save RAM?</li>
+            <li><input type="checkbox" readonly="true"  /> Hosting: Store non-temporary downloaded files in Backblaze B2</li>
+            <li><input type="checkbox" readonly="true"  /> Hosting: Basic auth</li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Allow triggering video download and processing from inside the app &mdash; Nov 20th, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Queue up multiple videos for processing &mdash; Nov 20th, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Add &quot;read&quot; state and progress tracking &mdash; Nov 20th, 2023</li>
             <li><input type="checkbox" readonly="true" checked /> Speed up SSIM process &mdash; Nov 18th, 2023</li>
             <li><input type="checkbox" readonly="true" checked /> Generate a summary of the video &mdash; Nov 18th, 2023</li>
             <li><input type="checkbox" readonly="true" checked /> Use structural similarity (SSIM) metric to remove duplicate screenshots &mdash; Nov 17th, 2023</li>

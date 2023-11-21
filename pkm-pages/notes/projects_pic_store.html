@@ -11,7 +11,21 @@ updated: 2023-11-20
     <li><h2>Tasks</h2>
       <ul class="list-bullet">
         <li><h3>Up Next</h3></li>
-        <li><h3>Soon</h3></li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Quick upload endpoint
+              <ul class="list-bullet">
+                <li>This should allow creating a base image and uploading it with a single call. Some of the other image metadata such as alt text can be set later when using this mode.</li>
+                <li><code>/projects/:project_id/quick_upload</code></li>
+                <li>query string parameters:
+                  <ul class="list-bullet">
+                    <li>upload profile, if not the default</li>
+                    <li>alt text — defaults to empty</li>
+                    <li>filename — defaults to empty string (so just the base ID)</li>
+                    <li>output location name — this was already optional, so same logic as before</li>
+                  </ul>                </li>
+              </ul>            </li>
+          </ul>        </li>
         <li><h3>Later</h3>
           <ul class="list-bullet">
             <li>Side Helper Tasks
