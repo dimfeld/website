@@ -2,23 +2,63 @@
 title: "sqlx"
 tags: Rust
 date: 2021-03-19
-updated: 2021-03-19
+updated: 2023-11-24
 ---
 
 
   <ul class="list-bullet">
-    <li>Migrations
+    <li><h2>Deserializing JSON</h2>
+      <ul class="list-bullet">
+        <li><h3>Custom Types</h3>
+          <ul class="list-bullet">
+            <li>This is largely unintuitive if you don&#39;t want to go through a <code>serde_json::Value</code>. The trick is to rename the column in the query to include type information, which sqlx will use to</li>
+            <li><pre><code><span class="sy-source sy-rust"><span class="sy-meta sy-annotation sy-rust"><span class="sy-punctuation sy-definition sy-annotation sy-rust">#</span><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">[</span><span class="sy-variable sy-annotation sy-rust">derive</span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span></span></span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust">Serialize<span class="sy-punctuation sy-separator sy-rust">,</span> Deserialize</span></span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span></span><span class="sy-punctuation sy-section sy-group sy-end sy-rust">]</span></span>
+<span class="sy-meta sy-struct sy-rust"><span class="sy-storage sy-modifier sy-rust">pub</span> <span class="sy-storage sy-type sy-struct sy-rust">struct</span> </span><span class="sy-meta sy-struct sy-rust"><span class="sy-entity sy-name sy-struct sy-rust">SomeJsonField</span> </span><span class="sy-meta sy-struct sy-rust"><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-begin sy-rust">{</span>
+    <span class="sy-comment sy-line sy-double-slash sy-rust"><span class="sy-punctuation sy-definition sy-comment sy-rust">//</span> Whatever fields match the JSON structure
+</span>    <span class="sy-storage sy-modifier sy-rust">pub</span> <span class="sy-variable sy-other sy-member sy-rust">name</span><span class="sy-punctuation sy-separator sy-type sy-rust">:</span> String,
+    <span class="sy-storage sy-modifier sy-rust">pub</span> <span class="sy-variable sy-other sy-member sy-rust">some_param</span><span class="sy-punctuation sy-separator sy-type sy-rust">:</span> <span class="sy-meta sy-generic sy-rust"><span class="sy-support sy-type sy-rust">Option</span><span class="sy-punctuation sy-definition sy-generic sy-begin sy-rust">&lt;</span><span class="sy-support sy-type sy-rust">String</span><span class="sy-punctuation sy-definition sy-generic sy-end sy-rust">&gt;</span></span>,
+    <span class="sy-storage sy-modifier sy-rust">pub</span> <span class="sy-variable sy-other sy-member sy-rust">count</span><span class="sy-punctuation sy-separator sy-type sy-rust">:</span> <span class="sy-storage sy-type sy-rust">i32</span>,
+</span><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-end sy-rust">}</span></span></span>
+
+<span class="sy-support sy-macro sy-rust">sqlx_json_decode!</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span>SomeJsonField</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+
+<span class="sy-meta sy-annotation sy-rust"><span class="sy-punctuation sy-definition sy-annotation sy-rust">#</span><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">[</span><span class="sy-variable sy-annotation sy-rust">derive</span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span></span></span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust">sqlx::FromRow</span></span><span class="sy-meta sy-annotation sy-parameters sy-rust"><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span></span><span class="sy-punctuation sy-section sy-group sy-end sy-rust">]</span></span>
+<span class="sy-meta sy-struct sy-rust"><span class="sy-storage sy-modifier sy-rust">pub</span> <span class="sy-storage sy-type sy-struct sy-rust">struct</span> </span><span class="sy-meta sy-struct sy-rust"><span class="sy-entity sy-name sy-struct sy-rust">QueryResult</span> </span><span class="sy-meta sy-struct sy-rust"><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-begin sy-rust">{</span>
+    <span class="sy-storage sy-modifier sy-rust">pub</span> <span class="sy-variable sy-other sy-member sy-rust">id</span><span class="sy-punctuation sy-separator sy-type sy-rust">:</span> <span class="sy-storage sy-type sy-rust">i32</span>,
+    <span class="sy-storage sy-modifier sy-rust">pub</span> <span class="sy-variable sy-other sy-member sy-rust">name</span><span class="sy-punctuation sy-separator sy-type sy-rust">:</span> String,
+    <span class="sy-storage sy-modifier sy-rust">pub</span> <span class="sy-variable sy-other sy-member sy-rust">params</span><span class="sy-punctuation sy-separator sy-type sy-rust">:</span> <span class="sy-meta sy-path sy-rust">sqlx<span class="sy-punctuation sy-accessor sy-rust">::</span></span><span class="sy-meta sy-path sy-rust">types<span class="sy-punctuation sy-accessor sy-rust">::</span></span><span class="sy-meta sy-generic sy-rust">Json<span class="sy-punctuation sy-definition sy-generic sy-begin sy-rust">&lt;</span>SomeJsonField<span class="sy-punctuation sy-definition sy-generic sy-end sy-rust">&gt;</span></span>,
+</span><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-end sy-rust">}</span></span></span>
+
+async <span class="sy-meta sy-function sy-rust"><span class="sy-meta sy-function sy-rust"><span class="sy-storage sy-type sy-function sy-rust">fn</span> </span><span class="sy-entity sy-name sy-function sy-rust">do_query</span></span><span class="sy-meta sy-function sy-rust"><span class="sy-meta sy-function sy-parameters sy-rust"><span class="sy-punctuation sy-section sy-parameters sy-begin sy-rust">(</span><span class="sy-variable sy-parameter sy-rust">pool</span><span class="sy-punctuation sy-separator sy-rust">:</span> <span class="sy-keyword sy-operator sy-rust">&amp;</span>PgPool</span><span class="sy-meta sy-function sy-rust"><span class="sy-meta sy-function sy-parameters sy-rust"><span class="sy-punctuation sy-section sy-parameters sy-end sy-rust">)</span></span></span></span><span class="sy-meta sy-function sy-rust"> </span><span class="sy-meta sy-function sy-rust"><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-begin sy-rust">{</span>
+  <span class="sy-storage sy-type sy-rust">let</span> result <span class="sy-keyword sy-operator sy-assignment sy-rust">=</span> <span class="sy-meta sy-path sy-rust">sqlx<span class="sy-punctuation sy-accessor sy-rust">::</span></span>query_as<span class="sy-keyword sy-operator sy-logical sy-rust">!</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span>
+    QueryResult<span class="sy-punctuation sy-separator sy-rust">,</span>
+    <span class="sy-string sy-quoted sy-double sy-raw sy-rust"><span class="sy-storage sy-type sy-string sy-rust">r</span><span class="sy-punctuation sy-definition sy-string sy-begin sy-rust">##&quot;</span>SELECT id,
+        name,
+        params as &quot;params: SomeJsonField&quot;
+      FROM some_table<span class="sy-punctuation sy-definition sy-string sy-end sy-rust">&quot;##</span></span><span class="sy-punctuation sy-separator sy-rust">,</span>
+	</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-accessor sy-dot sy-rust">.</span><span class="sy-support sy-function sy-rust">fetch_one</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-begin sy-rust">(</span><span class="sy-keyword sy-operator sy-bitwise sy-rust">&amp;</span>pool</span><span class="sy-meta sy-group sy-rust"><span class="sy-punctuation sy-section sy-group sy-end sy-rust">)</span></span><span class="sy-punctuation sy-accessor sy-dot sy-rust">.</span>await<span class="sy-keyword sy-operator sy-rust">?</span><span class="sy-punctuation sy-terminator sy-rust">;</span>
+</span><span class="sy-meta sy-block sy-rust"><span class="sy-punctuation sy-section sy-block sy-end sy-rust">}</span></span></span>
+</span></code></pre></li>
+            <li>I also have a crate <a href="https://docs.rs/sqlx-transparent-json-decode/latest/sqlx_transparent_json_decode">sqlx-transparent-json-decode</a>, that provides a macro to implement the <code>Decode</code> trait for JSON columns for any structure that implements <code>Deserialize</code>.</li>
+            <li>With this crate, you can import the <code>sqlx_json_decode</code> macro, then add <code>sqlx_json_decode!(SomeJsonField)</code> to the above code, and then you won&#39;t have to wrap the type in <code>sqlx::types::Json</code> anymore. This can be convenient when using one of these structures for both database results and other purposes.</li>
+          </ul>        </li>
+        <li><h3>Box&lt;RawValue&gt;</h3>
+          <ul class="list-bullet">
+            <li>Sometimes you just want to get the raw JSON out of a field without needing to create a bunch of objects from it. For example, a web server that is passing the JSON straight down to the client without even looking at it. <code>serde_json</code> provides the <code>RawValue</code> type for this, but it is a reference type, and so needs to be wrapped in a <code>Box</code> or something to be usable once the database connection is released.</li>
+            <li><code>sqlx</code> provides an implementation to decode a <code>&amp;RawValue</code>, but not a <code>Box&lt;RawValue&gt;</code>, and so the <code>sqlx-transparent-json-decode</code> crate also offers a wrapper type around <code>Box&lt;RawValue&gt;</code> that implements <code>Decode</code>.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Migrations</h2>
       <ul class="list-bullet">
         <li>To update the checksum of a migration when the file changed, you can recalculate the hash
           <ul class="list-bullet">
             <li><code>cat migrations/FILENAME.sql | openssl dgst -sha384 | cut -d &#39; &#39; -f 2</code></li>
           </ul>        </li>
-        <li>Then change the checksum for that row in the database: 
+        <li>Then change the checksum for that row in the database:
           <ul class="list-bullet">
-            <li>
-<pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">update</span> _sqlx_migrations 
-	<span class="sy-keyword sy-other sy-DML sy-sql">set</span> checksum<span class="sy-keyword sy-operator sy-comparison sy-sql">=</span><span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span><span class="sy-constant sy-character sy-escape sy-sql">\x</span>&lt;the checksum&gt;<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>
-  <span class="sy-keyword sy-other sy-DML sy-sql">where</span> version <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span><span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>&lt;the version&gt;<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>;
+            <li><pre><code><span class="sy-source sy-sql"><span class="sy-keyword sy-other sy-DML sy-sql">update</span> _sqlx_migrations 
+<span class="sy-keyword sy-other sy-DML sy-sql">set</span> checksum<span class="sy-keyword sy-operator sy-comparison sy-sql">=</span><span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span><span class="sy-constant sy-character sy-escape sy-sql">\x</span>&lt;the checksum&gt;<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>
+<span class="sy-keyword sy-other sy-DML sy-sql">where</span> version <span class="sy-keyword sy-operator sy-comparison sy-sql">=</span><span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>&lt;the version&gt;<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>;
 </span></code></pre></li>
           </ul>        </li>
       </ul>    </li>
