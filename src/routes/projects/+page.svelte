@@ -15,10 +15,17 @@
     {
       name: 'PromptBox',
       repo: 'https://www.github.com/dimfeld/promptbox',
-      link: 'https://www.github.com/dimfeld/promptbox',
+      link: 'https://promptbox.imfeld.dev',
       text: `PromptBox is a utility that manages libraries of LLM prompt templates,
         which can be filled in and submitted from the command line.`,
       notes: '/notes/projects_promptbox',
+    },
+    {
+      name: 'sqlweld',
+      repo: 'https://www.github.com/dimfeld/sqlweld',
+      link: 'https://sqlweld.imfeld.dev',
+      text: `sqlweld is a utility that lets you write SQL in the Liquid template syntax, helping to
+        manage common clauses and generate multiple variants on a single query.`,
     },
     {
       name: 'Glance',
