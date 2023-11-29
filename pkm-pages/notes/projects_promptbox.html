@@ -2,13 +2,13 @@
 title: "PromptBox"
 tags: Projects
 date: 2023-10-31
-updated: 2023-11-18
+updated: 2023-11-29
 ---
 
 
   <ul class="list-bullet">
     <li>This utility allows maintaining libraries of LLM prompt templates which can be filled in and submitted from the command line.</li>
-    <li><a href="https://github.com/dimfeld/promptbox">Github</a></li>
+    <li><a href="https://github.com/dimfeld/promptbox">Github</a>, <a href="https://promptbox.imfeld.dev">Website</a></li>
     <li>A sample prompt. Each of the options below becomes a CLI flag which can fill in the template.
       <ul class="list-bullet">
         <li><pre><code><span class="sy-source sy-toml"><span class="sy-meta sy-tag sy-key sy-toml"><span class="sy-entity sy-name sy-tag sy-toml">description</span></span> <span class="sy-punctuation sy-definition sy-key-value sy-toml">=</span> <span class="sy-string sy-quoted sy-double sy-basic sy-toml"><span class="sy-punctuation sy-definition sy-string sy-begin sy-toml">&quot;</span>Summarize some files<span class="sy-punctuation sy-definition sy-string sy-end sy-toml">&quot;</span></span>
@@ -43,8 +43,6 @@ File {{ f.filename }}:
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Set up CI and distribution</li>
-            <li><input type="checkbox" readonly="true" checked /> Streaming support for openai<br /><span><span class="font-medium text-gray-800">completed:</span> <span>Nov 14th, 2023</span></span></li>
             <li><input type="checkbox" readonly="true"  /> Testing
               <ul class="list-bullet">
                 <li><input type="checkbox" readonly="true" checked /> stop at the top_level config</li>
@@ -61,7 +59,13 @@ File {{ f.filename }}:
                 <li><input type="checkbox" readonly="true" checked /> all types of arguments</li>
                 <li><input type="checkbox" readonly="true" checked /> Bool arguments are always optional</li>
                 <li><input type="checkbox" readonly="true" checked /> required arguments (switch from required to optional)</li>
-                <li><input type="checkbox" readonly="true" checked /> Array arguments</li>
+                <li><input type="checkbox" readonly="true" checked /> Array arguments
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" readonly="true"  /> Template model options should override config model options</li>
+                  </ul>                </li>
+                <li><input type="checkbox" readonly="true"  /> make sure it works to invoke with global options and template options at the same time</li>
+                <li><input type="checkbox" readonly="true"  /> system prompt, embedded and in separate file</li>
+                <li><input type="checkbox" readonly="true"  /> json mode</li>
               </ul>            </li>
             <li><input type="checkbox" readonly="true"  /> Support for GPT4 Vision
               <ul class="list-bullet">
@@ -91,6 +95,8 @@ File {{ f.filename }}:
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Set up CI and distribution &mdash; Nov 21th, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Streaming support for openai &mdash; Nov 14th, 2023</li>
             <li><input type="checkbox" readonly="true" checked /> Append any additional positional arguments</li>
             <li><input type="checkbox" readonly="true" checked /> Append input from stdin</li>
             <li><input type="checkbox" readonly="true" checked /> Support <code>format=&quot;json&quot;</code></li>
@@ -103,12 +109,6 @@ File {{ f.filename }}:
             <li><input type="checkbox" readonly="true" checked /> Define CLI options in template file</li>
             <li><input type="checkbox" readonly="true" checked /> Help output always shows openai_key (maybe due to .env?)</li>
           </ul>        </li>
-      </ul>    </li>
-    <li><input type="checkbox" readonly="true"  /> Template model options should override config model options
-      <ul class="list-bullet">
-        <li><input type="checkbox" readonly="true"  /> make sure it works to invoke with global options and template options at the same time</li>
-        <li><input type="checkbox" readonly="true"  /> system prompt, embedded and in separate file</li>
-        <li><input type="checkbox" readonly="true"  /> json mode</li>
       </ul>    </li>
   </ul>
 
