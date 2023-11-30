@@ -2,7 +2,7 @@
 title: "PromptBox"
 tags: Projects
 date: 2023-10-31
-updated: 2023-11-29
+updated: 2023-11-30
 ---
 
 
@@ -43,6 +43,21 @@ File {{ f.filename }}:
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Token counter functionality</li>
+            <li><input type="checkbox" readonly="true"  /> Handle 429 from OpenAI
+              <ul class="list-bullet">
+                <li>This also depends on token counting so we can detect when a request is just too large</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Chop off too-large context, option to keep beginning or end
+              <ul class="list-bullet">
+                <li>Should also be able to specify which inputs to slice off i.e. keep the fixed template intact but remove some of the piped-in input</li>
+                <li>Ideally have per-model context values.
+                  <ul class="list-bullet">
+                    <li>Ollama can get this from the API.</li>
+                    <li>OpenAI has few enough models that we can do some basic pattern matching to make a guess</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Verbose mode should print token stats at end</li>
             <li><input type="checkbox" readonly="true"  /> Testing
               <ul class="list-bullet">
                 <li><input type="checkbox" readonly="true" checked /> stop at the top_level config</li>
@@ -67,16 +82,20 @@ File {{ f.filename }}:
                 <li><input type="checkbox" readonly="true"  /> system prompt, embedded and in separate file</li>
                 <li><input type="checkbox" readonly="true"  /> json mode</li>
               </ul>            </li>
+          </ul>        </li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
             <li><input type="checkbox" readonly="true"  /> Support for GPT4 Vision
               <ul class="list-bullet">
                 <li>Can <a href="https://platform.openai.com/docs/guides/vision/uploading-base-64-encoded-images">pass images in base64</a></li>
               </ul>            </li>
-          </ul>        </li>
-        <li><h3>Soon</h3>
-          <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Pass images to Ollama</li>
+            <li><input type="checkbox" readonly="true"  /> Pass images to Ollama
+              <ul class="list-bullet">
+                <li>Once <a href="https://github.com/jmorganca/ollama/pull/1216">Multimodal support by pdevine · Pull Request #1216 · jmorganca/ollama</a> is merged and released</li>
+              </ul>            </li>
             <li><input type="checkbox" readonly="true"  /> List command
               <ul class="list-bullet">
+                <li>List all templates in a directory</li>
                 <li>should also take a filter</li>
                 <li>Short mode for completion</li>
                 <li>by default print template name and description in a table</li>
