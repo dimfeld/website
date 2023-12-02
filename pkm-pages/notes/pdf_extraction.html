@@ -1,0 +1,33 @@
+---
+title: "PDF Extraction"
+tags: 
+date: 2023-12-02
+updated: 2023-12-02
+---
+
+
+  <ul class="list-bullet">
+    <li>A full pipeline that includes the below techniques and more: <a href="https://github.com/VikParuchuri/marker">VikParuchuri/marker: Convert PDF to markdown quickly with high accuracy</a></li>
+    <li><a href="https://github.com/tesseract-ocr/tesseract">tesseract</a> is one of the leading OCR applications/libraries
+      <ul class="list-bullet">
+        <li>Usually want PSM mode 4 (single column of text) or 6 (single uniform block of text)</li>
+        <li><a href="https://pyimagesearch.com/2021/11/15/tesseract-page-segmentation-modes-psms-explained-how-to-improve-your-ocr-accuracy/">Tesseract Page Segmentation Modes (PSMs) Explained: How to Improve Your OCR Accuracy - PyImageSearch</a></li>
+      </ul>    </li>
+    <li>OCR often works best with some preprocessing
+      <ul class="list-bullet">
+        <li><pre><code><span class="sy-source sy-python"><span class="sy-comment sy-line sy-number-sign sy-python"><span class="sy-punctuation sy-definition sy-comment sy-python">#</span> get grayscale image
+</span><span class="sy-meta sy-function sy-python"><span class="sy-storage sy-type sy-function sy-python"><span class="sy-keyword sy-declaration sy-function sy-python">def</span></span> <span class="sy-entity sy-name sy-function sy-python"><span class="sy-meta sy-generic-name sy-python">get_grayscale</span></span></span><span class="sy-meta sy-function sy-parameters sy-python"><span class="sy-punctuation sy-section sy-parameters sy-begin sy-python">(</span></span><span class="sy-meta sy-function sy-parameters sy-python"><span class="sy-variable sy-parameter sy-python">image</span><span class="sy-punctuation sy-section sy-parameters sy-end sy-python">)</span></span><span class="sy-meta sy-function sy-python"><span class="sy-punctuation sy-section sy-function sy-begin sy-python">:</span></span>
+    <span class="sy-keyword sy-control sy-flow sy-return sy-python">return</span> <span class="sy-meta sy-function-call sy-python"><span class="sy-meta sy-qualified-name sy-python"><span class="sy-meta sy-generic-name sy-python">cv2</span></span><span class="sy-meta sy-qualified-name sy-python"><span class="sy-punctuation sy-accessor sy-dot sy-python">.</span></span><span class="sy-meta sy-qualified-name sy-python"><span class="sy-variable sy-function sy-python"><span class="sy-meta sy-generic-name sy-python">cvtColor</span></span></span></span><span class="sy-meta sy-function-call sy-arguments sy-python"><span class="sy-punctuation sy-section sy-arguments sy-begin sy-python">(</span><span class="sy-meta sy-qualified-name sy-python"><span class="sy-meta sy-generic-name sy-python">image</span></span><span class="sy-punctuation sy-separator sy-arguments sy-python">,</span> <span class="sy-meta sy-qualified-name sy-python"><span class="sy-meta sy-generic-name sy-python">cv2</span><span class="sy-punctuation sy-accessor sy-dot sy-python">.</span><span class="sy-variable sy-other sy-constant sy-python">COLOR_BGR2GRAY</span></span><span class="sy-punctuation sy-section sy-arguments sy-end sy-python">)</span></span>
+
+<span class="sy-meta sy-function sy-python"><span class="sy-storage sy-type sy-function sy-python"><span class="sy-keyword sy-declaration sy-function sy-python">def</span></span> <span class="sy-entity sy-name sy-function sy-python"><span class="sy-meta sy-generic-name sy-python">thresholding</span></span></span><span class="sy-meta sy-function sy-parameters sy-python"><span class="sy-punctuation sy-section sy-parameters sy-begin sy-python">(</span></span><span class="sy-meta sy-function sy-parameters sy-python"><span class="sy-variable sy-parameter sy-python">image</span><span class="sy-punctuation sy-section sy-parameters sy-end sy-python">)</span></span><span class="sy-meta sy-function sy-python"><span class="sy-punctuation sy-section sy-function sy-begin sy-python">:</span></span>
+    <span class="sy-keyword sy-control sy-flow sy-return sy-python">return</span> <span class="sy-meta sy-function-call sy-python"><span class="sy-meta sy-qualified-name sy-python"><span class="sy-meta sy-generic-name sy-python">cv2</span></span><span class="sy-meta sy-qualified-name sy-python"><span class="sy-punctuation sy-accessor sy-dot sy-python">.</span></span><span class="sy-meta sy-qualified-name sy-python"><span class="sy-variable sy-function sy-python"><span class="sy-meta sy-generic-name sy-python">threshold</span></span></span></span><span class="sy-meta sy-function-call sy-arguments sy-python"><span class="sy-punctuation sy-section sy-arguments sy-begin sy-python">(</span><span class="sy-meta sy-qualified-name sy-python"><span class="sy-meta sy-generic-name sy-python">image</span></span><span class="sy-punctuation sy-separator sy-arguments sy-python">,</span> <span class="sy-constant sy-numeric sy-integer sy-decimal sy-python">0</span><span class="sy-punctuation sy-separator sy-arguments sy-python">,</span> <span class="sy-constant sy-numeric sy-integer sy-decimal sy-python">255</span><span class="sy-punctuation sy-separator sy-arguments sy-python">,</span> <span class="sy-meta sy-qualified-name sy-python"><span class="sy-meta sy-generic-name sy-python">cv2</span><span class="sy-punctuation sy-accessor sy-dot sy-python">.</span><span class="sy-variable sy-other sy-constant sy-python">THRESH_BINARY</span></span> <span class="sy-keyword sy-operator sy-arithmetic sy-python">+</span> <span class="sy-meta sy-qualified-name sy-python"><span class="sy-meta sy-generic-name sy-python">cv2</span><span class="sy-punctuation sy-accessor sy-dot sy-python">.</span><span class="sy-variable sy-other sy-constant sy-python">THRESH_OTSU</span></span><span class="sy-punctuation sy-section sy-arguments sy-end sy-python">)</span></span><span class="sy-meta sy-item-access sy-python"><span class="sy-punctuation sy-section sy-brackets sy-begin sy-python">[</span></span><span class="sy-meta sy-item-access sy-arguments sy-python"><span class="sy-constant sy-numeric sy-integer sy-decimal sy-python">1</span></span><span class="sy-meta sy-item-access sy-python"><span class="sy-punctuation sy-section sy-brackets sy-end sy-python">]</span></span>
+</span></code></pre></li>
+        <li><a href="https://pyimagesearch.com/2017/02/20/text-skew-correction-opencv-python/">Deskew</a></li>
+      </ul>    </li>
+    <li>Table extraction
+      <ul class="list-bullet">
+        <li><a href="https://pyimagesearch.com/2022/02/28/multi-column-table-ocr/">Multi-Column Table OCR - PyImageSearch</a></li>
+        <li><a href="https://github.com/microsoft/table-transformer">Microsoft Table Transformer (TATR) </a></li>
+      </ul>    </li>
+  </ul>
+

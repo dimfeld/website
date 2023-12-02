@@ -2,7 +2,7 @@
 title: "PromptBox"
 tags: Projects
 date: 2023-10-31
-updated: 2023-11-30
+updated: 2023-12-02
 ---
 
 
@@ -43,21 +43,7 @@ File {{ f.filename }}:
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Token counter functionality</li>
-            <li><input type="checkbox" readonly="true"  /> Handle 429 from OpenAI
-              <ul class="list-bullet">
-                <li>This also depends on token counting so we can detect when a request is just too large</li>
-              </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Chop off too-large context, option to keep beginning or end
-              <ul class="list-bullet">
-                <li>Should also be able to specify which inputs to slice off i.e. keep the fixed template intact but remove some of the piped-in input</li>
-                <li>Ideally have per-model context values.
-                  <ul class="list-bullet">
-                    <li>Ollama can get this from the API.</li>
-                    <li>OpenAI has few enough models that we can do some basic pattern matching to make a guess</li>
-                    <li>But need ability to specify a lower cap too, e.g. maybe we never actually want to send 128K tokens to GPT4</li>
-                  </ul>                </li>
-              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Handle 429 from OpenAI</li>
             <li><input type="checkbox" readonly="true"  /> Verbose mode should print token stats at end</li>
             <li><input type="checkbox" readonly="true"  /> Testing
               <ul class="list-bullet">
@@ -79,7 +65,7 @@ File {{ f.filename }}:
                   <ul class="list-bullet">
                     <li><input type="checkbox" readonly="true"  /> Template model options should override config model options</li>
                   </ul>                </li>
-                <li><input type="checkbox" readonly="true"  /> make sure it works to invoke with global options and template options at the same time</li>
+                <li><input type="checkbox" readonly="true"  /> make sure it works to invoke with command-line options and template options at the same time</li>
                 <li><input type="checkbox" readonly="true"  /> system prompt, embedded and in separate file</li>
                 <li><input type="checkbox" readonly="true"  /> json mode</li>
               </ul>            </li>
@@ -102,6 +88,7 @@ File {{ f.filename }}:
                 <li>by default print template name and description in a table</li>
               </ul>            </li>
             <li><input type="checkbox" readonly="true"  /> Show command to output the information from a template</li>
+            <li><input type="checkbox" readonly="true"  /> &quot;run&quot; command detection is fragile</li>
           </ul>        </li>
         <li><h3>Later</h3>
           <ul class="list-bullet">
@@ -112,9 +99,21 @@ File {{ f.filename }}:
             <li><input type="checkbox" readonly="true"  /> bash/zsh Autocomplete template names</li>
             <li><input type="checkbox" readonly="true"  /> Can we autocomplete options as well once the template name is present?</li>
             <li><input type="checkbox" readonly="true"  /> Recall previous invocations</li>
+            <li><input type="checkbox" readonly="true"  /> Option to trim context in the middle with a <code>&lt;truncated&gt;</code> message or something like that?</li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Chop off too-large context, option to keep beginning or end &mdash; v0.1.1 Dec 1st, 2023
+              <ul class="list-bullet">
+                <li>Should also be able to specify which inputs to slice off i.e. keep the fixed template intact but remove some of the piped-in input</li>
+                <li>Ideally have per-model context values.
+                  <ul class="list-bullet">
+                    <li>Ollama can get this from the API.</li>
+                    <li>OpenAI has few enough models that we can do some basic pattern matching to make a guess</li>
+                    <li>But need ability to specify a lower cap too, e.g. maybe we never actually want to send 128K tokens to GPT4</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true" checked /> Token counter functionality &mdash; v0.1.1 Nov 30th, 2023</li>
             <li><input type="checkbox" readonly="true" checked /> Set up CI and distribution &mdash; Nov 21th, 2023</li>
             <li><input type="checkbox" readonly="true" checked /> Streaming support for openai &mdash; Nov 14th, 2023</li>
             <li><input type="checkbox" readonly="true" checked /> Append any additional positional arguments</li>
