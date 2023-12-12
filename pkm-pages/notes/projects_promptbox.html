@@ -2,7 +2,7 @@
 title: "PromptBox"
 tags: Projects
 date: 2023-10-31
-updated: 2023-12-02
+updated: 2023-12-12
 ---
 
 
@@ -43,43 +43,18 @@ File {{ f.filename }}:
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Handle 429 from OpenAI</li>
-            <li><input type="checkbox" readonly="true"  /> Verbose mode should print token stats at end</li>
-            <li><input type="checkbox" readonly="true"  /> Testing
-              <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true" checked /> stop at the top_level config</li>
-                <li><input type="checkbox" readonly="true" checked /> Resolution of model options between different configs</li>
-                <li><input type="checkbox" readonly="true" checked /> Don&#39;t require a config in every directory</li>
-                <li><input type="checkbox" readonly="true" checked /> Malformed configs raise an error</li>
-                <li><input type="checkbox" readonly="true" checked /> Malformed templates throw an error</li>
-                <li><input type="checkbox" readonly="true" checked /> templates resolved in order from the current directory</li>
-                <li><input type="checkbox" readonly="true" checked /> Look under <code>./promptbox.toml</code> and <code>./promptbox/promptbox.toml</code></li>
-                <li><input type="checkbox" readonly="true" checked /> Prompts can be in subdirectories</li>
-                <li><input type="checkbox" readonly="true"  /> Prepend</li>
-                <li><input type="checkbox" readonly="true"  /> Append</li>
-                <li><input type="checkbox" readonly="true"  /> Prepend and append</li>
-                <li><input type="checkbox" readonly="true" checked /> all types of arguments</li>
-                <li><input type="checkbox" readonly="true" checked /> Bool arguments are always optional</li>
-                <li><input type="checkbox" readonly="true" checked /> required arguments (switch from required to optional)</li>
-                <li><input type="checkbox" readonly="true" checked /> Array arguments
-                  <ul class="list-bullet">
-                    <li><input type="checkbox" readonly="true"  /> Template model options should override config model options</li>
-                  </ul>                </li>
-                <li><input type="checkbox" readonly="true"  /> make sure it works to invoke with command-line options and template options at the same time</li>
-                <li><input type="checkbox" readonly="true"  /> system prompt, embedded and in separate file</li>
-                <li><input type="checkbox" readonly="true"  /> json mode</li>
-              </ul>            </li>
-          </ul>        </li>
-        <li><h3>Soon</h3>
-          <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Support for GPT4 Vision
-              <ul class="list-bullet">
-                <li>Can <a href="https://platform.openai.com/docs/guides/vision/uploading-base-64-encoded-images">pass images in base64</a></li>
-              </ul>            </li>
             <li><input type="checkbox" readonly="true"  /> Pass images to Ollama
               <ul class="list-bullet">
                 <li>Once <a href="https://github.com/jmorganca/ollama/pull/1216">Multimodal support by pdevine · Pull Request #1216 · jmorganca/ollama</a> is merged and released</li>
               </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Support for GPT4 Vision
+              <ul class="list-bullet">
+                <li>Can <a href="https://platform.openai.com/docs/guides/vision/uploading-base-64-encoded-images">pass images in base64</a></li>
+              </ul>            </li>
+          </ul>        </li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Verbose mode should print token stats at end</li>
             <li><input type="checkbox" readonly="true"  /> List command
               <ul class="list-bullet">
                 <li>List all templates in a directory</li>
@@ -90,19 +65,97 @@ File {{ f.filename }}:
             <li><input type="checkbox" readonly="true"  /> Show command to output the information from a template</li>
             <li><input type="checkbox" readonly="true"  /> &quot;run&quot; command detection is fragile</li>
           </ul>        </li>
-        <li><h3>Later</h3>
+        <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true"  /> Save all invocations in a database?</li>
             <li><input type="checkbox" readonly="true"  /> Allow templates to reference partials in same directory</li>
             <li><input type="checkbox" readonly="true"  /> Allow templates to reference partials in parent template directories</li>
-            <li><input type="checkbox" readonly="true"  /> Define ChatGPT functions in the prompt? Probably skip this</li>
+            <li><input type="checkbox" readonly="true"  /> Define ChatGPT functions in the prompt? Probably skip this, more appropriate for some other project</li>
             <li><input type="checkbox" readonly="true"  /> bash/zsh Autocomplete template names</li>
             <li><input type="checkbox" readonly="true"  /> Can we autocomplete options as well once the template name is present?</li>
             <li><input type="checkbox" readonly="true"  /> Recall previous invocations</li>
-            <li><input type="checkbox" readonly="true"  /> Option to trim context in the middle with a <code>&lt;truncated&gt;</code> message or something like that?</li>
+            <li><input type="checkbox" readonly="true"  /> Option to trim context in the middle with a <code>&lt;truncated&gt;</code> message or something like that</li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Support <a href="https://openrouter.ai/">OpenRouter</a> &mdash; v0.2.0 Dec 8th, 2023
+              <ul class="list-bullet">
+                <li>OpenRouter offers an OpenAI compatible API which is probably the easiest way to add this.</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true" checked /> Set prompt format, context length, etc. per model - v0.2.0 Dec 8th, 2023
+              <ul class="list-bullet">
+                <li>Done specifically for Together right now, can expand this to generic host at some point</li>
+                <li>Support standard formats and allow custom formats too</li>
+                <li>Needed for some providers that don&#39;t apply the template for you, or who don&#39;t provide accurate info about context length and other things.</li>
+                <li>This can be defined in the model definition once it can be an object (see <a class="block-ref" href="/notes/projects_promptbox#656e51d7-5951-46f1-9945-f52622163231"><input type="checkbox" readonly="true" checked /> Support multiple hosts - v0.2.0 Dec 8th, 2023</a>).</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true" checked /> Support together.xyz model host - v0.2.0 Dec 8th, 2023
+              <ul class="list-bullet">
+                <li>Fetch model info from <code>https://api.together.xyz/models/info</code></li>
+                <li>Short term cache on the model info</li>
+                <li>Get the config from the model info to determine how to format the prompt, stop tokens, etc.
+                  <ul class="list-bullet">
+                    <li>Some of the configs here actually don&#39;t include things like system prompt...
+                      <ul class="list-bullet">
+                        <li>Maybe just build in templates to the tool and lets them be specified in the config somehow</li>
+                      </ul>                    </li>
+                    <li>Looks like context length is missing from some models as well</li>
+                  </ul>                </li>
+                <li>max_tokens seems have a very small default, need to set this higher to be useful</li>
+              </ul>            </li>
+            <li id="656e51d7-5951-46f1-9945-f52622163231"><input type="checkbox" readonly="true" checked /> Support multiple hosts - v0.2.0 Dec 8th, 2023
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true" checked /> Allow defining hosts beyond the built-in hosts
+                  <ul class="list-bullet">
+                    <li>API url</li>
+                    <li>Request Format (currently just OpenAI and Ollama format but probably more in the future)</li>
+                    <li>Environment variable that holds the API key</li>
+                  </ul>                </li>
+                <li><input type="checkbox" readonly="true" checked /> Ability to configure the default host for non-GPT-3.5/4 models (whereas now Ollama is the default)</li>
+                <li><input type="checkbox" readonly="true" checked /> Need a way to specify in the model name which host to use
+                  <ul class="list-bullet">
+                    <li>Actually the way to do this is to allow the model name to be either a string or a <code>{ host: Option&lt;String&gt;, model: String }</code> structure.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" readonly="true" checked /> Tests
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" readonly="true" checked /> config file overrides specific fields of bulit-in hosts
+                      <ul class="list-bullet">
+                        <li>e.g. <code>host.openai.api_key = &quot;DIFFERENT_VAR_NAME&quot;</code></li>
+                      </ul>                    </li>
+                    <li><input type="checkbox" readonly="true" checked /> Adding new hosts from the config file</li>
+                    <li><input type="checkbox" readonly="true" checked /> Use default provider when none is specified</li>
+                    <li><input type="checkbox" readonly="true" checked /> Set <code>default_host</code> to something else</li>
+                    <li><input type="checkbox" readonly="true" checked /> Complain when default_host refers to a nonexistent host</li>
+                    <li><input type="checkbox" readonly="true" checked /> Alias handling
+                      <ul class="list-bullet">
+                        <li>Alias can be a full model spec</li>
+                        <li>Model can be a full model spec and also reference an alias which is a full model spec. Should fetch the alias from <code>model</code> and merge the remaining fields together in this case</li>
+                      </ul>                    </li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true" checked /> Testing
+              <ul class="list-bullet">
+                <li><input type="checkbox" readonly="true" checked /> stop at the top_level config</li>
+                <li><input type="checkbox" readonly="true" checked /> Resolution of model options between different configs</li>
+                <li><input type="checkbox" readonly="true" checked /> Don&#39;t require a config in every directory</li>
+                <li><input type="checkbox" readonly="true" checked /> Malformed configs raise an error</li>
+                <li><input type="checkbox" readonly="true" checked /> Malformed templates throw an error</li>
+                <li><input type="checkbox" readonly="true" checked /> templates resolved in order from the current directory</li>
+                <li><input type="checkbox" readonly="true" checked /> Look under <code>./promptbox.toml</code> and <code>./promptbox/promptbox.toml</code></li>
+                <li><input type="checkbox" readonly="true" checked /> Prompts can be in subdirectories</li>
+                <li><input type="checkbox" readonly="true" checked /> Prepend</li>
+                <li><input type="checkbox" readonly="true" checked /> Append</li>
+                <li><input type="checkbox" readonly="true" checked /> Prepend and append</li>
+                <li><input type="checkbox" readonly="true" checked /> all types of arguments</li>
+                <li><input type="checkbox" readonly="true" checked /> Bool arguments are always optional</li>
+                <li><input type="checkbox" readonly="true" checked /> required arguments (switch from required to optional)</li>
+                <li><input type="checkbox" readonly="true" checked /> Array arguments</li>
+                <li><input type="checkbox" readonly="true" checked /> Template model options should override config model options</li>
+                <li><input type="checkbox" readonly="true" checked /> make sure it works to invoke with command-line options and template options at the same time</li>
+                <li><input type="checkbox" readonly="true" checked /> system prompt, embedded and in separate file</li>
+                <li><input type="checkbox" readonly="true" checked /> json mode</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true" checked /> Handle 429 from OpenAI &mdash; v0.1.2 Dec 4th, 2023</li>
             <li><input type="checkbox" readonly="true" checked /> Chop off too-large context, option to keep beginning or end &mdash; v0.1.1 Dec 1st, 2023
               <ul class="list-bullet">
                 <li>Should also be able to specify which inputs to slice off i.e. keep the fixed template intact but remove some of the piped-in input</li>
