@@ -2,7 +2,7 @@
 title: "PromptBox"
 tags: Projects
 date: 2023-10-31
-updated: 2023-12-12
+updated: 2023-12-14
 ---
 
 
@@ -41,17 +41,7 @@ File {{ f.filename }}:
       </ul>    </li>
     <li><h2>Task List</h2>
       <ul class="list-bullet">
-        <li><h3>Up Next</h3>
-          <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Pass images to Ollama
-              <ul class="list-bullet">
-                <li>Once <a href="https://github.com/jmorganca/ollama/pull/1216">Multimodal support by pdevine · Pull Request #1216 · jmorganca/ollama</a> is merged and released</li>
-              </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Support for GPT4 Vision
-              <ul class="list-bullet">
-                <li>Can <a href="https://platform.openai.com/docs/guides/vision/uploading-base-64-encoded-images">pass images in base64</a></li>
-              </ul>            </li>
-          </ul>        </li>
+        <li><h3>Up Next</h3></li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" readonly="true"  /> Verbose mode should print token stats at end</li>
@@ -78,6 +68,11 @@ File {{ f.filename }}:
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Pass images to Ollama &mdash; v0.3.0 Dec 13th, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Support for GPT4 Vision &mdash; v0.3.0 Dec 13th, 2023
+              <ul class="list-bullet">
+                <li>Can <a href="https://platform.openai.com/docs/guides/vision/uploading-base-64-encoded-images">pass images in base64</a></li>
+              </ul>            </li>
             <li><input type="checkbox" readonly="true" checked /> Support <a href="https://openrouter.ai/">OpenRouter</a> &mdash; v0.2.0 Dec 8th, 2023
               <ul class="list-bullet">
                 <li>OpenRouter offers an OpenAI compatible API which is probably the easiest way to add this.</li>

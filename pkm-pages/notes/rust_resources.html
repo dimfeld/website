@@ -2,7 +2,7 @@
 title: "Rust Resources"
 tags: Rust
 date: 2021-02-13
-updated: 2023-11-11
+updated: 2023-12-19
 ---
 
 
@@ -22,14 +22,21 @@ updated: 2023-11-11
           <ul class="list-bullet">
             <li><a href="https://docs.rs/rayon">rayon</a> for super-easy parallelism</li>
             <li><a href="https://docs.rs/itertools">itertools</a> adds a bunch of useful functions that work with <code>Iterator</code></li>
-            <li><a href="https://docs.rs/fxhash">fxhash</a> is a good default hash replacement if you DO NOT need a cryptographically secure hash. If you&#39;re running a service that stores user-defined input in a hash table then don&#39;t use it.</li>
+            <li><a href="https://docs.rs/ahash">ahash</a> is a good default hash replacement.
+              <ul class="list-bullet">
+                <li>It is not cryptographically secure. But unlike many non-cryptographically secure hashes, it is designed to be DOS resistant, so it&#39;s OK to use it for HashMaps that take user-provided input.</li>
+                <li>ahash also uses a random seed initialization and is not guaranteed to have stable output across versions or platforms, so you generally should not use it in situations where a hash will be stored to disk or sent across the network, but it is great for in-memory data structures.</li>
+              </ul>            </li>
             <li><a href="https://docs.rs/smallvec">smallvec</a> when you are making a lot of mostly-small vectors and most, but not all of them, will be below a certain size.</li>
             <li><a href="http://docs.rs/arrayvec">arrayvec</a> when you are making a lot of small vectors and know that they will never exceed a certain size</li>
             <li><a href="https://docs.rs/aho-corasick">aho-corasick</a> for performing multiple substring searches at once in a larger string</li>
           </ul>        </li>
         <li>Error Handling
           <ul class="list-bullet">
-            <li><a href="https://docs.rs/error-stack">error-stack</a> makes it easy to retain the entire stack of errors throughout execution, ensuring nothing is lost. It also allows attaching additional context to any error in the stack.</li>
+            <li><a href="https://docs.rs/error-stack">error-stack</a> makes it easy to retain the entire stack of errors throughout execution, ensuring nothing is lost. It also allows attaching additional context to any error in the stack.
+              <ul class="list-bullet">
+                <li>This isn&#39;t a replacement for <code>thiserror</code>, but a great complement to it, and I use it in all my projects now.</li>
+              </ul>            </li>
             <li><a href="https://docs.rs/anyhow">anyhow</a> is great for just merging random errors together when you don&#39;t really care otherwise and just want to get the error message out and all the various errors to have the same type. (i.e. most CLI utilities)</li>
             <li><a href="https://docs.rs/eyre">eyre</a> is a fork of <code>anyhow</code> with emphasis on better error reporting
               <ul class="list-bullet">
@@ -83,6 +90,7 @@ updated: 2023-11-11
             <li><code>dialoguer</code> for prompts</li>
             <li><code>indicatif</code> for progress indicators</li>
             <li><code>clap</code> can also be used to create a REPL. See <a href="https://github.com/dimfeld/perceive/blob/master/crates/perceive-cli/repl.rs">https://github.com/dimfeld/perceive/blob/master/crates/perceive-cli/repl.rs</a> for an example.</li>
+            <li><a href="https://docs.rs/ratatui/latest/ratatui/">ratatui</a> for complex terminal-based UI</li>
           </ul>        </li>
         <li>Database
           <ul class="list-bullet">
@@ -116,10 +124,10 @@ updated: 2023-11-11
               <ul class="list-bullet">
                 <li>I&#39;ve heard that <a href="https://tree-sitter.github.io/tree-sitter/syntax-highlighting">tree-sitter</a> is good for this too but haven&#39;t tried it.</li>
               </ul>            </li>
-            <li><a href="https://docs.rs/handlebars">handlebars</a>, <a href="https://docs.rs/liquid">liquid</a>, and <a href="https://docs.rs/tera">tera</a> are popular libraries for text templates.</li>
+            <li><a href="https://docs.rs/handlebars">handlebars</a>, <a href="https://docs.rs/liquid">liquid</a>, and <a href="https://docs.rs/tera">tera</a> are popular libraries for text templates. I&#39;m currently mostly using <code>tera</code> since it supports template inheritance but they&#39;re all good.</li>
             <li><a href="https://docs.rs/opendal/latest/opendal/">opendal</a> and <a href="https://docs.rs/object_store/latest/object_store/">object_store</a> for abstracting IO operations over different storage such as local disk and various cloud storage services.</li>
             <li><a href="https://docs.rs/delegate">delegate</a> for delegating method calls to the same method on an internal field.</li>
-            <li><a href="https://crates.io/crates/ouroboros">ouroboros</a> for allowing members of a structure to reference other owned members in the structure, with some additional methods to build and borrow the data.</li>
+            <li><a href="https://crates.io/crates/ouroboros">ouroboros</a> and <a href="https://docs.rs/self_cell/latest/self_cell/">self_cell</a> for allowing members of a structure to reference other owned members in the structure, with some additional methods to build and borrow the data.</li>
             <li><a href="https://docs.rs/tempfile/latest/tempfile/index.html">tempfile</a> for managing temporary files that will automatically clean themselves up</li>
             <li><a href="https://docs.rs/strum/latest/strum/">strum</a> includes a bunch of functionality for enums such as iterating over the members and autogenerating a <code>Display</code> impl.</li>
             <li>Arena Allocators
@@ -127,6 +135,8 @@ updated: 2023-11-11
                 <li><a href="https://docs.rs/bumpalo/latest/bumpalo/">bumpalo</a> skips calling <code>Drop</code> but allows mixed types of allocations in an arena.</li>
                 <li><a href="https://docs.rs/typed-arena/latest/typed_arena/">typed-arena</a> calls <code>Drop</code> but is limited to allocating objects of one type per arena.</li>
               </ul>            </li>
+            <li><a href="https://docs.rs/validator/latest/validator/">validator</a> is a derive macro for easily adding validation logic to a struct.</li>
+            <li><a href="https://lib.rs/crates/typed-builder">typed-builder</a> creates &quot;builder&quot; functionality for a struct</li>
           </ul>        </li>
       </ul>    </li>
     <li>Learning

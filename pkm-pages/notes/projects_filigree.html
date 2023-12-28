@@ -1,0 +1,263 @@
+---
+title: "Filigree"
+tags: Projects
+date: 2023-12-09
+updated: 2023-12-28
+---
+
+
+  <ul class="list-bullet">
+    <li>Filigree is a web app framework based on Rust and SvelteKit, which includes common components such as authentication and background workers, and also makes it easier to set up data models and generate SQL, endpoints, and so on to use them.</li>
+    <li><h2>Task List</h2>
+      <ul class="list-bullet">
+        <li><h3>Up Next</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Get server to start</li>
+            <li><input type="checkbox" readonly="true"  /> Password Auth endpoints</li>
+            <li><input type="checkbox" readonly="true"  /> Endpoints for retrieving and updating your own user</li>
+          </ul>        </li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> Need a default role of admin which has all the permissions. (Or actually just add a new admin permission so there&#39;s one for the global admin and one for the team admin)</li>
+            <li><input type="checkbox" readonly="true"  /> endpoint to create a new org that also creates default roles, adds a user, etc.</li>
+            <li><input type="checkbox" readonly="true"  /> Ability to make &quot;new org&quot; open to the public or admin-only</li>
+            <li><input type="checkbox" readonly="true"  /> Generate Typescript interfaces and JS code to talk to the API</li>
+            <li><input type="checkbox" readonly="true"  /> Configurable &quot;create&quot; permission
+              <ul class="list-bullet">
+                <li>for non-individual models, the owner permission or the write permission</li>
+                <li>for individual models, can be a separate global permission or always allow</li>
+                <li>How to properly define configuration for these since they have two settings?
+                  <ul class="list-bullet">
+                    <li>Maybe make a tagged enum for permissions model, with different values for each</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Password forgot/reset endpoints</li>
+            <li><input type="checkbox" readonly="true"  /> MVP Basic email sending, enough to do password management and such</li>
+          </ul>        </li>
+        <li><h3>Later/Maybe</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true"  /> For models with global permissions, add permissions check in route layer before hitting database</li>
+            <li><input type="checkbox" readonly="true"  /> <a class="block-ref" href="/notes/projects_filigree#657a981d-8503-427b-a6ab-319c7879b94c">Project-based Access Control</a></li>
+            <li><input type="checkbox" readonly="true"  /> User verification</li>
+            <li><input type="checkbox" readonly="true"  /> Fixture data system</li>
+            <li><input type="checkbox" readonly="true"  /> Data-driven default org contents, even if this just a JSON blob to start
+              <ul class="list-bullet">
+                <li>This can piggyback off of the fixture system</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Generate tests for models</li>
+            <li><input type="checkbox" readonly="true"  /> OAuth</li>
+            <li><input type="checkbox" readonly="true"  /> Some way to easily add hooks to CRUD operations
+              <ul class="list-bullet">
+                <li>Developer should probably just edit to code here.</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> New runs diff against previous run and only apply diffed changes
+              <ul class="list-bullet">
+                <li>When running the CLI, could compare existing config against state file to see what changed and only apply changes to stateful things like databases</li>
+                <li>I think this needs to be versioned somehow, so that we can do equivalent of &quot;git commit&quot; or &quot;git commit &mdash;amend&quot;</li>
+                <li>Might be interesting to store a gzipped version of all files we generate on each run. Then every time we do a new generate, attempt to apply a diff from the previous version to the new version. This probably makes things much simpler, and simplifies issues around the developer changing things.</li>
+                <li>Or is it better to actually use git for this?
+                  <ul class="list-bullet">
+                    <li>Would reduce changes to store since this data would be stored in Git too (e.g. only a few lines changed vs storing a binary which stores the entire thing each time)</li>
+                    <li>Simplifies diffing since git supports that natively</li>
+                    <li>Need to think about this but it seems promising...</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Initial migration should only be written once</li>
+            <li><input type="checkbox" readonly="true"  /> New models should be added in new migrations</li>
+            <li><input type="checkbox" readonly="true"  /> Columns changes to models should generate new migrations</li>
+            <li><input type="checkbox" readonly="true"  /> Models can define extra permissions</li>
+            <li><input type="checkbox" readonly="true"  /> Models can define custom functions/actions</li>
+            <li><input type="checkbox" readonly="true"  /> Emails with template system</li>
+            <li><input type="checkbox" readonly="true"  /> Passwordless email auth</li>
+            <li><input type="checkbox" readonly="true"  /> Passkey auth</li>
+            <li><input type="checkbox" readonly="true"  /> Define background jobs and generate a helper to enqueue one</li>
+            <li><input type="checkbox" readonly="true"  /> Add outbox pattern support for background jobs</li>
+            <li><input type="checkbox" readonly="true"  /> Define scheduled tasks that run a job on a cron schedule</li>
+            <li><input type="checkbox" readonly="true"  /> Other types of notifications?</li>
+            <li><input type="checkbox" readonly="true"  /> Internal notifications
+              <ul class="list-bullet">
+                <li>e.g. Discord webhook notifying myself about events</li>
+                <li>This should have notification templates and also destinations for the notifications</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Easy setup for commercialization</li>
+            <li><input type="checkbox" readonly="true"  /> Export metrics to some tool
+              <ul class="list-bullet">
+                <li>Looks like Honeycomb supports Prometheus format</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Delete log table for possibility of undelete later</li>
+            <li><input type="checkbox" readonly="true"  /> Auditing on all operations</li>
+            <li><input type="checkbox" readonly="true"  /> Ability for admins to assume roles of other users
+              <ul class="list-bullet">
+                <li>This needs to be audited as well even if nothing else is audited</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true"  /> Service accounts</li>
+          </ul>        </li>
+        <li><h3>Done</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" readonly="true" checked /> Add permissions checks to endpoints &mdash; Dec 27th, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Add app-specific AuthInfo object &mdash; Dec 23rd, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Add AuthQueries implementation &mdash; Dec 23rd, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Select queries need to return the current permission level on each object for project/object-level permissions &mdash; Dec 22nd, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Make more files &quot;generated once&quot; &mdash; Dec 22nd, 2023
+              <ul class="list-bullet">
+                <li>endpoints should only be generated once, and should always be generated even if they are disabled</li>
+                <li>Move files that are regenerated to &quot;generated&quot; subdir</li>
+              </ul>            </li>
+            <li><input type="checkbox" readonly="true" checked /> Add middleware layer to do permissions check &mdash; Dec 22nd, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Add authz middleware to do generic predicate check &mdash; Dec 22nd, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> query to load user/roles/org for auth info &mdash; Dec 21st, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Generate router for all model endpoints &mdash; Dec 21st, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Create endpoints for the model &mdash; Dec 20th, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Bearer token auth middleware &mdash; Dec 20th, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Session cookie auth middleware &mdash; Dec 20th, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Figure out querystring filter parameters &mdash; Dec 18th, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Pagination &mdash; Dec 18th, 2023</li>
+            <li><input type="checkbox" readonly="true" checked /> Rename team to organization</li>
+            <li><input type="checkbox" readonly="true" checked /> Create Rust structures for each model</li>
+            <li><input type="checkbox" readonly="true" checked /> Bootstrap CLI utility</li>
+            <li><input type="checkbox" readonly="true" checked /> Figure out main config format</li>
+            <li><input type="checkbox" readonly="true" checked /> Figure out model definition</li>
+            <li><input type="checkbox" readonly="true" checked /> Create team, user, role, permissions, etc. tables</li>
+            <li><input type="checkbox" readonly="true" checked /> Create SQL migration</li>
+            <li><input type="checkbox" readonly="true" checked /> Create SQL queries to read/write the model</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li>This should be made modular somehow so it&#39;s easy to maintain and add new stuff.
+      <ul class="list-bullet">
+        <li>Modules define dependencies</li>
+      </ul>    </li>
+    <li>Config
+      <ul class="list-bullet">
+        <li>formatters to use</li>
+        <li>SQL dialect (postgres or sqlite)</li>
+      </ul>    </li>
+    <li>Model definition
+      <ul class="list-bullet">
+        <li>Write in TOML</li>
+        <li>Each field has
+          <ul class="list-bullet">
+            <li>SQL type</li>
+            <li>nullable (default not null)</li>
+            <li>Rust type (can be inferred from the SQL type, but can be overridden)</li>
+          </ul>        </li>
+        <li>Define Indexes and primary key
+          <ul class="list-bullet">
+            <li>indexes can maybe just be defined in raw sql</li>
+          </ul>        </li>
+        <li>Can have child relationships, one -to-one and one-to-many</li>
+        <li>Can have JSON fields, which deserialize to either JSON values or other Rust structs
+          <ul class="list-bullet">
+            <li>The rust structs can be defined in the config as strings or something like that</li>
+          </ul>        </li>
+        <li>List of other query functions to generate (find by field, etc.)</li>
+        <li>Permissions
+          <ul class="list-bullet">
+            <li>Automatic checking on all operations</li>
+            <li>Ability to define which permissions are needed for what</li>
+          </ul>        </li>
+        <li>some kind of hook on update? or is this better done by just changing the generated code myself</li>
+      </ul>    </li>
+    <li>Consider some kind of codegen for even easier crud endpoint generation
+      <ul class="list-bullet">
+        <li>Need ability to generate migrations that add/remove columns too
+          <ul class="list-bullet">
+            <li>this can definitely be manual to start though.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li>Authentication
+      <ul class="list-bullet">
+        <li>Need a user/account mapping to support multiple auth methods per user.</li>
+      </ul>    </li>
+    <li>Authorization
+      <ul class="list-bullet">
+        <li>Concepts
+          <ul class="list-bullet">
+            <li>Organization</li>
+            <li>User
+              <ul class="list-bullet">
+                <li>Users can potentially be in multiple organizations</li>
+              </ul>            </li>
+            <li>Role
+              <ul class="list-bullet">
+                <li>Basically a collection of permissions</li>
+              </ul>            </li>
+            <li>Group
+              <ul class="list-bullet">
+                <li>This is similar to Role</li>
+                <li>Might not do this, but it can be useful to make this different when more advanced sharing options are created.</li>
+              </ul>            </li>
+            <li>Actor - all the things (users, roles, groups) that can have permissions on objects
+              <ul class="list-bullet">
+                <li>When looking at permissions we gather up all the actors that apply to the current user, and use that whole list for permissions checks</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>The permissions table is then a list of the permissions each actor has.</li>
+        <li>Permissions
+          <ul class="list-bullet">
+            <li>These should be definable per model once more than one is supported.</li>
+            <li>Tables
+              <ul class="list-bullet">
+                <li>Global permissions
+                  <ul class="list-bullet">
+                    <li>A many-to-many mapping of actor to permission</li>
+                  </ul>                </li>
+                <li>Object permissions
+                  <ul class="list-bullet">
+                    <li>A mapping of actor to object and permission</li>
+                    <li>For a project-based model, the projects are also just objects</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li>Models
+              <ul class="list-bullet">
+                <li>Role-based Access Control (RBAC)
+                  <ul class="list-bullet">
+                    <li>Each role has permissions on whether it can read/write/admin certain types of objects.</li>
+                    <li>This is the first one we&#39;ll support</li>
+                    <li>Might be useful to have two sets of roles, some which can have the global permissions and are only created by administrators, and others which are generic groups of people for managing sharing of projects and objects
+                      <ul class="list-bullet">
+                        <li>Need to think about how much this needs to be in the data model vs. just something in the UI. Probably just a single boolean flag is sufficient.</li>
+                      </ul>                    </li>
+                  </ul>                </li>
+                <li>Resource-based access control
+                  <ul class="list-bullet">
+                    <li>Read/write/admin on individual objects</li>
+                    <li>Each role/user has specific permissions for each object</li>
+                    <li>More complex, need to make sure the relevant entries get added for each object when it is created</li>
+                    <li>Best for a model where objects are not shared by default.</li>
+                  </ul>                </li>
+                <li id="657a981d-8503-427b-a6ab-319c7879b94c">Project-based Access Control
+                  <ul class="list-bullet">
+                    <li>This combines with the above concepts but is a middle level of granularity compared to the all-or-nothing of plain RBAC and the often-overly-granular resource-based system.</li>
+                    <li>A project acts as a container for objects, and actors can have permissions on the project instead of the individual objects.</li>
+                    <li>Will probably implement this after RBAC, just need additional functionality for project management and ability to</li>
+                    <li>Both individuals and roles can be added to projects</li>
+                  </ul>                </li>
+                <li>Attribute-based Access Control (ABAC)
+                  <ul class="list-bullet">
+                    <li>Objects have attributes and actors</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li>Types of default permissions
+              <ul class="list-bullet">
+                <li>creator only until shared</li>
+                <li>Creator gets write access, everyone else gets read access</li>
+                <li>everyone can see, only creator can write</li>
+                <li>Everyone in the project can see</li>
+                <li>Everyone in the project can edit</li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+    <li>Pricing Plan Support
+      <ul class="list-bullet">
+        <li>Add pricing tiers and permissions that go along with those tiers - this should mostly be data driven
+          <ul class="list-bullet">
+            <li>Need ability for numeric values as well (e.g. max 3 projects, 500MB storage, up to 60 minutes of something, etc.)</li>
+          </ul>        </li>
+        <li>Need ability to do grandfathering of pricing tiers and permissions
+          <ul class="list-bullet">
+            <li>Essentially this means that both price plans and permissions sets should be versioned, and separately.</li>
+            <li>And there should be the ability to update existing plans and all previous versions</li>
+          </ul>        </li>
+      </ul>    </li>
+  </ul>
+
