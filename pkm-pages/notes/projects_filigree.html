@@ -12,17 +12,17 @@ updated: 2023-12-28
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Get server to start</li>
-            <li><input type="checkbox" readonly="true"  /> Password Auth endpoints</li>
-            <li><input type="checkbox" readonly="true"  /> Endpoints for retrieving and updating your own user</li>
+            <li><input type="checkbox" disabled  /> Get server to start</li>
+            <li><input type="checkbox" disabled  /> Password Auth endpoints</li>
+            <li><input type="checkbox" disabled  /> Endpoints for retrieving and updating your own user</li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Need a default role of admin which has all the permissions. (Or actually just add a new admin permission so there&#39;s one for the global admin and one for the team admin)</li>
-            <li><input type="checkbox" readonly="true"  /> endpoint to create a new org that also creates default roles, adds a user, etc.</li>
-            <li><input type="checkbox" readonly="true"  /> Ability to make &quot;new org&quot; open to the public or admin-only</li>
-            <li><input type="checkbox" readonly="true"  /> Generate Typescript interfaces and JS code to talk to the API</li>
-            <li><input type="checkbox" readonly="true"  /> Configurable &quot;create&quot; permission
+            <li><input type="checkbox" disabled  /> Need a default role of admin which has all the permissions. (Or actually just add a new admin permission so there&#39;s one for the global admin and one for the team admin)</li>
+            <li><input type="checkbox" disabled  /> signup endpoint to create a new org that also creates default roles, adds a user, etc.</li>
+            <li><input type="checkbox" disabled  /> Ability to make &quot;new org&quot; open to the public or admin-only</li>
+            <li><input type="checkbox" disabled  /> Generate Typescript interfaces and JS code to talk to the API</li>
+            <li><input type="checkbox" disabled  /> Configurable &quot;create&quot; permission
               <ul class="list-bullet">
                 <li>for non-individual models, the owner permission or the write permission</li>
                 <li>for individual models, can be a separate global permission or always allow</li>
@@ -31,26 +31,26 @@ updated: 2023-12-28
                     <li>Maybe make a tagged enum for permissions model, with different values for each</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Password forgot/reset endpoints</li>
-            <li><input type="checkbox" readonly="true"  /> MVP Basic email sending, enough to do password management and such</li>
+            <li><input type="checkbox" disabled  /> Password forgot/reset endpoints</li>
+            <li><input type="checkbox" disabled  /> MVP Basic email sending, enough to do password management and such</li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> For models with global permissions, add permissions check in route layer before hitting database</li>
-            <li><input type="checkbox" readonly="true"  /> <a class="block-ref" href="/notes/projects_filigree#657a981d-8503-427b-a6ab-319c7879b94c">Project-based Access Control</a></li>
-            <li><input type="checkbox" readonly="true"  /> User verification</li>
-            <li><input type="checkbox" readonly="true"  /> Fixture data system</li>
-            <li><input type="checkbox" readonly="true"  /> Data-driven default org contents, even if this just a JSON blob to start
+            <li><input type="checkbox" disabled  /> For models with global permissions, add permissions check in route layer before hitting database</li>
+            <li><input type="checkbox" disabled  /> <a class="block-ref" href="/notes/projects_filigree#657a981d-8503-427b-a6ab-319c7879b94c">Project-based Access Control</a></li>
+            <li><input type="checkbox" disabled  /> User verification</li>
+            <li><input type="checkbox" disabled  /> Fixture data system</li>
+            <li><input type="checkbox" disabled  /> Data-driven default org contents, even if this just a JSON blob to start
               <ul class="list-bullet">
                 <li>This can piggyback off of the fixture system</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Generate tests for models</li>
-            <li><input type="checkbox" readonly="true"  /> OAuth</li>
-            <li><input type="checkbox" readonly="true"  /> Some way to easily add hooks to CRUD operations
+            <li><input type="checkbox" disabled  /> Generate tests for models</li>
+            <li><input type="checkbox" disabled  /> OAuth</li>
+            <li><input type="checkbox" disabled  /> Some way to easily add hooks to CRUD operations
               <ul class="list-bullet">
                 <li>Developer should probably just edit to code here.</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> New runs diff against previous run and only apply diffed changes
+            <li><input type="checkbox" disabled  /> New runs diff against previous run and only apply diffed changes
               <ul class="list-bullet">
                 <li>When running the CLI, could compare existing config against state file to see what changed and only apply changes to stateful things like databases</li>
                 <li>I think this needs to be versioned somehow, so that we can do equivalent of &quot;git commit&quot; or &quot;git commit &mdash;amend&quot;</li>
@@ -62,64 +62,64 @@ updated: 2023-12-28
                     <li>Need to think about this but it seems promising...</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Initial migration should only be written once</li>
-            <li><input type="checkbox" readonly="true"  /> New models should be added in new migrations</li>
-            <li><input type="checkbox" readonly="true"  /> Columns changes to models should generate new migrations</li>
-            <li><input type="checkbox" readonly="true"  /> Models can define extra permissions</li>
-            <li><input type="checkbox" readonly="true"  /> Models can define custom functions/actions</li>
-            <li><input type="checkbox" readonly="true"  /> Emails with template system</li>
-            <li><input type="checkbox" readonly="true"  /> Passwordless email auth</li>
-            <li><input type="checkbox" readonly="true"  /> Passkey auth</li>
-            <li><input type="checkbox" readonly="true"  /> Define background jobs and generate a helper to enqueue one</li>
-            <li><input type="checkbox" readonly="true"  /> Add outbox pattern support for background jobs</li>
-            <li><input type="checkbox" readonly="true"  /> Define scheduled tasks that run a job on a cron schedule</li>
-            <li><input type="checkbox" readonly="true"  /> Other types of notifications?</li>
-            <li><input type="checkbox" readonly="true"  /> Internal notifications
+            <li><input type="checkbox" disabled  /> Initial migration should only be written once</li>
+            <li><input type="checkbox" disabled  /> New models should be added in new migrations</li>
+            <li><input type="checkbox" disabled  /> Columns changes to models should generate new migrations</li>
+            <li><input type="checkbox" disabled  /> Models can define extra permissions</li>
+            <li><input type="checkbox" disabled  /> Models can define custom functions/actions</li>
+            <li><input type="checkbox" disabled  /> Emails with template system</li>
+            <li><input type="checkbox" disabled  /> Passwordless email auth</li>
+            <li><input type="checkbox" disabled  /> Passkey auth</li>
+            <li><input type="checkbox" disabled  /> Define background jobs and generate a helper to enqueue one</li>
+            <li><input type="checkbox" disabled  /> Add outbox pattern support for background jobs</li>
+            <li><input type="checkbox" disabled  /> Define scheduled tasks that run a job on a cron schedule</li>
+            <li><input type="checkbox" disabled  /> Other types of notifications?</li>
+            <li><input type="checkbox" disabled  /> Internal notifications
               <ul class="list-bullet">
                 <li>e.g. Discord webhook notifying myself about events</li>
                 <li>This should have notification templates and also destinations for the notifications</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Easy setup for commercialization</li>
-            <li><input type="checkbox" readonly="true"  /> Export metrics to some tool
+            <li><input type="checkbox" disabled  /> Easy setup for commercialization</li>
+            <li><input type="checkbox" disabled  /> Export metrics to some tool
               <ul class="list-bullet">
                 <li>Looks like Honeycomb supports Prometheus format</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Delete log table for possibility of undelete later</li>
-            <li><input type="checkbox" readonly="true"  /> Auditing on all operations</li>
-            <li><input type="checkbox" readonly="true"  /> Ability for admins to assume roles of other users
+            <li><input type="checkbox" disabled  /> Delete log table for possibility of undelete later</li>
+            <li><input type="checkbox" disabled  /> Auditing on all operations</li>
+            <li><input type="checkbox" disabled  /> Ability for admins to assume roles of other users
               <ul class="list-bullet">
                 <li>This needs to be audited as well even if nothing else is audited</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Service accounts</li>
+            <li><input type="checkbox" disabled  /> Service accounts</li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> Add permissions checks to endpoints &mdash; Dec 27th, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Add app-specific AuthInfo object &mdash; Dec 23rd, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Add AuthQueries implementation &mdash; Dec 23rd, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Select queries need to return the current permission level on each object for project/object-level permissions &mdash; Dec 22nd, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Make more files &quot;generated once&quot; &mdash; Dec 22nd, 2023
+            <li><input type="checkbox" disabled checked /> Add permissions checks to endpoints &mdash; Dec 27th, 2023</li>
+            <li><input type="checkbox" disabled checked /> Add app-specific AuthInfo object &mdash; Dec 23rd, 2023</li>
+            <li><input type="checkbox" disabled checked /> Add AuthQueries implementation &mdash; Dec 23rd, 2023</li>
+            <li><input type="checkbox" disabled checked /> Select queries need to return the current permission level on each object for project/object-level permissions &mdash; Dec 22nd, 2023</li>
+            <li><input type="checkbox" disabled checked /> Make more files &quot;generated once&quot; &mdash; Dec 22nd, 2023
               <ul class="list-bullet">
                 <li>endpoints should only be generated once, and should always be generated even if they are disabled</li>
                 <li>Move files that are regenerated to &quot;generated&quot; subdir</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> Add middleware layer to do permissions check &mdash; Dec 22nd, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Add authz middleware to do generic predicate check &mdash; Dec 22nd, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> query to load user/roles/org for auth info &mdash; Dec 21st, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Generate router for all model endpoints &mdash; Dec 21st, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Create endpoints for the model &mdash; Dec 20th, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Bearer token auth middleware &mdash; Dec 20th, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Session cookie auth middleware &mdash; Dec 20th, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Figure out querystring filter parameters &mdash; Dec 18th, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Pagination &mdash; Dec 18th, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Rename team to organization</li>
-            <li><input type="checkbox" readonly="true" checked /> Create Rust structures for each model</li>
-            <li><input type="checkbox" readonly="true" checked /> Bootstrap CLI utility</li>
-            <li><input type="checkbox" readonly="true" checked /> Figure out main config format</li>
-            <li><input type="checkbox" readonly="true" checked /> Figure out model definition</li>
-            <li><input type="checkbox" readonly="true" checked /> Create team, user, role, permissions, etc. tables</li>
-            <li><input type="checkbox" readonly="true" checked /> Create SQL migration</li>
-            <li><input type="checkbox" readonly="true" checked /> Create SQL queries to read/write the model</li>
+            <li><input type="checkbox" disabled checked /> Add middleware layer to do permissions check &mdash; Dec 22nd, 2023</li>
+            <li><input type="checkbox" disabled checked /> Add authz middleware to do generic predicate check &mdash; Dec 22nd, 2023</li>
+            <li><input type="checkbox" disabled checked /> query to load user/roles/org for auth info &mdash; Dec 21st, 2023</li>
+            <li><input type="checkbox" disabled checked /> Generate router for all model endpoints &mdash; Dec 21st, 2023</li>
+            <li><input type="checkbox" disabled checked /> Create endpoints for the model &mdash; Dec 20th, 2023</li>
+            <li><input type="checkbox" disabled checked /> Bearer token auth middleware &mdash; Dec 20th, 2023</li>
+            <li><input type="checkbox" disabled checked /> Session cookie auth middleware &mdash; Dec 20th, 2023</li>
+            <li><input type="checkbox" disabled checked /> Figure out querystring filter parameters &mdash; Dec 18th, 2023</li>
+            <li><input type="checkbox" disabled checked /> Pagination &mdash; Dec 18th, 2023</li>
+            <li><input type="checkbox" disabled checked /> Rename team to organization</li>
+            <li><input type="checkbox" disabled checked /> Create Rust structures for each model</li>
+            <li><input type="checkbox" disabled checked /> Bootstrap CLI utility</li>
+            <li><input type="checkbox" disabled checked /> Figure out main config format</li>
+            <li><input type="checkbox" disabled checked /> Figure out model definition</li>
+            <li><input type="checkbox" disabled checked /> Create team, user, role, permissions, etc. tables</li>
+            <li><input type="checkbox" disabled checked /> Create SQL migration</li>
+            <li><input type="checkbox" disabled checked /> Create SQL queries to read/write the model</li>
           </ul>        </li>
       </ul>    </li>
     <li>This should be made modular somehow so it&#39;s easy to maintain and add new stuff.

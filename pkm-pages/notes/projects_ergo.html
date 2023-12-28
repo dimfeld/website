@@ -40,33 +40,33 @@ updated: 2023-11-21
     <li>Current Tasks
       <ul class="list-bullet">
         <li>Need to drop a lot of this given the above design rework.</li>
-        <li><input type="checkbox" readonly="true"  /> Move complex queries into files for better maintainability</li>
-        <li><input type="checkbox" readonly="true"  /> Package import and export that contains tasks and the various other objects they reference.
+        <li><input type="checkbox" disabled  /> Move complex queries into files for better maintainability</li>
+        <li><input type="checkbox" disabled  /> Package import and export that contains tasks and the various other objects they reference.
           <ul class="list-bullet">
             <li>Allow cross-instance import</li>
             <li>Link imported objects to the original package to facilitate re-imports and other things.</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true"  /> Think about using row locking instead of serializable transaction mode when handling inputs</li>
-        <li><input type="checkbox" readonly="true"  /> <strong class="font-bold">Enough to get the weather task working</strong>
+        <li><input type="checkbox" disabled  /> Think about using row locking instead of serializable transaction mode when handling inputs</li>
+        <li><input type="checkbox" disabled  /> <strong class="font-bold">Enough to get the weather task working</strong>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> New Action Screen
+            <li><input type="checkbox" disabled checked /> New Action Screen
               <ul class="list-bullet">
                 <li>Actually make fields editable</li>
                 <li>New action screen</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Action Account Management</li>
-            <li><input type="checkbox" readonly="true" checked /> Actual testing of periodic tasks</li>
-            <li><input type="checkbox" readonly="true" checked /> Script simulator</li>
+            <li><input type="checkbox" disabled  /> Action Account Management</li>
+            <li><input type="checkbox" disabled checked /> Actual testing of periodic tasks</li>
+            <li><input type="checkbox" disabled checked /> Script simulator</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true"  /> Task triggers can have a built-in payload filter
+        <li><input type="checkbox" disabled  /> Task triggers can have a built-in payload filter
           <ul class="list-bullet">
             <li>this would just check for equality on certain fields of the body, nothing complicated</li>
             <li>or it could be Javascript?</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true" checked /> Task triggers can be configured to fire periodically
+        <li><input type="checkbox" disabled checked /> Task triggers can be configured to fire periodically
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> Each periodic task trigger can be associated with a payload that must conform to the input schema of the task trigger&#39;s input.</li>
-            <li><input type="checkbox" readonly="true" checked /> Add a new table of periodic triggers
+            <li><input type="checkbox" disabled checked /> Each periodic task trigger can be associated with a payload that must conform to the input schema of the task trigger&#39;s input.</li>
+            <li><input type="checkbox" disabled checked /> Add a new table of periodic triggers
               <ul class="list-bullet">
                 <li>Each one links to a specific task trigger.</li>
                 <li>Each entry can be configured to run the trigger on a schedule with a particular payload.
@@ -75,26 +75,26 @@ updated: 2023-11-21
                   </ul>                </li>
                 <li>Trigger schedule formats
                   <ul class="list-bullet">
-                    <li><input type="checkbox" readonly="true" checked /> Cron format</li>
-                    <li><input type="checkbox" readonly="true" checked /> Weekday schedules like &quot;2nd tuesday of month&quot;
+                    <li><input type="checkbox" disabled checked /> Cron format</li>
+                    <li><input type="checkbox" disabled checked /> Weekday schedules like &quot;2nd tuesday of month&quot;
                       <ul class="list-bullet">
                         <li>Done via human-readable descriptions of</li>
                       </ul>                    </li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> Track scheduled inputs using the input logs
+            <li><input type="checkbox" disabled checked /> Track scheduled inputs using the input logs
               <ul class="list-bullet">
                 <li>Add a &quot;scheduled_at&quot; field to the input logs table.</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> Re-enqueue task triggers
+            <li><input type="checkbox" disabled checked /> Re-enqueue task triggers
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true" checked /> Upon running successfully</li>
-                <li><input type="checkbox" readonly="true" checked /> On error if the maximum number of retries is hit.</li>
-                <li><input type="checkbox" readonly="true" checked /> With a sweeper that makes sure things get re-enqueued, just in case.</li>
-                <li><input type="checkbox" readonly="true" checked /> Test it</li>
+                <li><input type="checkbox" disabled checked /> Upon running successfully</li>
+                <li><input type="checkbox" disabled checked /> On error if the maximum number of retries is hit.</li>
+                <li><input type="checkbox" disabled checked /> With a sweeper that makes sure things get re-enqueued, just in case.</li>
+                <li><input type="checkbox" disabled checked /> Test it</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> Test API code for creating/deleting/updating task triggers</li>
-            <li><input type="checkbox" readonly="true" checked /> Provide cheerio or something as scraping logic. (npm/skypack/pika/deno package imports will work for this)</li>
+            <li><input type="checkbox" disabled checked /> Test API code for creating/deleting/updating task triggers</li>
+            <li><input type="checkbox" disabled checked /> Provide cheerio or something as scraping logic. (npm/skypack/pika/deno package imports will work for this)</li>
             <li>Old plan
               <ul class="list-bullet">
                 <li>The task triggers already sort of support this so perhaps what we want is a generic main input type that the task triggers can link to.</li>
@@ -108,73 +108,73 @@ updated: 2023-11-21
                         <li>There&#39;s a way to read a file out of the allocation. Not sure how reliably we can know that the allocation will still be there though after the process ends.</li>
                       </ul>                    </li>
                   </ul>                </li>
-                <li><input type="checkbox" readonly="true" checked /> <del class="line-through">Optionally perform automatic dedupe against previous fetched payload, so that we don&#39;t trigger tasks if nothing has changed.</del>
+                <li><input type="checkbox" disabled checked /> <del class="line-through">Optionally perform automatic dedupe against previous fetched payload, so that we don&#39;t trigger tasks if nothing has changed.</del>
                   <ul class="list-bullet">
                     <li>Actually just make this easy to do with functions that work with the task context.</li>
                   </ul>                </li>
               </ul>            </li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true"  /> UI Work
+        <li><input type="checkbox" disabled  /> UI Work
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Input editor</li>
-            <li><input type="checkbox" readonly="true"  /> Action editor
+            <li><input type="checkbox" disabled  /> Input editor</li>
+            <li><input type="checkbox" disabled  /> Action editor
               <ul class="list-bullet">
                 <li>Screen is implemented but this is mostly readonly right now</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Task action editor
+            <li><input type="checkbox" disabled  /> Task action editor
               <ul class="list-bullet">
                 <li>Simple management is done. Need to add template editor</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> Task trigger editor</li>
-            <li><input type="checkbox" readonly="true"  /> Task script editor
+            <li><input type="checkbox" disabled checked /> Task trigger editor</li>
+            <li><input type="checkbox" disabled  /> Task script editor
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true" checked /> Allow writing tasks in Typescript? This would also help with type checking the context function and action definitions.
+                <li><input type="checkbox" disabled checked /> Allow writing tasks in Typescript? This would also help with type checking the context function and action definitions.
                   <ul class="list-bullet">
                     <li>Use <a href="https://www.npmjs.com/package/@typescript/vfs">https://www.npmjs.com/package/@typescript/vfs</a> to help integrate it in the browser.</li>
                   </ul>                </li>
-                <li><input type="checkbox" readonly="true"  /> Run simulated inputs in the client and show the result, along with validating the actions taken.
+                <li><input type="checkbox" disabled  /> Run simulated inputs in the client and show the result, along with validating the actions taken.
                   <ul class="list-bullet">
                     <li>ability to save input payloads</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Text Editor Work
+            <li><input type="checkbox" disabled  /> Text Editor Work
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true" checked /> Javascript editor</li>
-                <li><input type="checkbox" readonly="true" checked /> JSON/JSON5 editor with schema validation</li>
-                <li><input type="checkbox" readonly="true" checked /> Validate use of payload/input fields?
+                <li><input type="checkbox" disabled checked /> Javascript editor</li>
+                <li><input type="checkbox" disabled checked /> JSON/JSON5 editor with schema validation</li>
+                <li><input type="checkbox" disabled checked /> Validate use of payload/input fields?
                   <ul class="list-bullet">
                     <li>Probably possible based on the schema for each input/action</li>
                     <li>Now that this is done in Rust it&#39;s just a matter of making that work properly.</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> State machine editor
+            <li><input type="checkbox" disabled  /> State machine editor
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true" checked /> Text editor as JSON with schema validation</li>
-                <li><input type="checkbox" readonly="true"  /> Simulation and visualization of states
+                <li><input type="checkbox" disabled checked /> Text editor as JSON with schema validation</li>
+                <li><input type="checkbox" disabled  /> Simulation and visualization of states
                   <ul class="list-bullet">
                     <li>Can we take stuff from stately.ai? Probably more fun to build my own.</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  />  API key generation</li>
-            <li><input type="checkbox" readonly="true"  />  Permissions editor for API keys and users</li>
+            <li><input type="checkbox" disabled  />  API key generation</li>
+            <li><input type="checkbox" disabled  />  Permissions editor for API keys and users</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true"  />  Task Queue Upgrades
+        <li><input type="checkbox" disabled  />  Task Queue Upgrades
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked />  Doesn&#39;t seem to run more than one task at a time</li>
-            <li><input type="checkbox" readonly="true" checked />  Use listener for Postgres queue checker for better response times.</li>
-            <li><input type="checkbox" readonly="true" checked />  <del class="line-through">Can I use a listener for Redis queue checker? Probably use the pubsub for this</del></li>
-            <li><input type="checkbox" readonly="true" checked /> Scheduled Task Sweeper</li>
-            <li><input type="checkbox" readonly="true" checked /> Move all queue staging to the generic model</li>
-            <li><input type="checkbox" readonly="true"  /> Expired Task Sweeper</li>
-            <li><input type="checkbox" readonly="true"  /> Just move to Prefect</li>
+            <li><input type="checkbox" disabled checked />  Doesn&#39;t seem to run more than one task at a time</li>
+            <li><input type="checkbox" disabled checked />  Use listener for Postgres queue checker for better response times.</li>
+            <li><input type="checkbox" disabled checked />  <del class="line-through">Can I use a listener for Redis queue checker? Probably use the pubsub for this</del></li>
+            <li><input type="checkbox" disabled checked /> Scheduled Task Sweeper</li>
+            <li><input type="checkbox" disabled checked /> Move all queue staging to the generic model</li>
+            <li><input type="checkbox" disabled  /> Expired Task Sweeper</li>
+            <li><input type="checkbox" disabled  /> Just move to Prefect</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true"  />  Permissions system upgrades
+        <li><input type="checkbox" disabled  />  Permissions system upgrades
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  />  Create an &quot;owner&quot; permission
+            <li><input type="checkbox" disabled  />  Create an &quot;owner&quot; permission
               <ul class="list-bullet">
                 <li>This assigns full rights to an object</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  />  Think about how to better systematize permissions checks
+            <li><input type="checkbox" disabled  />  Think about how to better systematize permissions checks
               <ul class="list-bullet">
                 <li>Problems right now:
                   <ul class="list-bullet">
@@ -194,7 +194,7 @@ updated: 2023-11-21
                       </ul>                    </li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  />  Object tags
+            <li><input type="checkbox" disabled  />  Object tags
               <ul class="list-bullet">
                 <li>These should be not only a method of organizing objects, but permissions should be assignable to tags</li>
                 <li>Assigning roles to permissions on tags should be the primary method of arranging permissions.</li>
@@ -206,23 +206,23 @@ updated: 2023-11-21
                   </ul>                </li>
                 <li>Should all user-created tags participate in the permissions system, or just admin-created tags? (Probably the former)</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Role inheritance</li>
+            <li><input type="checkbox" disabled  /> Role inheritance</li>
             <li>Do we want to have something more expressive like casbin, or does the roles -&gt; tags arrangement get us everything we need?</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true"  />  Scripting v1
+        <li><input type="checkbox" disabled  />  Scripting v1
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked />  Script executor</li>
-            <li><input type="checkbox" readonly="true" checked />  Action templates can be scripts instead of templates.</li>
-            <li><input type="checkbox" readonly="true" checked />  Implement scripts in state machine conditions</li>
-            <li><input type="checkbox" readonly="true" checked />  <del class="line-through">Tasks can be serialized scripts</del>
+            <li><input type="checkbox" disabled checked />  Script executor</li>
+            <li><input type="checkbox" disabled checked />  Action templates can be scripts instead of templates.</li>
+            <li><input type="checkbox" disabled checked />  Implement scripts in state machine conditions</li>
+            <li><input type="checkbox" disabled checked />  <del class="line-through">Tasks can be serialized scripts</del>
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true" checked /> This requires some database modifications.</li>
-                <li><input type="checkbox" readonly="true" checked /> Currently it&#39;s assumed that tasks are state machines. We can change the column names of the state machine config and data to reuse them for task scripts and task data.</li>
+                <li><input type="checkbox" disabled checked /> This requires some database modifications.</li>
+                <li><input type="checkbox" disabled checked /> Currently it&#39;s assumed that tasks are state machines. We can change the column names of the state machine config and data to reuse them for task scripts and task data.</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> Task context management
+            <li><input type="checkbox" disabled checked /> Task context management
               <ul class="list-bullet">
                 <li>This is a simple method of keeping state for a task.</li>
-                <li><input type="checkbox" readonly="true" checked /> Tasks can set their context
+                <li><input type="checkbox" disabled checked /> Tasks can set their context
                   <ul class="list-bullet">
                     <li>Almost done. Need to write the context back to Postgres</li>
                     <li>localStorage is a common interface but it sucks since it&#39;s all string based</li>
@@ -252,84 +252,84 @@ updated: 2023-11-21
                           </ul>                        </li>
                       </ul>                    </li>
                   </ul>                </li>
-                <li><input type="checkbox" readonly="true" checked /> Feed context into the script on each run
+                <li><input type="checkbox" disabled checked /> Feed context into the script on each run
                   <ul class="list-bullet">
                     <li>Fetchable from in the script with <code>Ergo.getContext()</code></li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> Scripts can fire actions
+            <li><input type="checkbox" disabled checked /> Scripts can fire actions
               <ul class="list-bullet">
                 <li>This won&#39;t run it right away, but will add it to a list of things to do, which are then all enqueued at the end of the script.</li>
-                <li><input type="checkbox" readonly="true" checked /> Provide a function something like <code>Ergo.runAction(&#39;actionName&#39;, args)</code>.</li>
-                <li><input type="checkbox" readonly="true" checked /> Enqueue the actions from the list</li>
-                <li><input type="checkbox" readonly="true" checked /> Testing</li>
+                <li><input type="checkbox" disabled checked /> Provide a function something like <code>Ergo.runAction(&#39;actionName&#39;, args)</code>.</li>
+                <li><input type="checkbox" disabled checked /> Enqueue the actions from the list</li>
+                <li><input type="checkbox" disabled checked /> Testing</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> <del class="line-through">Implement module loaders.</del>
+            <li><input type="checkbox" disabled checked /> <del class="line-through">Implement module loaders.</del>
               <ul class="list-bullet">
                 <li>Doing this on the client for now via Rollup bundling</li>
               </ul>            </li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true"  /> User-definable inputs that trigger multiple tasks.
+        <li><input type="checkbox" disabled  /> User-definable inputs that trigger multiple tasks.
           <ul class="list-bullet">
             <li>Currently inputs can only be created by admins but we want to have inputs that are per-org, with task triggers subscribing to those inputs triggering. This really brings up a few new features
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true"  />  Creation of org-specific inputs</li>
-                <li><input type="checkbox" readonly="true"  />  Task triggers can listen to these inputs</li>
-                <li><input type="checkbox" readonly="true"  />  Inputs can be triggered globally, for globally-owned inputs, or per-org, for org-owned inputs.
+                <li><input type="checkbox" disabled  />  Creation of org-specific inputs</li>
+                <li><input type="checkbox" disabled  />  Task triggers can listen to these inputs</li>
+                <li><input type="checkbox" disabled  />  Inputs can be triggered globally, for globally-owned inputs, or per-org, for org-owned inputs.
                   <ul class="list-bullet">
                     <li>Inputs should be marked as global, which means that they can be triggered apart from a task, and will instead trigger any task trigger attached to the input.</li>
                   </ul>                </li>
-                <li><input type="checkbox" readonly="true"  />  Inputs can be triggered by other tasks</li>
+                <li><input type="checkbox" disabled  />  Inputs can be triggered by other tasks</li>
               </ul>            </li>
           </ul>        </li>
       </ul>    </li>
     <li>Future Tasks
       <ul class="list-bullet">
-        <li><input type="checkbox" readonly="true"  /> tasks rescheduling themselves
+        <li><input type="checkbox" disabled  /> tasks rescheduling themselves
           <ul class="list-bullet">
             <li>How should this work? This feels like a different level where we are scheduling one-off input sends but it&#39;s kind of the same thing as periodic tasks. Probably this becomes an action/executor type to send an input at a scheduled time.</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true" checked /> Figure out versioning
+        <li><input type="checkbox" disabled checked /> Figure out versioning
           <ul class="list-bullet">
             <li>The ground work in the data structures has been done. Actual support for working with it still remains</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true"  /> Dashboards
+        <li><input type="checkbox" disabled  /> Dashboards
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Array of buttons to trigger tasks with certain inputs</li>
-            <li><input type="checkbox" readonly="true" checked /> Show recent runs</li>
+            <li><input type="checkbox" disabled  /> Array of buttons to trigger tasks with certain inputs</li>
+            <li><input type="checkbox" disabled checked /> Show recent runs</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true"  /> (MAYBE) Templates may need a way to interpolate arrays and objects into values instead of just strings
+        <li><input type="checkbox" disabled  /> (MAYBE) Templates may need a way to interpolate arrays and objects into values instead of just strings
           <ul class="list-bullet">
             <li>e.g. <code>{ &quot;obj_field&quot;: object_argument }</code></li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true"  /> (MAYBE) Tasks can access a KV store like redis or PG for more complex needs than the context system provides</li>
+        <li><input type="checkbox" disabled  /> (MAYBE) Tasks can access a KV store like redis or PG for more complex needs than the context system provides</li>
         <li>Other Executors
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Docker executor</li>
-            <li><input type="checkbox" readonly="true"  /> Discord executor
+            <li><input type="checkbox" disabled  /> Docker executor</li>
+            <li><input type="checkbox" disabled  /> Discord executor
               <ul class="list-bullet">
                 <li>Send a discord message. Useful for notifications.</li>
                 <li>This actually should be implemented as an action on top of the HTTP executor.</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> &quot;Send an input&quot; executor
+            <li><input type="checkbox" disabled  /> &quot;Send an input&quot; executor
               <ul class="list-bullet">
                 <li>To the triggering task, to a particular task, or to all tasks once global input listeners are ready.</li>
-                <li><input type="checkbox" readonly="true" checked /> And this needs to interact with the permission system.
+                <li><input type="checkbox" disabled checked /> And this needs to interact with the permission system.
                   <ul class="list-bullet">
-                    <li><input type="checkbox" readonly="true" checked /> See if the user can send inputs to a certain task.</li>
+                    <li><input type="checkbox" disabled checked /> See if the user can send inputs to a certain task.</li>
                     <li>Adding a global trigger to a task should require a permission.</li>
                   </ul>                </li>
-                <li><input type="checkbox" readonly="true"  /> Testing</li>
+                <li><input type="checkbox" disabled  /> Testing</li>
               </ul>            </li>
             <li>
               <ul class="list-bullet">
                 <li>New job to run a container image or run an existing Nomad job.</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Kubernetes Executor
+            <li><input type="checkbox" disabled  /> Kubernetes Executor
               <ul class="list-bullet">
                 <li>I&#39;m not really going to use this but it needs to be done if this project is going to get a lot of external pickup.</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> WASM executor?
+            <li><input type="checkbox" disabled  /> WASM executor?
               <ul class="list-bullet">
                 <li>This would load and run a WASM module. Might need to wait until WASI supports socket operations for this to really be useful. Might also be obviated by the Docker/Nomad/Kubernetes executors.</li>
               </ul>            </li>
@@ -337,75 +337,75 @@ updated: 2023-11-21
       </ul>    </li>
     <li>Done Tasks
       <ul class="list-bullet">
-        <li><input type="checkbox" readonly="true" checked /> Connection Pool Changes
+        <li><input type="checkbox" disabled checked /> Connection Pool Changes
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> Switch to sqlx default pool
+            <li><input type="checkbox" disabled checked /> Switch to sqlx default pool
               <ul class="list-bullet">
                 <li>This wasn&#39;t as good of a fit back when I was doing Vault auto-reload, but I think this is more hassle than it&#39;s worth. Better to just kill and restart the container if you&#39;re doing this kind of thing.</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> <del class="line-through">See about switching from redis pool to a single multiplexed connection.</del>
+            <li><input type="checkbox" disabled checked /> <del class="line-through">See about switching from redis pool to a single multiplexed connection.</del>
               <ul class="list-bullet">
                 <li>Status: So far this looks like a hassle since despite the conection manager supporting multiplexing, you need <code>mut</code> access to the connection to do anything which makes everything harder and it&#39;s not really worth it to implement interior mutability compared to the deadpool solution which already works.</li>
                 <li>Since redis is single-threaded anyway it&#39;s not like multiple connections gets us much.</li>
               </ul>            </li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true" checked /> Client-side Task Validation
+        <li><input type="checkbox" disabled checked /> Client-side Task Validation
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> Put <code>task_types</code> crate back into the normal <code>tasks</code> crate and figure out how to make that work</li>
-            <li><input type="checkbox" readonly="true" checked /> Add validation that referenced inputs, actions, states, etc. all exist
+            <li><input type="checkbox" disabled checked /> Put <code>task_types</code> crate back into the normal <code>tasks</code> crate and figure out how to make that work</li>
+            <li><input type="checkbox" disabled checked /> Add validation that referenced inputs, actions, states, etc. all exist
               <ul class="list-bullet">
                 <li>Base work is done</li>
               </ul>            </li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true" checked /> Endpoint to get recent logs
+        <li><input type="checkbox" disabled checked /> Endpoint to get recent logs
           <ul class="list-bullet">
             <li>Go from inputs to actions</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true" checked />  Dashboard home page
+        <li><input type="checkbox" disabled checked />  Dashboard home page
           <ul class="list-bullet">
             <li>First version just shows recent logs.</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true" checked /> Improve test coverage</li>
-        <li><input type="checkbox" readonly="true" checked /> API input HTTP endpoint can have the API key as part of the path. (done: query string)</li>
-        <li><input type="checkbox" readonly="true" checked /> Events v0.1
+        <li><input type="checkbox" disabled checked /> Improve test coverage</li>
+        <li><input type="checkbox" disabled checked /> API input HTTP endpoint can have the API key as part of the path. (done: query string)</li>
+        <li><input type="checkbox" disabled checked /> Events v0.1
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> Table to store events</li>
-            <li><input type="checkbox" readonly="true" checked /> Table to store tasks</li>
-            <li><input type="checkbox" readonly="true" checked /> Table to store actions</li>
-            <li><input type="checkbox" readonly="true" checked /> Trigger events from endpoint
+            <li><input type="checkbox" disabled checked /> Table to store events</li>
+            <li><input type="checkbox" disabled checked /> Table to store tasks</li>
+            <li><input type="checkbox" disabled checked /> Table to store actions</li>
+            <li><input type="checkbox" disabled checked /> Trigger events from endpoint
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true" checked /> Simple state machine implementation</li>
-                <li><input type="checkbox" readonly="true" checked /> Figure out atomic updates for state machines
+                <li><input type="checkbox" disabled checked /> Simple state machine implementation</li>
+                <li><input type="checkbox" disabled checked /> Figure out atomic updates for state machines
                   <ul class="list-bullet">
-                    <li><input type="checkbox" readonly="true" checked /> Maybe have a flag for single-state state machines that aren&#39;t keeping any state so we don&#39;t have to touch the database.</li>
-                    <li><input type="checkbox" readonly="true" checked /> Use Postgres SELECT FOR UPDATE, or is it better to use a serializable transaction? I think the latter is better because it won&#39;t block runs that don&#39;t actually update any internal task state.
+                    <li><input type="checkbox" disabled checked /> Maybe have a flag for single-state state machines that aren&#39;t keeping any state so we don&#39;t have to touch the database.</li>
+                    <li><input type="checkbox" disabled checked /> Use Postgres SELECT FOR UPDATE, or is it better to use a serializable transaction? I think the latter is better because it won&#39;t block runs that don&#39;t actually update any internal task state.
                       <ul class="list-bullet">
                         <li>Serializable transaction</li>
                       </ul>                    </li>
-                    <li><input type="checkbox" readonly="true" checked /> Queue up actions to be done in a postgres table so that the transaction itself doesn&#39;t have to wait for them to run</li>
+                    <li><input type="checkbox" disabled checked /> Queue up actions to be done in a postgres table so that the transaction itself doesn&#39;t have to wait for them to run</li>
                   </ul>                </li>
               </ul>            </li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true" checked /> User Management v0.1
+        <li><input type="checkbox" disabled checked /> User Management v0.1
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> Simple users/roles/orgs tables</li>
-            <li><input type="checkbox" readonly="true" checked /> API keys for users</li>
+            <li><input type="checkbox" disabled checked /> Simple users/roles/orgs tables</li>
+            <li><input type="checkbox" disabled checked /> API keys for users</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true" checked /> Pull actions out of the queue and run them.</li>
-        <li><input type="checkbox" readonly="true" checked /> Event logging on inputs</li>
-        <li><input type="checkbox" readonly="true" checked /> Discord webhooks for inputs and actions</li>
-        <li><input type="checkbox" readonly="true" checked /> Execute actions
+        <li><input type="checkbox" disabled checked /> Pull actions out of the queue and run them.</li>
+        <li><input type="checkbox" disabled checked /> Event logging on inputs</li>
+        <li><input type="checkbox" disabled checked /> Discord webhooks for inputs and actions</li>
+        <li><input type="checkbox" disabled checked /> Execute actions
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> Raw Command Executor</li>
-            <li><input type="checkbox" readonly="true" checked /> Http Request Executor
+            <li><input type="checkbox" disabled checked /> Raw Command Executor</li>
+            <li><input type="checkbox" disabled checked /> Http Request Executor
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true"  /> Add a per-task cookie jar or something? (probably not but is this useful ever?)</li>
+                <li><input type="checkbox" disabled  /> Add a per-task cookie jar or something? (probably not but is this useful ever?)</li>
               </ul>            </li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true" checked /> Each input and each action execution gets an ID which is created when it enters the queue, and those ID ends up in the action log so we can read back the results later and link actions to the inputs that most directly caused them.</li>
-        <li><input type="checkbox" readonly="true" checked /> Make sure all components are instantiated in the aio-server.</li>
-        <li><input type="checkbox" readonly="true" checked /> Clean up ergonomics of getting a connection from the pool March 19th, 2021</li>
-        <li><input type="checkbox" readonly="true" checked /> Single SIGINT listener that closes a <code>broadcast</code> channel, and all other things using sigint listeners listen to that instead March 17th, 2021</li>
+        <li><input type="checkbox" disabled checked /> Each input and each action execution gets an ID which is created when it enters the queue, and those ID ends up in the action log so we can read back the results later and link actions to the inputs that most directly caused them.</li>
+        <li><input type="checkbox" disabled checked /> Make sure all components are instantiated in the aio-server.</li>
+        <li><input type="checkbox" disabled checked /> Clean up ergonomics of getting a connection from the pool March 19th, 2021</li>
+        <li><input type="checkbox" disabled checked /> Single SIGINT listener that closes a <code>broadcast</code> channel, and all other things using sigint listeners listen to that instead March 17th, 2021</li>
       </ul>    </li>
     <li>Why?
       <ul class="list-bullet">
@@ -426,7 +426,7 @@ updated: 2023-11-21
       <ul class="list-bullet">
         <li>Weather alerts using data from <a href="https://open-meteo.com/en">https://open-meteo.com/en</a></li>
         <li>Scrape web sources and send emails based on some content in them</li>
-        <li><input type="checkbox" readonly="true" checked /> Receive a payload and run youtube-dl on the provided URL</li>
+        <li><input type="checkbox" disabled checked /> Receive a payload and run youtube-dl on the provided URL</li>
         <li>Periodically download Roam database</li>
         <li>Some sort of Twitter list archiving?</li>
         <li>Scrape TradeMachine and load potential trades into database</li>
@@ -505,7 +505,7 @@ updated: 2023-11-21
           <ul class="list-bullet">
             <li>A task is a collection of state machines that listen to inputs and fire actions.</li>
             <li>State machines can have persistent state across calls.</li>
-            <li><input type="checkbox" readonly="true"  /> Tasks can fork themselves, for instance to launch a chatbot for a particular user in response to an inquiry.
+            <li><input type="checkbox" disabled  /> Tasks can fork themselves, for instance to launch a chatbot for a particular user in response to an inquiry.
               <ul class="list-bullet">
                 <li>How do we deal with routing future incoming requests to the correct task clone?
                   <ul class="list-bullet">
@@ -532,11 +532,11 @@ updated: 2023-11-21
             <li>Log each trigger, event, task, action, etc.</li>
           </ul>        </li>
       </ul>    </li>
-    <li><input type="checkbox" readonly="true"  /> Scripting
+    <li><input type="checkbox" disabled  /> Scripting
       <ul class="list-bullet">
-        <li><input type="checkbox" readonly="true" checked /> Action Templates can be scripts</li>
-        <li><input type="checkbox" readonly="true" checked /> Task state machine handlers can be scripts.</li>
-        <li><input type="checkbox" readonly="true"  /> Scripts need a timeout.</li>
+        <li><input type="checkbox" disabled checked /> Action Templates can be scripts</li>
+        <li><input type="checkbox" disabled checked /> Task state machine handlers can be scripts.</li>
+        <li><input type="checkbox" disabled  /> Scripts need a timeout.</li>
         <li>Ended up choosing Deno core
           <ul class="list-bullet">
             <li>Some of these types of functionality are best done with some embedded scripting language.</li>
@@ -552,10 +552,10 @@ updated: 2023-11-21
       </ul>    </li>
     <li>Event Loop
       <ul class="list-bullet">
-        <li><input type="checkbox" readonly="true" checked /> Events and actions are each in a separate queue</li>
-        <li><input type="checkbox" readonly="true" checked /> Separate from the web server, there will be listener processes for events and actions. (Currently all-in-one)</li>
-        <li><input type="checkbox" readonly="true" checked /> The events queue listener will actually run the tasks</li>
-        <li><input type="checkbox" readonly="true" checked /> The actions queue listener is just responsible for running actions.</li>
+        <li><input type="checkbox" disabled checked /> Events and actions are each in a separate queue</li>
+        <li><input type="checkbox" disabled checked /> Separate from the web server, there will be listener processes for events and actions. (Currently all-in-one)</li>
+        <li><input type="checkbox" disabled checked /> The events queue listener will actually run the tasks</li>
+        <li><input type="checkbox" disabled checked /> The actions queue listener is just responsible for running actions.</li>
       </ul>    </li>
     <li>GUI Ideas
       <ul class="list-bullet">

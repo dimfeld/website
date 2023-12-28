@@ -12,14 +12,14 @@ updated: 2023-11-21
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Real 2x image support
+            <li><input type="checkbox" disabled  /> Real 2x image support
               <ul class="list-bullet">
                 <li>Currently you can just configure a double-size image in the conversion profile, but if you only want to use it for 2x there&#39;s no way to figure that out when querying the resulting image. Should add an option to generate a 2x image and then mark the resulting image as such in the metadata so they can be better merged in the picture tag.</li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true"  /> Quick upload endpoint
+            <li><input type="checkbox" disabled  /> Quick upload endpoint
               <ul class="list-bullet">
                 <li>This should allow creating a base image and uploading it with a single call. Some of the other image metadata such as alt text can be set later when using this mode.</li>
                 <li><code>/projects/:project_id/quick_upload</code></li>
@@ -36,43 +36,43 @@ updated: 2023-11-21
           <ul class="list-bullet">
             <li>Side Helper Tasks
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true"  /> CLI app that can hash an image and get the corresponding <code>&lt;picture&gt;</code> tag or other URL for it, and upload it if needed.</li>
-                <li><input type="checkbox" readonly="true"  /> Some sort of GUI version of the same, maybe even something that can be triggered straight from macOS Finder.
+                <li><input type="checkbox" disabled  /> CLI app that can hash an image and get the corresponding <code>&lt;picture&gt;</code> tag or other URL for it, and upload it if needed.</li>
+                <li><input type="checkbox" disabled  /> Some sort of GUI version of the same, maybe even something that can be triggered straight from macOS Finder.
                   <ul class="list-bullet">
                     <li>Good excuse to try Tauri</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true"  /> Generate <code>&lt;picture&gt;</code> tag corresponding to the base image and its output images. (The API currently exposes the info to let this happen, but doesn&#39;t generate the HTML on its own.)</li>
-            <li><input type="checkbox" readonly="true"  /> When adding a storage location, allow testing read/write access to it</li>
-            <li><input type="checkbox" readonly="true"  /> Make it possible to delete obsolete output images</li>
-            <li><input type="checkbox" readonly="true"  /> Support HEIC as input format</li>
+            <li><input type="checkbox" disabled  /> Generate <code>&lt;picture&gt;</code> tag corresponding to the base image and its output images. (The API currently exposes the info to let this happen, but doesn&#39;t generate the HTML on its own.)</li>
+            <li><input type="checkbox" disabled  /> When adding a storage location, allow testing read/write access to it</li>
+            <li><input type="checkbox" disabled  /> Make it possible to delete obsolete output images</li>
+            <li><input type="checkbox" disabled  /> Support HEIC as input format</li>
             <li><h4>More tests</h4>
               <ul class="list-bullet">
-                <li><input type="checkbox" readonly="true"  /> Upload a base image and see that the output images get created</li>
-                <li><input type="checkbox" readonly="true" checked /> Targeted tests for each image type
+                <li><input type="checkbox" disabled  /> Upload a base image and see that the output images get created</li>
+                <li><input type="checkbox" disabled checked /> Targeted tests for each image type
                   <ul class="list-bullet">
-                    <li><input type="checkbox" readonly="true" checked /> Read PNG, JPEG, Avif, Webp</li>
-                    <li><input type="checkbox" readonly="true" checked /> Convert image to PNG, JPEG, Avif, Webp</li>
+                    <li><input type="checkbox" disabled checked /> Read PNG, JPEG, Avif, Webp</li>
+                    <li><input type="checkbox" disabled checked /> Convert image to PNG, JPEG, Avif, Webp</li>
                   </ul>                </li>
-                <li><input type="checkbox" readonly="true"  /> Check that image conversion has a reasonable result</li>
-                <li><input type="checkbox" readonly="true"  /> Upload to some kind of mock S3</li>
-                <li><input type="checkbox" readonly="true"  /> Set upload locations, conversion profile, etc. and read them back</li>
+                <li><input type="checkbox" disabled  /> Check that image conversion has a reasonable result</li>
+                <li><input type="checkbox" disabled  /> Upload to some kind of mock S3</li>
+                <li><input type="checkbox" disabled  /> Set upload locations, conversion profile, etc. and read them back</li>
                 <li>Test all the permissions, checking for authorized and unauthorized operations</li>
-                <li><input type="checkbox" readonly="true"  /> Set up e2e test framework
+                <li><input type="checkbox" disabled  /> Set up e2e test framework
                   <ul class="list-bullet">
-                    <li><input type="checkbox" readonly="true" checked /> Scaffold base data</li>
-                    <li><input type="checkbox" readonly="true" checked /> Testing functionality, new database and so on</li>
-                    <li><input type="checkbox" readonly="true"  /> Create temporary folder to hold output images</li>
-                    <li><input type="checkbox" readonly="true"  /> Some method of checking that output images actually look ok. The <a href="https://docs.rs/image-compare">image-compare</a> crate may work well here.</li>
+                    <li><input type="checkbox" disabled checked /> Scaffold base data</li>
+                    <li><input type="checkbox" disabled checked /> Testing functionality, new database and so on</li>
+                    <li><input type="checkbox" disabled  /> Create temporary folder to hold output images</li>
+                    <li><input type="checkbox" disabled  /> Some method of checking that output images actually look ok. The <a href="https://docs.rs/image-compare">image-compare</a> crate may work well here.</li>
                   </ul>                </li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" readonly="true" checked /> Update reconvert endpoint to create a new set of output images corresponding to the current conversion profile, instead of using the old set of outputs &mdash; Nov 19th, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Use WebP lossless encoding when quality is set to 100 &mdash; Nov 19th, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Allow setting image encoder quality in the conversion profile &mdash; Nov 19th, 2023</li>
-            <li><input type="checkbox" readonly="true" checked /> Add some simple logic to conversions
+            <li><input type="checkbox" disabled checked /> Update reconvert endpoint to create a new set of output images corresponding to the current conversion profile, instead of using the old set of outputs &mdash; Nov 19th, 2023</li>
+            <li><input type="checkbox" disabled checked /> Use WebP lossless encoding when quality is set to 100 &mdash; Nov 19th, 2023</li>
+            <li><input type="checkbox" disabled checked /> Allow setting image encoder quality in the conversion profile &mdash; Nov 19th, 2023</li>
+            <li><input type="checkbox" disabled checked /> Add some simple logic to conversions
               <ul class="list-bullet">
                 <li>Only upsize</li>
                 <li>Only downsize</li>
@@ -81,27 +81,27 @@ updated: 2023-11-21
                     <li>e.g. only generate JPEGs if the source image is also a JPEG.</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> Update S3 auth to support instance metadata auth method
+            <li><input type="checkbox" disabled checked /> Update S3 auth to support instance metadata auth method
               <ul class="list-bullet">
                 <li>This is mostly just adding the config and setting it to not do anything</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> Endpoint to check by hash if an image already exists</li>
-            <li><input type="checkbox" readonly="true" checked /> Ensure that replacing a base image properly replaces the output images</li>
-            <li><input type="checkbox" readonly="true" checked /> When replacing a base image, delete the current output images associated with it.
+            <li><input type="checkbox" disabled checked /> Endpoint to check by hash if an image already exists</li>
+            <li><input type="checkbox" disabled checked /> Ensure that replacing a base image properly replaces the output images</li>
+            <li><input type="checkbox" disabled checked /> When replacing a base image, delete the current output images associated with it.
               <ul class="list-bullet">
                 <li>We&#39;ll want an option here for how long to keep the old images around</li>
                 <li>Forever should be an option</li>
                 <li>Resolved: Images of the same size/format are overwritten, the rest are retained and marked for manual deletion.</li>
               </ul>            </li>
-            <li><input type="checkbox" readonly="true" checked /> Check out tracing-tree as a replacement for bunyan formatter</li>
-            <li><input type="checkbox" readonly="true" checked /> Integrate DB into Axum</li>
-            <li><input type="checkbox" readonly="true" checked /> Set up storage providers</li>
-            <li><input type="checkbox" readonly="true" checked /> Accept HTTP uploads of images</li>
-            <li><input type="checkbox" readonly="true" checked /> Put uploaded images into S3 (can we stream them directly?)</li>
-            <li><input type="checkbox" readonly="true" checked /> Download files to convert from S3</li>
-            <li><input type="checkbox" readonly="true" checked /> Do conversion on files and save them back to S3</li>
-            <li><input type="checkbox" readonly="true" checked /> Graceful shutdown for server on SIGINT</li>
-            <li><input type="checkbox" readonly="true" checked /> Bootstrapping command
+            <li><input type="checkbox" disabled checked /> Check out tracing-tree as a replacement for bunyan formatter</li>
+            <li><input type="checkbox" disabled checked /> Integrate DB into Axum</li>
+            <li><input type="checkbox" disabled checked /> Set up storage providers</li>
+            <li><input type="checkbox" disabled checked /> Accept HTTP uploads of images</li>
+            <li><input type="checkbox" disabled checked /> Put uploaded images into S3 (can we stream them directly?)</li>
+            <li><input type="checkbox" disabled checked /> Download files to convert from S3</li>
+            <li><input type="checkbox" disabled checked /> Do conversion on files and save them back to S3</li>
+            <li><input type="checkbox" disabled checked /> Graceful shutdown for server on SIGINT</li>
+            <li><input type="checkbox" disabled checked /> Bootstrapping command
               <ul class="list-bullet">
                 <li>team</li>
                 <li>user</li>
@@ -114,10 +114,10 @@ updated: 2023-11-21
       </ul>    </li>
     <li><h2>Goals</h2>
       <ul class="list-bullet">
-        <li><input type="checkbox" readonly="true" checked /> Image Upload</li>
-        <li><input type="checkbox" readonly="true" checked /> Convert and resize</li>
-        <li><input type="checkbox" readonly="true"  /> Helper library for image upload from front-end</li>
-        <li><input type="checkbox" readonly="true"  /> Helper library (vite plugin maybe?) for using uploaded images
+        <li><input type="checkbox" disabled checked /> Image Upload</li>
+        <li><input type="checkbox" disabled checked /> Convert and resize</li>
+        <li><input type="checkbox" disabled  /> Helper library for image upload from front-end</li>
+        <li><input type="checkbox" disabled  /> Helper library (vite plugin maybe?) for using uploaded images
           <ul class="list-bullet">
             <li>This should also check by hash and upload if needed.</li>
           </ul>        </li>
@@ -150,7 +150,7 @@ updated: 2023-11-21
               </ul>            </li>
             <li>Likewise with checkpoints</li>
           </ul>        </li>
-        <li><input type="checkbox" readonly="true" checked /> Currently using a modified version of sqlxmq, changed to work with Diesel. While I like the queue code, maintaining a fork like this isn&#39;t a great idea so I should find something else. (Switched to <a href="/notes/projects_effectum">Effectum</a> )</li>
+        <li><input type="checkbox" disabled checked /> Currently using a modified version of sqlxmq, changed to work with Diesel. While I like the queue code, maintaining a fork like this isn&#39;t a great idea so I should find something else. (Switched to <a href="/notes/projects_effectum">Effectum</a> )</li>
       </ul>    </li>
     <li><h3>Workflows</h3>
       <ul class="list-bullet">
