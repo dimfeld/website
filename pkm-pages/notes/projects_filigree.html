@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2023-12-28
+updated: 2023-12-29
 ---
 
 
@@ -12,8 +12,7 @@ updated: 2023-12-28
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Get server to start</li>
-            <li><input type="checkbox" disabled  /> Password Auth endpoints</li>
+            <li><input type="checkbox" disabled  /> Password login/logout endpoints</li>
             <li><input type="checkbox" disabled  /> Endpoints for retrieving and updating your own user</li>
           </ul>        </li>
         <li><h3>Soon</h3>
@@ -33,12 +32,13 @@ updated: 2023-12-28
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Password forgot/reset endpoints</li>
             <li><input type="checkbox" disabled  /> MVP Basic email sending, enough to do password management and such</li>
+            <li><input type="checkbox" disabled  /> Add appropriate dependencies to Cargo.toml</li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> For models with global permissions, add permissions check in route layer before hitting database</li>
             <li><input type="checkbox" disabled  /> <a class="block-ref" href="/notes/projects_filigree#657a981d-8503-427b-a6ab-319c7879b94c">Project-based Access Control</a></li>
-            <li><input type="checkbox" disabled  /> User verification</li>
+            <li><input type="checkbox" disabled  /> Email-based user verification</li>
             <li><input type="checkbox" disabled  /> Fixture data system</li>
             <li><input type="checkbox" disabled  /> Data-driven default org contents, even if this just a JSON blob to start
               <ul class="list-bullet">
@@ -94,6 +94,7 @@ updated: 2023-12-28
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Get server to start &mdash; Dec 27th, 2023</li>
             <li><input type="checkbox" disabled checked /> Add permissions checks to endpoints &mdash; Dec 27th, 2023</li>
             <li><input type="checkbox" disabled checked /> Add app-specific AuthInfo object &mdash; Dec 23rd, 2023</li>
             <li><input type="checkbox" disabled checked /> Add AuthQueries implementation &mdash; Dec 23rd, 2023</li>
