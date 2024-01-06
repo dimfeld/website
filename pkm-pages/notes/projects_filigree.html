@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2023-12-29
+updated: 2024-01-06
 ---
 
 
@@ -12,15 +12,17 @@ updated: 2023-12-29
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Password login/logout endpoints</li>
-            <li><input type="checkbox" disabled  /> Endpoints for retrieving and updating your own user</li>
+            <li><input type="checkbox" disabled  /> Generate tests for models</li>
+            <li><input type="checkbox" disabled  /> Tests for users without proper permissions for each action</li>
+            <li><input type="checkbox" disabled  /> Tests for login/logout</li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Endpoints for retrieving and updating your own user</li>
+            <li><input type="checkbox" disabled  /> List all permissions in a file with descriptions</li>
             <li><input type="checkbox" disabled  /> Need a default role of admin which has all the permissions. (Or actually just add a new admin permission so there&#39;s one for the global admin and one for the team admin)</li>
             <li><input type="checkbox" disabled  /> signup endpoint to create a new org that also creates default roles, adds a user, etc.</li>
-            <li><input type="checkbox" disabled  /> Ability to make &quot;new org&quot; open to the public or admin-only</li>
-            <li><input type="checkbox" disabled  /> Generate Typescript interfaces and JS code to talk to the API</li>
+            <li><input type="checkbox" disabled  /> Ability to make signup open to the public or admin-only</li>
             <li><input type="checkbox" disabled  /> Configurable &quot;create&quot; permission
               <ul class="list-bullet">
                 <li>for non-individual models, the owner permission or the write permission</li>
@@ -31,69 +33,141 @@ updated: 2023-12-29
                   </ul>                </li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Password forgot/reset endpoints</li>
+            <li><input type="checkbox" disabled  /> Integrate with email sending services</li>
             <li><input type="checkbox" disabled  /> MVP Basic email sending, enough to do password management and such</li>
-            <li><input type="checkbox" disabled  /> Add appropriate dependencies to Cargo.toml</li>
+            <li><input type="checkbox" disabled  /> Auto-add appropriate dependencies to Cargo.toml</li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> For models with global permissions, add permissions check in route layer before hitting database</li>
-            <li><input type="checkbox" disabled  /> <a class="block-ref" href="/notes/projects_filigree#657a981d-8503-427b-a6ab-319c7879b94c">Project-based Access Control</a></li>
-            <li><input type="checkbox" disabled  /> Email-based user verification</li>
-            <li><input type="checkbox" disabled  /> Fixture data system</li>
-            <li><input type="checkbox" disabled  /> Data-driven default org contents, even if this just a JSON blob to start
+            <li>Template System
               <ul class="list-bullet">
-                <li>This can piggyback off of the fixture system</li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> Generate tests for models</li>
-            <li><input type="checkbox" disabled  /> OAuth</li>
-            <li><input type="checkbox" disabled  /> Some way to easily add hooks to CRUD operations
-              <ul class="list-bullet">
-                <li>Developer should probably just edit to code here.</li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> New runs diff against previous run and only apply diffed changes
-              <ul class="list-bullet">
-                <li>When running the CLI, could compare existing config against state file to see what changed and only apply changes to stateful things like databases</li>
-                <li>I think this needs to be versioned somehow, so that we can do equivalent of &quot;git commit&quot; or &quot;git commit &mdash;amend&quot;</li>
-                <li>Might be interesting to store a gzipped version of all files we generate on each run. Then every time we do a new generate, attempt to apply a diff from the previous version to the new version. This probably makes things much simpler, and simplifies issues around the developer changing things.</li>
-                <li>Or is it better to actually use git for this?
+                <li><input type="checkbox" disabled  /> Easier way to add new fields to user/org model than redefining the whole thing</li>
+                <li><input type="checkbox" disabled  /> New runs diff against previous run and only apply diffed changes
                   <ul class="list-bullet">
-                    <li>Would reduce changes to store since this data would be stored in Git too (e.g. only a few lines changed vs storing a binary which stores the entire thing each time)</li>
-                    <li>Simplifies diffing since git supports that natively</li>
-                    <li>Need to think about this but it seems promising...</li>
+                    <li>When running the CLI, save the generated templates (post-formatter) to a state directory</li>
+                    <li>On each run, diff the generated templates against the previous state in that directory</li>
+                    <li>Apply that diff to the actual output file
+                      <ul class="list-bullet">
+                        <li>Need a patch style that matches against nearby lines instead of just using line numbers.</li>
+                      </ul>                    </li>
+                    <li>Point out conflicts as they occur, probably use git style merge conflict markers</li>
+                    <li><code>diffy</code> supports three-way merge so that&#39;s also worth looking at</li>
+                    <li>This system allows the user to make changes to the generated files but still update the config.</li>
+                    <li>Need a command to rewrite a particular file</li>
+                    <li>Need a command to just regenerate the state cache, for when changing formatter settings</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Data-driven default org contents, even if this just a JSON blob to start
+                  <ul class="list-bullet">
+                    <li>This can piggyback off of the fixture system</li>
+                    <li>Considering not doing this since it may be simpler to just do it in a function.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Some way to easily add hooks to CRUD operations
+                  <ul class="list-bullet">
+                    <li>Developer should probably just edit the generated code here.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Initial migration should only be written once</li>
+                <li><input type="checkbox" disabled  /> New models should be added in new migrations</li>
+                <li><input type="checkbox" disabled  /> Columns changes to models should generate new migrations</li>
+                <li><input type="checkbox" disabled  /> Models can define extra permissions</li>
+                <li><input type="checkbox" disabled  /> Models can define custom functions/actions
+                  <ul class="list-bullet">
+                    <li>Might not do this since it may be worse DX than just adding to generated code</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Initial migration should only be written once</li>
-            <li><input type="checkbox" disabled  /> New models should be added in new migrations</li>
-            <li><input type="checkbox" disabled  /> Columns changes to models should generate new migrations</li>
-            <li><input type="checkbox" disabled  /> Models can define extra permissions</li>
-            <li><input type="checkbox" disabled  /> Models can define custom functions/actions</li>
-            <li><input type="checkbox" disabled  /> Emails with template system</li>
-            <li><input type="checkbox" disabled  /> Passwordless email auth</li>
-            <li><input type="checkbox" disabled  /> Passkey auth</li>
-            <li><input type="checkbox" disabled  /> Define background jobs and generate a helper to enqueue one</li>
-            <li><input type="checkbox" disabled  /> Add outbox pattern support for background jobs</li>
-            <li><input type="checkbox" disabled  /> Define scheduled tasks that run a job on a cron schedule</li>
-            <li><input type="checkbox" disabled  /> Other types of notifications?</li>
-            <li><input type="checkbox" disabled  /> Internal notifications
+            <li>Authentication and Registration
               <ul class="list-bullet">
-                <li>e.g. Discord webhook notifying myself about events</li>
-                <li>This should have notification templates and also destinations for the notifications</li>
+                <li><input type="checkbox" disabled  /> OAuth</li>
+                <li><input type="checkbox" disabled  /> Passwordless email auth</li>
+                <li><input type="checkbox" disabled  /> Password requirements
+                  <ul class="list-bullet">
+                    <li>length</li>
+                    <li>mix of character types</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Prevent reuse of recent passwords</li>
+                <li><input type="checkbox" disabled  /> Expire passwords that need a rehash due to upgraded standards</li>
+                <li><input type="checkbox" disabled  /> Expire passwords after a certain amount of time
+                  <ul class="list-bullet">
+                    <li>This isn&#39;t recommended practice but some enterprise clients require this in order to sign with you.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Passkeys
+                  <ul class="list-bullet">
+                    <li><a href="https://passkeys.dev/">https://passkeys.dev/</a></li>
+                    <li><a href="https://github.com/1Password/passkey-rs">https://github.com/1Password/passkey-rs</a></li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Authenticator app</li>
+                <li><input type="checkbox" disabled  /> Authenticator Account recovery codes</li>
+                <li><input type="checkbox" disabled  /> Email-based user verification</li>
+                <li><input type="checkbox" disabled  /> Account self-deletion</li>
+                <li><input type="checkbox" disabled  /> Optional TOS acceptance at registration</li>
+                <li><input type="checkbox" disabled  /> Service accounts</li>
+                <li><input type="checkbox" disabled  /> Record info about sessions (geoip, user-agent, etc.)</li>
+                <li><input type="checkbox" disabled  /> Allow logging out other sessions</li>
               </ul>            </li>
+            <li>Permissions
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> For models with global permissions, add permissions check in route layer before hitting database</li>
+                <li><input type="checkbox" disabled  /> <a class="block-ref" href="/notes/projects_filigree#657a981d-8503-427b-a6ab-319c7879b94c">Project-based Access Control</a></li>
+                <li><input type="checkbox" disabled  /> API Key lookup query needs to change to make permissions a subset of the user&#39;s permissions when inherit<em class="italic">user</em>permissions is false</li>
+                <li><input type="checkbox" disabled  /> Feature flags</li>
+                <li><input type="checkbox" disabled  /> Add &quot;all&quot; model permissions so that some roles have permissions on everything even when new models are added.
+                  <ul class="list-bullet">
+                    <li>This needs some more thought though. Some models like user, org, etc don&#39;t want to have this blanket rule applied.</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li>Block Storage
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Block storage abstraction
+                  <ul class="list-bullet">
+                    <li>revisit opendal vs. object_store crates</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Block storage: Make it easy to return an object as a Response body</li>
+                <li><input type="checkbox" disabled  /> Block storage: Option for Uploads via signed URL</li>
+              </ul>            </li>
+            <li>Workers
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Define background jobs and generate a helper to enqueue one</li>
+                <li><input type="checkbox" disabled  /> Outbox pattern support for running background jobs</li>
+                <li><input type="checkbox" disabled  /> Define scheduled tasks that run a job on a cron schedule</li>
+              </ul>            </li>
+            <li>Notifications
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Notifications: Other types of notifications?</li>
+                <li><input type="checkbox" disabled  /> Notifications Internal notifications
+                  <ul class="list-bullet">
+                    <li>e.g. Discord webhook notifying myself about events</li>
+                    <li>This should have notification templates and also destinations for the notifications</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Email template system</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Bootstrap the real database from fixtures? Maybe not, this is simpler to do in code and tie in to the &quot;new org&quot; code.</li>
+            <li><input type="checkbox" disabled  /> Generate Typescript interfaces and JS code to talk to the API</li>
             <li><input type="checkbox" disabled  /> Easy setup for commercialization</li>
-            <li><input type="checkbox" disabled  /> Export metrics to some tool
+            <li><input type="checkbox" disabled  /> Collect and export metrics to some tool
               <ul class="list-bullet">
                 <li>Looks like Honeycomb supports Prometheus format</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Delete log table for possibility of undelete later</li>
-            <li><input type="checkbox" disabled  /> Auditing on all operations</li>
-            <li><input type="checkbox" disabled  /> Ability for admins to assume roles of other users
+            <li><input type="checkbox" disabled  /> Option for auditing on all operations</li>
+            <li><input type="checkbox" disabled  /> Ability for admins to assume permissions of other users
               <ul class="list-bullet">
                 <li>This needs to be audited as well even if nothing else is audited</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Service accounts</li>
+            <li><input type="checkbox" disabled  /> Password confirmation flow for &quot;dangerous&quot; actions</li>
+            <li><input type="checkbox" disabled  /> User profile photos</li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Generate fixtures for tests &mdash; Jan 5th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Write functions needed to bootstrap test data &mdash; Jan 4th, 2024
+              <ul class="list-bullet">
+                <li>These should basically be the version that the actual app will use, just deferring all the surrounding functionality that isn&#39;t needed to write basic tests</li>
+                <li>Add org</li>
+                <li>Add roles</li>
+                <li>Add user to org with roles/permissions</li>
+                <li>Add new org (using all the above)</li>
+                <li>Add API key for user</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Password login/logout endpoints &mdash; Dec 29th, 2023</li>
             <li><input type="checkbox" disabled checked /> Get server to start &mdash; Dec 27th, 2023</li>
             <li><input type="checkbox" disabled checked /> Add permissions checks to endpoints &mdash; Dec 27th, 2023</li>
             <li><input type="checkbox" disabled checked /> Add app-specific AuthInfo object &mdash; Dec 23rd, 2023</li>
@@ -236,6 +310,11 @@ updated: 2023-12-29
                 <li>Attribute-based Access Control (ABAC)
                   <ul class="list-bullet">
                     <li>Objects have attributes and actors</li>
+                  </ul>                </li>
+                <li>Public sharing
+                  <ul class="list-bullet">
+                    <li>Some sites are built around publicly sharing your stuff.</li>
+                    <li>This is basically the same as the resource-based access control model, but with the ability to share with an &quot;anyone&quot; user, and then all the permissions checks check for that actor ID as well.</li>
                   </ul>                </li>
               </ul>            </li>
             <li>Types of default permissions
