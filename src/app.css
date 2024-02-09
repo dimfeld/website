@@ -241,6 +241,10 @@ article .has-component > *:not(:last-child) {
   display: none;
 }
 
+.CodeMirror-line {
+  box-shadow: none;
+}
+
 /*
 .pkm-page {
   ul,

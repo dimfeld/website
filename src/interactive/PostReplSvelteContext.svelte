@@ -1,20 +1,20 @@
 <script>
   import Repl from './ReplWrapper.svelte';
 
-  import storeApp from './svelte-context-src/store-app.txt';
-  import storeChild from './svelte-context-src/store-child.txt';
-  import storeGrandchild from './svelte-context-src/store-grandchild.txt';
+  import storeApp from './svelte-context-src/store-app.txt?raw';
+  import storeChild from './svelte-context-src/store-child.txt?raw';
+  import storeGrandchild from './svelte-context-src/store-grandchild.txt?raw';
 
-  import contextAfterInitApp from './svelte-context-src/context-after-init-app.txt';
-  import contextAfterInitChild from './svelte-context-src/context-after-init-child.txt';
+  import contextAfterInitApp from './svelte-context-src/context-after-init-app.txt?raw';
+  import contextAfterInitChild from './svelte-context-src/context-after-init-child.txt?raw';
 
-  import preventingKeyInterferenceApp from './svelte-context-src/preventing-key-interference-app.txt';
-  import preventingKeyInterferenceChild from './svelte-context-src/preventing-key-interference-child.txt';
-  import preventingKeyInterferenceContext from './svelte-context-src/preventing-key-interference-context.txt';
+  import preventingKeyInterferenceApp from './svelte-context-src/preventing-key-interference-app.txt?raw';
+  import preventingKeyInterferenceChild from './svelte-context-src/preventing-key-interference-child.txt?raw';
+  import preventingKeyInterferenceContext from './svelte-context-src/preventing-key-interference-context.txt?raw';
 
-  import storeSeparateFileApp from './svelte-context-src/store-separate-file-app.txt';
-  import storeSeparateFileChild from './svelte-context-src/store-separate-file-child.txt';
-  import storeSeparateFileStore from './svelte-context-src/store-separate-file-store.txt';
+  import storeSeparateFileApp from './svelte-context-src/store-separate-file-app.txt?raw';
+  import storeSeparateFileChild from './svelte-context-src/store-separate-file-child.txt?raw';
+  import storeSeparateFileStore from './svelte-context-src/store-separate-file-store.txt?raw';
 
   export let preset;
 
