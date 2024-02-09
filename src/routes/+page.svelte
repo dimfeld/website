@@ -79,6 +79,7 @@
     </p>
   </section>
 
+  <!--
   <p class="mt-4">
     If you like what you've read here, please consider subscribing to my
     weekly-ish newsletter, where I write short essays, announce new articles,
@@ -86,6 +87,7 @@
   </p>
 
   <NewsletterSignup />
+  -->
 
   <h1 id="aboutme">About Me</h1>
 
