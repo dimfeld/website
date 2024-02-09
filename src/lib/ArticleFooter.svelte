@@ -10,10 +10,12 @@
     note on <a href="https://www.twitter.com/dimfeld">Twitter</a>.
   </p>
 
+  <!--
   <p>
     Please also consider subscribing to my weekly-ish newsletter, where I write
     short essays, announce new articles, and share other interesting things I've
     found.
   </p>
   <NewsletterSignup />
+  -->
 </footer>
