@@ -46,6 +46,9 @@ Then you just set up the transitions on your elements, and you're ready to go!
 
 This same technique can be used to facilitate transitions between routes in a single-page application. Here's an example using the [tinro](https://github.com/AlexxNB/tinro) router.
 
+Note: I wrote this long ago, and nowadays it's better to use the browser's [View Transitions
+API](https://developer.chrome.com/docs/web-platform/view-transitions/).
+
 ```svelte
 <script>
   import { Route } from 'tinro';
@@ -96,8 +99,6 @@ This same technique can be used to facilitate transitions between routes in a si
 </main>
 </div>
 ```
-
-<div data-component="Repl" data-prop-id="c701f43b27ce4da1a189b08a8a250255"></div>
 
 
 I'll cover more advanced transition techniques in future posts. Thanks for reading!
