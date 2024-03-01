@@ -1,0 +1,78 @@
+---
+title: "AWS VPC Configuration"
+tags: AWS
+date: 2024-03-01
+updated: 2024-03-01
+---
+
+
+  <ul class="list-bullet">
+    <li>AWS sets up a bunch of convenient things in the default VPC for an account, which you may need to recreate when making a new VPC. Here&#39;s how to do that in Terraform.</li>
+    <li>First, the VPC and subnets:
+      <ul class="list-bullet">
+        <li><pre><code><span class="sy-source sy-terraform"><span class="sy-meta sy-type sy-terraform"><span class="sy-storage sy-type sy-terraform">resource</span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>aws_vpc<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>my_app<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span> <span class="sy-meta sy-block sy-terraform"><span class="sy-punctuation sy-section sy-block sy-begin sy-terraform">{</span></span></span><span class="sy-meta sy-block sy-terraform">
+  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">cidr_block</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span><span class="sy-support sy-constant sy-terraform">var</span><span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">my_app_cidr</span>
+  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">tags</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span><span class="sy-meta sy-braces sy-terraform"><span class="sy-punctuation sy-section sy-braces sy-begin sy-terraform">{</span>
+    <span class="sy-meta sy-mapping sy-key sy-terraform"><span class="sy-string sy-unquoted sy-terraform">Name</span></span> <span class="sy-keyword sy-operator sy-terraform">=</span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>my_app<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span>
+  <span class="sy-punctuation sy-section sy-braces sy-end sy-terraform">}</span></span>
+<span class="sy-punctuation sy-section sy-block sy-end sy-terraform">}</span></span>
+
+<span class="sy-meta sy-type sy-terraform"><span class="sy-storage sy-type sy-terraform">resource</span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>aws_subnet<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>my_app<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span> <span class="sy-meta sy-block sy-terraform"><span class="sy-punctuation sy-section sy-block sy-begin sy-terraform">{</span></span></span><span class="sy-meta sy-block sy-terraform">
+  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">vpc_id</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span>aws_vpc<span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">my_app</span><span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">id</span>
+  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">cidr_block</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span><span class="sy-support sy-constant sy-terraform">var</span><span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">my_app_cidr</span>
+  <span class="sy-comment sy-line sy-terraform"><span class="sy-punctuation sy-definition sy-comment sy-terraform">#</span> Set appropriately for your needs<span class="sy-punctuation sy-definition sy-comment sy-terraform">
+</span></span>  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">map_public_ip_on_launch</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span><span class="sy-constant sy-language sy-terraform">true</span>
+  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">availability_zone</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span><span class="sy-support sy-constant sy-terraform">var</span><span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">az</span>
+  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">tags</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span><span class="sy-meta sy-braces sy-terraform"><span class="sy-punctuation sy-section sy-braces sy-begin sy-terraform">{</span>
+    <span class="sy-meta sy-mapping sy-key sy-terraform"><span class="sy-string sy-unquoted sy-terraform">Name</span></span> <span class="sy-keyword sy-operator sy-terraform">=</span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>my_app<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span>
+  <span class="sy-punctuation sy-section sy-braces sy-end sy-terraform">}</span></span>
+<span class="sy-punctuation sy-section sy-block sy-end sy-terraform">}</span></span>
+
+</span></code></pre></li>
+      </ul>    </li>
+    <li>For tasks that access the internet, you also need an internet gateway and a routing table to use it.
+      <ul class="list-bullet">
+        <li>You can also use a NAT gateway or something, but this is the simplest and cheapest way to go.</li>
+        <li>Here we&#39;ll also set up a VPC endpoint to link directly into S3, which saves egress charges for going through public routes.</li>
+        <li><pre><code><span class="sy-source sy-terraform"><span class="sy-meta sy-type sy-terraform"><span class="sy-storage sy-type sy-terraform">resource</span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>aws_internet_gateway<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>my_app<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span> <span class="sy-meta sy-block sy-terraform"><span class="sy-punctuation sy-section sy-block sy-begin sy-terraform">{</span></span></span><span class="sy-meta sy-block sy-terraform">
+  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">vpc_id</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span>aws_vpc<span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">my_app</span><span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">id</span>
+
+  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">tags</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span><span class="sy-meta sy-braces sy-terraform"><span class="sy-punctuation sy-section sy-braces sy-begin sy-terraform">{</span>
+    <span class="sy-meta sy-mapping sy-key sy-terraform"><span class="sy-string sy-unquoted sy-terraform">Name</span></span> <span class="sy-keyword sy-operator sy-terraform">=</span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>my_app<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span>
+  <span class="sy-punctuation sy-section sy-braces sy-end sy-terraform">}</span></span>
+<span class="sy-punctuation sy-section sy-block sy-end sy-terraform">}</span></span>
+
+<span class="sy-meta sy-type sy-terraform"><span class="sy-storage sy-type sy-terraform">resource</span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>aws_route_table<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>my_app<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span> <span class="sy-meta sy-block sy-terraform"><span class="sy-punctuation sy-section sy-block sy-begin sy-terraform">{</span></span></span><span class="sy-meta sy-block sy-terraform">
+  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">vpc_id</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span>aws_vpc<span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">my_app</span><span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">id</span>
+
+  <span class="sy-meta sy-type sy-terraform"><span class="sy-entity sy-name sy-type sy-terraform">route</span> <span class="sy-meta sy-block sy-terraform"><span class="sy-punctuation sy-section sy-block sy-begin sy-terraform">{</span></span></span><span class="sy-meta sy-block sy-terraform">
+    <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">cidr_block</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span><span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>0.0.0.0/0<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span>
+    <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">gateway_id</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span>aws_internet_gateway<span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">my_app</span><span class="sy-keyword sy-operator sy-accessor sy-terraform">.</span><span class="sy-variable sy-other sy-member sy-terraform">id</span>
+  <span class="sy-punctuation sy-section sy-block sy-end sy-terraform">}</span></span>
+
+  <span class="sy-variable sy-declaration sy-terraform"><span class="sy-variable sy-other sy-readwrite sy-terraform">tags</span> <span class="sy-keyword sy-operator sy-assignment sy-terraform">= </span></span><span class="sy-meta sy-braces sy-terraform"><span class="sy-punctuation sy-section sy-braces sy-begin sy-terraform">{</span>
+    <span class="sy-meta sy-mapping sy-key sy-terraform"><span class="sy-string sy-unquoted sy-terraform">Name</span></span> <span class="sy-keyword sy-operator sy-terraform">=</span> <span class="sy-string sy-quoted sy-double sy-terraform"><span class="sy-punctuation sy-definition sy-string sy-begin sy-terraform">&quot;</span>my_app<span class="sy-punctuation sy-definition sy-string sy-end sy-terraform">&quot;</span></span>
+  <span class="sy-punctuation sy-section sy-braces sy-end sy-terraform">}</span></span>
+<span class="sy-punctuation sy-section sy-block sy-end sy-terraform">}</span></span>
+</span></code></pre></li>
+      </ul>    </li>
+    <li>Finally, we set up a VPC endpoint to communicate directly with S3, without needing to go through the public internet. This can improve performance and save money.
+      <ul class="list-bullet">
+        <li><pre><code><span class="sy-text sy-plain">resource &quot;aws_vpc_endpoint&quot; &quot;my_app_s3&quot; {
+  vpc_id       = aws_vpc.my_app.id
+  service_name = &quot;com.amazonaws.us-west-2.s3&quot;
+
+  tags = {
+    Name = &quot;my_app_s3&quot;
+  }
+}
+
+resource &quot;aws_vpc_endpoint_route_table_association&quot; &quot;my_app_s3&quot; {
+  vpc_endpoint_id = aws_vpc_endpoint.my_app_s3.id
+  route_table_id = aws_route_table.my_app.id
+}
+
+</span></code></pre></li>
+      </ul>    </li>
+  </ul>
+

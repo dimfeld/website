@@ -1,0 +1,88 @@
+---
+title: "Smelter"
+tags: Projects
+date: 2023-06-27
+updated: 2024-03-01
+---
+
+
+  <ul class="list-bullet">
+    <li>This is a project to do map-reduce style calculations using a bunch of serverless workers reading from S3.</li>
+    <li><h2>Task List</h2>
+      <ul class="list-bullet">
+        <li><h3>Up Next</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Full test of Fargate jobs</li>
+          </ul>        </li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> StatusCollector may need be aware of individual jobs. Probably the former.
+              <ul class="list-bullet">
+                <li>Adding a job ID to SubtaskID is probably the simplest way to do this. Every time a job gets created it would have a new ID. Use UUIDv7</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> StatusSender needs to work with a raw StatusUpdateItem, and the StatusCollector should be able to handle native StatusUpdateItem and have its own separate channel for the read operations.</li>
+          </ul>        </li>
+        <li><h3>Later</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> AWS Lambda orchestrator</li>
+            <li><input type="checkbox" disabled  /> Convert a single SQL statement into a multi-stage map-reduce set of tasks</li>
+          </ul>        </li>
+        <li><h3>Done</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Build fargate container</li>
+            <li><input type="checkbox" disabled checked /> Have something that helps generate task definitions for fargate</li>
+            <li><input type="checkbox" disabled checked /> AWS Fargate Spawner
+              <ul class="list-bullet">
+                <li>How to figure out if a container succeeded or not? &mdash; exit code is exposed though there&#39;s no other way to pass back data</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> AWS Fargate Worker Framework</li>
+            <li id="651362f2-b0ec-4bf6-b14a-226b2f8cc350"><input type="checkbox" disabled checked /> Example to run workers as local processes</li>
+            <li><input type="checkbox" disabled checked /> Remove the <code>Spawner</code> trait altogether
+              <ul class="list-bullet">
+                <li>It&#39;s no longer necessary and isn&#39;t sufficiently expressive for most spawners</li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Test Datasets</h2>
+      <ul class="list-bullet">
+        <li><a href="https://opensky-network.org/datasets/raw/">https://opensky-network.org/datasets/raw/</a></li>
+      </ul>    </li>
+    <li><h2>Initial Features</h2>
+      <ul class="list-bullet">
+        <li>Split up queries across a number of workers
+          <ul class="list-bullet">
+            <li>Split queries into chunks</li>
+            <li>Max number of concurrent workers</li>
+          </ul>        </li>
+        <li>Run workers</li>
+        <li>Gather results</li>
+        <li>Reduce results using 1 or more reducers</li>
+        <li>Retryable workers with some threshold for retrying
+          <ul class="list-bullet">
+            <li>e.g. autoretry remaining workers once the first 90% have returned</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Pluggable Backends</h2>
+      <ul class="list-bullet">
+        <li>Execution
+          <ul class="list-bullet">
+            <li>AWS Lambda</li>
+            <li>Docker/Kubernetes/Nomad</li>
+          </ul>        </li>
+        <li>Storage
+          <ul class="list-bullet">
+            <li>Various Cloud storage</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Applications</h2>
+      <ul class="list-bullet">
+        <li>Query over some data and output a DuckDB file with the results for further analysis.</li>
+      </ul>    </li>
+    <li><h3>From Honeycomb&#39;s O11y Book
+
+But serverless functions and cloud object storage aren&#39;t 100% reliable. In practice, the latency at the tails of the distribution of invocation time can be significant orders of magnitude higher than the median time. That last 5% to 10% of results may take tens of seconds to return, or may never complete. In the Retriever implementation, we use impatience to return results in a timely manner. Once 90% of the requests to process segments have completed, the remaining 10% are re-requested, without canceling the still-pending requests. The parallel attempts race each other, with whichever returns first being used to populate the query result. Even if it is 10% more expensive to always retry the slowest 10% of subqueries, a different read attempt against the cloud provider&#39;s backend will likely perform faster than a &quot;stuck&quot; query blocked on S3, or network I/O that may never finish before it times out.
+
+
+What happens if someone attempts to group results by a high-cardinality field? How can you still return accurate values without running out of memory? The simplest solution is to fan out the reduce step by assigning reduce workers to handle only a proportional subset of the possible groups. For instance, you could follow the pattern Chord does by creating a hash of the group and looking up the hash correspondence in a ring covering the keyspace.</h3></li>
+  </ul>
+

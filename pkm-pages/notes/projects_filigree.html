@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-01-06
+updated: 2024-02-29
 ---
 
 
@@ -12,51 +12,125 @@ updated: 2024-01-06
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Generate tests for models</li>
-            <li><input type="checkbox" disabled  /> Tests for users without proper permissions for each action</li>
-            <li><input type="checkbox" disabled  /> Tests for login/logout</li>
+            <li><input type="checkbox" disabled  /> Parent/child model relationships
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled checked /> Configuration</li>
+                <li><input type="checkbox" disabled checked /> Add fields for <code>belongs_to</code> relationships to model structures</li>
+                <li><input type="checkbox" disabled checked /> Generate composite primary key for joining tables and update queries appropriately</li>
+                <li><input type="checkbox" disabled checked /> handle has_one relationships in fetch queries with ID fetch</li>
+                <li><input type="checkbox" disabled checked /> handle has_one relationships in fetch queries with data fetch</li>
+                <li><input type="checkbox" disabled checked /> handle has_many relationships in fetch queries with ID fetch</li>
+                <li><input type="checkbox" disabled checked /> handle has_many relationships in fetch queries with data fetch</li>
+                <li><input type="checkbox" disabled checked /> Allow populating <code>references</code> fields on fetch when configured</li>
+                <li><input type="checkbox" disabled checked /> Updates for has_one relationships with data payload</li>
+                <li><input type="checkbox" disabled checked /> Updates for has_many relationships with data payload</li>
+                <li><input type="checkbox" disabled checked /> Generate CRUD endpoints for children of a particular object
+                  <ul class="list-bullet">
+                    <li>This is basically the same as the normal endpoint, but with the parent ID specified in the URL instead of in the payload.</li>
+                    <li>When it&#39;s not a many relationship, omit the child ID parameter</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Populated query functions
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" disabled checked /> Call populated functions from endpoints when appropriate</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> SQL Queries for child objects
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" disabled checked /> List by parent ID
+                      <ul class="list-bullet">
+                        <li>This could be done as just another filter on the list query instead of a new query template</li>
+                      </ul>                    </li>
+                    <li><input type="checkbox" disabled checked /> insert/update multiple objects</li>
+                    <li><input type="checkbox" disabled checked /> Delete by parent ID where ID is not in the set of IDs just inserted/deleted</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Ensure that each model is not referenced my more than one non-through <code>has</code> relationship</li>
+                <li><input type="checkbox" disabled checked /> Sort CREATE TABLE statements so that parents come first</li>
+                <li><input type="checkbox" disabled  /> Tests
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" disabled checked /> Create a test model with children
+                      <ul class="list-bullet">
+                        <li>Post</li>
+                        <li>has one Poll</li>
+                        <li>has many Comments</li>
+                        <li>has many Reactions</li>
+                      </ul>                    </li>
+                    <li><input type="checkbox" disabled checked /> populated queries with has_one</li>
+                    <li><input type="checkbox" disabled checked /> populated queries with has_many</li>
+                    <li><input type="checkbox" disabled checked /> insert with child object</li>
+                    <li><input type="checkbox" disabled checked /> update with child object</li>
+                    <li><input type="checkbox" disabled  /> delete also deletes child objects</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> create and update functions should return the resulting objects</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Joining tables
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Handle <code>through</code> relationships in fetch queries</li>
+                <li><input type="checkbox" disabled  /> Updates for <code>through</code> relationships</li>
+                <li><input type="checkbox" disabled  /> Generate endpoints for managing links in joining tables
+                  <ul class="list-bullet">
+                    <li>These can just be CRUD endpoints on the linking model. Main difference is the URL structure accounts for the composite ID</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Updates for has_one relationships with ID payload</li>
+                <li><input type="checkbox" disabled  /> Updates for has_many relationships with ID payload</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> <del class="line-through">Store .gen files in a tar file instead</del> - Cancelled
+              <ul class="list-bullet">
+                <li>This reduces the huge number of files in the state directory, but will make merge conflicts more difficult to deal with so</li>
+              </ul>            </li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Endpoints for retrieving and updating your own user</li>
-            <li><input type="checkbox" disabled  /> List all permissions in a file with descriptions</li>
-            <li><input type="checkbox" disabled  /> Need a default role of admin which has all the permissions. (Or actually just add a new admin permission so there&#39;s one for the global admin and one for the team admin)</li>
-            <li><input type="checkbox" disabled  /> signup endpoint to create a new org that also creates default roles, adds a user, etc.</li>
-            <li><input type="checkbox" disabled  /> Ability to make signup open to the public or admin-only</li>
-            <li><input type="checkbox" disabled  /> Configurable &quot;create&quot; permission
+            <li><input type="checkbox" disabled  /> Generate Typescript interfaces and JS code to talk to the API</li>
+            <li><input type="checkbox" disabled  /> Frontend: Generate client-side validation
               <ul class="list-bullet">
-                <li>for non-individual models, the owner permission or the write permission</li>
-                <li>for individual models, can be a separate global permission or always allow</li>
-                <li>How to properly define configuration for these since they have two settings?
-                  <ul class="list-bullet">
-                    <li>Maybe make a tagged enum for permissions model, with different values for each</li>
-                  </ul>                </li>
+                <li>This is mostly generating the JSON schema into JS, hooking it into <code>ajv</code>, and then making sure that the form submission functions actually use it.</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Password forgot/reset endpoints</li>
-            <li><input type="checkbox" disabled  /> Integrate with email sending services</li>
-            <li><input type="checkbox" disabled  /> MVP Basic email sending, enough to do password management and such</li>
-            <li><input type="checkbox" disabled  /> Auto-add appropriate dependencies to Cargo.toml</li>
+            <li><input type="checkbox" disabled  /> Error reporting
+              <ul class="list-bullet">
+                <li>Support reporting errors to an external service like Rollbar or Sentry, on both the frontend and backend</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Error page</li>
+            <li><input type="checkbox" disabled  /> Reenable endpoints on child models
+              <ul class="list-bullet">
+                <li>This should mostly work already, but the tests need some additional setup to make a parent object to link to.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Frontend: Project initialization
+              <ul class="list-bullet">
+                <li>Run sveltekit init command to generate basic project, then fill in files from there.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> tests for list endpoint filtering/pagination/sorting</li>
+            <li><input type="checkbox" disabled  /> Set up axum-sqlx-tx?</li>
+            <li><input type="checkbox" disabled  /> Create and update endpoints should return children when doing update<em class="italic">with</em>parent</li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Add auto-bootstrap option
+              <ul class="list-bullet">
+                <li>When appropriate environment variables are set, allows the API to do the bootstrapping itself when it first starts up</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Add <code>init</code> command that runs Cargo init, create-svelte, and creates basic config.toml?</li>
+            <li>Frontend
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Figure out how best to link Rust side with SvelteKit
+                  <ul class="list-bullet">
+                    <li>For production, Rust side can have a fallback route which forwards connection to SvelteKit server.
+                      <ul class="list-bullet">
+                        <li>More complex setups could use a reverse proxy in front of everything but this should be a good default.</li>
+                      </ul>                    </li>
+                    <li>For dev, easiest to use Vite support and proxy <code>/api</code> to the Rust side</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> App shell with nav bar, etc.</li>
+                <li><input type="checkbox" disabled  /> Password reset page</li>
+                <li><input type="checkbox" disabled  /> Profile management page</li>
+                <li><input type="checkbox" disabled  /> Manage your organization</li>
+                <li><input type="checkbox" disabled  /> Default Model editor page</li>
+                <li><input type="checkbox" disabled  /> Default Model list page</li>
+                <li><input type="checkbox" disabled  /> Admin: invite users to app</li>
+                <li><input type="checkbox" disabled  /> Admin: administer organizations</li>
+                <li><input type="checkbox" disabled  /> 404 page</li>
+              </ul>            </li>
             <li>Template System
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Easier way to add new fields to user/org model than redefining the whole thing</li>
-                <li><input type="checkbox" disabled  /> New runs diff against previous run and only apply diffed changes
-                  <ul class="list-bullet">
-                    <li>When running the CLI, save the generated templates (post-formatter) to a state directory</li>
-                    <li>On each run, diff the generated templates against the previous state in that directory</li>
-                    <li>Apply that diff to the actual output file
-                      <ul class="list-bullet">
-                        <li>Need a patch style that matches against nearby lines instead of just using line numbers.</li>
-                      </ul>                    </li>
-                    <li>Point out conflicts as they occur, probably use git style merge conflict markers</li>
-                    <li><code>diffy</code> supports three-way merge so that&#39;s also worth looking at</li>
-                    <li>This system allows the user to make changes to the generated files but still update the config.</li>
-                    <li>Need a command to rewrite a particular file</li>
-                    <li>Need a command to just regenerate the state cache, for when changing formatter settings</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled  /> Data-driven default org contents, even if this just a JSON blob to start
+                <li><input type="checkbox" disabled  /> Data-driven default org contents, even if just a JSON blob to start
                   <ul class="list-bullet">
                     <li>This can piggyback off of the fixture system</li>
                     <li>Considering not doing this since it may be simpler to just do it in a function.</li>
@@ -64,20 +138,36 @@ updated: 2024-01-06
                 <li><input type="checkbox" disabled  /> Some way to easily add hooks to CRUD operations
                   <ul class="list-bullet">
                     <li>Developer should probably just edit the generated code here.</li>
+                    <li>Maybe add stub functions to each model to allow adding pre/post save hooks</li>
                   </ul>                </li>
-                <li><input type="checkbox" disabled  /> Initial migration should only be written once</li>
-                <li><input type="checkbox" disabled  /> New models should be added in new migrations</li>
-                <li><input type="checkbox" disabled  /> Columns changes to models should generate new migrations</li>
                 <li><input type="checkbox" disabled  /> Models can define extra permissions</li>
                 <li><input type="checkbox" disabled  /> Models can define custom functions/actions
                   <ul class="list-bullet">
                     <li>Might not do this since it may be worse DX than just adding to generated code</li>
                   </ul>                </li>
+                <li><input type="checkbox" disabled  /> Make it easy for additional queries to use the permissions macros
+                  <ul class="list-bullet">
+                    <li>Can suggest using sqlweld here</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Autogenerate belongs_to field if necessary when the inverse has is detected without a through table.
+                  <ul class="list-bullet">
+                    <li>Currently this returns an error</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Allow disabling child population at runtime in list/get endpoints, when it is enabled by default</li>
+                <li><input type="checkbox" disabled  /> Test populated get and list when update<em class="italic">with</em>parent is false</li>
               </ul>            </li>
             <li>Authentication and Registration
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> OAuth</li>
-                <li><input type="checkbox" disabled  /> Passwordless email auth</li>
+                <li><input type="checkbox" disabled  /> Rate limiting for login-related endpoints
+                  <ul class="list-bullet">
+                    <li><a href="https://docs.rs/governor/latest/governor/">https://docs.rs/governor/latest/governor/</a></li>
+                    <li><a href="https://lib.rs/crates/tower_governor">https://lib.rs/crates/tower_governor</a></li>
+                    <li><a href="https://github.com/brandur/redis-cell">https://github.com/brandur/redis-cell</a> if i need this to be distributed
+                      <ul class="list-bullet">
+                        <li>DragonflyDB is a redis-compatible that has this built-in</li>
+                      </ul>                    </li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Passwordless login should include a code that can be pasted into the UI to log in instead.</li>
                 <li><input type="checkbox" disabled  /> Password requirements
                   <ul class="list-bullet">
                     <li>length</li>
@@ -85,7 +175,7 @@ updated: 2024-01-06
                   </ul>                </li>
                 <li><input type="checkbox" disabled  /> Prevent reuse of recent passwords</li>
                 <li><input type="checkbox" disabled  /> Expire passwords that need a rehash due to upgraded standards</li>
-                <li><input type="checkbox" disabled  /> Expire passwords after a certain amount of time
+                <li><input type="checkbox" disabled  /> Option to expire passwords after a certain amount of time
                   <ul class="list-bullet">
                     <li>This isn&#39;t recommended practice but some enterprise clients require this in order to sign with you.</li>
                   </ul>                </li>
@@ -94,24 +184,62 @@ updated: 2024-01-06
                     <li><a href="https://passkeys.dev/">https://passkeys.dev/</a></li>
                     <li><a href="https://github.com/1Password/passkey-rs">https://github.com/1Password/passkey-rs</a></li>
                   </ul>                </li>
-                <li><input type="checkbox" disabled  /> Authenticator app</li>
+                <li><input type="checkbox" disabled  /> RSA timecode Authenticator app</li>
                 <li><input type="checkbox" disabled  /> Authenticator Account recovery codes</li>
-                <li><input type="checkbox" disabled  /> Email-based user verification</li>
                 <li><input type="checkbox" disabled  /> Account self-deletion</li>
                 <li><input type="checkbox" disabled  /> Optional TOS acceptance at registration</li>
                 <li><input type="checkbox" disabled  /> Service accounts</li>
                 <li><input type="checkbox" disabled  /> Record info about sessions (geoip, user-agent, etc.)</li>
-                <li><input type="checkbox" disabled  /> Allow logging out other sessions</li>
+                <li><input type="checkbox" disabled  /> Allow viewing other sessions for your user, and potentially logging them out</li>
+                <li><input type="checkbox" disabled  /> Invite users to your team</li>
+                <li><input type="checkbox" disabled  /> Invite users to the app, but not in your team</li>
+                <li><input type="checkbox" disabled  /> Link a new OAuth login that may not have a matching email to an existing account</li>
+                <li><input type="checkbox" disabled  /> When logging in via OAuth, fetch all known emails from the OAuth provider and see if any of them match an existing account if we haven&#39;t seen the account before.
+                  <ul class="list-bullet">
+                    <li>Need to handle the case where there are multiple emails and they match different accounts. This probably requires an interstitial after the login page to select the matching account.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Waitlist functionality</li>
               </ul>            </li>
-            <li>Permissions
+            <li>Permissions and Authorization
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> For models with global permissions, add permissions check in route layer before hitting database</li>
                 <li><input type="checkbox" disabled  /> <a class="block-ref" href="/notes/projects_filigree#657a981d-8503-427b-a6ab-319c7879b94c">Project-based Access Control</a></li>
-                <li><input type="checkbox" disabled  /> API Key lookup query needs to change to make permissions a subset of the user&#39;s permissions when inherit<em class="italic">user</em>permissions is false</li>
+                <li><input type="checkbox" disabled  /> API Key lookup query needs to change to make permissions a subset of the user&#39;s permissions when inherit<em class="italic">user</em>permissions is false
+                  <ul class="list-bullet">
+                    <li>This way if a user has some permissions removed, they can&#39;t bypass those limits using an old API key which still had those permissions</li>
+                  </ul>                </li>
                 <li><input type="checkbox" disabled  /> Feature flags</li>
                 <li><input type="checkbox" disabled  /> Add &quot;all&quot; model permissions so that some roles have permissions on everything even when new models are added.
                   <ul class="list-bullet">
-                    <li>This needs some more thought though. Some models like user, org, etc don&#39;t want to have this blanket rule applied.</li>
+                    <li>This needs some more thought though. Some models like user, org, etc don&#39;t want to have this blanket rule applied. Might be better to just do this via migrations.</li>
+                    <li>Better: Have some models use global org-wide permissions of just &quot;read,&quot; &quot;write,&quot; etc. and only specific models have their own set of permissions.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Ability to apply limits on how many objects are created
+                  <ul class="list-bullet">
+                    <li>There&#39;s a lot of flexibility here, since the limits could be something simple like number of objects, or some derived metric such as &quot;number of minutes&quot; for an audio-based model.</li>
+                    <li>The source for the limits could also come from a number of different places, most commonly pricing plan but could be other stuff such as number of community contributions, upvotes, etc.</li>
+                    <li>So the question is what&#39;s the proper framework to make it easy to write code that accomplishes all this.
+                      <ul class="list-bullet">
+                        <li>Make it easy to fetch the limits data.</li>
+                        <li>Make it easy to enforce rules around these limits.</li>
+                      </ul>                    </li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> API call quotas
+                  <ul class="list-bullet">
+                    <li>e.g. 3000 calls per month, 20  calls per hour</li>
+                    <li>This should be able to group endpoints by categories where they all share a quota</li>
+                    <li id="65b71168-ac29-47fc-b3f5-6913e2ea63c2">Might need to do this with a combination of event tracking and a rate limiter</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Usage-based pricing</li>
+                <li><input type="checkbox" disabled  /> Ability to add rate limiting on any endpoint
+                  <ul class="list-bullet">
+                    <li>keyed by org</li>
+                    <li>keyed by user</li>
+                    <li>endpoints can share a bucket</li>
+                    <li>Local tracking is fine at first, should eventually support doing it in Redis or similar to support multiple API servers.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Ability for admins to assume permissions of other users
+                  <ul class="list-bullet">
+                    <li>This needs to be audited as well even if nothing else is audited</li>
                   </ul>                </li>
               </ul>            </li>
             <li>Block Storage
@@ -122,6 +250,11 @@ updated: 2024-01-06
                   </ul>                </li>
                 <li><input type="checkbox" disabled  /> Block storage: Make it easy to return an object as a Response body</li>
                 <li><input type="checkbox" disabled  /> Block storage: Option for Uploads via signed URL</li>
+                <li><input type="checkbox" disabled  /> File model field type
+                  <ul class="list-bullet">
+                    <li>Have ability to upload to a block storage url</li>
+                    <li>Ability to calculate hash and file size as upload occurs</li>
+                  </ul>                </li>
               </ul>            </li>
             <li>Workers
               <ul class="list-bullet">
@@ -137,26 +270,121 @@ updated: 2024-01-06
                     <li>e.g. Discord webhook notifying myself about events</li>
                     <li>This should have notification templates and also destinations for the notifications</li>
                   </ul>                </li>
-                <li><input type="checkbox" disabled  /> Email template system</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Bootstrap the real database from fixtures? Maybe not, this is simpler to do in code and tie in to the &quot;new org&quot; code.</li>
-            <li><input type="checkbox" disabled  /> Generate Typescript interfaces and JS code to talk to the API</li>
+            <li>Workflow System
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Build the workflow system
+                  <ul class="list-bullet">
+                    <li>A lot from <a href="/notes/projects_ergo">Ergo</a> can be reused</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> State chart implementation</li>
+                <li><input type="checkbox" disabled  /> Workflows can &quot;sleep&quot; by enqueueing a scheduled task that will continue running when it wakes up</li>
+                <li><input type="checkbox" disabled  /> Endpoint to send an event to a workflow</li>
+                <li><input type="checkbox" disabled  /> Define workflow actions</li>
+                <li><input type="checkbox" disabled  /> Ability to define workflows in the app config</li>
+                <li><input type="checkbox" disabled  /> Scripting for Workflows
+                  <ul class="list-bullet">
+                    <li>Piggyback on Ergo but maybe switch to QuickJS or <a href="https://github.com/saghul/txiki.js">saghul/txiki.js: A tiny JavaScript runtime</a></li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> User model list/get functions need to return users which are in multiple orgs, and whose current org is a different one</li>
             <li><input type="checkbox" disabled  /> Easy setup for commercialization</li>
             <li><input type="checkbox" disabled  /> Collect and export metrics to some tool
               <ul class="list-bullet">
                 <li>Looks like Honeycomb supports Prometheus format</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Delete log table for possibility of undelete later</li>
-            <li><input type="checkbox" disabled  /> Option for auditing on all operations</li>
-            <li><input type="checkbox" disabled  /> Ability for admins to assume permissions of other users
+            <li>Data Hooks and Similar
               <ul class="list-bullet">
-                <li>This needs to be audited as well even if nothing else is audited</li>
+                <li><input type="checkbox" disabled  /> Delete log table for possibility of undelete later</li>
+                <li><input type="checkbox" disabled  /> Option for auditing on all operations</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Password confirmation flow for &quot;dangerous&quot; actions</li>
             <li><input type="checkbox" disabled  /> User profile photos</li>
+            <li><input type="checkbox" disabled  /> Support HTTPS hosting without a reverse proxy in front</li>
+            <li><input type="checkbox" disabled  /> Copy all tests in test-app into filigree crate where it makes sense
+              <ul class="list-bullet">
+                <li>Some tests are more convenient to test in the test app, but rely on minimal scaffolded functionality. Should add a minimal server/migration setup in filigree crate tests so that they can run there as well.</li>
+              </ul>            </li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Test passwordless login in Glance &mdash; Feb 14th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Test login with password in Glance &mdash; Feb 13th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Frontend: Handle validation errors from server &mdash; Feb 11th, 2024</li>
+            <li><input type="checkbox" disabled checked /> On validation failure, return the sent data
+              <ul class="list-bullet">
+                <li>This helps when SvelteKit has forwarded the request straight to the server, since it allows Kit to return the form data back again to repopulate the form</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Command to bootstrap initial org and user &mdash; Feb 11th, 2024
+              <ul class="list-bullet">
+                <li>This should have the ability to take admin user&#39;s email from either the command line or the environment</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Initial OAuth login support &mdash; Feb 10th, 2024
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled checked /> Update create<em class="italic">new</em>user to implement <code>UserCreator</code> trait</li>
+                <li><input type="checkbox" disabled checked /> Allow creating a user without an email address</li>
+                <li><input type="checkbox" disabled checked /> Look for client id/secret environment variables for each provider and create the ones that are found  &mdash; Feb 3rd, 2024</li>
+                <li><input type="checkbox" disabled checked /> Hook up oauth code to endpoints  &mdash; Feb 3rd, 2024</li>
+                <li><input type="checkbox" disabled checked /> Link to existing account when it&#39;s a new OAuth login but a known email  &mdash; Feb 2nd, 2024</li>
+                <li><input type="checkbox" disabled checked /> Client-side code for OAuth login &mdash; Feb 9th, 2024</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Login page &mdash; Feb 10th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Easier way to add new fields to base models than redefining the whole model &mdash; Jan 29th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Integrate into <a href="/notes/projects_glance">Glance</a></li>
+            <li><input type="checkbox" disabled checked /> User Creation updates &mdash; Jan 27th, 2024
+              <ul class="list-bullet">
+                <li>Add default role field to org, for users who are added without any set of roles</li>
+                <li>Add roles field to email_invites</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Validation for form submissions &mdash; Jan 22nd, 2024</li>
+            <li><input type="checkbox" disabled checked /> Use hosts list in post-login redirect processing</li>
+            <li><input type="checkbox" disabled checked /> JSON validation that checks multiple fields
+              <ul class="list-bullet">
+                <li>do this using axum-jsonschema</li>
+                <li>Derive <code>schemars::JsonSchema</code> on every structure that might need to be validated</li>
+                <li>Might want to add additional validation in the future with an extension to this</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> CORS configuration &mdash; Jan 17th, 2024
+              <ul class="list-bullet">
+                <li>Host allow list for apps that want to lock to the app&#39;s host</li>
+                <li>Use <code>CorsLayer::permissive()</code> on <code>/api</code> for apps that want to expose the API to browsers</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Initial SQL migration should only be written once &mdash; Jan 17th, 2024</li>
+            <li><input type="checkbox" disabled checked /> New models should be added in new SQL migrations &mdash; Jan 17th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Column changes to models should generate new SQL migrations &mdash; Jan 17th, 2024
+              <ul class="list-bullet">
+                <li><code>sql-migration-sim</code> crate is written, just need diff functionality</li>
+                <li>Add index tracking to <code>sql-migration-sim</code></li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> New runs diff against previous run and only apply diffed changes &mdash; Jan 16th, 2024
+              <ul class="list-bullet">
+                <li>When running the CLI, save the generated templates (post-formatter) to a state directory</li>
+                <li>On each run, diff the generated templates against the previous state in that directory</li>
+                <li>Apply that diff to the actual output file
+                  <ul class="list-bullet">
+                    <li>Need a patch style that matches against nearby lines instead of just using line numbers.</li>
+                  </ul>                </li>
+                <li>Point out conflicts as they occur, probably use git style merge conflict markers</li>
+                <li><code>diffy</code> supports three-way merge so that&#39;s also worth looking at</li>
+                <li>This system allows the user to make changes to the generated files but still update the config.</li>
+                <li>Need a command to rewrite a particular file</li>
+                <li>Need a command to just regenerate the state cache, for when changing formatter settings</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Ability to make signup open to the public or admin-only &mdash; Jan 12th, 2024</li>
+            <li><input type="checkbox" disabled checked /> signup endpoint to create a new org that also creates default roles, adds a user, etc. &mdash; Jan 12th, 2024</li>
+            <li><input type="checkbox" disabled checked /> ability to sign up via passwordless email auth if enabled &mdash; Jan 12th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Password forgot/reset endpoints &mdash; Jan 12th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Passwordless email auth &mdash; Jan 11th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Email template system &mdash; Jan 11th, 2024</li>
+            <li><input type="checkbox" disabled checked /> List all permissions in a file with descriptions &mdash; Jan 9th, 2024</li>
+            <li><input type="checkbox" disabled checked /> For models with global permissions, add permissions check in route layer before hitting database &mdash; Jan 9th, 2024</li>
+            <li><input type="checkbox" disabled checked /> MVP Basic email sending, enough to do password management and such &mdash; Jan 9th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Integrate with email sending services &mdash; Jan 9th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Endpoints for retrieving and updating your own user &mdash; Jan 7th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Auto-add appropriate dependencies to Cargo.toml &mdash; Jan 7th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Tests for users without proper permissions for each action &mdash; Jan 6th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Generate tests for models &mdash; Jan 6th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Tests for login/logout &mdash; Jan 5th, 2024</li>
             <li><input type="checkbox" disabled checked /> Generate fixtures for tests &mdash; Jan 5th, 2024</li>
             <li><input type="checkbox" disabled checked /> Write functions needed to bootstrap test data &mdash; Jan 4th, 2024
               <ul class="list-bullet">
@@ -173,11 +401,6 @@ updated: 2024-01-06
             <li><input type="checkbox" disabled checked /> Add app-specific AuthInfo object &mdash; Dec 23rd, 2023</li>
             <li><input type="checkbox" disabled checked /> Add AuthQueries implementation &mdash; Dec 23rd, 2023</li>
             <li><input type="checkbox" disabled checked /> Select queries need to return the current permission level on each object for project/object-level permissions &mdash; Dec 22nd, 2023</li>
-            <li><input type="checkbox" disabled checked /> Make more files &quot;generated once&quot; &mdash; Dec 22nd, 2023
-              <ul class="list-bullet">
-                <li>endpoints should only be generated once, and should always be generated even if they are disabled</li>
-                <li>Move files that are regenerated to &quot;generated&quot; subdir</li>
-              </ul>            </li>
             <li><input type="checkbox" disabled checked /> Add middleware layer to do permissions check &mdash; Dec 22nd, 2023</li>
             <li><input type="checkbox" disabled checked /> Add authz middleware to do generic predicate check &mdash; Dec 22nd, 2023</li>
             <li><input type="checkbox" disabled checked /> query to load user/roles/org for auth info &mdash; Dec 21st, 2023</li>
@@ -315,6 +538,7 @@ updated: 2024-01-06
                   <ul class="list-bullet">
                     <li>Some sites are built around publicly sharing your stuff.</li>
                     <li>This is basically the same as the resource-based access control model, but with the ability to share with an &quot;anyone&quot; user, and then all the permissions checks check for that actor ID as well.</li>
+                    <li>The main change here is that the organization ID checks need to be relaxed when looking for publicly-shared objects.</li>
                   </ul>                </li>
               </ul>            </li>
             <li>Types of default permissions
@@ -325,6 +549,43 @@ updated: 2024-01-06
                 <li>Everyone in the project can see</li>
                 <li>Everyone in the project can edit</li>
               </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+    <li>Model relationships
+      <ul class="list-bullet">
+        <li>Types
+          <ul class="list-bullet">
+            <li>parent-child one to many</li>
+            <li>parent-child one to one</li>
+            <li>Many to one
+              <ul class="list-bullet">
+                <li>Usually this isn&#39;t really a parent-child paradigm so much as related objects. This is actually similar to ActiveRecord <code>belongs_to</code> on the parent object, but without the meaning implied by the word &quot;belongs&quot;.</li>
+                <li>e.g. Image uploads can all reference a single conversion configuration, but any image can be switched to a different configuration.</li>
+                <li>The main thing that we want here is the ability to easily fetch the associated objects instead of just their IDs</li>
+              </ul>            </li>
+            <li>Many to many
+              <ul class="list-bullet">
+                <li>Almost always best implemented with a join table</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>Configuration keywords
+          <ul class="list-bullet">
+            <li><code>has</code> - For one-to-one or one-to-many parent-child relationships.</li>
+            <li><code>has</code> with <code>through</code> for many-to-many relationships
+              <ul class="list-bullet">
+                <li>In this case <code>through</code> is the name of the model that holds the joins. Making it a full-fledged model allows adding other information to the relationship, if applicable.</li>
+                <li>Need a special mode for through models that will omit the normal id field since its primary key will be a composite of the IDs of the two other models.</li>
+              </ul>            </li>
+            <li><code>references</code> for many-to-one relationships
+              <ul class="list-bullet">
+                <li>This is actually accomplished by the existing <code>references</code> member on a model field definition.</li>
+                <li>Added 2 extra fields that allow setting the option to automatically populate the field on list or get</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>Where does the linking field actually go?
+          <ul class="list-bullet">
+            <li>When there&#39;s a linking model, it goes into that model&#39;s table, of course.</li>
+            <li>Otherwise for a <code>has</code> relationship it goes into the child object. This is slightly inefficient in a true <code>has_one</code> case but those are rare in practice. In general those turn into either a complex JSON field inside the model itself, or it would be a has_many.</li>
           </ul>        </li>
       </ul>    </li>
     <li>Pricing Plan Support
@@ -338,6 +599,13 @@ updated: 2024-01-06
             <li>Essentially this means that both price plans and permissions sets should be versioned, and separately.</li>
             <li>And there should be the ability to update existing plans and all previous versions</li>
           </ul>        </li>
+      </ul>    </li>
+    <li>Workflows
+      <ul class="list-bullet">
+        <li>Workflows are basically state machine definitions which can be instantiated with some data, linked to users/orgs/etc.</li>
+        <li>Workflows can perform some set of predefined actions, which may include sending emails, notifying a user, spawning other workflows, etc.</li>
+        <li>Workflows can define transitions to run after a certain amount of time</li>
+        <li>Consider a scripting engine or something for checking state when transitioning (perhaps just reuse a bunch of code from Ergo for this)</li>
       </ul>    </li>
   </ul>
 

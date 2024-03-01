@@ -514,6 +514,11 @@
     "title": "2023-11-28",
     "uid": ""
   },
+  "pkm-pages/journals/2024-02-29.html": {
+    "slug": "/journals/2024_02_29",
+    "title": "2024-02-29",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -537,6 +542,11 @@
   "pkm-pages/notes/atomic_memory_ordering_models.html": {
     "slug": "/notes/atomic_memory_ordering_models",
     "title": "Atomic Memory Ordering Models",
+    "uid": ""
+  },
+  "pkm-pages/notes/aws_vpc_configuration.html": {
+    "slug": "/notes/aws_vpc_configuration",
+    "title": "AWS VPC Configuration",
     "uid": ""
   },
   "pkm-pages/notes/book_designing_data_intensive_applications.html": {
@@ -844,6 +854,11 @@
     "title": "SBBP",
     "uid": ""
   },
+  "pkm-pages/notes/projects_smelter.html": {
+    "slug": "/notes/projects_smelter",
+    "title": "Smelter",
+    "uid": ""
+  },
   "pkm-pages/notes/projects_tracksome.html": {
     "slug": "/notes/projects_tracksome",
     "title": "Tracksome",
@@ -917,6 +932,11 @@
   "pkm-pages/notes/serializable_transactions.html": {
     "slug": "/notes/serializable_transactions",
     "title": "Serializable Transactions",
+    "uid": ""
+  },
+  "pkm-pages/notes/setting_up_aws_fargate_on_ecs.html": {
+    "slug": "/notes/setting_up_aws_fargate_on_ecs",
+    "title": "Setting up AWS Fargate on ECS",
     "uid": ""
   },
   "pkm-pages/notes/sql.html": {
