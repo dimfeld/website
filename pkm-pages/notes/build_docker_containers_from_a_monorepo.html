@@ -29,7 +29,7 @@ apps/my-app/target
 </span></span></span></code></pre></li>
       </ul>    </li>
     <li><h2>Building for Rust</h2></li>
-    <li>If your application is built in Rust, then you can use <code>cargo-chef</code> to help speed up the builds, but the defaul recipe needs a few directory tweaks if your application has dependencies elsewhere in the monorepo.</li>
+    <li>If your application is built in Rust, then you can use <code>cargo-chef</code> to help speed up the builds, but the default recipe needs a few directory tweaks if your application has dependencies elsewhere in the monorepo.</li>
     <li>Something like this works well:</li>
     <li><pre><code><span class="sy-text sy-plain"># This Dockerfile works with cargo chef, which prebuilds dependencies in a
 # separate Docker image to speed up builds.
