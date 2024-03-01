@@ -1,0 +1,62 @@
+---
+title: "Build Docker Containers from a Monorepo"
+tags: 
+date: 2024-02-29
+updated: 2024-03-01
+---
+
+
+  <ul class="list-bullet">
+    <li><a href="https://docs.docker.com/build/building/context/#dockerignore-files">A .dockerignore file</a> is very important here to reduce the amount of context that needs to be sent to the builder process. Note that the <code>.dockerfile</code> file requires prepending <code>**/</code> to any match that you want to apply outside of the root directory.
+      <ul class="list-bullet">
+        <li><pre><code><span class="sy-text sy-plain">**/node_modules
+**/*.js
+**/*.ts
+**/apps
+**/target
+!apps/my-app
+apps/my-app/target
+</span></code></pre></li>
+      </ul>    </li>
+    <li>Then you will want to build with the context directory being the root of the monorepo
+      <ul class="list-bullet">
+        <li><pre><code><span class="sy-source sy-shell sy-bash"><span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell">!/bin/bash</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span><span class="sy-meta sy-function-call sy-shell"><span class="sy-variable sy-function sy-shell">docker</span></span><span class="sy-meta sy-function-call sy-arguments sy-shell"> build <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell">  -</span>t</span> <span class="sy-meta sy-group sy-expansion sy-parameter sy-shell"><span class="sy-punctuation sy-definition sy-variable sy-shell">$</span><span class="sy-variable sy-other sy-readwrite sy-shell">NAME</span></span> <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell">  -</span>f</span> Dockerfile <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span><span class="sy-variable sy-parameter sy-option sy-shell"><span class="sy-punctuation sy-definition sy-parameter sy-shell">  --</span>ignorefile</span> .dockerignore <span class="sy-punctuation sy-separator sy-continuation sy-line sy-shell">\
+</span>  ../../ <span class="sy-comment sy-line sy-number-sign sy-shell"><span class="sy-punctuation sy-definition sy-comment sy-begin sy-shell">#</span></span><span class="sy-comment sy-line sy-number-sign sy-shell"> The monorepo root</span><span class="sy-comment sy-line sy-number-sign sy-shell">
+</span></span></span></code></pre></li>
+      </ul>    </li>
+    <li><h2>Building for Rust</h2></li>
+    <li>If your application is built in Rust, then you can use <code>cargo-chef</code> to help speed up the builds, but the defaul recipe needs a few directory tweaks if your application has dependencies elsewhere in the monorepo.</li>
+    <li>Something like this works well:</li>
+    <li><pre><code><span class="sy-text sy-plain"># This Dockerfile works with cargo chef, which prebuilds dependencies in a
+# separate Docker image to speed up builds.
+
+FROM lukemathwalker/cargo-chef:latest-rust-1 AS chef
+RUN apt-get update &amp;&amp; apt-get install -y pkg-config libssl-dev
+WORKDIR /app/apps/my-app
+
+FROM chef as planner
+COPY ./libs/some-lib /app/libs/some-lib
+COPY ./apps/my-app /app/apps/my-app
+RUN cargo chef prepare --recipe-path recipe.json
+
+FROM chef as builder
+COPY --from=planner /app/apps/my-app/recipe.json recipe.json
+# Build dependencies - this is the caching Docker layer!
+COPY ./libs/some-lib /app/libs/some-lib
+RUN cargo chef cook --release --recipe-path recipe.json
+# Build application
+COPY ./apps/my-app /app/apps/my-app
+RUN cargo build --release --bin my-app
+
+FROM debian:bookworm-slim as runtime
+RUN apt-get update &amp;&amp; apt-get install -y pkg-config libssl-dev
+COPY --from=builder /app/apps/my-app/target/release/my-app /usr/local/bin
+ENTRYPOINT [&quot;/usr/local/bin/my-app&quot;]
+</span></code></pre></li>
+    <li>If building from Mac or Windows, you may also see benefits from increasing the amount of RAM available to the Docker VM. For example, the default VM from Podman uses only 2GB and while the Rust compiler can run within those boundaries, it&#39;s very slow. Using a 16 or 32GB VM can speed up the compilation by an order of magnitude.</li>
+  </ul>
+

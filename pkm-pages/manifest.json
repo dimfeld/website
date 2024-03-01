@@ -564,6 +564,11 @@
     "title": "SQL Antipatterns",
     "uid": ""
   },
+  "pkm-pages/notes/build_docker_containers_from_a_monorepo.html": {
+    "slug": "/notes/build_docker_containers_from_a_monorepo",
+    "title": "Build Docker Containers from a Monorepo",
+    "uid": ""
+  },
   "pkm-pages/notes/building_things_to_help_sell_the_things_you_make.html": {
     "slug": "/notes/building_things_to_help_sell_the_things_you_make",
     "title": "Building Things to Help Sell the Things You Make",
