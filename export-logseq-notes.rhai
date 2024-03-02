@@ -66,7 +66,8 @@ if page.is_journal {
       let tags = autotag(autotags, block.id);
       page.add_tags(tags);
     } else if contents == "Learning" ||
-        contents == "Links" {
+        contents == "Links" ||
+        contents == "Building" {
       if contents == "Learning" {
         block.view_type = ViewType::Document;
       } else {
