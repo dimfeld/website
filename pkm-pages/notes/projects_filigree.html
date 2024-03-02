@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-02-29
+updated: 2024-03-01
 ---
 
 
@@ -12,69 +12,16 @@ updated: 2024-02-29
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Parent/child model relationships
-              <ul class="list-bullet">
-                <li><input type="checkbox" disabled checked /> Configuration</li>
-                <li><input type="checkbox" disabled checked /> Add fields for <code>belongs_to</code> relationships to model structures</li>
-                <li><input type="checkbox" disabled checked /> Generate composite primary key for joining tables and update queries appropriately</li>
-                <li><input type="checkbox" disabled checked /> handle has_one relationships in fetch queries with ID fetch</li>
-                <li><input type="checkbox" disabled checked /> handle has_one relationships in fetch queries with data fetch</li>
-                <li><input type="checkbox" disabled checked /> handle has_many relationships in fetch queries with ID fetch</li>
-                <li><input type="checkbox" disabled checked /> handle has_many relationships in fetch queries with data fetch</li>
-                <li><input type="checkbox" disabled checked /> Allow populating <code>references</code> fields on fetch when configured</li>
-                <li><input type="checkbox" disabled checked /> Updates for has_one relationships with data payload</li>
-                <li><input type="checkbox" disabled checked /> Updates for has_many relationships with data payload</li>
-                <li><input type="checkbox" disabled checked /> Generate CRUD endpoints for children of a particular object
-                  <ul class="list-bullet">
-                    <li>This is basically the same as the normal endpoint, but with the parent ID specified in the URL instead of in the payload.</li>
-                    <li>When it&#39;s not a many relationship, omit the child ID parameter</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled checked /> Populated query functions
-                  <ul class="list-bullet">
-                    <li><input type="checkbox" disabled checked /> Call populated functions from endpoints when appropriate</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled checked /> SQL Queries for child objects
-                  <ul class="list-bullet">
-                    <li><input type="checkbox" disabled checked /> List by parent ID
-                      <ul class="list-bullet">
-                        <li>This could be done as just another filter on the list query instead of a new query template</li>
-                      </ul>                    </li>
-                    <li><input type="checkbox" disabled checked /> insert/update multiple objects</li>
-                    <li><input type="checkbox" disabled checked /> Delete by parent ID where ID is not in the set of IDs just inserted/deleted</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled checked /> Ensure that each model is not referenced my more than one non-through <code>has</code> relationship</li>
-                <li><input type="checkbox" disabled checked /> Sort CREATE TABLE statements so that parents come first</li>
-                <li><input type="checkbox" disabled  /> Tests
-                  <ul class="list-bullet">
-                    <li><input type="checkbox" disabled checked /> Create a test model with children
-                      <ul class="list-bullet">
-                        <li>Post</li>
-                        <li>has one Poll</li>
-                        <li>has many Comments</li>
-                        <li>has many Reactions</li>
-                      </ul>                    </li>
-                    <li><input type="checkbox" disabled checked /> populated queries with has_one</li>
-                    <li><input type="checkbox" disabled checked /> populated queries with has_many</li>
-                    <li><input type="checkbox" disabled checked /> insert with child object</li>
-                    <li><input type="checkbox" disabled checked /> update with child object</li>
-                    <li><input type="checkbox" disabled  /> delete also deletes child objects</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled  /> create and update functions should return the resulting objects</li>
-              </ul>            </li>
             <li><input type="checkbox" disabled  /> Joining tables
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> Handle <code>through</code> relationships in fetch queries</li>
-                <li><input type="checkbox" disabled  /> Updates for <code>through</code> relationships</li>
+                <li><input type="checkbox" disabled  /> Updates in main payload for <code>through</code> relationships</li>
                 <li><input type="checkbox" disabled  /> Generate endpoints for managing links in joining tables
                   <ul class="list-bullet">
                     <li>These can just be CRUD endpoints on the linking model. Main difference is the URL structure accounts for the composite ID</li>
                   </ul>                </li>
                 <li><input type="checkbox" disabled  /> Updates for has_one relationships with ID payload</li>
                 <li><input type="checkbox" disabled  /> Updates for has_many relationships with ID payload</li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled checked /> <del class="line-through">Store .gen files in a tar file instead</del> - Cancelled
-              <ul class="list-bullet">
-                <li>This reduces the huge number of files in the state directory, but will make merge conflicts more difficult to deal with so</li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Soon</h3>
@@ -99,7 +46,6 @@ updated: 2024-02-29
               </ul>            </li>
             <li><input type="checkbox" disabled  /> tests for list endpoint filtering/pagination/sorting</li>
             <li><input type="checkbox" disabled  /> Set up axum-sqlx-tx?</li>
-            <li><input type="checkbox" disabled  /> Create and update endpoints should return children when doing update<em class="italic">with</em>parent</li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
@@ -308,6 +254,59 @@ updated: 2024-02-29
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Create endpoints should return children when doing update<em class="italic">with</em>parent &mdash; Feb 29th, 2024</li>
+            <li><input type="checkbox" disabled checked /> <del class="line-through">Store .gen files in a tar file instead</del> - Cancelled Feb 28th, 2024
+              <ul class="list-bullet">
+                <li>This reduces the huge number of files in the state directory, but makes merge conflicts more difficult to deal with.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Parent/child model relationships &mdash; Feb 27th, 2024
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled checked /> Configuration</li>
+                <li><input type="checkbox" disabled checked /> Add fields for <code>belongs_to</code> relationships to model structures</li>
+                <li><input type="checkbox" disabled checked /> Generate composite primary key for joining tables and update queries appropriately</li>
+                <li><input type="checkbox" disabled checked /> handle has_one relationships in fetch queries with ID fetch</li>
+                <li><input type="checkbox" disabled checked /> handle has_one relationships in fetch queries with data fetch</li>
+                <li><input type="checkbox" disabled checked /> handle has_many relationships in fetch queries with ID fetch</li>
+                <li><input type="checkbox" disabled checked /> handle has_many relationships in fetch queries with data fetch</li>
+                <li><input type="checkbox" disabled checked /> Allow populating <code>references</code> fields on fetch when configured</li>
+                <li><input type="checkbox" disabled checked /> Updates for has_one relationships with data payload</li>
+                <li><input type="checkbox" disabled checked /> Updates for has_many relationships with data payload</li>
+                <li><input type="checkbox" disabled checked /> Generate CRUD endpoints for children of a particular object
+                  <ul class="list-bullet">
+                    <li>This is basically the same as the normal endpoint, but with the parent ID specified in the URL instead of in the payload.</li>
+                    <li>When it&#39;s not a many relationship, omit the child ID parameter</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Populated query functions
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" disabled checked /> Call populated functions from endpoints when appropriate</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> SQL Queries for child objects
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" disabled checked /> List by parent ID
+                      <ul class="list-bullet">
+                        <li>This could be done as just another filter on the list query instead of a new query template</li>
+                      </ul>                    </li>
+                    <li><input type="checkbox" disabled checked /> insert/update multiple objects</li>
+                    <li><input type="checkbox" disabled checked /> Delete by parent ID where ID is not in the set of IDs just inserted/deleted</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Ensure that each model is not referenced my more than one non-through <code>has</code> relationship</li>
+                <li><input type="checkbox" disabled checked /> Sort CREATE TABLE statements so that parents come first</li>
+                <li><input type="checkbox" disabled checked /> First round of Tests
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" disabled checked /> Create a test model with children
+                      <ul class="list-bullet">
+                        <li>Post</li>
+                        <li>has one Poll</li>
+                        <li>has many Comments</li>
+                        <li>has many Reactions</li>
+                      </ul>                    </li>
+                    <li><input type="checkbox" disabled checked /> populated queries with has_one</li>
+                    <li><input type="checkbox" disabled checked /> populated queries with has_many</li>
+                    <li><input type="checkbox" disabled checked /> insert with child object</li>
+                    <li><input type="checkbox" disabled checked /> update with child object</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> create and update functions should return the resulting objects</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled checked /> Test passwordless login in Glance &mdash; Feb 14th, 2024</li>
             <li><input type="checkbox" disabled checked /> Test login with password in Glance &mdash; Feb 13th, 2024</li>
             <li><input type="checkbox" disabled checked /> Frontend: Handle validation errors from server &mdash; Feb 11th, 2024</li>

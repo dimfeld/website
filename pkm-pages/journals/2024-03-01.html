@@ -1,0 +1,29 @@
+---
+title: "2024-03-01"
+tags: 
+date: 2024-03-01
+updated: 2024-03-02
+---
+
+
+    
+    <p><a href="/notes/projects_smelter">Smelter</a> had been on hold for a while, but this week at work a need came up for parallel processing, so I finished it up and ran the first real job!</p>
+    <p>This data processing pipeline formerly took 6 hours to run with a single process on a 24 vCPU machine, and now runs in 23 minutes using 32 8vCPU containers on Fargate.</p>
+    <p>The original vision for Smelter was to run it with Lambdas and other similar FaaS runtimes, but because it uses an adapter model to support new platforms, I was able to add Fargate with no changes to the existing code. Really happy how this turned out.</p>
+    <p>I do still want to implement the originally envisioned massively-parallel Lambda computation at some point too, for more interactive use cases.</p>
+
+    <h3>Building</h3>
+      <ul class="list-bullet">
+        <li><a href="/notes/projects_filigree">Filigree</a>
+          <ul class="list-bullet">
+            <li>Started on many-to-many relationships using a through table and model</li>
+          </ul>        </li>
+        <li><a href="/notes/projects_smelter">Smelter</a>
+          <ul class="list-bullet">
+            <li>Tested out the Fargate orchestration code with real containers and made some fixes</li>
+            <li>Ergonomic improvements to spawning Fargate tasks</li>
+            <li>First real run of Smelter! This is a data processing pipeline at work that formerly ran with a single process, now running with 32 containers in parallel across the dataset.</li>
+          </ul>        </li>
+      </ul>
+
+
