@@ -2,7 +2,7 @@
 title: "Smelter"
 tags: Projects
 date: 2023-06-27
-updated: 2024-03-02
+updated: 2024-03-03
 ---
 
 
@@ -10,22 +10,13 @@ updated: 2024-03-02
     <li>This is a project to do map-reduce style calculations using a bunch of serverless workers reading from S3.</li>
     <li><h2>Task List</h2>
       <ul class="list-bullet">
-        <li><h3>Up Next</h3>
-          <ul class="list-bullet">
-            <li><input type="checkbox" disabled checked /> Full test of Fargate jobs</li>
-            <li><input type="checkbox" disabled  /> Allow a cancel signal to kill all containers</li>
-          </ul>        </li>
+        <li><h3>Up Next</h3></li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> Workers automatically track RAM usage, load factor, time running, etc., and return these with the task results
               <ul class="list-bullet">
                 <li><a href="https://lib.rs/crates/systemstat">systemstat — Get system information/statistics in a cross-platform way</a></li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> StatusCollector may need be aware of individual jobs. Probably the former.
-              <ul class="list-bullet">
-                <li>Adding a job ID to SubtaskID is probably the simplest way to do this. Every time a job gets created it would have a new ID. Use UUIDv7</li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> StatusSender needs to work with a raw StatusUpdateItem, and the StatusCollector should be able to handle native StatusUpdateItem and have its own separate mechanism for the read operations. (Maybe just use a mutex here to simplify?)</li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
@@ -46,6 +37,9 @@ updated: 2024-03-02
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Full test of Fargate jobs</li>
+            <li><input type="checkbox" disabled checked /> Allow a cancel signal to kill all containers</li>
+            <li><input type="checkbox" disabled checked /> StatusSender needs to work with a raw StatusUpdateItem, and the StatusCollector should be able to handle native StatusUpdateItem and have its own separate mechanism for the read operations. (Maybe just use a mutex here to simplify?)</li>
             <li><input type="checkbox" disabled checked /> Build fargate container</li>
             <li><input type="checkbox" disabled checked /> Have something that helps generate task definitions for fargate</li>
             <li><input type="checkbox" disabled checked /> AWS Fargate Spawner
