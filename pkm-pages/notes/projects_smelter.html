@@ -2,7 +2,7 @@
 title: "Smelter"
 tags: Projects
 date: 2023-06-27
-updated: 2024-03-03
+updated: 2024-03-05
 ---
 
 
@@ -11,17 +11,15 @@ updated: 2024-03-03
     <li><h2>Task List</h2>
       <ul class="list-bullet">
         <li><h3>Up Next</h3></li>
-        <li><h3>Soon</h3>
-          <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Workers automatically track RAM usage, load factor, time running, etc., and return these with the task results
-              <ul class="list-bullet">
-                <li><a href="https://lib.rs/crates/systemstat">systemstat — Get system information/statistics in a cross-platform way</a></li>
-              </ul>            </li>
-          </ul>        </li>
+        <li><h3>Soon</h3></li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> Ability for spawner to send an event when a container goes from pending to running</li>
-            <li><input type="checkbox" disabled  /> Option to run a server within the worker container that can collect logs and send them back to the manager</li>
+            <li><input type="checkbox" disabled  /> Option to run a server within the worker container that can collect logs and stream them back to the manager</li>
+            <li><input type="checkbox" disabled  /> Option to timeout if we don&#39;t see any logs for too long
+              <ul class="list-bullet">
+                <li>This depends on being able to get logs shipped from the container down to the manager.</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> AWS Lambda orchestrator</li>
             <li><input type="checkbox" disabled  /> Support Fargate spot instances
               <ul class="list-bullet">
@@ -29,14 +27,28 @@ updated: 2024-03-03
                   <ul class="list-bullet">
                     <li>This can be a new error code alongside <code>TaskFailed</code>, call it <code>TaskPreempted</code></li>
                   </ul>                </li>
-                <li>An option to launch it as a normal instance if the spot instance gets preempted too much or if it takes to long to start</li>
                 <li>Specify which capacity provider to use for Spot vs. Normal launching</li>
-                <li>Currently Fargate doesn&#39;t support spot on Arm</li>
+                <li>An option to launch it as a non-spot instance if the spot instance gets preempted too much or if it takes too long to start.</li>
+                <li>Currently Fargate doesn&#39;t support spot on ARM</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Convert a single SQL statement into a multi-stage map-reduce set of tasks</li>
+            <li><input type="checkbox" disabled  /> Convert a single SQL statement into a multi-stage set of tasks
+              <ul class="list-bullet">
+                <li>This may be better done by integrating with something like <a href="https://arrow.apache.org/datafusion/">Datafusion</a> which already supports creating query plans</li>
+                <li>Consider also supporting <a href="https://substrait.io/">Substrait</a> query plan format</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Clean up inter-level channels
+              <ul class="list-bullet">
+                <li>There are a bunch of channels for communicating cancel state, task results, etc. between the tasks, stages, job, and manager. See if there&#39;s a way to make this cleaner.</li>
+              </ul>            </li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Cancel all the jobs when an error occurs, and wait for them to be cancelled</li>
+            <li><input type="checkbox" disabled checked /> Handle rate exceeded errors from Fargate API
+              <ul class="list-bullet">
+                <li>The Rust AWS SDK doesn&#39;t properly handle <code>ThrottlingError</code> and flag it for retry, but with a custom retry layer this can be done.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Workers automatically track RAM usage, load factor, time running, etc., and return these with the task results</li>
             <li><input type="checkbox" disabled checked /> Full test of Fargate jobs</li>
             <li><input type="checkbox" disabled checked /> Allow a cancel signal to kill all containers</li>
             <li><input type="checkbox" disabled checked /> StatusSender needs to work with a raw StatusUpdateItem, and the StatusCollector should be able to handle native StatusUpdateItem and have its own separate mechanism for the read operations. (Maybe just use a mutex here to simplify?)</li>

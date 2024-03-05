@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-03-01
+updated: 2024-03-04
 ---
 
 
@@ -12,16 +12,40 @@ updated: 2024-03-01
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
+            <li>Block Storage
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Block storage abstraction
+                  <ul class="list-bullet">
+                    <li>use object_store crate for the underlying interface</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Stream request body into object storage</li>
+                <li><input type="checkbox" disabled  /> Stream multipart files into object storage</li>
+                <li><input type="checkbox" disabled  /> Option to calculate file hash as uploaded file streams through to storage</li>
+                <li><input type="checkbox" disabled  /> Stream file from object storage as Response body</li>
+                <li><input type="checkbox" disabled  /> File model field type
+                  <ul class="list-bullet">
+                    <li>Ability to calculate hash and file size as upload occurs</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Background jobs v1
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Define background jobs in config</li>
+                <li><input type="checkbox" disabled  /> Global and per-job concurrency settings</li>
+                <li><input type="checkbox" disabled  /> Generate a helper to enqueue a background job</li>
+                <li><input type="checkbox" disabled  /> Generate a stub payload and function that runs the job</li>
+                <li><input type="checkbox" disabled  /> Outbox pattern support for transactional starting of background jobs</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Joining tables
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> Handle <code>through</code> relationships in fetch queries</li>
-                <li><input type="checkbox" disabled  /> Updates in main payload for <code>through</code> relationships</li>
+                <li><input type="checkbox" disabled  /> Updates in main payload for <code>through</code> relationships
+                  <ul class="list-bullet">
+                    <li>This will just be IDs on the other side. Write payload field name should just be <code>OTHER_SIDE_NAME_ids</code></li>
+                  </ul>                </li>
                 <li><input type="checkbox" disabled  /> Generate endpoints for managing links in joining tables
                   <ul class="list-bullet">
                     <li>These can just be CRUD endpoints on the linking model. Main difference is the URL structure accounts for the composite ID</li>
                   </ul>                </li>
-                <li><input type="checkbox" disabled  /> Updates for has_one relationships with ID payload</li>
-                <li><input type="checkbox" disabled  /> Updates for has_many relationships with ID payload</li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Soon</h3>
@@ -188,25 +212,17 @@ updated: 2024-03-01
                     <li>This needs to be audited as well even if nothing else is audited</li>
                   </ul>                </li>
               </ul>            </li>
-            <li>Block Storage
-              <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Block storage abstraction
-                  <ul class="list-bullet">
-                    <li>revisit opendal vs. object_store crates</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled  /> Block storage: Make it easy to return an object as a Response body</li>
-                <li><input type="checkbox" disabled  /> Block storage: Option for Uploads via signed URL</li>
-                <li><input type="checkbox" disabled  /> File model field type
-                  <ul class="list-bullet">
-                    <li>Have ability to upload to a block storage url</li>
-                    <li>Ability to calculate hash and file size as upload occurs</li>
-                  </ul>                </li>
-              </ul>            </li>
             <li>Workers
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Define background jobs and generate a helper to enqueue one</li>
-                <li><input type="checkbox" disabled  /> Outbox pattern support for running background jobs</li>
                 <li><input type="checkbox" disabled  /> Define scheduled tasks that run a job on a cron schedule</li>
+                <li><input type="checkbox" disabled  /> Ability to run worker tasks in some other process/VM/FaaS
+                  <ul class="list-bullet">
+                    <li>Need to figure out configuration for this... this might be better implemented in the task queue itself</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li>Block Storage
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Option for Uploads via signed URL</li>
               </ul>            </li>
             <li>Notifications
               <ul class="list-bullet">
@@ -250,6 +266,10 @@ updated: 2024-03-01
             <li><input type="checkbox" disabled  /> Copy all tests in test-app into filigree crate where it makes sense
               <ul class="list-bullet">
                 <li>Some tests are more convenient to test in the test app, but rely on minimal scaffolded functionality. Should add a minimal server/migration setup in filigree crate tests so that they can run there as well.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Support SQLite
+              <ul class="list-bullet">
+                <li>Not sure how much work it will be to support both Postgres and SQLite, could turn out to be a big hassle but I&#39;ll see at some point</li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Done</h3>

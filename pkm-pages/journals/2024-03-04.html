@@ -1,0 +1,22 @@
+---
+title: "2024-03-04"
+tags: rust
+date: 2024-03-04
+updated: 2024-03-05
+---
+
+
+    <h3>Building</h3>
+      <ul class="list-bullet">
+        <li><a href="/notes/projects_effectum">Effectum</a>
+          <ul class="list-bullet">
+            <li>Started on support for transactional outbox pattern, since I&#39;m starting to add background worker support to <a href="/notes/projects_filigree">Filigree</a></li>
+          </ul>        </li>
+        <li><a href="/notes/projects_smelter">Smelter</a>
+          <ul class="list-bullet">
+            <li>The AWS Rust SDK doesn&#39;t handle the <code>ThrottlingError</code> returned from the ECS API, and so they don&#39;t get retried. I <a href="https://github.com/dimfeld/smelter/commit/986f72efa966a4c54dbb85ea5db851cc74ac42b0">added a custom `ClassifyRetry` layer</a> to make this work.</li>
+            <li>Improved job cancellation on error, specifically around ensuring that there is time to send cancel requests to all the workers. There&#39;s still room for improvement around the ergonomics here I think, but it&#39;s an improvement.</li>
+          </ul>        </li>
+      </ul>
+
+
