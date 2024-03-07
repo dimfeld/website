@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-03-04
+updated: 2024-03-07
 ---
 
 
@@ -33,7 +33,6 @@ updated: 2024-03-04
                 <li><input type="checkbox" disabled  /> Global and per-job concurrency settings</li>
                 <li><input type="checkbox" disabled  /> Generate a helper to enqueue a background job</li>
                 <li><input type="checkbox" disabled  /> Generate a stub payload and function that runs the job</li>
-                <li><input type="checkbox" disabled  /> Outbox pattern support for transactional starting of background jobs</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Joining tables
               <ul class="list-bullet">
@@ -218,6 +217,10 @@ updated: 2024-03-04
                 <li><input type="checkbox" disabled  /> Ability to run worker tasks in some other process/VM/FaaS
                   <ul class="list-bullet">
                     <li>Need to figure out configuration for this... this might be better implemented in the task queue itself</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Outbox pattern support for transactional starting of background jobs
+                  <ul class="list-bullet">
+                    <li>Not important for now since <a href="/notes/projects_effectum">Effectum</a> only runs in-process but at some point it will have a server mode and then it will make more sense.</li>
                   </ul>                </li>
               </ul>            </li>
             <li>Block Storage
