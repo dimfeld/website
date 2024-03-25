@@ -35,7 +35,7 @@
     "just-partition": "^2.0.1",
     "just-safe-get": "^4.0.1",
     "just-unique": "^4.0.1",
-    "katex": "^0.12.0",
+    "katex": "^0.16.10",
     "ky": "^0.30.0",
     "linkify-it": "^2.2.0",
     "lodash-es": "~4.17.21",
