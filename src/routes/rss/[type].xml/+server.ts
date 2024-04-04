@@ -65,7 +65,7 @@ export async function GET({ params }) {
     let j = readAllSources(journalSources);
     posts = [...p, ...n, ...j];
   } else {
-    throw error(404, 'not found');
+    error(404, 'not found');
   }
 
   posts = posts.sort(sorter({ value: 'date', descending: true })).slice(0, 20);

@@ -126,7 +126,7 @@ export const GET: RequestHandler = async function GET({ params }) {
   let headers: Record<string, string> = {};
   let obj = objects[params.id];
   if (!obj) {
-    throw error(404, 'Not found');
+    error(404, 'Not found');
   }
 
   let data = await obj();

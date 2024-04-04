@@ -7,7 +7,7 @@ export const GET: RequestHandler = async function GET({ setHeaders, params }) {
   let { id } = params;
   let post = await lookupContent(postSources, id);
   if (!post) {
-    throw error(404, 'Not found');
+    error(404, 'Not found');
   }
 
   let { headers, body } = await generateImage(post);
