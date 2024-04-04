@@ -2,7 +2,7 @@
 title: "Smelter"
 tags: Projects
 date: 2023-06-27
-updated: 2024-03-06
+updated: 2024-03-23
 ---
 
 
@@ -14,6 +14,16 @@ updated: 2024-03-06
         <li><h3>Soon</h3></li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Platform adapters could make it easier to build the local and platform-side code
+              <ul class="list-bullet">
+                <li>Not sure how useful this actually is, but this would mostly be a preconfigured way for a binary to determine if its running in the platform or not and then run your manager code or your worker code when you&#39;re doing the single-source-code configuration</li>
+                <li>I think a simple abstraction would be something like:
+                  <ul class="list-bullet">
+                    <li>The spawner has an easy way to set a &quot;SMELTER_TASK&quot; variable in the environment (or whatever is the equivalent) of the spawned task.</li>
+                    <li>Provide a function that retrieves this value, and then you can match on it and run your own code. If it&#39;s not set, then you assume that you are the job manager and run that code instead.</li>
+                    <li>Ultimately this isn&#39;t too different from doing it yourself, might be a nice convenience though especially when developing the pipeline.</li>
+                  </ul>                </li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Ability for spawner to send an event when a container goes from pending to running</li>
             <li><input type="checkbox" disabled  /> Option to run a server within the worker container that can collect logs and stream them back to the manager</li>
             <li><input type="checkbox" disabled  /> Option to timeout if we don&#39;t see any logs for too long
@@ -43,6 +53,7 @@ updated: 2024-03-06
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Retry inside the spawner when Fargate returns a capacity error</li>
             <li><input type="checkbox" disabled checked /> Cancel all the jobs when an error occurs, and wait for them to be cancelled</li>
             <li><input type="checkbox" disabled checked /> Handle rate exceeded errors from Fargate API
               <ul class="list-bullet">

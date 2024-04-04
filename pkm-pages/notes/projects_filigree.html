@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-03-07
+updated: 2024-04-04
 ---
 
 
@@ -12,30 +12,34 @@ updated: 2024-03-07
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li>Block Storage
+            <li><input type="checkbox" disabled  /> Set it up to work in production
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Block storage abstraction
+                <li><input type="checkbox" disabled  /> Dockerfile</li>
+                <li><input type="checkbox" disabled checked /> handleFetch hook</li>
+                <li><input type="checkbox" disabled  /> Client accesses of API need to go straight to API
                   <ul class="list-bullet">
-                    <li>use object_store crate for the underlying interface</li>
+                    <li>This can be fixed either with a reverse proxy or by sending all requests through the Rust server and having it do reverse proxy</li>
+                    <li>The latter is a bit more work upfront but will potentially make deployment simpler</li>
                   </ul>                </li>
-                <li><input type="checkbox" disabled  /> Stream request body into object storage</li>
-                <li><input type="checkbox" disabled  /> Stream multipart files into object storage</li>
-                <li><input type="checkbox" disabled  /> Option to calculate file hash as uploaded file streams through to storage</li>
-                <li><input type="checkbox" disabled  /> Stream file from object storage as Response body</li>
-                <li><input type="checkbox" disabled  /> File model field type
+                <li><input type="checkbox" disabled  /> Rust side has a fallback route which directs data to the SvelteKit server
                   <ul class="list-bullet">
-                    <li>Ability to calculate hash and file size as upload occurs</li>
+                    <li>Most uses will also have a reverse proxy in front but this will let it work without that</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Background jobs v1
+            <li><input type="checkbox" disabled  /> TLS/HTTPS support</li>
+            <li><input type="checkbox" disabled  /> Frontend: Generate client-side validation
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Define background jobs in config</li>
-                <li><input type="checkbox" disabled  /> Global and per-job concurrency settings</li>
-                <li><input type="checkbox" disabled  /> Generate a helper to enqueue a background job</li>
-                <li><input type="checkbox" disabled  /> Generate a stub payload and function that runs the job</li>
+                <li>This is mostly done with the generated zod schema, but some things are needed such as checking against create or update schema as appropriate</li>
+                <li>Right now the UI doesn&#39;t update right on a client-side validation failure</li>
               </ul>            </li>
+          </ul>        </li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> LetsEncrypt support</li>
+            <li><input type="checkbox" disabled  /> HTTP -&gt; HTTPS redirect</li>
             <li><input type="checkbox" disabled  /> Joining tables
               <ul class="list-bullet">
+                <li>Doesn&#39;t compile yet. Configuration and SQL migrations are done here, need the rest of the support:</li>
                 <li><input type="checkbox" disabled  /> Handle <code>through</code> relationships in fetch queries</li>
                 <li><input type="checkbox" disabled  /> Updates in main payload for <code>through</code> relationships
                   <ul class="list-bullet">
@@ -46,32 +50,39 @@ updated: 2024-03-07
                     <li>These can just be CRUD endpoints on the linking model. Main difference is the URL structure accounts for the composite ID</li>
                   </ul>                </li>
               </ul>            </li>
-          </ul>        </li>
-        <li><h3>Soon</h3>
-          <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Generate Typescript interfaces and JS code to talk to the API</li>
-            <li><input type="checkbox" disabled  /> Frontend: Generate client-side validation
-              <ul class="list-bullet">
-                <li>This is mostly generating the JSON schema into JS, hooking it into <code>ajv</code>, and then making sure that the form submission functions actually use it.</li>
-              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Invalid password returns &quot;unauthenticated&quot; instead of something like &quot;user or password not found&quot; when obfuscation is on</li>
             <li><input type="checkbox" disabled  /> Error reporting
               <ul class="list-bullet">
                 <li>Support reporting errors to an external service like Rollbar or Sentry, on both the frontend and backend</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Error page</li>
-            <li><input type="checkbox" disabled  /> Reenable endpoints on child models
-              <ul class="list-bullet">
-                <li>This should mostly work already, but the tests need some additional setup to make a parent object to link to.</li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> Frontend: Project initialization
-              <ul class="list-bullet">
-                <li>Run sveltekit init command to generate basic project, then fill in files from there.</li>
-              </ul>            </li>
             <li><input type="checkbox" disabled  /> tests for list endpoint filtering/pagination/sorting</li>
             <li><input type="checkbox" disabled  /> Set up axum-sqlx-tx?</li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Option to only allow connections from certain IP ranges
+              <ul class="list-bullet">
+                <li>eg <a href="https://www.cloudflare.com/ips/">https://www.cloudflare.com/ips/</a> when using Cloudflare</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Helpers for retrying requests and other operations
+              <ul class="list-bullet">
+                <li>rate limit retry-after</li>
+                <li>exponential retry with jitter, etc. for regular retryable failures</li>
+                <li>ability to not retry for certain errors</li>
+                <li>Maybe just fork backon for this?</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> QoL Issues Encountered
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Conflict in src/main.rs on first run
+                  <ul class="list-bullet">
+                    <li>Maybe detect if this is the first run by looking at absence of .state directory and ask if it&#39;s ok to just replace it</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> <code>rustfmt.toml</code> needs to be created before trying to format the template.
+                  <ul class="list-bullet">
+                    <li>Create a default one if absent (ask first)</li>
+                  </ul>                </li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Add auto-bootstrap option
               <ul class="list-bullet">
                 <li>When appropriate environment variables are set, allows the API to do the bootstrapping itself when it first starts up</li>
@@ -79,13 +90,13 @@ updated: 2024-03-07
             <li><input type="checkbox" disabled  /> Add <code>init</code> command that runs Cargo init, create-svelte, and creates basic config.toml?</li>
             <li>Frontend
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Figure out how best to link Rust side with SvelteKit
+                <li><input type="checkbox" disabled  /> Add dependencies to package.json like we do for the Rust side
                   <ul class="list-bullet">
-                    <li>For production, Rust side can have a fallback route which forwards connection to SvelteKit server.
-                      <ul class="list-bullet">
-                        <li>More complex setups could use a reverse proxy in front of everything but this should be a good default.</li>
-                      </ul>                    </li>
-                    <li>For dev, easiest to use Vite support and proxy <code>/api</code> to the Rust side</li>
+                    <li>filigree-web, zod</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Project initialization
+                  <ul class="list-bullet">
+                    <li>Run sveltekit init command to generate basic project, then fill in files from there.</li>
                   </ul>                </li>
                 <li><input type="checkbox" disabled  /> App shell with nav bar, etc.</li>
                 <li><input type="checkbox" disabled  /> Password reset page</li>
@@ -96,9 +107,76 @@ updated: 2024-03-07
                 <li><input type="checkbox" disabled  /> Admin: invite users to app</li>
                 <li><input type="checkbox" disabled  /> Admin: administer organizations</li>
                 <li><input type="checkbox" disabled  /> 404 page</li>
+                <li><input type="checkbox" disabled  /> Generate JS code to talk to the API
+                  <ul class="list-bullet">
+                    <li>Maybe use a helper function that creates a function to call the endpoint with proper types and such.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> TS Type Enhancements
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" disabled  /> Permission names per model</li>
+                    <li><input type="checkbox" disabled  /> typed functions that validate and call the endpoints</li>
+                  </ul>                </li>
               </ul>            </li>
-            <li>Template System
+            <li>Models Backend
               <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Generate endpoints for grandchild objects
+                  <ul class="list-bullet">
+                    <li>Probably need to make this generally recursive which may difficult to do via the current template system, might need a macro that can call itself or some fancier fragment rendering.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Models with non-writable, but required, fields don&#39;t generate valid tests
+                  <ul class="list-bullet">
+                    <li>This can happen when the normal &quot;create&quot; workflow happens in some other way than calling a REST create endpoint.</li>
+                    <li>Will be easier to fix once <a class="block-ref" href="/notes/projects_filigree#660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> More ergonomic backend object use</a> is done</li>
+                    <li>Also consider detecting this and just not generating an &quot;insert&quot; script that can&#39;t work.
+                      <ul class="list-bullet">
+                        <li>The criteria is a model that has at least one field which
+                          <ul class="list-bullet">
+                            <li>is not <code>fixed</code></li>
+                            <li>is not <code>nullable</code></li>
+                            <li>has no default (SQL or Rust)</li>
+                            <li>is not writable by owner</li>
+                          </ul>                        </li>
+                      </ul>                    </li>
+                  </ul>                </li>
+                <li id="660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> More ergonomic backend object use
+                  <ul class="list-bullet">
+                    <li>Have a way to really easily load an object from the DB, modify it, and then save it back to the DB for cases where doing it all in a single SQL statement is a hassle.</li>
+                    <li>This should probably take the form of methods on the main model struct which internally call the get/update/insert query methods.</li>
+                    <li>Might need a bit of additional stuff for populated or not but that can be dealt with after the initial implementation</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Support file uploads in multipart form submissions
+                  <ul class="list-bullet">
+                    <li>A lot of the underlying framework for this is ready but the code itself needs to be written. Main issue is that the current <code>FormOrJson</code> can&#39;t be used in that case. Instead we probably need something that even on a JSON file looks like a multipart submission, but just doesn&#39;t return any files.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Test populated get and list when update<em class="italic">with</em>parent is false</li>
+                <li><input type="checkbox" disabled  /> Models can define extra permissions</li>
+                <li><input type="checkbox" disabled  /> Allow disabling child population at runtime in list/get endpoints, when it is enabled by default
+                  <ul class="list-bullet">
+                    <li>This is one place it would help to use sea_query</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li>CLI / Template System
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Bug: CLI doesn&#39;t throw an error if a field is defined twice</li>
+                <li><input type="checkbox" disabled  /> Command to list all the environment variables that will be read along with their defaults if not provided
+                  <ul class="list-bullet">
+                    <li>Might be a bit complex but worth it since there can be a lot</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Bug: when deleting a model the files under <code>src/model/NAME/</code> are not removed.
+                  <ul class="list-bullet">
+                    <li>Probably need to read the <code>.state</code> directory to see what files we generated before but aren&#39;t being generated this time</li>
+                    <li>Also don&#39;t delete files which have been edited</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> When generating migrations, read in the actual app migrations and ignore tables that we don&#39;t care about.
+                  <ul class="list-bullet">
+                    <li>This lets us see things like model tables having been removed if, say, a migration file was deleted since it did the wrong thing.</li>
+                    <li>Do need to figure out how to handle extra columns added in the model via manual SQL migrations here.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Command to print config and diff files against last gen and current config gen</li>
+                <li><input type="checkbox" disabled  /> Consider using something like sea_query to generate queries instead of a bunch of fixed queries
+                  <ul class="list-bullet">
+                    <li>Will add flexibility, and could make a lot of things simpler. Need to see if there&#39;s still a good way to pre-generate queries when running the CLI</li>
+                  </ul>                </li>
                 <li><input type="checkbox" disabled  /> Data-driven default org contents, even if just a JSON blob to start
                   <ul class="list-bullet">
                     <li>This can piggyback off of the fixture system</li>
@@ -109,21 +187,16 @@ updated: 2024-03-07
                     <li>Developer should probably just edit the generated code here.</li>
                     <li>Maybe add stub functions to each model to allow adding pre/post save hooks</li>
                   </ul>                </li>
-                <li><input type="checkbox" disabled  /> Models can define extra permissions</li>
-                <li><input type="checkbox" disabled  /> Models can define custom functions/actions
-                  <ul class="list-bullet">
-                    <li>Might not do this since it may be worse DX than just adding to generated code</li>
-                  </ul>                </li>
                 <li><input type="checkbox" disabled  /> Make it easy for additional queries to use the permissions macros
                   <ul class="list-bullet">
+                    <li>Probably moving away from SQL and toward Rust code for permissions checks so this won&#39;t matter as much</li>
                     <li>Can suggest using sqlweld here</li>
+                    <li>See if there&#39;s a path to using a query builder like <code>sea_query</code> instead, maybe as an addition to the existing thing.</li>
                   </ul>                </li>
                 <li><input type="checkbox" disabled  /> Autogenerate belongs_to field if necessary when the inverse has is detected without a through table.
                   <ul class="list-bullet">
-                    <li>Currently this returns an error</li>
+                    <li>Currently this returns an error instead</li>
                   </ul>                </li>
-                <li><input type="checkbox" disabled  /> Allow disabling child population at runtime in list/get endpoints, when it is enabled by default</li>
-                <li><input type="checkbox" disabled  /> Test populated get and list when update<em class="italic">with</em>parent is false</li>
               </ul>            </li>
             <li>Authentication and Registration
               <ul class="list-bullet">
@@ -168,13 +241,33 @@ updated: 2024-03-07
                     <li>Need to handle the case where there are multiple emails and they match different accounts. This probably requires an interstitial after the login page to select the matching account.</li>
                   </ul>                </li>
                 <li><input type="checkbox" disabled  /> Waitlist functionality</li>
+                <li><input type="checkbox" disabled  /> Put auth code behind an adapter so it can be swapped out for a 3rd-party service</li>
               </ul>            </li>
             <li>Permissions and Authorization
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> <a class="block-ref" href="/notes/projects_filigree#657a981d-8503-427b-a6ab-319c7879b94c">Project-based Access Control</a></li>
+                <li><input type="checkbox" disabled  /> Consider separating permissions checks from the SQL queries themselves
+                  <ul class="list-bullet">
+                    <li>This has the upside that it would simplify a lot of checking for permissions and make more complex permissions easier</li>
+                    <li>Upsides
+                      <ul class="list-bullet">
+                        <li>SQL templates become simpler</li>
+                        <li>Much easier to implement ABAC</li>
+                        <li>Easier to differentiate authz errors from missing objects</li>
+                      </ul>                    </li>
+                    <li>Downsides
+                      <ul class="list-bullet">
+                        <li>Requires remembering to actually check for permissions, though that&#39;s alleviated some by the template system since the checks can be placed in the access functions.</li>
+                        <li>We also end up reading objects multiple times in update/delete situations, though this isn&#39;t that big of a deal. For project-based permissions we could potentially load all the projects though would have to see about that.</li>
+                      </ul>                    </li>
+                    <li>Should probably do this as permissions is becoming more and more complex as more options are added.</li>
+                    <li>Maybe consider something like casbin or biscuits too. Feels like overkill at this point for most things though, probably more appropriate for an API-first product.</li>
+                    <li>list query would still need permissions checks in the SQL</li>
+                  </ul>                </li>
                 <li><input type="checkbox" disabled  /> API Key lookup query needs to change to make permissions a subset of the user&#39;s permissions when inherit<em class="italic">user</em>permissions is false
                   <ul class="list-bullet">
                     <li>This way if a user has some permissions removed, they can&#39;t bypass those limits using an old API key which still had those permissions</li>
+                    <li>This is actually a good use case for casbin or biscuit, though could still be implemented without it.</li>
                   </ul>                </li>
                 <li><input type="checkbox" disabled  /> Feature flags</li>
                 <li><input type="checkbox" disabled  /> Add &quot;all&quot; model permissions so that some roles have permissions on everything even when new models are added.
@@ -213,7 +306,6 @@ updated: 2024-03-07
               </ul>            </li>
             <li>Workers
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Define scheduled tasks that run a job on a cron schedule</li>
                 <li><input type="checkbox" disabled  /> Ability to run worker tasks in some other process/VM/FaaS
                   <ul class="list-bullet">
                     <li>Need to figure out configuration for this... this might be better implemented in the task queue itself</li>
@@ -223,9 +315,31 @@ updated: 2024-03-07
                     <li>Not important for now since <a href="/notes/projects_effectum">Effectum</a> only runs in-process but at some point it will have a server mode and then it will make more sense.</li>
                   </ul>                </li>
               </ul>            </li>
-            <li>Block Storage
+            <li>Block Storage and File Uploads
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> Option for Uploads via signed URL</li>
+                <li><input type="checkbox" disabled  /> Generate tests for file upload endpoints</li>
+                <li><input type="checkbox" disabled  /> When retain<em class="italic">file</em>on_delete is set, optionally add an entry to a table that lists orphaned files.
+                  <ul class="list-bullet">
+                    <li>The idea being that we might want to hold on to orphaned files for some period of time, and then delete them later.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Image statistics on upload
+                  <ul class="list-bullet">
+                    <li>format, width, height
+                      <ul class="list-bullet">
+                        <li>Can detect on upload using code from <a href="/notes/projects_pic_store">Pic Store</a></li>
+                      </ul>                    </li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  />  Generate image thumbnail and blurhash
+                  <ul class="list-bullet">
+                    <li>Best done in background worker</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Potentially need a way to upload a file before the parent object exists. Will probably wait for a real use case on this one.
+                  <ul class="list-bullet">
+                    <li>Could make the parent ID nullable here and then add an endpoint to &quot;claim&quot; a file for a particular parent object</li>
+                    <li>Also could just do the Github style thing and upload them to a publicly available bucket. We don&#39;t maintain a file database entry  in this case, and just return the public URL for whatever use it is.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Allow specifying storage provider presets from env vars, not just in config</li>
               </ul>            </li>
             <li>Notifications
               <ul class="list-bullet">
@@ -258,6 +372,8 @@ updated: 2024-03-07
               <ul class="list-bullet">
                 <li>Looks like Honeycomb supports Prometheus format</li>
               </ul>            </li>
+            <li><input type="checkbox" disabled  /> Basic Analytics</li>
+            <li><input type="checkbox" disabled  /> More complex workflow/funnel analytics</li>
             <li>Data Hooks and Similar
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> Delete log table for possibility of undelete later</li>
@@ -277,6 +393,87 @@ updated: 2024-03-07
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Command to print all the environment variables that the generated application will check &mdash; Apr 2nd, 2024</li>
+            <li><input type="checkbox" disabled checked /> Specify custom endpoints per model &mdash; Mar 29th, 2024
+              <ul class="list-bullet">
+                <li>This generates an endpoint function, a route, path/query/body parameters, input/output/query structures, and corresponding Typescript functions and interfaces to use it.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Allow omitting certain normal fields on list &mdash; Mar 27th, 2024
+              <ul class="list-bullet">
+                <li>e.g. if there&#39;s a large JSON field not needed for the list page we should omit it.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Easy generation of TS types from Rust types &mdash; Mar 25th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Background jobs v1 &mdash; Mar 23rd, 2024
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled checked /> Define background jobs in config
+                  <ul class="list-bullet">
+                    <li>Option to set recurrence in config</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Global and per-job concurrency settings
+                  <ul class="list-bullet">
+                    <li>Actually do this via multiple worker configurations. Can configure workers equal to your concurrency desires.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Generate a payload structure for the background job
+                  <ul class="list-bullet">
+                    <li>No need to define the contents in the config, the user can just fill in what they need</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Generate a helper to enqueue a background job</li>
+                <li><input type="checkbox" disabled checked /> Generate a stub payload and function that runs the job</li>
+                <li><input type="checkbox" disabled checked /> Hook it all up
+                  <ul class="list-bullet">
+                    <li>Add queue to ServerState</li>
+                    <li>Make environment variables</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Option to allow setting an object ID when creating an object &mdash; Mar 22nd, 2024
+              <ul class="list-bullet">
+                <li>This can help with scenarios where we want to create an object and potentially write it to the database later, but have the ID to use beforehand.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Generate Typescript interfaces for models &mdash; Mar 19th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Generate tests for child object url endpoints &mdash; Mar 17th, 2024</li>
+            <li><input type="checkbox" disabled checked /> File model type &mdash; Mar 15th, 2024
+              <ul class="list-bullet">
+                <li>Files are a separate model, and when they need to be referenced by another model they can just form a parent-child relationship.</li>
+                <li><input type="checkbox" disabled checked /> Add a function for upload
+                  <ul class="list-bullet">
+                    <li>where should this function go? probably a new file which handles upload, delete, and whatever else might be necessary</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Add an endpoint to process an upload directly</li>
+                <li><input type="checkbox" disabled checked /> Delete file when model is deleted</li>
+                <li><input type="checkbox" disabled checked /> Delete files when parent model is deleted</li>
+                <li><input type="checkbox" disabled checked /> Special file configuration
+                  <ul class="list-bullet">
+                    <li>upload path template</li>
+                    <li>a bucket from <code>storage.bucket</code> to store an upload</li>
+                    <li>permissions for download or not</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Extra optional fields
+                  <ul class="list-bullet">
+                    <li>hash</li>
+                    <li>file size</li>
+                    <li>original filename</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Initial Block Storage Support &mdash; Mar 10th, 2024
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled checked /> Block storage abstraction
+                  <ul class="list-bullet">
+                    <li>use object_store crate for the underlying interface</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Storage configuration
+                  <ul class="list-bullet">
+                    <li>The idea here is that each storage location can be configured but the details should be completely configurable at runtime.
+                      <ul class="list-bullet">
+                        <li>Or should it always be environment based? Probably yes actually except maybe some basics like bucket name, endpoint, etc.</li>
+                      </ul>                    </li>
+                    <li>something like <code>STORAGE_${location_name}_BUCKET</code> and so on for each provider</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Use storage configuration in template</li>
+                <li><input type="checkbox" disabled checked /> Stream request body into object storage</li>
+                <li><input type="checkbox" disabled checked /> Stream multipart files into object storage</li>
+                <li><input type="checkbox" disabled checked /> Allow examining data as it streams through</li>
+                <li><input type="checkbox" disabled checked /> Stream file from object storage as Response body</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled checked /> Create endpoints should return children when doing update<em class="italic">with</em>parent &mdash; Feb 29th, 2024</li>
             <li><input type="checkbox" disabled checked /> <del class="line-through">Store .gen files in a tar file instead</del> - Cancelled Feb 28th, 2024
               <ul class="list-bullet">
@@ -442,51 +639,55 @@ updated: 2024-03-07
             <li><input type="checkbox" disabled checked /> Create SQL queries to read/write the model</li>
           </ul>        </li>
       </ul>    </li>
-    <li>This should be made modular somehow so it&#39;s easy to maintain and add new stuff.
+    <li><h3>Setup</h3>
       <ul class="list-bullet">
-        <li>Modules define dependencies</li>
-      </ul>    </li>
-    <li>Config
-      <ul class="list-bullet">
-        <li>formatters to use</li>
-        <li>SQL dialect (postgres or sqlite)</li>
-      </ul>    </li>
-    <li>Model definition
-      <ul class="list-bullet">
-        <li>Write in TOML</li>
-        <li>Each field has
+        <li>This isn&#39;t really full documentation., just notes on how I set things up.  More of this will be automated and rough edges smoothed out over time.</li>
+        <li><h4>Initial Setup</h4>
           <ul class="list-bullet">
-            <li>SQL type</li>
-            <li>nullable (default not null)</li>
-            <li>Rust type (can be inferred from the SQL type, but can be overridden)</li>
+            <li>Create a git repository</li>
+            <li>Create a Rust project in it</li>
+            <li>Create a SvelteKit project, add <code>filigree-web</code> as a dependency</li>
+            <li>Add the <code>filigree</code> directory with <code>config.toml</code> and other files</li>
+            <li>Create a <code>rustfmt.toml</code></li>
+            <li>Delete the default <code>src/main.rs</code></li>
+            <li>Run <code>filigree</code> to write the source code</li>
+            <li>Add this to the vite config
+              <ul class="list-bullet">
+                <li><pre><code><span class="sy-source sy-js">  <span class="sy-constant sy-other sy-object sy-key sy-js"><span class="sy-string sy-unquoted sy-label sy-js">server</span><span class="sy-punctuation sy-separator sy-key-value sy-js">:</span></span> <span class="sy-meta sy-group sy-braces sy-curly sy-js"><span class="sy-meta sy-brace sy-curly sy-begin sy-js">{</span>
+    <span class="sy-constant sy-other sy-object sy-key sy-js"><span class="sy-string sy-unquoted sy-label sy-js">proxy</span><span class="sy-punctuation sy-separator sy-key-value sy-js">:</span></span> <span class="sy-meta sy-group sy-braces sy-curly sy-js"><span class="sy-meta sy-brace sy-curly sy-begin sy-js">{</span>
+      <span class="sy-string sy-quoted sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>/api<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span><span class="sy-punctuation sy-separator sy-key-value sy-js">:</span> <span class="sy-meta sy-group sy-braces sy-curly sy-js"><span class="sy-meta sy-brace sy-curly sy-begin sy-js">{</span>
+        <span class="sy-constant sy-other sy-object sy-key sy-js"><span class="sy-string sy-unquoted sy-label sy-js">target</span><span class="sy-punctuation sy-separator sy-key-value sy-js">:</span></span> <span class="sy-string sy-quoted sy-js"><span class="sy-punctuation sy-definition sy-string sy-begin sy-js">&#39;</span>http://localhost:7823<span class="sy-punctuation sy-definition sy-string sy-end sy-js">&#39;</span></span><span class="sy-meta sy-delimiter sy-comma sy-js">,</span>
+      <span class="sy-meta sy-brace sy-curly sy-end sy-js">}</span></span><span class="sy-meta sy-delimiter sy-comma sy-js">,</span>
+    <span class="sy-meta sy-brace sy-curly sy-end sy-js">}</span></span><span class="sy-meta sy-delimiter sy-comma sy-js">,</span>
+  <span class="sy-meta sy-brace sy-curly sy-end sy-js">}</span></span><span class="sy-meta sy-delimiter sy-comma sy-js">,</span>
+
+</span></code></pre></li>
+              </ul>            </li>
           </ul>        </li>
-        <li>Define Indexes and primary key
+        <li><h4>Set up Database</h4>
           <ul class="list-bullet">
-            <li>indexes can maybe just be defined in raw sql</li>
+            <li>Create Database and Database User
+              <ul class="list-bullet">
+                <li><code>cat /dev/urandom | head | shasum</code> for an easy random password</li>
+                <li><pre><code><span class="sy-source sy-sql"><span class="sy-comment sy-line sy-double-dash sy-sql"><span class="sy-punctuation sy-definition sy-comment sy-sql">--</span> Create the user and database
+</span>create role USER login password <span class="sy-string sy-quoted sy-single sy-sql"><span class="sy-punctuation sy-definition sy-string sy-begin sy-sql">&#39;</span>PASSWORD<span class="sy-punctuation sy-definition sy-string sy-end sy-sql">&#39;</span></span>;
+<span class="sy-meta sy-create sy-sql"><span class="sy-keyword sy-other sy-create sy-sql">create</span> <span class="sy-keyword sy-other sy-sql">database</span> </span><span class="sy-meta sy-toc-list sy-full-identifier sy-sql">THE_DB with owner </span><span class="sy-meta sy-toc-list sy-full-identifier sy-sql"><span class="sy-entity sy-name sy-function sy-sql">USER</span></span>;
+</span></code></pre></li>
+                <li>Set <code>DATABASE_URL</code> in your .env</li>
+                <li><code>cd YOUR_API_DIRECTORY &amp;&amp; sqlx migrate run</code></li>
+              </ul>            </li>
+            <li>Bootstrap the Database
+              <ul class="list-bullet">
+                <li><pre><code><span class="sy-text sy-plain">cargo run --release -- db bootstrap \
+  --email YOUR_EMAIL \
+  --password &#39;PASSWORD&#39; \
+  --name &#39;YOUR NAME&#39; \
+  --org-name &#39;ORG NAME&#39;
+</span></code></pre></li>
+                <li>The only required option is <code>email</code>. Without a password you can log in via OAuth or through a passwordless email login.</li>
+                <li>You can also supply a prehashed password by using the <code>--password-hash</code> argument instead, and hashes can be created by running <code>cargo run --release -- util hash-password YOURPASSWORD</code>.</li>
+              </ul>            </li>
           </ul>        </li>
-        <li>Can have child relationships, one -to-one and one-to-many</li>
-        <li>Can have JSON fields, which deserialize to either JSON values or other Rust structs
-          <ul class="list-bullet">
-            <li>The rust structs can be defined in the config as strings or something like that</li>
-          </ul>        </li>
-        <li>List of other query functions to generate (find by field, etc.)</li>
-        <li>Permissions
-          <ul class="list-bullet">
-            <li>Automatic checking on all operations</li>
-            <li>Ability to define which permissions are needed for what</li>
-          </ul>        </li>
-        <li>some kind of hook on update? or is this better done by just changing the generated code myself</li>
-      </ul>    </li>
-    <li>Consider some kind of codegen for even easier crud endpoint generation
-      <ul class="list-bullet">
-        <li>Need ability to generate migrations that add/remove columns too
-          <ul class="list-bullet">
-            <li>this can definitely be manual to start though.</li>
-          </ul>        </li>
-      </ul>    </li>
-    <li>Authentication
-      <ul class="list-bullet">
-        <li>Need a user/account mapping to support multiple auth methods per user.</li>
       </ul>    </li>
     <li>Authorization
       <ul class="list-bullet">
@@ -628,6 +829,55 @@ updated: 2024-03-07
         <li>Workflows can perform some set of predefined actions, which may include sending emails, notifying a user, spawning other workflows, etc.</li>
         <li>Workflows can define transitions to run after a certain amount of time</li>
         <li>Consider a scripting engine or something for checking state when transitioning (perhaps just reuse a bunch of code from Ergo for this)</li>
+      </ul>    </li>
+    <li><h2>Old Notes</h2>
+      <ul class="list-bullet">
+        <li>This should be made modular somehow so it&#39;s easy to maintain and add new stuff.
+          <ul class="list-bullet">
+            <li>Modules define dependencies</li>
+          </ul>        </li>
+        <li>Config
+          <ul class="list-bullet">
+            <li>formatters to use</li>
+            <li>SQL dialect (postgres or sqlite)</li>
+          </ul>        </li>
+        <li>Model definition
+          <ul class="list-bullet">
+            <li>Write in TOML</li>
+            <li>Each field has
+              <ul class="list-bullet">
+                <li>SQL type</li>
+                <li>nullable (default not null)</li>
+                <li>Rust type (can be inferred from the SQL type, but can be overridden)</li>
+              </ul>            </li>
+            <li>Define Indexes and primary key
+              <ul class="list-bullet">
+                <li>indexes can maybe just be defined in raw sql</li>
+              </ul>            </li>
+            <li>Can have child relationships, one -to-one and one-to-many</li>
+            <li>Can have JSON fields, which deserialize to either JSON values or other Rust structs
+              <ul class="list-bullet">
+                <li>The rust structs can be defined in the config as strings or something like that</li>
+              </ul>            </li>
+            <li>List of other query functions to generate (find by field, etc.)</li>
+            <li>Permissions
+              <ul class="list-bullet">
+                <li>Automatic checking on all operations</li>
+                <li>Ability to define which permissions are needed for what</li>
+              </ul>            </li>
+            <li>some kind of hook on update? or is this better done by just changing the generated code myself</li>
+          </ul>        </li>
+        <li>Consider some kind of codegen for even easier crud endpoint generation
+          <ul class="list-bullet">
+            <li>Need ability to generate migrations that add/remove columns too
+              <ul class="list-bullet">
+                <li>this can definitely be manual to start though.</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>Authentication
+          <ul class="list-bullet">
+            <li>Need a user/account mapping to support multiple auth methods per user.</li>
+          </ul>        </li>
       </ul>    </li>
   </ul>
 

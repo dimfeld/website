@@ -2,7 +2,7 @@
 title: "Effectum"
 tags: Projects
 date: 2022-11-16
-updated: 2024-03-07
+updated: 2024-03-23
 ---
 
 
@@ -14,6 +14,7 @@ updated: 2024-03-07
         <li><h3>Up Next</h3></li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> A job can reschedule itself to run again</li>
             <li><input type="checkbox" disabled  /> Server mode: allow adding jobs remotely</li>
             <li><input type="checkbox" disabled  /> Server mode: Job workers can be in other processes that pull jobs from the server</li>
             <li><input type="checkbox" disabled  /> Make it easy to launch jobs on an orchestrator (Fly Machines, AWS Lambda, etc.)</li>
@@ -29,11 +30,14 @@ updated: 2024-03-07
                 <li>This is only really useful when the worker task is running outside the current process. Otherwise just spawn a task and do it there.</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Use from Node.js</li>
-            <li><input type="checkbox" disabled  /> Example: Retries due to failure</li>
-            <li><input type="checkbox" disabled  /> Example: Job priority</li>
-            <li><input type="checkbox" disabled  /> Example: Graceful shutdown</li>
-            <li><input type="checkbox" disabled  /> Example: Checkpoint functionality</li>
-            <li><input type="checkbox" disabled  /> Example: Expired jobs retry</li>
+            <li>Examples
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Example: Retries due to failure</li>
+                <li><input type="checkbox" disabled  /> Example: Job priority</li>
+                <li><input type="checkbox" disabled  /> Example: Graceful shutdown</li>
+                <li><input type="checkbox" disabled  /> Example: Checkpoint functionality</li>
+                <li><input type="checkbox" disabled  /> Example: Expired jobs retry</li>
+              </ul>            </li>
           </ul>        </li>
         <li><h3>Done</h3></li>
       </ul>    </li>
