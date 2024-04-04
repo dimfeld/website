@@ -16,7 +16,7 @@
     <h1>Layout jumps without forced overlap</h1>
 
     {#key enabled}
-      <h3 class="text-center" transition:fly={{ x: -200, duration: 1000 }}>
+      <h3 class="text-center" transition:fly|global={{ x: -200, duration: 1000 }}>
         {#if enabled}Enabled!{:else}Disabled!{/if}
       </h3>
     {/key}

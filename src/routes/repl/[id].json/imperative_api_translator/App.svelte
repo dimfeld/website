@@ -86,7 +86,7 @@
       {#each Array.from(values).sort() as s (s)}
         <li
           animate:flip={{ duration: 300 }}
-          transition:fade={{ duration: 300 }}>
+          transition:fade|global={{ duration: 300 }}>
           {s}
         </li>
       {/each}

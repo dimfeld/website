@@ -106,8 +106,8 @@
       <div class="flex flex-col space-y-4">
         {#each section.items as item, itemIndex (item)}
           <div
-            in:inTransition={{ key: item }}
-            out:outTransition={{ key: item }}
+            in:inTransition|global={{ key: item }}
+            out:outTransition|global={{ key: item }}
             animate:flip={{ duration: 300 }}
             class="bg-white px-2 py-4 shadow-xl">
             <div class="text-center text-sm font-medium text-gray-800">

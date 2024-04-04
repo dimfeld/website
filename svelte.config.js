@@ -1,10 +1,10 @@
 import { vitePreprocess } from '@sveltejs/kit/vite';
-import vercelAdapter from '@sveltejs/adapter-vercel';
+import adapter from '@sveltejs/adapter-cloudflare';
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
   preprocess: [vitePreprocess()],
   kit: {
-    adapter: vercelAdapter(),
+    adapter: adapter(),
   },
 };

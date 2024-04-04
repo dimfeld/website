@@ -171,7 +171,7 @@
       <div
         class="absolute inset-x-0 z-40"
         style="top:40px"
-        transition:fade={{ duration: 200 }}>
+        transition:fade|global={{ duration: 200 }}>
         <div
           on:click|stopPropagation={() => {}}
           class="flex w-full flex-row border-t border-teal-700 bg-teal-900 pb-2
@@ -289,7 +289,7 @@
         class="fixed inset-0 z-30"
         style="background-color:rgba(0, 0, 0, 0.3);"
         on:click={() => (displayNav = false)}
-        transition:fade={{ duration: 200 }} />
+        transition:fade|global={{ duration: 200 }} />
     {/if}
   </div>
 </nav>

@@ -21,7 +21,7 @@ async function instantiateComponent(element: Element) {
   try {
     let attrs = element.getAttributeNames();
 
-    let component: typeof SvelteComponent | null = null;
+    let component: typeof SvelteComponent<any> | null = null;
     let props: { [key: string]: string } = {};
     for (let attr of attrs) {
       let value = element.getAttribute(attr);
