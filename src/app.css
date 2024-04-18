@@ -22,8 +22,17 @@ html {
     @apply ml-auto mr-auto;
   }
 
+  .content.note {
+    max-width: 95vw;
+  }
+
   article {
     max-width: min(65ch, 95vw);
+    @apply ml-auto mr-auto w-full;
+  }
+
+  article.note {
+    max-width: min(100ch, 95vw);
     @apply ml-auto mr-auto w-full;
   }
 
