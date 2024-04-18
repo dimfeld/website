@@ -1,0 +1,84 @@
+---
+title: "Chronicle"
+tags: Projects
+date: 2024-03-29
+updated: 2024-04-18
+---
+
+
+  <ul class="list-bullet">
+    <li>Provides a proxy which can be called instead of the normal URL, then passes a request to the LLM provider and returns the response. Chronicle can be embedded directly into a Rust application or can run as a standalone server.</li>
+    <li><h2>Task List</h2>
+      <ul class="list-bullet">
+        <li><h3>Up Next</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Endpoint that proxies the call</li>
+            <li><input type="checkbox" disabled  /> Common format chat messages and responses</li>
+            <li><input type="checkbox" disabled  /> Common format for tool use</li>
+            <li><input type="checkbox" disabled  /> Retry failed calls and on 429</li>
+            <li><input type="checkbox" disabled  /> Send all relevant metadata as Otel traces</li>
+          </ul>        </li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Easy way to set up clients from JS and Python to call the proxy with appropriate headers
+              <ul class="list-bullet">
+                <li>This is most useful in concert with other libraries that make LLM calls, like dspy and instructor</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Load model and provider definitions from a configuration file</li>
+            <li><input type="checkbox" disabled  /> Store and load model and provider definitions from the database</li>
+            <li><input type="checkbox" disabled  /> Automatic retry with rate-limit support</li>
+            <li><input type="checkbox" disabled  /> Save metadata into SQLite or Postgres</li>
+          </ul>        </li>
+        <li><h3>Later/Maybe</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Global rate limiting</li>
+            <li><input type="checkbox" disabled  /> Configurable user agent for HTTP client</li>
+            <li><input type="checkbox" disabled  /> Configurable timeout</li>
+            <li>Analysis
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> visualize by arbitrary metadata</li>
+                <li><input type="checkbox" disabled  /> Ability to create database indexes on arbitrary metadata even in JSON fields</li>
+              </ul>            </li>
+            <li>Price Tracking
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Calculate price of each call</li>
+                <li><input type="checkbox" disabled  /> Fetch and update prices for each provider</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Support binary upload APIs like Deepgram as well</li>
+            <li><input type="checkbox" disabled  /> Support streaming responses</li>
+            <li><input type="checkbox" disabled  /> Submit request metadata (org/user/workflow id) via HTTP headers or cookies?</li>
+          </ul>        </li>
+        <li><h3>Done</h3></li>
+      </ul>    </li>
+    <li>Probably take some code from Promptbox and change that to use this as a library, since it already has some of the needed functionality</li>
+    <li>Maintain a price sheet with input/output token price per provider and model
+      <ul class="list-bullet">
+        <li>Each price sheet entry as an active flag</li>
+        <li>When prices are updated for a model, add a new entry and mark it active</li>
+        <li>In the future have a scraper or other mechanism of getting latest price data for each model</li>
+      </ul>    </li>
+    <li>Support multiple methods of output:
+      <ul class="list-bullet">
+        <li>Record in a postgres table</li>
+        <li>Output OpenTelemetry</li>
+      </ul>    </li>
+    <li>Consider allowing metadata such as org and user ID can be sent in a cookie or in HTTP headers in addition to the body. Not sure how useful this is though.</li>
+    <li>For each entry, record:
+      <ul class="list-bullet">
+        <li>Org ID</li>
+        <li>User ID</li>
+        <li>Run ID (ID linking related prompt calls together)</li>
+        <li>Workflow Name</li>
+        <li>Workflow Step</li>
+        <li>Arbitrary other metadata</li>
+        <li>endpoint called</li>
+        <li>provider and model used</li>
+        <li>input text</li>
+        <li>output text</li>
+        <li>input token count</li>
+        <li>output token count</li>
+        <li>which price sheet row was used</li>
+        <li>response time</li>
+      </ul>    </li>
+  </ul>
+

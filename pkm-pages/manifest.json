@@ -844,6 +844,11 @@
     "title": "Buzzy",
     "uid": ""
   },
+  "pkm-pages/notes/projects_chronicle.html": {
+    "slug": "/notes/projects_chronicle",
+    "title": "Chronicle",
+    "uid": ""
+  },
   "pkm-pages/notes/projects_data_retrieval_application_manager.html": {
     "slug": "/notes/projects_data_retrieval_application_manager",
     "title": "Data Retrieval Application Manager",

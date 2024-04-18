@@ -2,7 +2,7 @@
 title: "Effectum"
 tags: Projects
 date: 2022-11-16
-updated: 2024-03-23
+updated: 2024-04-05
 ---
 
 
@@ -11,7 +11,13 @@ updated: 2024-03-23
     <li>A job queue based on SQLite, which is embeddable as a library and eventually will run standalone as well.</li>
     <li><h2>Task List</h2>
       <ul class="list-bullet">
-        <li><h3>Up Next</h3></li>
+        <li><h3>Up Next</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Status callbacks
+              <ul class="list-bullet">
+                <li>e.g. to report failures to Sentry, update some other status table with job status</li>
+              </ul>            </li>
+          </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> A job can reschedule itself to run again</li>
@@ -24,6 +30,11 @@ updated: 2024-03-23
             <li><input type="checkbox" disabled  /> Enqueue jobs using Postgres transactional outbox pattern
               <ul class="list-bullet">
                 <li>This is mostly done but isn&#39;t important until server mode is done</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Pluggable storage engine
+              <ul class="list-bullet">
+                <li>Would require rewriting most of the library but might want to run against Postgres at some point.</li>
+                <li>Probably wont do this.</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Wrapper function which can enqueue a job, wait for it to finish, and return the result from the job
               <ul class="list-bullet">

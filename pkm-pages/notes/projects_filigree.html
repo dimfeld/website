@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-04-04
+updated: 2024-04-17
 ---
 
 
@@ -12,55 +12,59 @@ updated: 2024-04-04
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Set it up to work in production
+            <li><input type="checkbox" disabled  /> Make it easier for differing get/list model types to be used interchangeably
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Dockerfile</li>
-                <li><input type="checkbox" disabled checked /> handleFetch hook</li>
-                <li><input type="checkbox" disabled  /> Client accesses of API need to go straight to API
+                <li>For every structure, add functions that both get one and run a list operation
                   <ul class="list-bullet">
-                    <li>This can be fixed either with a reverse proxy or by sending all requests through the Rust server and having it do reverse proxy</li>
-                    <li>The latter is a bit more work upfront but will potentially make deployment simpler</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled  /> Rust side has a fallback route which directs data to the SvelteKit server
-                  <ul class="list-bullet">
-                    <li>Most uses will also have a reverse proxy in front but this will let it work without that</li>
+                    <li>This starts to become a lot of SQL files though, what&#39;s a better way to do this? Probably just do this as part of the move to seaquery, and use some OnceLocks for the fixed queries that never change. Mostly have to figure out how best to integrate permissions checks in an easy way here.</li>
                   </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> TLS/HTTPS support</li>
-            <li><input type="checkbox" disabled  /> Frontend: Generate client-side validation
-              <ul class="list-bullet">
-                <li>This is mostly done with the generated zod schema, but some things are needed such as checking against create or update schema as appropriate</li>
-                <li>Right now the UI doesn&#39;t update right on a client-side validation failure</li>
-              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Debugging option to show a toast whenever a livereload finishes or an htmx error occurs</li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> LetsEncrypt support</li>
-            <li><input type="checkbox" disabled  /> HTTP -&gt; HTTPS redirect</li>
-            <li><input type="checkbox" disabled  /> Joining tables
+            <li><input type="checkbox" disabled  /> Improve livereload performance
               <ul class="list-bullet">
-                <li>Doesn&#39;t compile yet. Configuration and SQL migrations are done here, need the rest of the support:</li>
-                <li><input type="checkbox" disabled  /> Handle <code>through</code> relationships in fetch queries</li>
-                <li><input type="checkbox" disabled  /> Updates in main payload for <code>through</code> relationships
-                  <ul class="list-bullet">
-                    <li>This will just be IDs on the other side. Write payload field name should just be <code>OTHER_SIDE_NAME_ids</code></li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled  /> Generate endpoints for managing links in joining tables
-                  <ul class="list-bullet">
-                    <li>These can just be CRUD endpoints on the linking model. Main difference is the URL structure accounts for the composite ID</li>
-                  </ul>                </li>
+                <li>Not sure how much opportunity there is here but it feels like it can be made 20% faster</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Invalid password returns &quot;unauthenticated&quot; instead of something like &quot;user or password not found&quot; when obfuscation is on</li>
-            <li><input type="checkbox" disabled  /> Error reporting
+            <li><input type="checkbox" disabled  /> Anonymous user mode
               <ul class="list-bullet">
-                <li>Support reporting errors to an external service like Rollbar or Sentry, on both the frontend and backend</li>
+                <li>Anonymous users get a default Authed with a specific org and user ID created just for the anonymous user.</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Error page</li>
-            <li><input type="checkbox" disabled  /> tests for list endpoint filtering/pagination/sorting</li>
-            <li><input type="checkbox" disabled  /> Set up axum-sqlx-tx?</li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> HTMX support improvements
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> move client-side code from SBBP into Filigree for reuse by other projects</li>
+                <li><input type="checkbox" disabled  /> theming, dark/light mode with persistence via localStorage and header script to inject dark class
+                  <ul class="list-bullet">
+                    <li>DaisyUI provides a lot of this already</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Island architecture support for Svelte components
+                  <ul class="list-bullet">
+                    <li>Each of these should be its own entry point in the Vite config, and from there we can use the manifest support to get the necessary tags</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Flash/toast support
+                  <ul class="list-bullet">
+                    <li>Can probably be done with HX-Trigger header, or maybe an extension</li>
+                    <li><input type="checkbox" disabled  /> Adapter function for actions to have errors return a toast</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Implement fancy dropdown menu in Alpine with floating-ui
+                  <ul class="list-bullet">
+                    <li><a href="https://github.com/awcodes/alpine-floating-ui">https://github.com/awcodes/alpine-floating-ui</a> may work well</li>
+                    <li><a href="https://alpinejs.dev/plugins/anchor">https://alpinejs.dev/plugins/anchor</a> is the official one, seems to support fewer options</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Improve API error printing
+              <ul class="list-bullet">
+                <li>Some errors use <code>source</code> and error_stack&#39;s default printer ignores it. Should walk the source chain as well. This seems difficult though without using nightly features</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Metrics tracking and alerts
+              <ul class="list-bullet">
+                <li>Consistently high CPU, RAM usage, etc.</li>
+                <li>Might just use a service for this, need to see</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Option to only allow connections from certain IP ranges
               <ul class="list-bullet">
                 <li>eg <a href="https://www.cloudflare.com/ips/">https://www.cloudflare.com/ips/</a> when using Cloudflare</li>
@@ -87,13 +91,19 @@ updated: 2024-04-04
               <ul class="list-bullet">
                 <li>When appropriate environment variables are set, allows the API to do the bootstrapping itself when it first starts up</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Add <code>init</code> command that runs Cargo init, create-svelte, and creates basic config.toml?</li>
+            <li><input type="checkbox" disabled  /> Ops helpers
+              <ul class="list-bullet">
+                <li>This isn&#39;t part of the core framework, but a set of tools for automatically doing ops-related tassk</li>
+                <li><input type="checkbox" disabled  /> Back up database to cloud storage on a regular basis</li>
+                <li><input type="checkbox" disabled  /> Deploy on Git push</li>
+                <li><input type="checkbox" disabled  /> Preview environments?</li>
+                <li><input type="checkbox" disabled  /> Set up Postgres slow statement tracking and create a report on what was slow</li>
+                <li><input type="checkbox" disabled  /> Drop partitions of old data</li>
+              </ul>            </li>
             <li>Frontend
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Add dependencies to package.json like we do for the Rust side
-                  <ul class="list-bullet">
-                    <li>filigree-web, zod</li>
-                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> SvelteKit: Error page</li>
+                <li><input type="checkbox" disabled  /> Add dependencies to package.json like we do for the Rust side</li>
                 <li><input type="checkbox" disabled  /> Project initialization
                   <ul class="list-bullet">
                     <li>Run sveltekit init command to generate basic project, then fill in files from there.</li>
@@ -107,18 +117,27 @@ updated: 2024-04-04
                 <li><input type="checkbox" disabled  /> Admin: invite users to app</li>
                 <li><input type="checkbox" disabled  /> Admin: administer organizations</li>
                 <li><input type="checkbox" disabled  /> 404 page</li>
-                <li><input type="checkbox" disabled  /> Generate JS code to talk to the API
-                  <ul class="list-bullet">
-                    <li>Maybe use a helper function that creates a function to call the endpoint with proper types and such.</li>
-                  </ul>                </li>
                 <li><input type="checkbox" disabled  /> TS Type Enhancements
                   <ul class="list-bullet">
                     <li><input type="checkbox" disabled  /> Permission names per model</li>
-                    <li><input type="checkbox" disabled  /> typed functions that validate and call the endpoints</li>
                   </ul>                </li>
               </ul>            </li>
             <li>Models Backend
               <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Joining tables
+                  <ul class="list-bullet">
+                    <li>Doesn&#39;t compile yet. Configuration and SQL migrations are done here, need the rest of the support:</li>
+                    <li><input type="checkbox" disabled  /> Handle <code>through</code> relationships in fetch queries</li>
+                    <li><input type="checkbox" disabled  /> Updates in main payload for <code>through</code> relationships
+                      <ul class="list-bullet">
+                        <li>This will just be IDs on the other side. Write payload field name should just be <code>OTHER_SIDE_NAME_ids</code></li>
+                      </ul>                    </li>
+                    <li><input type="checkbox" disabled  /> Generate endpoints for managing links in joining tables
+                      <ul class="list-bullet">
+                        <li>These can just be CRUD endpoints on the linking model. Main difference is the URL structure accounts for the composite ID</li>
+                      </ul>                    </li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> tests for list endpoint filtering/pagination/sorting</li>
                 <li><input type="checkbox" disabled  /> Generate endpoints for grandchild objects
                   <ul class="list-bullet">
                     <li>Probably need to make this generally recursive which may difficult to do via the current template system, might need a macro that can call itself or some fancier fragment rendering.</li>
@@ -366,6 +385,13 @@ updated: 2024-04-04
                     <li>Piggyback on Ergo but maybe switch to QuickJS or <a href="https://github.com/saghul/txiki.js">saghul/txiki.js: A tiny JavaScript runtime</a></li>
                   </ul>                </li>
               </ul>            </li>
+            <li>Hosting
+              <ul class="list-bullet">
+                <li>Not sure if I&#39;ll do any of this, it&#39;s really better handled by a reverse proxy</li>
+                <li><input type="checkbox" disabled  /> LetsEncrypt support</li>
+                <li><input type="checkbox" disabled  /> TLS/HTTPS support</li>
+                <li><input type="checkbox" disabled  /> HTTP -&gt; HTTPS redirect</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> User model list/get functions need to return users which are in multiple orgs, and whose current org is a different one</li>
             <li><input type="checkbox" disabled  /> Easy setup for commercialization</li>
             <li><input type="checkbox" disabled  /> Collect and export metrics to some tool
@@ -381,7 +407,6 @@ updated: 2024-04-04
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Password confirmation flow for &quot;dangerous&quot; actions</li>
             <li><input type="checkbox" disabled  /> User profile photos</li>
-            <li><input type="checkbox" disabled  /> Support HTTPS hosting without a reverse proxy in front</li>
             <li><input type="checkbox" disabled  /> Copy all tests in test-app into filigree crate where it makes sense
               <ul class="list-bullet">
                 <li>Some tests are more convenient to test in the test app, but rely on minimal scaffolded functionality. Should add a minimal server/migration setup in filigree crate tests so that they can run there as well.</li>
@@ -393,6 +418,64 @@ updated: 2024-04-04
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Allow specifying a user ID for anonymous users to impersonate. This lets them have specific permissions, see certain objects, etc. &mdash; Apr 16th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Add <code>init</code> command that runs Cargo init, create-svelte, and creates basic config.toml? &mdash; Apr 16th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Add a command that creates a new Postgres user, password, and database for your project &mdash; Apr 16th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Support maud/htmx as a SvelteKit alternative for less complicated apps &mdash; Apr 16th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Switch out deprecated Jaeger tracing crate for opentelemetry-otlp &mdash; Apr 15th, 2024</li>
+            <li><input type="checkbox" disabled checked /> When a type and its populated type are the same, don&#39;t generate e.g &quot;ListAndPopulatedListResult&quot;, just &quot;ListResult&quot; &mdash; Apr 15th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: manifest alterations need to be a vite plugin so they work in dev mode &mdash; Apr 12th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: live reload &mdash; Apr 12th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: asset pipeline config to bundle CSS and scripts, compress assets, etc. &mdash; Apr 11th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: build JS with vite or esbuild, read from file manifest to get list of static files with hash &mdash; Apr 11th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: Simple bundling with vite &mdash; Apr 11th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: Read vite manifest to support hashed values &mdash; Apr 11th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: Instantiate manifest object in app, set up watcher in dev mode  &mdash; Apr 11th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: obfuscate error middleware should only run on JSON responses (although maybe do HTML obfuscation too)  &mdash; Apr 10th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: Potentially a new extractor that lives alongside FormOrJson that always returns the form  &mdash; Apr 10th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: Customize <code>/</code> route in pages &mdash; Apr 10th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: Tailwind CSS support &mdash; Apr 10th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Auth failures need to redirect to login page instead of just returning a 404 error -  &mdash; Apr 9th, 2024
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled checked /> Errors in general need to do that</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Skip rendering sveltekit files when it is not enabled  &mdash; Apr 8th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Remove &quot;sync types&quot; and TS generation code when not using sveltekit  &mdash; Apr 8th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: <code>Page</code> wrapper that gets standard &lt;head&gt; tag contents for all  &mdash; Apr 8th, 2024</li>
+            <li><input type="checkbox" disabled checked /> htmx: Allow defining pages and actions  &mdash; Apr 8th, 2024
+              <ul class="list-bullet">
+                <li>This works similar to the existing endpoints stuff but made for HTML app</li>
+                <li>Autogenerate a rust module for each path and its actions</li>
+                <li>Should this be in a nested directory structure or just by filenames? Maybe nested directories</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Backend Error reporting &mdash; Apr 7th, 2024
+              <ul class="list-bullet">
+                <li>Almost done, just need to hook up the error reporting interface into FiligreeServerState so that I can report errors outside of the automatic system.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Frontend error reporting &mdash; Apr 7th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Generate JS code to talk to the API
+              <ul class="list-bullet">
+                <li>This is done for custom endpoint functions, not yet for CRUD</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Add configuration to enable trace export &mdash; Apr 6th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Add SQL functions to go between an object ID text and UUID forms. &mdash; Apr 5th, 2024
+              <ul class="list-bullet">
+                <li>Should have these left over from Ergo</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Frontend: Generate client-side validation &mdash; Apr 5th, 2024
+              <ul class="list-bullet">
+                <li>This is mostly done with the generated zod schema, but some things are needed such as checking against create or update schema as appropriate</li>
+                <li>Right now the UI doesn&#39;t update right on a client-side validation failure</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Set it up to work in production &mdash; Apr 5th, 2024
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled checked /> Dockerfile</li>
+                <li><input type="checkbox" disabled checked /> handleFetch hook</li>
+                <li><input type="checkbox" disabled checked /> Rust side has a fallback route which directs data to the SvelteKit server
+                  <ul class="list-bullet">
+                    <li>Most uses will also have a reverse proxy in front but this will let it work without that</li>
+                  </ul>                </li>
+              </ul>            </li>
             <li><input type="checkbox" disabled checked /> Command to print all the environment variables that the generated application will check &mdash; Apr 2nd, 2024</li>
             <li><input type="checkbox" disabled checked /> Specify custom endpoints per model &mdash; Mar 29th, 2024
               <ul class="list-bullet">
