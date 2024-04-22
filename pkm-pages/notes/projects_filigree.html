@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-04-18
+updated: 2024-04-22
 ---
 
 
@@ -18,6 +18,12 @@ updated: 2024-04-18
                   <ul class="list-bullet">
                     <li>This starts to become a lot of SQL files though, what&#39;s a better way to do this? Probably just do this as part of the move to seaquery, and use some OnceLocks for the fixed queries that never change. Mostly have to figure out how best to integrate permissions checks in an easy way here.</li>
                   </ul>                </li>
+              </ul>            </li>
+            <li id="660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> More ergonomic backend object use
+              <ul class="list-bullet">
+                <li>Have a way to really easily load an object from the DB, modify it, and then save it back to the DB for cases where doing it all in a single SQL statement is a hassle.</li>
+                <li>This should probably take the form of methods on the main model struct which internally call the get/update/insert query methods.</li>
+                <li>Might need a bit of additional stuff for populated or not but that can be dealt with after the initial implementation</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Debugging option to show a toast whenever a livereload finishes or an htmx error occurs</li>
           </ul>        </li>
@@ -82,10 +88,6 @@ updated: 2024-04-18
                   <ul class="list-bullet">
                     <li>Maybe detect if this is the first run by looking at absence of .state directory and ask if it&#39;s ok to just replace it</li>
                   </ul>                </li>
-                <li><input type="checkbox" disabled  /> <code>rustfmt.toml</code> needs to be created before trying to format the template.
-                  <ul class="list-bullet">
-                    <li>Create a default one if absent (ask first)</li>
-                  </ul>                </li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Add auto-bootstrap option
               <ul class="list-bullet">
@@ -93,7 +95,7 @@ updated: 2024-04-18
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Ops helpers
               <ul class="list-bullet">
-                <li>This isn&#39;t part of the core framework, but a set of tools for automatically doing ops-related tassk</li>
+                <li>This isn&#39;t part of the core framework, but a set of tools for automatically doing ops-related tasks</li>
                 <li><input type="checkbox" disabled  /> Back up database to cloud storage on a regular basis</li>
                 <li><input type="checkbox" disabled  /> Deploy on Git push</li>
                 <li><input type="checkbox" disabled  /> Preview environments?</li>
@@ -156,12 +158,6 @@ updated: 2024-04-18
                             <li>is not writable by owner</li>
                           </ul>                        </li>
                       </ul>                    </li>
-                  </ul>                </li>
-                <li id="660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> More ergonomic backend object use
-                  <ul class="list-bullet">
-                    <li>Have a way to really easily load an object from the DB, modify it, and then save it back to the DB for cases where doing it all in a single SQL statement is a hassle.</li>
-                    <li>This should probably take the form of methods on the main model struct which internally call the get/update/insert query methods.</li>
-                    <li>Might need a bit of additional stuff for populated or not but that can be dealt with after the initial implementation</li>
                   </ul>                </li>
                 <li><input type="checkbox" disabled  /> Support file uploads in multipart form submissions
                   <ul class="list-bullet">

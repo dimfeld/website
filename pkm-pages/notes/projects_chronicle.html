@@ -2,7 +2,7 @@
 title: "Chronicle"
 tags: Projects
 date: 2024-03-29
-updated: 2024-04-18
+updated: 2024-04-21
 ---
 
 
@@ -12,11 +12,8 @@ updated: 2024-04-18
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Endpoint that proxies the call</li>
-            <li><input type="checkbox" disabled  /> Common format chat messages and responses</li>
-            <li><input type="checkbox" disabled  /> Common format for tool use</li>
-            <li><input type="checkbox" disabled  /> Retry failed calls and on 429</li>
-            <li><input type="checkbox" disabled  /> Send all relevant metadata as Otel traces</li>
+            <li><input type="checkbox" disabled  /> Support tool use fields</li>
+            <li><input type="checkbox" disabled  /> Save metadata into SQLite or Postgres</li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
@@ -26,14 +23,12 @@ updated: 2024-04-18
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Load model and provider definitions from a configuration file</li>
             <li><input type="checkbox" disabled  /> Store and load model and provider definitions from the database</li>
-            <li><input type="checkbox" disabled  /> Automatic retry with rate-limit support</li>
-            <li><input type="checkbox" disabled  /> Save metadata into SQLite or Postgres</li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Send logged data to arbitrary HTTP endpoint</li>
             <li><input type="checkbox" disabled  /> Global rate limiting</li>
             <li><input type="checkbox" disabled  /> Configurable user agent for HTTP client</li>
-            <li><input type="checkbox" disabled  /> Configurable timeout</li>
             <li>Analysis
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> visualize by arbitrary metadata</li>
@@ -48,7 +43,15 @@ updated: 2024-04-18
             <li><input type="checkbox" disabled  /> Support streaming responses</li>
             <li><input type="checkbox" disabled  /> Submit request metadata (org/user/workflow id) via HTTP headers or cookies?</li>
           </ul>        </li>
-        <li><h3>Done</h3></li>
+        <li><h3>Done</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Link requests to internal users/orgs/projects</li>
+            <li><input type="checkbox" disabled checked /> Configurable timeout &mdash; Apr 20th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Common format chat messages and responses &mdash; Apr 19th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Automatic retry with rate-limit support &mdash; Apr 19th, 2023</li>
+            <li><input type="checkbox" disabled checked /> Endpoint that proxies the call &mdash; Apr 19th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Send all relevant metadata as Otel traces &mdash; Apr 19th, 2024</li>
+          </ul>        </li>
       </ul>    </li>
     <li>Probably take some code from Promptbox and change that to use this as a library, since it already has some of the needed functionality</li>
     <li>Maintain a price sheet with input/output token price per provider and model
