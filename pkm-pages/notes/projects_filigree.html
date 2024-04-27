@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-04-22
+updated: 2024-04-27
 ---
 
 
@@ -12,6 +12,7 @@ updated: 2024-04-22
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Unique fields need to be unique per org, not globally</li>
             <li><input type="checkbox" disabled  /> Make it easier for differing get/list model types to be used interchangeably
               <ul class="list-bullet">
                 <li>For every structure, add functions that both get one and run a list operation
@@ -32,10 +33,6 @@ updated: 2024-04-22
             <li><input type="checkbox" disabled  /> Improve livereload performance
               <ul class="list-bullet">
                 <li>Not sure how much opportunity there is here but it feels like it can be made 20% faster</li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> Anonymous user mode
-              <ul class="list-bullet">
-                <li>Anonymous users get a default Authed with a specific org and user ID created just for the anonymous user.</li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
@@ -173,15 +170,6 @@ updated: 2024-04-22
             <li>CLI / Template System
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> Bug: CLI doesn&#39;t throw an error if a field is defined twice</li>
-                <li><input type="checkbox" disabled  /> Command to list all the environment variables that will be read along with their defaults if not provided
-                  <ul class="list-bullet">
-                    <li>Might be a bit complex but worth it since there can be a lot</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled  /> Bug: when deleting a model the files under <code>src/model/NAME/</code> are not removed.
-                  <ul class="list-bullet">
-                    <li>Probably need to read the <code>.state</code> directory to see what files we generated before but aren&#39;t being generated this time</li>
-                    <li>Also don&#39;t delete files which have been edited</li>
-                  </ul>                </li>
                 <li><input type="checkbox" disabled  /> When generating migrations, read in the actual app migrations and ignore tables that we don&#39;t care about.
                   <ul class="list-bullet">
                     <li>This lets us see things like model tables having been removed if, say, a migration file was deleted since it did the wrong thing.</li>
@@ -414,6 +402,20 @@ updated: 2024-04-22
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Interactive bootstrap command &mdash; Apr 26th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Command to list all the environment variables that will be read along with their defaults if not provided
+              <ul class="list-bullet">
+                <li>Might be a bit complex but worth it since there can be a lot</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Bug: when deleting a model the files under <code>src/model/NAME/</code> are not removed.
+              <ul class="list-bullet">
+                <li>Probably need to read the <code>.state</code> directory to see what files we generated before but aren&#39;t being generated this time</li>
+                <li>Also don&#39;t delete files which have been edited</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Anonymous user mode
+              <ul class="list-bullet">
+                <li>Anonymous users get a default Authed with a specific org and user ID created just for the anonymous user.</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled checked /> Allow specifying a user ID for anonymous users to impersonate. This lets them have specific permissions, see certain objects, etc. &mdash; Apr 16th, 2024</li>
             <li><input type="checkbox" disabled checked /> Add <code>init</code> command that runs Cargo init, create-svelte, and creates basic config.toml? &mdash; Apr 16th, 2024</li>
             <li><input type="checkbox" disabled checked /> Add a command that creates a new Postgres user, password, and database for your project &mdash; Apr 16th, 2024</li>

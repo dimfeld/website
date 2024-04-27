@@ -2,7 +2,7 @@
 title: "Chronicle"
 tags: Projects
 date: 2024-03-29
-updated: 2024-04-21
+updated: 2024-04-27
 ---
 
 
@@ -13,22 +13,35 @@ updated: 2024-04-21
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> Support tool use fields</li>
-            <li><input type="checkbox" disabled  /> Save metadata into SQLite or Postgres</li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Javascript client
+              <ul class="list-bullet">
+                <li>This should be both a normal client and have the ability to wrap other common clients such as the OpenAI SDK</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Python client
+              <ul class="list-bullet">
+                <li>This should be both a normal client and have the ability to wrap other common clients such as the OpenAI SDK</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Easy way to set up clients from JS and Python to call the proxy with appropriate headers
               <ul class="list-bullet">
                 <li>This is most useful in concert with other libraries that make LLM calls, like dspy and instructor</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Load model and provider definitions from a configuration file</li>
-            <li><input type="checkbox" disabled  /> Store and load model and provider definitions from the database</li>
+            <li><input type="checkbox" disabled  /> Extra providers
+              <ul class="list-bullet">
+                <li>Fireworks</li>
+                <li>Together</li>
+              </ul>            </li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Send logged data to arbitrary HTTP endpoint</li>
+            <li><input type="checkbox" disabled  /> Send logged data to arbitrary HTTP endpoint
+              <ul class="list-bullet">
+                <li>This should be done in a way that it can sent to something like Elasticsearch without custom code</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Global rate limiting</li>
-            <li><input type="checkbox" disabled  /> Configurable user agent for HTTP client</li>
+            <li><input type="checkbox" disabled  /> When looping around providers with retries, omit providers who had an unrecoverable error.</li>
             <li>Analysis
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> visualize by arbitrary metadata</li>
@@ -36,7 +49,7 @@ updated: 2024-04-21
               </ul>            </li>
             <li>Price Tracking
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Calculate price of each call</li>
+                <li><input type="checkbox" disabled  /> Associate each provider and its calls with a pricing plan</li>
                 <li><input type="checkbox" disabled  /> Fetch and update prices for each provider</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Support binary upload APIs like Deepgram as well</li>
@@ -45,7 +58,27 @@ updated: 2024-04-21
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled checked /> Link requests to internal users/orgs/projects</li>
+            <li><input type="checkbox" disabled checked /> API should have default to do everything without authorization
+              <ul class="list-bullet">
+                <li>Do this by not only setting up a default user, but also adding it as the anonymous fallback</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Testing &mdash; Apr 26th, 2024</li>
+            <li><input type="checkbox" disabled checked /> For API mode, add data tables as <a href="/notes/projects_filigree">Filigree</a> models instead of using the built-in tables</li>
+            <li><input type="checkbox" disabled checked /> When multiple providers are in use, keep retrying even on normally un-retryable errors</li>
+            <li><input type="checkbox" disabled checked /> Allow configuring fallback provider and model on retry. &mdash; Apr 24th, 2024
+              <ul class="list-bullet">
+                <li>This is part of the model alias configuration. Basically instead of a single provider and model there&#39;s an array of provider/model/apikey tuples</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Support model/provider aliases &mdash; Apr 23rd, 2024</li>
+            <li><input type="checkbox" disabled checked /> Support api keys &mdash; Apr 23rd, 2024
+              <ul class="list-bullet">
+                <li>These can only be referenced by aliases</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Save metadata into SQLite or Postgres &mdash; Apr 22nd, 2024</li>
+            <li><input type="checkbox" disabled checked /> Load model and provider definitions from a configuration file &mdash; Apr 22nd, 2024</li>
+            <li><input type="checkbox" disabled checked /> Store and load model and provider definitions from the database &mdash; Apr 22nd, 2024</li>
+            <li><input type="checkbox" disabled checked /> Configurable user agent for HTTP client &mdash; Apr 21st, 2024</li>
+            <li><input type="checkbox" disabled checked /> Link requests to internal users/orgs/projects &mdash; Apr 21st, 2024</li>
             <li><input type="checkbox" disabled checked /> Configurable timeout &mdash; Apr 20th, 2024</li>
             <li><input type="checkbox" disabled checked /> Common format chat messages and responses &mdash; Apr 19th, 2024</li>
             <li><input type="checkbox" disabled checked /> Automatic retry with rate-limit support &mdash; Apr 19th, 2023</li>
