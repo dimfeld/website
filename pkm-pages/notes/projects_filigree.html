@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-05-23
+updated: 2024-05-24
 ---
 
 
@@ -12,12 +12,17 @@ updated: 2024-05-23
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Add more test apps
+              <ul class="list-bullet">
+                <li>HTMX mode, SvelteKit mode, Custom Auth with string object IDs</li>
+                <li>Add more as big new features are added</li>
+                <li>These should mostly be .gitignored</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Make user/org/role/etc. models optional
               <ul class="list-bullet">
                 <li>We might be plugging into another auth system so may not want these.</li>
-                <li>Still need to have <em class="italic">some</em> idea of what kind of IDs we&#39;re using though. Main challenge might be that</li>
+                <li>Main challenge might be that the user/org IDs may be strings and not UUIDs, so we need the ability to interchange those everywhere that matters.</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Unique fields need to be unique per org, not globally</li>
             <li><input type="checkbox" disabled  /> Move default MakeSpan implementation into filigree</li>
             <li><input type="checkbox" disabled  /> Make it easier for differing get/list model types to be used interchangeably
               <ul class="list-bullet">
@@ -407,6 +412,7 @@ updated: 2024-05-23
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Bug: Unique fields need to be unique per org, not globally &mdash; May 23rd, 2024</li>
             <li><input type="checkbox" disabled checked /> Pluggable auth system &mdash; May 22nd, 2024
               <ul class="list-bullet">
                 <li>Support talking to some other auth microservice, external service, using JWTs or Biscuits, etc.</li>
