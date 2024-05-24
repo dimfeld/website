@@ -2,7 +2,7 @@
 title: "Rust Cheatsheet"
 tags: cheat sheet, Rust
 date: 2021-01-25
-updated: 2023-02-10
+updated: 2024-04-29
 ---
 
 
@@ -97,6 +97,7 @@ updated: 2023-02-10
         <li><code>tracing_subscriber::EnvFilter</code> takes the format <code>target[span{field=value}]=level</code></li>
         <li>All except for <code>level</code> are optional.</li>
         <li><code>value</code>, if present, acts as a regex unless it&#39;s a number or boolean. As a string, it should be surrounded by quotes. If absent, then it just filters on the presence of <code>field</code>.</li>
+        <li>If exporting to GRPC with HTTPS, you need to make sure that the tonic crate has the <code>tls-roots</code> feature enabled. Otherwise you&#39;ll get a HTTP/2 &quot;frame with invalid size&quot; error, which is not very helpful for figuring out the issue.</li>
       </ul>    </li>
   </ul>
 

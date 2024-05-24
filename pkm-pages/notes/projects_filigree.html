@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-04-27
+updated: 2024-05-23
 ---
 
 
@@ -12,7 +12,13 @@ updated: 2024-04-27
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Make user/org/role/etc. models optional
+              <ul class="list-bullet">
+                <li>We might be plugging into another auth system so may not want these.</li>
+                <li>Still need to have <em class="italic">some</em> idea of what kind of IDs we&#39;re using though. Main challenge might be that</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Unique fields need to be unique per org, not globally</li>
+            <li><input type="checkbox" disabled  /> Move default MakeSpan implementation into filigree</li>
             <li><input type="checkbox" disabled  /> Make it easier for differing get/list model types to be used interchangeably
               <ul class="list-bullet">
                 <li>For every structure, add functions that both get one and run a list operation
@@ -26,19 +32,13 @@ updated: 2024-04-27
                 <li>This should probably take the form of methods on the main model struct which internally call the get/update/insert query methods.</li>
                 <li>Might need a bit of additional stuff for populated or not but that can be dealt with after the initial implementation</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Debugging option to show a toast whenever a livereload finishes or an htmx error occurs</li>
           </ul>        </li>
-        <li><h3>Soon</h3>
-          <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Improve livereload performance
-              <ul class="list-bullet">
-                <li>Not sure how much opportunity there is here but it feels like it can be made 20% faster</li>
-              </ul>            </li>
-          </ul>        </li>
+        <li><h3>Soon</h3></li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> HTMX support improvements
               <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Debugging option to show a toast whenever a livereload finishes or an htmx error occurs</li>
                 <li><input type="checkbox" disabled  /> move client-side code from SBBP into Filigree for reuse by other projects</li>
                 <li><input type="checkbox" disabled  /> theming, dark/light mode with persistence via localStorage and header script to inject dark class
                   <ul class="list-bullet">
@@ -57,6 +57,10 @@ updated: 2024-04-27
                   <ul class="list-bullet">
                     <li><a href="https://github.com/awcodes/alpine-floating-ui">https://github.com/awcodes/alpine-floating-ui</a> may work well</li>
                     <li><a href="https://alpinejs.dev/plugins/anchor">https://alpinejs.dev/plugins/anchor</a> is the official one, seems to support fewer options</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Improve livereload performance
+                  <ul class="list-bullet">
+                    <li>Not sure how much opportunity there is here but it feels like it can be made 20% faster</li>
                   </ul>                </li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Improve API error printing
@@ -170,6 +174,7 @@ updated: 2024-04-27
             <li>CLI / Template System
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> Bug: CLI doesn&#39;t throw an error if a field is defined twice</li>
+                <li><input type="checkbox" disabled  /> Use <a href="https://lib.rs/crates/toml_edit">toml_edit</a> to allow adding features to Cargo.toml</li>
                 <li><input type="checkbox" disabled  /> When generating migrations, read in the actual app migrations and ignore tables that we don&#39;t care about.
                   <ul class="list-bullet">
                     <li>This lets us see things like model tables having been removed if, say, a migration file was deleted since it did the wrong thing.</li>
@@ -402,6 +407,18 @@ updated: 2024-04-27
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Pluggable auth system &mdash; May 22nd, 2024
+              <ul class="list-bullet">
+                <li>Support talking to some other auth microservice, external service, using JWTs or Biscuits, etc.</li>
+                <li>This requires
+                  <ul class="list-bullet">
+                    <li>A new function on the <code>AuthQueries</code> trait that can take a request <code>Parts</code> instead of a pre-parsed API key or session ID
+                      <ul class="list-bullet">
+                        <li>Or maybe just change the api_key to pass the raw Bearer token, and make it easy to unpack that into an API key for standard uses</li>
+                      </ul>                    </li>
+                    <li>trait functions should return some error type other than an sqlx::Error. An <code>AuthError</code> is probably the way to go or maybe even just start using <code>Report</code> there so we can save the internal error</li>
+                  </ul>                </li>
+              </ul>            </li>
             <li><input type="checkbox" disabled checked /> Interactive bootstrap command &mdash; Apr 26th, 2024</li>
             <li><input type="checkbox" disabled checked /> Command to list all the environment variables that will be read along with their defaults if not provided
               <ul class="list-bullet">

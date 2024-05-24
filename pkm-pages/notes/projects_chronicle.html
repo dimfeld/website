@@ -2,7 +2,7 @@
 title: "Chronicle"
 tags: Projects
 date: 2024-03-29
-updated: 2024-04-27
+updated: 2024-05-23
 ---
 
 
@@ -12,35 +12,40 @@ updated: 2024-04-27
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Support tool use fields</li>
+            <li><input type="checkbox" disabled  /> &quot;Simple&quot; API can build for Postgres
+              <ul class="list-bullet">
+                <li>Or maybe just do the work to make the Filigree auth system more pluggable, and use a dyn trait for the database layer. We don&#39;t need a new users table for every application</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Streaming support</li>
+            <li><input type="checkbox" disabled  /> Write documentation</li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Javascript client
+            <li><input type="checkbox" disabled  /> Figure out what to do about large data
               <ul class="list-bullet">
-                <li>This should be both a normal client and have the ability to wrap other common clients such as the OpenAI SDK</li>
+                <li>saving input and outputs is useful but can start taking up a lot of space. Ideally we can have something that places records in cloud storage, just need to figure out the formats and so on and if/how to make things queryable before they land in storage..</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Python client
               <ul class="list-bullet">
-                <li>This should be both a normal client and have the ability to wrap other common clients such as the OpenAI SDK</li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> Easy way to set up clients from JS and Python to call the proxy with appropriate headers
-              <ul class="list-bullet">
-                <li>This is most useful in concert with other libraries that make LLM calls, like dspy and instructor</li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> Extra providers
-              <ul class="list-bullet">
-                <li>Fireworks</li>
-                <li>Together</li>
+                <li>This should be both a normal client and have the ability to wrap other common clients such as the OpenAI SDK. Needs to be compatible with tools like instructor, DSPy, etc.</li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> New Provider: Cohere</li>
+            <li><input type="checkbox" disabled  /> New Provider: OpenRouter</li>
+            <li><input type="checkbox" disabled  /> New Provider: AWS Bedrock</li>
+            <li><input type="checkbox" disabled  /> New Provider: Google Gemini</li>
+            <li><input type="checkbox" disabled  /> Function to validate configuration and return a list of errors</li>
             <li><input type="checkbox" disabled  /> Send logged data to arbitrary HTTP endpoint
               <ul class="list-bullet">
-                <li>This should be done in a way that it can sent to something like Elasticsearch without custom code</li>
+                <li>This should be done in a way that it can sent to something like Kafka, Elasticsearch, or Clickhouse using only the configuration, no custom code</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Global rate limiting</li>
+            <li><input type="checkbox" disabled  /> Send logged data to S3</li>
+            <li><input type="checkbox" disabled  /> Option for provider-level or model-level rate limiting
+              <ul class="list-bullet">
+                <li>So that new requests coming in will automatically wait or fallback</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> When looping around providers with retries, omit providers who had an unrecoverable error.</li>
             <li>Analysis
               <ul class="list-bullet">
@@ -54,10 +59,26 @@ updated: 2024-04-27
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Support binary upload APIs like Deepgram as well</li>
             <li><input type="checkbox" disabled  /> Support streaming responses</li>
-            <li><input type="checkbox" disabled  /> Submit request metadata (org/user/workflow id) via HTTP headers or cookies?</li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Anthropic now supports &quot;required&quot; tool mode</li>
+            <li><input type="checkbox" disabled checked /> Recover from Groq function calling failure</li>
+            <li><input type="checkbox" disabled checked /> Endpoint for generic event logging &mdash; May 8th, 2024
+              <ul class="list-bullet">
+                <li>Take the same metadata that we use for LLM calls, store them in a different table with just an event type and data json blob.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Support tool use fields &mdash; May 1st, 2024</li>
+            <li><input type="checkbox" disabled checked /> Simpler API server that supports SQLite &mdash; Apr 30th, 2024
+              <ul class="list-bullet">
+                <li>This will just use the built-in proxy tables, but is better for simpler use since it writes to SQLite</li>
+                <li>Autoload config files from the XDG directories</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Javascript client &mdash; Apr 29th, 2024
+              <ul class="list-bullet">
+                <li>This comes with a Chronicle-specific client, and can also redirect clients such as the OpenAI SDK using a custom fetch function.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Submit request metadata (org/user/workflow id) via HTTP headers &mdash; Apr 29th, 2024</li>
             <li><input type="checkbox" disabled checked /> API should have default to do everything without authorization
               <ul class="list-bullet">
                 <li>Do this by not only setting up a default user, but also adding it as the anonymous fallback</li>

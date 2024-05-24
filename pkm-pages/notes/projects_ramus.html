@@ -1,0 +1,346 @@
+---
+title: "Ramus"
+tags: Projects
+date: 2024-03-29
+updated: 2024-05-20
+---
+
+
+  <ul class="list-bullet">
+    <li>Ramus is an in-process DAG and state machine executor designed for running agents with a focus on observability.</li>
+    <li><h2>Task List</h2>
+      <ul class="list-bullet">
+        <li><h3>Up Next</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Chatbot interface that can be adapted to web, Slack, Discord, etc.
+              <ul class="list-bullet">
+                <li>Standard set of incoming and outgoing events for this case</li>
+                <li>Implement serialization</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Chronicle function for converting metadata into span attributes</li>
+            <li><input type="checkbox" disabled  /> Dynamic node type that can expand its inputs into a DAG or state machine</li>
+          </ul>        </li>
+        <li><h3>Later/Maybe</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Replay a DAG from any point in its execution
+              <ul class="list-bullet">
+                <li>Basically just rerunning a node from its inputs and setting things up so that the descendant nodes will all run appropriately too.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Replay a state machine from any point in its execution
+              <ul class="list-bullet">
+                <li>At each step, save the input/output and a diff of the context.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Tool result caching
+              <ul class="list-bullet">
+                <li>Mainly for tools that make network requests and for LLMs. This is mostly a debugging feature but in some cases will probably be useful for other things.</li>
+                <li>LLM request caching can be built into chronicle</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Completely serialize and restore an agent
+              <ul class="list-bullet">
+                <li>This needs to account for tool context as well, shared state between nodes, nested state machines, etc.
+                  <ul class="list-bullet">
+                    <li>Probably split up &quot;context&quot; and &quot;tools&quot; where &quot;context&quot; always needs to be serializable and tools can contain functions.</li>
+                    <li>Could go more complicated with serialize/deserialize functions but this gets messy in JS.</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Dynamic modification of a DAG or state machine
+              <ul class="list-bullet">
+                <li>Add new nodes to the existing DAG or state machine. This shouldn&#39;t be too hard to do and will help with introspection if doing dynamic planning.</li>
+                <li>This should also be able to take another DAG configuration and merge it into the current one, along with support for mapping or prefixing the node names so that multiple copies of a DAG can be merged.</li>
+                <li>Where do the outputs of the merged DAG go? Need to think more about how this makes sense and fits together.</li>
+                <li>A simple version of this is the node that is dynamically configured as another node</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Short term memory system
+              <ul class="list-bullet">
+                <li>Sometimes we want to do RAG or something while an agent executes but won&#39;t need most of this data afterward. This basically becomes the ability to purge and/or archive the RAG data after we don&#39;t need it anymore.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Script to parse DAG dependencies and generate a Typescript interface with proper types for the inputs and outputs of each node</li>
+            <li><input type="checkbox" disabled  /> Manage multiple related state machines
+              <ul class="list-bullet">
+                <li>e.g. multiple agents running similar tasks on different input for a usre</li>
+                <li>or multiple parts of a single plan all executing concurrently</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Send an event to multiple state machines based on some criteria
+              <ul class="list-bullet">
+                <li>This should allow some level of arbitrary criteria, like we want to be able to select based on an organization, a user, workflow type, start time, some other tag</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Global rate limiting of active tasks</li>
+          </ul>        </li>
+        <li><h3>Done</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Convert to multipackage monorepo</li>
+            <li><input type="checkbox" disabled checked /> Allow overriding name of DAG or state machine on each run</li>
+            <li><input type="checkbox" disabled checked /> Basic State machine support
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled checked /> Configuration</li>
+                <li><input type="checkbox" disabled checked /> Function to execute one step of the state machine</li>
+                <li><input type="checkbox" disabled checked /> Ability to call a DAG, other state machines, or an arbitrary promise-returning function in a state</li>
+                <li><input type="checkbox" disabled checked /> Tracing/events on all transitions</li>
+                <li><input type="checkbox" disabled checked /> Configurable transitions</li>
+                <li><input type="checkbox" disabled checked /> Global error handler/state</li>
+                <li><input type="checkbox" disabled checked /> Configurable override of error transition on a per-state basis</li>
+                <li><input type="checkbox" disabled checked /> Send events to state machines</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Semaphores per class of node</li>
+            <li><input type="checkbox" disabled checked /> Stepwise mode for DAGs</li>
+            <li><input type="checkbox" disabled checked /> Some way to send events out while still running (e.g. to send updates to the user)</li>
+            <li><input type="checkbox" disabled checked /> Tracing spans for every state</li>
+            <li><input type="checkbox" disabled checked /> Log state transitions, inputs, and outputs to a database</li>
+            <li><input type="checkbox" disabled checked /> DAG excutor</li>
+            <li><input type="checkbox" disabled checked /> Spawn state machines or DAGs from an existing task and wait for them to finish
+              <ul class="list-bullet">
+                <li>This is just done via normal code, nothing special.</li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+    <li>The main features are:
+      <ul class="list-bullet">
+        <li>&quot;human in the loop&quot; states</li>
+        <li>cyclic workflow graphs
+          <ul class="list-bullet">
+            <li>with some control on the number of steps taken</li>
+          </ul>        </li>
+        <li>Fully embrace &quot;workflow as state machine&quot; rather than just using them behind the scenes</li>
+        <li>arbitrary delays</li>
+        <li>rate limiting on how quickly an agent can make requests?</li>
+      </ul>    </li>
+    <li>What do we <em class="italic">really</em> need a workflow engine for?
+      <ul class="list-bullet">
+        <li>Arbitrary delays e.g. resume after a month</li>
+        <li>Stop to get user input, and resume
+          <ul class="list-bullet">
+            <li>Sort of. This makes it somewhat easier but a simpler system can accomplish the same thing.</li>
+          </ul>        </li>
+        <li>Global rate limiting</li>
+        <li>Long-running tasks so we can resume from somewhere on failure
+          <ul class="list-bullet">
+            <li>This can be somewhat emulated with checkpoints or by doing a state machine inside the worker and having it save its state on every transition</li>
+          </ul>        </li>
+        <li>Events that can be sent to multiple dormant workflows based on some tag
+          <ul class="list-bullet">
+            <li>Can be done manually though</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li>A good first effort would be to write agents as state machines where the state machine runs in the agent itself instead of being externally orchestrated
+      <ul class="list-bullet">
+        <li>This simplifies the running a lot, especially for agents that don&#39;t need to sleep for a long time.</li>
+        <li>This leaves the external component as something that can resume and run a state machine, which doesn&#39;t have to be generic at first. It can just be a normal call to the service that runs it.</li>
+        <li>Downsides:
+          <ul class="list-bullet">
+            <li>Not resilient to full process crash, although with an external sweeper this could be mollified somewhat</li>
+            <li>Are there any downsides around spawning sub-state machines? I think the agent software would have to be designed to allow resuming from a state like this, but otherwise it wouldn&#39;t be a problem.</li>
+          </ul>        </li>
+        <li>Take a look at napi-rs or neon or maybe even just in WASM, to see if we can write a lot of this in Rust. Would simplify code reuse and reliability in some ways and look forward to more full-featured plans. Might be more complex than it&#39;s worth though, need to see.</li>
+        <li>Initial Layout
+          <ul class="list-bullet">
+            <li>This is a library which can run an arbitrary state machine and persist the config and state into a database</li>
+            <li>Two modes
+              <ul class="list-bullet">
+                <li>State machine</li>
+                <li>DAG
+                  <ul class="list-bullet">
+                    <li>The difference is that because a DAG is non-looping, we can just run all the root nodes concurrently and then run other nodes as soon as their parent dependencies are done.</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li>Each node in a state machine or DAG can spawn other DAGs and state machines, and wait for them to finish</li>
+            <li>Support running either preconfigured machine from the database or taking an ad hoc state machine</li>
+            <li>Some way to send events to a paused state machine to start it up again</li>
+            <li>State machines can run other state machines
+              <ul class="list-bullet">
+                <li>Need to figure out how much explicit support this really needs</li>
+              </ul>            </li>
+            <li>Ensure that we&#39;re never processing more than one state machine event at a time (except perhaps a cancel event)</li>
+            <li>When entering a state, supply
+              <ul class="list-bullet">
+                <li>Previous state name</li>
+                <li>Current machine context</li>
+                <li>Data emitted from the previous state for this state</li>
+                <li>Data emitted from any submachine results that ran between the previous and current state.</li>
+              </ul>            </li>
+            <li>When leaving a state, the function returns
+              <ul class="list-bullet">
+                <li>Next state</li>
+                <li>Data for that state</li>
+                <li>Context updates</li>
+                <li>Submachines to run before transitioning, if any, and their inputs</li>
+              </ul>            </li>
+            <li>Create a tracing span for every state</li>
+            <li>Global error state</li>
+            <li>States can override the global error state with some other state</li>
+            <li>Parallel states?
+              <ul class="list-bullet">
+                <li>Need to figure out the right configuration for merging these back into a single state again though.</li>
+                <li>Probably easier if either
+                  <ul class="list-bullet">
+                    <li>These are just run from within a state
+                      <ul class="list-bullet">
+                        <li>But then it&#39;s just a normal call. Works but not great</li>
+                      </ul>                    </li>
+                    <li>These are submachines which run to completion and there&#39;s a fixed state on the other end that receives all the results.
+                      <ul class="list-bullet">
+                      </ul>                    </li>
+                  </ul>                </li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>Library V2
+          <ul class="list-bullet">
+            <li>Eventually have preconfigured blocks for certain common things, that can be called without any custom code
+              <ul class="list-bullet">
+                <li>Maybe do this sooner than later depending on how agent planning goes</li>
+              </ul>            </li>
+            <li>Built-in loop control with loop count limit.
+              <ul class="list-bullet">
+                <li>Probably do loops as a submachine since the scoped context is useful here</li>
+              </ul>            </li>
+            <li>Submachines
+              <ul class="list-bullet">
+                <li>Scoped context for groups of states</li>
+                <li>Also useful for embedding state machines from other sources into a larger workflow.</li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+    <li>A particular instance of a workflow can have its own priority</li>
+    <li>Workflows can stream events out to the caller</li>
+    <li>Optionally use a time-weighted priority system for queuing</li>
+    <li>Model workflows as a Moore state machine
+      <ul class="list-bullet">
+        <li>Probably will end up with a hybrid Moore/Mealy though</li>
+      </ul>    </li>
+    <li>State executor code can run child state machines
+      <ul class="list-bullet">
+        <li>Have some way to time out on these, like we run 10 searches with a timeout of 15 seconds and when we reach the timeout use whatever results have come back.</li>
+        <li>Each submachine will run in parallel</li>
+        <li>I think it&#39;s best if these child machines are actually their own separate machines which can be spawned from the state, rather than part of the parent state machine config. This is because many of these child machines will be used by multiple workflows.</li>
+      </ul>    </li>
+    <li>States have categories (eg makes an LLM call or not)</li>
+    <li>Rate limits global, per workflow type, and per category</li>
+    <li>Scoped context so that a set of sub-machines can have its own context separate from the global context</li>
+    <li>Workflow and state priority</li>
+    <li>States can define a transition to a particular state on timeout</li>
+    <li>Support websockets or 2-way gRPC for simpler one-off runs where we don&#39;t really want to integrate a whole web server</li>
+    <li>Support running as a library for cases where the agent is in Rust</li>
+    <li>States and Transitions can log events for analysis
+      <ul class="list-bullet">
+        <li>Things like &quot;agent required correction&quot;, &quot;this is an error&quot;, &quot;user accepted the answer&quot;</li>
+      </ul>    </li>
+    <li>Each state (or state transition? whatever runs code) also has an &quot;error&quot; property which defines the state that it goes to upon an uncaught error. The state machine as a whole also has an error state which can perform some action.</li>
+    <li>jobs register their state machine with a version and a place to call back when triggering states. Then anything can start the job with some initial context.
+      <ul class="list-bullet">
+        <li>Allow upserting a config where it makes a new version if the config is different from the latest version.</li>
+      </ul>    </li>
+    <li>Some way to generate typescript types from state machine config
+      <ul class="list-bullet">
+        <li>This should include a list of permitted next states from any particular state</li>
+      </ul>    </li>
+    <li>Each step returns:
+      <ul class="list-bullet">
+        <li>next state. There should be some way of type checking the returned value from the worker.</li>
+        <li>Input for the next state, specific to that state?</li>
+        <li>Conditions to go to next state:
+          <ul class="list-bullet">
+            <li>Optional delay before next transition. This can be encoded in the state machine config but also overridden</li>
+            <li>Some kind of polling of an endpoint?
+              <ul class="list-bullet">
+                <li>Maybe the orchestrator calls an endpoint on some backoff schedule and depending on status code it either goes ot the next state or tries again. Need to think about this it might not be too useful</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>Context updates</li>
+      </ul>    </li>
+    <li><h2>Bot Abstraction</h2>
+      <ul class="list-bullet">
+        <li>Keep track of conversations.</li>
+        <li>Each &quot;server&quot; is a mapping of a platform (Discord, Slack, etc) and the ID of the team (Guild, Team, Org, etc.) on that platform to one of our orgs.</li>
+        <li>Each conversation has:
+          <ul class="list-bullet">
+            <li>Our own ID</li>
+            <li>The server it belongs to</li>
+            <li>Which user started it</li>
+            <li>The ID of the conversation in the platform. This should be JSON since it could have multiple components (e.g. a channel and thread ID in Discord) but also should be easy to look up.
+              <ul class="list-bullet">
+                <li>Might be best to just use separate tables for each platform for the platform-specific part. We do still need an indication in the main conversation table of which platform a conversation belongs to so we don&#39;t have to look it up in every table.</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>Sending events
+          <ul class="list-bullet">
+            <li>Figure out which platform the conversation belongs to</li>
+            <li>Send the conversation ID and the standardized event to the platform adapter</li>
+            <li>Platform adapter translates it to the platform-specific format and sends it.</li>
+          </ul>        </li>
+        <li>Receiving an event
+          <ul class="list-bullet">
+            <li>Look up the conversation, if one exists</li>
+            <li>Translate the event to the standard format</li>
+            <li>send the conversation ID and the event to the main layer</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h3>Notes from Phind</h3>
+      <ul class="list-bullet">
+        <li>Here are some suggestions to improve and expand on your notes for a workflow orchestrator that models workflows as Moore state machines:
+
+1. State Machine Definition:
+          <ul class="list-bullet">
+            <li>Allow defining state machines using a declarative format (e.g., YAML or JSON) for easy configuration and versioning.</li>
+            <li>Include additional properties for each state, such as:
+              <ul class="list-bullet">
+                <li>State name and description</li>
+                <li>Input and output data schemas for type checking and validation</li>
+                <li>Error handling and retry mechanisms</li>
+                <li>Timeouts and maximum execution time</li>
+              </ul>            </li>
+            <li><strong class="font-bold">Support nested state machines or sub-workflows for modular and reusable components.</strong>
+
+2. Step Categories and Rate Limiting:</li>
+            <li>Define a clear set of step categories based on the type of operation (e.g., LLM calls, database queries, external API calls).</li>
+            <li>Implement rate limiting at both the global and category levels to control resource utilization and prevent abuse.</li>
+            <li>Allow configuring rate limits per category and provide options to adjust them dynamically based on load or priority.
+
+3. Job Priority and Scheduling:</li>
+            <li>Introduce a priority system for jobs to determine their execution order and resource allocation.</li>
+            <li>Support different priority levels (e.g., low, medium, high) and allow assigning priorities to individual jobs or workflows.</li>
+            <li>Implement a scheduler that takes into account job priorities and available resources to optimize execution order and minimize waiting times.
+
+4. Callback Mechanism:</li>
+            <li>Provide a flexible callback mechanism for triggering state transitions and notifying external systems.</li>
+            <li><strong class="font-bold">Allow registering multiple callback endpoints or functions for different events (e.g., state entry, state exit, job completion).</strong></li>
+            <li>Support various callback protocols (e.g., HTTP, WebSocket, message queues) to integrate with different systems.
+
+5. Context Management:</li>
+            <li>Enhance the context object to store and pass data between states and steps.</li>
+            <li><strong class="font-bold">Allow defining default context values and merging them with job-specific context during execution.</strong></li>
+            <li>Provide methods to update, retrieve, and delete context variables within steps.
+
+6. Error Handling and Recovery:</li>
+            <li>Implement robust error handling mechanisms to handle failures gracefully and prevent workflow disruptions.</li>
+            <li><strong class="font-bold">Allow defining error handling strategies per state or step (e.g., retry, skip, abort).</strong></li>
+            <li>Support compensating actions or rollback mechanisms to revert partial changes in case of failures.
+
+7. Monitoring and Observability:</li>
+            <li>Provide built-in monitoring and logging capabilities to track workflow execution, performance metrics, and errors.</li>
+            <li>Expose APIs or dashboards for real-time monitoring and visualization of workflow progress and status.</li>
+            <li>Integrate with external monitoring and alerting systems for centralized observability and incident management.
+
+8. Scalability and Distribution:</li>
+            <li>Design the orchestrator to be scalable and distributed to handle a large number of concurrent workflows.</li>
+            <li>Implement load balancing and horizontal scaling mechanisms to distribute workload across multiple nodes or workers.</li>
+            <li>Consider using distributed locking and coordination mechanisms (e.g., ZooKeeper, etcd) for managing shared resources and ensuring consistency.
+
+9. Testing and Debugging:</li>
+            <li>Provide testing utilities and frameworks to facilitate unit testing and integration testing of workflows and steps.</li>
+            <li>Allow simulating and debugging workflows in a controlled environment without affecting production systems.</li>
+            <li>Implement logging and tracing capabilities to aid in troubleshooting and identifying issues during development and production.
+
+10. Documentation and Examples:
+              <ul class="list-bullet">
+                <li>Create comprehensive documentation that explains the concepts, architecture, and usage of the workflow orchestrator.</li>
+                <li>Provide clear examples and tutorials demonstrating how to define state machines, implement steps, and integrate with external systems.</li>
+                <li>Maintain a collection of common workflow patterns and best practices to guide users in designing efficient and maintainable workflows.
+
+These suggestions aim to enhance the functionality, reliability, and usability of your workflow orchestrator. They cover aspects such as state machine definition, rate limiting, job scheduling, error handling, monitoring, scalability, testing, and documentation. Incorporating these features and improvements will make your orchestrator more robust, flexible, and suitable for a wide range of workflow orchestration scenarios.</li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+  </ul>
+
