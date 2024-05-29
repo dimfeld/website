@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-05-24
+updated: 2024-05-28
 ---
 
 
@@ -12,17 +12,6 @@ updated: 2024-05-24
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Add more test apps
-              <ul class="list-bullet">
-                <li>HTMX mode, SvelteKit mode, Custom Auth with string object IDs</li>
-                <li>Add more as big new features are added</li>
-                <li>These should mostly be .gitignored</li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> Make user/org/role/etc. models optional
-              <ul class="list-bullet">
-                <li>We might be plugging into another auth system so may not want these.</li>
-                <li>Main challenge might be that the user/org IDs may be strings and not UUIDs, so we need the ability to interchange those everywhere that matters.</li>
-              </ul>            </li>
             <li><input type="checkbox" disabled  /> Move default MakeSpan implementation into filigree</li>
             <li><input type="checkbox" disabled  /> Make it easier for differing get/list model types to be used interchangeably
               <ul class="list-bullet">
@@ -38,7 +27,13 @@ updated: 2024-05-24
                 <li>Might need a bit of additional stuff for populated or not but that can be dealt with after the initial implementation</li>
               </ul>            </li>
           </ul>        </li>
-        <li><h3>Soon</h3></li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Simplify permissions system when using custom auth
+              <ul class="list-bullet">
+                <li>Since we aren&#39;t creating the roles and users, we need a way to make sure that people have reasonable permissions when they start. Perhaps just a function that adds default permissions or something like that when we first see a user.</li>
+              </ul>            </li>
+          </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> HTMX support improvements
@@ -213,6 +208,10 @@ updated: 2024-05-24
               </ul>            </li>
             <li>Authentication and Registration
               <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Make SessionBackend work with custom auth
+                  <ul class="list-bullet">
+                    <li>It mostly works but when the tables are in another schema then it doesn&#39;t. Need a less-fixed query method here.</li>
+                  </ul>                </li>
                 <li><input type="checkbox" disabled  /> Rate limiting for login-related endpoints
                   <ul class="list-bullet">
                     <li><a href="https://docs.rs/governor/latest/governor/">https://docs.rs/governor/latest/governor/</a></li>
@@ -407,11 +406,18 @@ updated: 2024-05-24
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Support SQLite
               <ul class="list-bullet">
-                <li>Not sure how much work it will be to support both Postgres and SQLite, could turn out to be a big hassle but I&#39;ll see at some point</li>
+                <li>Not sure how much work it will be to support both Postgres and SQLite, could turn out to be a big hassle due to differeing feature support and syntax, but I&#39;ll see at some point</li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Make user/org/role/etc. models optional &mdash; May 26th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Allow user/org/role IDs to be strings when using custom auth &mdash; May 26th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Add more test apps &mdash; May 24th, 2024
+              <ul class="list-bullet">
+                <li>Add more as big new features are added</li>
+                <li>These should mostly be .gitignored except for the files that filigree doesn&#39;t generate</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled checked /> Bug: Unique fields need to be unique per org, not globally &mdash; May 23rd, 2024</li>
             <li><input type="checkbox" disabled checked /> Pluggable auth system &mdash; May 22nd, 2024
               <ul class="list-bullet">

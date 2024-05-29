@@ -2,7 +2,7 @@
 title: "Chronicle"
 tags: Projects
 date: 2024-03-29
-updated: 2024-05-23
+updated: 2024-05-29
 ---
 
 
@@ -12,10 +12,6 @@ updated: 2024-05-23
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> &quot;Simple&quot; API can build for Postgres
-              <ul class="list-bullet">
-                <li>Or maybe just do the work to make the Filigree auth system more pluggable, and use a dyn trait for the database layer. We don&#39;t need a new users table for every application</li>
-              </ul>            </li>
             <li><input type="checkbox" disabled  /> Streaming support</li>
             <li><input type="checkbox" disabled  /> Write documentation</li>
           </ul>        </li>
@@ -23,7 +19,7 @@ updated: 2024-05-23
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> Figure out what to do about large data
               <ul class="list-bullet">
-                <li>saving input and outputs is useful but can start taking up a lot of space. Ideally we can have something that places records in cloud storage, just need to figure out the formats and so on and if/how to make things queryable before they land in storage..</li>
+                <li>saving input and outputs is useful but can start taking up a lot of space. Ideally we can have something that places records in cloud storage, just need to figure out the formats and so on and if/how to make things queryable before they land in storage.</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Python client
               <ul class="list-bullet">
@@ -58,10 +54,13 @@ updated: 2024-05-23
                 <li><input type="checkbox" disabled  /> Fetch and update prices for each provider</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Support binary upload APIs like Deepgram as well</li>
-            <li><input type="checkbox" disabled  /> Support streaming responses</li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> &quot;Simple&quot; API can build for Postgres
+              <ul class="list-bullet">
+                <li>Dropped the &quot;full web app&quot; version of the API. This will come back at some later time</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled checked /> Anthropic now supports &quot;required&quot; tool mode</li>
             <li><input type="checkbox" disabled checked /> Recover from Groq function calling failure</li>
             <li><input type="checkbox" disabled checked /> Endpoint for generic event logging &mdash; May 8th, 2024
