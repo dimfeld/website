@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-05-28
+updated: 2024-06-15
 ---
 
 
@@ -12,7 +12,12 @@ updated: 2024-05-28
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Move default MakeSpan implementation into filigree</li>
+            <li id="660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> More ergonomic backend object use
+              <ul class="list-bullet">
+                <li>Have a way to really easily load an object from the DB, modify it, and then save it back to the DB for cases where doing it all in a single SQL statement is a hassle.</li>
+                <li>This should probably take the form of methods on the main model struct which internally call the get/update/insert query methods.</li>
+                <li>Each object should be able to populate at query time or afterward.</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Make it easier for differing get/list model types to be used interchangeably
               <ul class="list-bullet">
                 <li>For every structure, add functions that both get one and run a list operation
@@ -20,49 +25,24 @@ updated: 2024-05-28
                     <li>This starts to become a lot of SQL files though, what&#39;s a better way to do this? Probably just do this as part of the move to seaquery, and use some OnceLocks for the fixed queries that never change. Mostly have to figure out how best to integrate permissions checks in an easy way here.</li>
                   </ul>                </li>
               </ul>            </li>
-            <li id="660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> More ergonomic backend object use
-              <ul class="list-bullet">
-                <li>Have a way to really easily load an object from the DB, modify it, and then save it back to the DB for cases where doing it all in a single SQL statement is a hassle.</li>
-                <li>This should probably take the form of methods on the main model struct which internally call the get/update/insert query methods.</li>
-                <li>Might need a bit of additional stuff for populated or not but that can be dealt with after the initial implementation</li>
-              </ul>            </li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Evaluate faster API authentication methods between SvelteKit Backend and Rust Backend
+              <ul class="list-bullet">
+                <li>Basically to make it work better to make multiple API calls from a single request without hitting the database every time to look up the user/roles/etc.</li>
+                <li>Instead of just a session ID, have an option to generate a short-lived JWT or similar token that contains all the auth info. Store the JWT in the cookie, on each request check the expiration time and get a new one if getting close to expiring.</li>
+                <li>Might also need some hook for client-side requests that can do the renewal if they talk directly to the API.</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Simplify permissions system when using custom auth
               <ul class="list-bullet">
-                <li>Since we aren&#39;t creating the roles and users, we need a way to make sure that people have reasonable permissions when they start. Perhaps just a function that adds default permissions or something like that when we first see a user.</li>
+                <li>Since we aren&#39;t creating the roles and users, we need a way to make sure that people have reasonable permissions when they start.</li>
+                <li>Perhaps just a function that adds default permissions or something like that when we first see a user.</li>
               </ul>            </li>
+            <li><input type="checkbox" disabled  /> Use docker compose with separate containers for API and SvelteKit parts</li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> HTMX support improvements
-              <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Debugging option to show a toast whenever a livereload finishes or an htmx error occurs</li>
-                <li><input type="checkbox" disabled  /> move client-side code from SBBP into Filigree for reuse by other projects</li>
-                <li><input type="checkbox" disabled  /> theming, dark/light mode with persistence via localStorage and header script to inject dark class
-                  <ul class="list-bullet">
-                    <li>DaisyUI provides a lot of this already</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled  /> Island architecture support for Svelte components
-                  <ul class="list-bullet">
-                    <li>Each of these should be its own entry point in the Vite config, and from there we can use the manifest support to get the necessary tags</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled  /> Flash/toast support
-                  <ul class="list-bullet">
-                    <li>Can probably be done with HX-Trigger header, or maybe an extension</li>
-                    <li><input type="checkbox" disabled  /> Adapter function for actions to have errors return a toast</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled  /> Implement fancy dropdown menu in Alpine with floating-ui
-                  <ul class="list-bullet">
-                    <li><a href="https://github.com/awcodes/alpine-floating-ui">https://github.com/awcodes/alpine-floating-ui</a> may work well</li>
-                    <li><a href="https://alpinejs.dev/plugins/anchor">https://alpinejs.dev/plugins/anchor</a> is the official one, seems to support fewer options</li>
-                  </ul>                </li>
-                <li><input type="checkbox" disabled  /> Improve livereload performance
-                  <ul class="list-bullet">
-                    <li>Not sure how much opportunity there is here but it feels like it can be made 20% faster</li>
-                  </ul>                </li>
-              </ul>            </li>
             <li><input type="checkbox" disabled  /> Improve API error printing
               <ul class="list-bullet">
                 <li>Some errors use <code>source</code> and error_stack&#39;s default printer ignores it. Should walk the source chain as well. This seems difficult though without using nightly features</li>
@@ -96,7 +76,7 @@ updated: 2024-05-28
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Ops helpers
               <ul class="list-bullet">
-                <li>This isn&#39;t part of the core framework, but a set of tools for automatically doing ops-related tasks</li>
+                <li>This isn&#39;t part of the core framework, but a set of tools for automatically doing ops-related tasks.</li>
                 <li><input type="checkbox" disabled  /> Back up database to cloud storage on a regular basis</li>
                 <li><input type="checkbox" disabled  /> Deploy on Git push</li>
                 <li><input type="checkbox" disabled  /> Preview environments?</li>
@@ -107,10 +87,6 @@ updated: 2024-05-28
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> SvelteKit: Error page</li>
                 <li><input type="checkbox" disabled  /> Add dependencies to package.json like we do for the Rust side</li>
-                <li><input type="checkbox" disabled  /> Project initialization
-                  <ul class="list-bullet">
-                    <li>Run sveltekit init command to generate basic project, then fill in files from there.</li>
-                  </ul>                </li>
                 <li><input type="checkbox" disabled  /> App shell with nav bar, etc.</li>
                 <li><input type="checkbox" disabled  /> Password reset page</li>
                 <li><input type="checkbox" disabled  /> Profile management page</li>
@@ -123,6 +99,34 @@ updated: 2024-05-28
                 <li><input type="checkbox" disabled  /> TS Type Enhancements
                   <ul class="list-bullet">
                     <li><input type="checkbox" disabled  /> Permission names per model</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> HTMX support improvements
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Debugging option to show a toast whenever a livereload finishes or an htmx error occurs</li>
+                <li><input type="checkbox" disabled  /> move client-side code from SBBP into Filigree for reuse by other projects</li>
+                <li><input type="checkbox" disabled  /> theming, dark/light mode with persistence via localStorage and header script to inject dark class
+                  <ul class="list-bullet">
+                    <li>DaisyUI provides a lot of this already</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Island architecture support for Svelte components
+                  <ul class="list-bullet">
+                    <li>Each of these should be its own entry point in the Vite config, and from there we can use the manifest support to get the necessary tags</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Flash/toast support
+                  <ul class="list-bullet">
+                    <li>Can probably be done with HX-Trigger header, or maybe an extension</li>
+                    <li><input type="checkbox" disabled  /> Adapter function for actions to have errors return a toast</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Implement fancy dropdown menu in Alpine with floating-ui
+                  <ul class="list-bullet">
+                    <li><a href="https://github.com/awcodes/alpine-floating-ui">https://github.com/awcodes/alpine-floating-ui</a> may work well</li>
+                    <li><a href="https://alpinejs.dev/plugins/anchor">https://alpinejs.dev/plugins/anchor</a> is the official one, seems to support fewer options</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Improve livereload performance
+                  <ul class="list-bullet">
+                    <li>Not sure how much opportunity there is here but it feels like it can be made 20% faster</li>
+                    <li>Dioxus is working on <a href="https://twitter.com/dioxuslabs/status/1797206374960476530">a solution</a> that I should be able to adapt once it&#39;s public.</li>
                   </ul>                </li>
               </ul>            </li>
             <li>Models Backend

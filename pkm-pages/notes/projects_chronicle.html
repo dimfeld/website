@@ -2,7 +2,7 @@
 title: "Chronicle"
 tags: Projects
 date: 2024-03-29
-updated: 2024-06-02
+updated: 2024-06-13
 ---
 
 
@@ -12,7 +12,6 @@ updated: 2024-06-02
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Streaming with Ollama</li>
             <li><input type="checkbox" disabled  /> Write documentation</li>
           </ul>        </li>
         <li><h3>Soon</h3>
@@ -30,13 +29,28 @@ updated: 2024-06-02
             <li><input type="checkbox" disabled  /> Add fixture tests for Ollama</li>
             <li><input type="checkbox" disabled  /> Add fixture tests for Anyscale</li>
             <li><input type="checkbox" disabled  /> Add fixture tests for DeepInfra</li>
+            <li><input type="checkbox" disabled  /> New Provider: AWS Bedrock
+              <ul class="list-bullet">
+                <li><a href="https://lib.rs/crates/aws-sdk-bedrockruntime">https://lib.rs/crates/aws-sdk-bedrockruntime</a></li>
+                <li><a href="https://docs.aws.amazon.com/bedrock/latest/APIReference/API_Operations_Amazon_Bedrock_Runtime.html">https://docs.aws.amazon.com/bedrock/latest/APIReference/API_Operations_Amazon_Bedrock_Runtime.html</a></li>
+              </ul>            </li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Simple Request caching
+              <ul class="list-bullet">
+                <li>Cache responses based on provider/model/text</li>
+                <li>Support in-memory, disk, database, Redis</li>
+                <li>Maybe use <a href="https://lib.rs/crates/cacache">https://lib.rs/crates/cacache</a></li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Semantic-similarity-based request caching
+              <ul class="list-bullet">
+                <li>May not do this, not sure how useful it ends up being and there are a lot of risks</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> New Provider: Cohere</li>
             <li><input type="checkbox" disabled  /> New Provider: OpenRouter</li>
-            <li><input type="checkbox" disabled  /> New Provider: AWS Bedrock</li>
             <li><input type="checkbox" disabled  /> New Provider: Google Gemini</li>
+            <li><input type="checkbox" disabled  /> Fetch secrets from AWS secrets store</li>
             <li><input type="checkbox" disabled  /> Function to validate configuration and return a list of errors</li>
             <li><input type="checkbox" disabled  /> Send logged data to arbitrary HTTP endpoint
               <ul class="list-bullet">
@@ -62,12 +76,12 @@ updated: 2024-06-02
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled checked /> Streaming with Groq &mdash; Jun 1st, 2024</li>
-            <li><input type="checkbox" disabled checked /> Enhance test suite with real-world cases &mdash; [May 31st, 2024
+            <li><input type="checkbox" disabled checked /> Streaming with Groq and Ollama &mdash; Jun 1st, 2024</li>
+            <li><input type="checkbox" disabled checked /> Enhance test suite with real-world cases &mdash; May 31st, 2024
               <ul class="list-bullet">
                 <li>This uses streaming and non-streaming responses from various provider types, for both regular text and tool calls.</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled checked /> Streaming with Claude &mdash; [May 31st, 2024]</li>
+            <li><input type="checkbox" disabled checked /> Streaming with Claude &mdash; May 31st, 2024</li>
             <li><input type="checkbox" disabled checked /> Streaming support &mdash; May 31st, 2024</li>
             <li><input type="checkbox" disabled checked /> &quot;Simple&quot; API can build for Postgres
               <ul class="list-bullet">

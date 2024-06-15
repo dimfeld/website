@@ -2,7 +2,7 @@
 title: "Smelter"
 tags: Projects
 date: 2023-06-27
-updated: 2024-03-23
+updated: 2024-06-06
 ---
 
 
@@ -44,7 +44,16 @@ updated: 2024-03-23
             <li><input type="checkbox" disabled  /> Convert a single SQL statement into a multi-stage set of tasks
               <ul class="list-bullet">
                 <li>This may be better done by integrating with something like <a href="https://arrow.apache.org/datafusion/">Datafusion</a> which already supports creating query plans</li>
-                <li>Consider also supporting <a href="https://substrait.io/">Substrait</a> query plan format</li>
+                <li>Consider also supporting <a href="https://substrait.io/">Substrait</a> query plan format
+                  <ul class="list-bullet">
+                    <li>DuckDB supports consuming Substrait so I may be able to generate Substrait from SQL, split it into stages, and then run the nodes as needed</li>
+                  </ul>                </li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Communication between manager and worker, after worker is started
+              <ul class="list-bullet">
+                <li>This would allow better inter-stage communication</li>
+                <li>For example stage 1 runs a bunch of &quot;map&quot; jobs, and stage 2 does the reduce, but both stages are started at the same time, and as the jobs in stage 1 finish their result locations are streamed to stage 2.</li>
+                <li>If everything is in the same VPC then this is easy; but otherwise it requires either a VPN or some other type of coordinator.</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Clean up inter-level channels
               <ul class="list-bullet">

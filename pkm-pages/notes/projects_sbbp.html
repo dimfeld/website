@@ -2,7 +2,7 @@
 title: "SBBP"
 tags: Projects
 date: 2023-11-19
-updated: 2024-05-23
+updated: 2024-06-15
 ---
 
 
@@ -16,25 +16,33 @@ updated: 2024-05-23
     <li><a href="https://github.com/dimfeld/sbbp">Github Link</a></li>
     <li><h2>Task List</h2>
       <ul class="list-bullet">
-        <li><h3>Up Next</h3></li>
+        <li><h3>Up Next</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Host this somewhere so I can access it over the web and add to Readwise
+              <ul class="list-bullet">
+                <li>Maybe just host locally and expose subdomain</li>
+              </ul>            </li>
+          </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> Get thumbnail image from video metadata</li>
             <li><input type="checkbox" disabled  /> Summarize comments (can yt-dlp grab them?)</li>
             <li><input type="checkbox" disabled  /> For videos with chapters, summarize each chapter</li>
-            <li><input type="checkbox" disabled  /> Allow navigating between chapters</li>
+            <li><input type="checkbox" disabled  /> Table of contents with video chapters</li>
             <li><input type="checkbox" disabled  /> Improve reader layout</li>
-            <li><input type="checkbox" disabled  /> Video Host whitelist?
-              <ul class="list-bullet">
-                <li>Might be a hassle to maintain but also potentially prevents issues with shady content</li>
-              </ul>            </li>
           </ul>        </li>
         <li><h3>Later</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Host this somewhere so I can access it over the web and add to Readwise</li>
-            <li><input type="checkbox" disabled  /> Some way for multiple users to link to the same video without downloading it each time
+            <li><input type="checkbox" disabled  /> For longer videos without chapters, use LLM to try to generate chunks</li>
+            <li><input type="checkbox" disabled  /> Click on/near a paragraph to play the video at that point.</li>
+            <li><input type="checkbox" disabled  /> Better image similarity algorithm</li>
+            <li><input type="checkbox" disabled  /> Some way for multiple users to link to the same video without downloading it each time (if opened to public)
               <ul class="list-bullet">
                 <li>Probably put the video metadata itself in a separate table and have the user&#39;s video model link to that.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Video Host whitelist? (if opened to public)
+              <ul class="list-bullet">
+                <li>Might be a hassle to maintain but also potentially prevents issues with shady content</li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Done</h3>
