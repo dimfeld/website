@@ -2,7 +2,7 @@
 title: "Chronicle"
 tags: Projects
 date: 2024-03-29
-updated: 2024-06-13
+updated: 2024-07-09
 ---
 
 
@@ -13,6 +13,8 @@ updated: 2024-06-13
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> Write documentation</li>
+            <li><input type="checkbox" disabled  /> Basic UI for visualizing runs, steps, etc.</li>
+            <li><input type="checkbox" disabled  /> Option to skip logging model messages</li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
@@ -29,24 +31,18 @@ updated: 2024-06-13
             <li><input type="checkbox" disabled  /> Add fixture tests for Ollama</li>
             <li><input type="checkbox" disabled  /> Add fixture tests for Anyscale</li>
             <li><input type="checkbox" disabled  /> Add fixture tests for DeepInfra</li>
-            <li><input type="checkbox" disabled  /> New Provider: AWS Bedrock
-              <ul class="list-bullet">
-                <li><a href="https://lib.rs/crates/aws-sdk-bedrockruntime">https://lib.rs/crates/aws-sdk-bedrockruntime</a></li>
-                <li><a href="https://docs.aws.amazon.com/bedrock/latest/APIReference/API_Operations_Amazon_Bedrock_Runtime.html">https://docs.aws.amazon.com/bedrock/latest/APIReference/API_Operations_Amazon_Bedrock_Runtime.html</a></li>
-              </ul>            </li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Allow passing through user-agent header</li>
             <li><input type="checkbox" disabled  /> Simple Request caching
               <ul class="list-bullet">
-                <li>Cache responses based on provider/model/text</li>
+                <li>Cache responses based on provider/model/messages</li>
                 <li>Support in-memory, disk, database, Redis</li>
                 <li>Maybe use <a href="https://lib.rs/crates/cacache">https://lib.rs/crates/cacache</a></li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Semantic-similarity-based request caching
-              <ul class="list-bullet">
-                <li>May not do this, not sure how useful it ends up being and there are a lot of risks</li>
-              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Claude: support &quot;is_error&quot; flag in tool results</li>
+            <li><input type="checkbox" disabled  /> Claude: support images in tool results</li>
             <li><input type="checkbox" disabled  /> New Provider: Cohere</li>
             <li><input type="checkbox" disabled  /> New Provider: OpenRouter</li>
             <li><input type="checkbox" disabled  /> New Provider: Google Gemini</li>
@@ -76,6 +72,13 @@ updated: 2024-06-13
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> New Provider: AWS Bedrock &mdash; Jul 8th, 2024
+              <ul class="list-bullet">
+                <li><a href="https://lib.rs/crates/aws-sdk-bedrockruntime">https://lib.rs/crates/aws-sdk-bedrockruntime</a></li>
+                <li><a href="https://docs.aws.amazon.com/bedrock/latest/APIReference/API_Operations_Amazon_Bedrock_Runtime.html">https://docs.aws.amazon.com/bedrock/latest/APIReference/API_Operations_Amazon_Bedrock_Runtime.html</a></li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Run and Step tracing &mdash; Jun 30th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Add Mistral support &mdash; Jun 19th, 2024</li>
             <li><input type="checkbox" disabled checked /> Streaming with Groq and Ollama &mdash; Jun 1st, 2024</li>
             <li><input type="checkbox" disabled checked /> Enhance test suite with real-world cases &mdash; May 31st, 2024
               <ul class="list-bullet">

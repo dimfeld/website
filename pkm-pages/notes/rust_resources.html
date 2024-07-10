@@ -2,7 +2,7 @@
 title: "Rust Resources"
 tags: Rust
 date: 2021-02-13
-updated: 2024-04-30
+updated: 2024-06-27
 ---
 
 
@@ -102,6 +102,7 @@ updated: 2024-04-30
                 <li>Derive <code>sqlx::Type</code> on enums to translate them to strings (or Postgres types)</li>
                 <li>Supports a bunch of different async runtimes and all the popular SQL databases.</li>
                 <li>Supports compile-time query validation and result type generation with the <code>query!</code> macro. Or <code>query_as!</code> to use an existing type.</li>
+                <li>sqlx also provides a <code>QueryBuilder</code> structure for helping with dynamic query generation including dynamic bindings</li>
               </ul>            </li>
             <li><code>diesel</code> for a full-fledged ORM if that&#39;s your style. I&#39;ve been using this recently and it&#39;s nice, with the usual caveats around having to fall back to raw SQL to do more complex queries. (See <a href="/notes/diesel_rust_orm">Diesel Rust ORM</a>)</li>
             <li><code>sea_orm</code> is another up-and-coming ORM, built on async and with more attempt to provide database-agnostic behavior at runtime.</li>
@@ -140,6 +141,7 @@ updated: 2024-04-30
               </ul>            </li>
             <li><a href="https://docs.rs/validator/latest/validator/">validator</a> is a derive macro for easily adding validation logic to a struct.</li>
             <li><a href="https://lib.rs/crates/typed-builder">typed-builder</a> creates &quot;builder&quot; functionality for a struct</li>
+            <li><a href="https://docs.rs/pretty_assertions/latest/pretty_assertions/">pretty_assertions</a> provides replacement <code>assert_eq</code> and similar macros that print a diff of the output on both sides on a mismatch</li>
           </ul>        </li>
       </ul>    </li>
     <li>Learning

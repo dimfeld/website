@@ -564,6 +564,16 @@
     "title": "2024-06-15",
     "uid": ""
   },
+  "pkm-pages/journals/2024-07-02.html": {
+    "slug": "/journals/2024_07_02",
+    "title": "2024-07-02",
+    "uid": ""
+  },
+  "pkm-pages/journals/2024-07-09.html": {
+    "slug": "/journals/2024_07_09",
+    "title": "2024-07-09",
+    "uid": ""
+  },
   "pkm-pages/notes/acid_database_semantics.html": {
     "slug": "/notes/acid_database_semantics",
     "title": "ACID Database Semantics",
@@ -817,6 +827,11 @@
   "pkm-pages/notes/overlapping_elements_with_css_grid.html": {
     "slug": "/notes/overlapping_elements_with_css_grid",
     "title": "Overlapping Elements with CSS Grid",
+    "uid": ""
+  },
+  "pkm-pages/notes/paper_the_landscape_of_emerging_ai_agent_architectures_for_reasoning_planning_and_tool_calling_a_survey.html": {
+    "slug": "/notes/paper_the_landscape_of_emerging_ai_agent_architectures_for_reasoning_planning_and_tool_calling_a_survey",
+    "title": "The Landscape of Emerging AI Agent Architectures for Reasoning, Planning, and Tool Calling - A Survey",
     "uid": ""
   },
   "pkm-pages/notes/patrick_mckenzie_on_leveling_up.html": {

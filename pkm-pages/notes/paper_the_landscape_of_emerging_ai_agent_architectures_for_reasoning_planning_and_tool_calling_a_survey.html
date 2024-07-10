@@ -1,0 +1,181 @@
+---
+title: "The Landscape of Emerging AI Agent Architectures for Reasoning, Planning, and Tool Calling - A Survey"
+tags: 
+date: 2024-07-09
+updated: 2024-07-10
+---
+
+
+  <ul class="list-bullet">
+    <li>[[2404.11584] The Landscape of Emerging AI Agent Architectures for Reasoning, Planning, and Tool Calling: A Survey](<a href="https://arxiv.org/abs/2404.11584">https://arxiv.org/abs/2404.11584</a>)</li>
+    <li><h2>Introduction</h2>
+      <ul class="list-bullet">
+        <li>The paper defines agents as a system that uses planning, loops, reflection, and other control structures, as well as leveraging the model&#39;s reasoning abilities to accomplish a task.</li>
+        <li>This paper focuses mostly on the difference between single-agent vs. multiple-agent architectures.</li>
+        <li>The multiple agent architectures are then subdivided into vertical and horizontal architectures.</li>
+        <li>Each agent has a persona which is basically the system prompt as well as the tools that the agent has access to.
+          <ul class="list-bullet">
+            <li>In addition to the instructions for the task, the persona may define a specific role such as an expert coder or a manager or a reviewer and so on.</li>
+          </ul>        </li>
+        <li>Tools of course are external function calls that the model can request, such as editing a document, searching the web, or other actions that the model is not able to do inside its computations.</li>
+        <li>The paper defines a single agent architecture as those powered by a single language model which performs all the tasks on its own with no feedback from other models or agents. There may be feedback from humans though.</li>
+        <li>In a multi-agent setup, each agent typically has a different persona.</li>
+        <li>In a vertical multi-agent architecture, one agent access to leader and other agents report to it. There could be multiple levels of hierarchy as well. But the main distinction is the clear division of labor between the different sub-agents.</li>
+        <li>In a horizontal architecture, the agents are all more or less equal and are part of a single discussion about the task. Communication between agents is shared between all of the agents. And agents can volunteer themselves to complete certain tasks or call tools.</li>
+      </ul>    </li>
+    <li><h2>Key Considerations</h2>
+      <ul class="list-bullet">
+        <li><h3>Reasoning</h3>
+          <ul class="list-bullet">
+            <li>Reasoning is basically the same thing that we humans do where we think critically about a problem, understand how it fits into the world around us, and make a decision.</li>
+            <li>For a model, reasoning is what allows it to go beyond its training data and learn new tasks or make decisions under new circumstances.</li>
+          </ul>        </li>
+        <li><h3>Planning</h3>
+          <ul class="list-bullet">
+            <li>Planning is an application of reasoning.</li>
+            <li>And there are five major approaches to it. Task decomposition, multi-plan selection, external modulated planning, reflection and refinement, and memory augmented planning. See <a href="https://arxiv.org/pdf/2402.02716">understanding the planning of LLM agents</a>.</li>
+            <li>Most agents have a dedicated planning step, which they run before executing any actions. There are many ways to do this. The paper particularly calls out <a href="https://arxiv.org/pdf/2402.02805">Graph-enhanced Large Language Models in Asynchronous Plan Reasoning</a> AKA &quot;Plan like a graph,&quot; and <a href="https://arxiv.org/abs/2305.10601">tree of thought</a> as examples which allow the agent to execute multiple steps in parallel.
+              <ul class="list-bullet">
+                <li>Although my recollection of Tree of Thought was that it was more about trying different permutations of problem solving and not so much about planning.</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li><h3>Tool Calling</h3>
+          <ul class="list-bullet">
+            <li>Tool calling goes hand in hand with reasoning and is what really allows the model to make effective and informed decisions.</li>
+            <li>Many agents use some iterative process of planning, reasoning, tool calling, and then breaking up the task into further sub steps with more planning and so on.</li>
+            <li>But some papers point out that single agent architectures often have trouble with these long chains of subtasks.
+              <ul class="list-bullet">
+                <li><a href="https://arxiv.org/pdf/2403.03031">https://arxiv.org/pdf/2403.03031</a></li>
+                <li><a href="https://arxiv.org/pdf/2401.17464">https://arxiv.org/pdf/2401.17464</a></li>
+              </ul>            </li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Single Agent Architectures</h2>
+      <ul class="list-bullet">
+        <li>Proper planning and self-correction is paramount here.</li>
+        <li>A big risk with single agent architectures is that because they don&#39;t have any external method of automatically correcting themselves, they may get stuck in an infinite loop where they reason the same step over and over again with the same result.</li>
+        <li>ReAct
+          <ul class="list-bullet">
+            <li><a href="https://arxiv.org/abs/2210.03629">ReAct: Synergizing Reasoning and Acting in Language Models</a> was one of the first single agent methods designed to improve over single-step prompting.  In React, which stands for Reason Plus Act, the agent has a cycle of thinking about a task, performing an action based on that thought and observing the output.</li>
+            <li>Aside from improved reliability, one big advantage of this method over previous single-prompt methods was that the sequence of thoughts and actions are all there to see, so it&#39;s easier to figure out how the model arrived at its conclusion.</li>
+            <li>But ReAct is susceptible to the infinite loops mentioned above.</li>
+          </ul>        </li>
+        <li>RAISE
+          <ul class="list-bullet">
+            <li>RAISE, as described in <a href="https://arxiv.org/abs/2401.02777">From LLM to Conversational Agent: A Memory Enhanced Architecture with Fine-Tuning of Large Language Models</a>, stands for Reasoning and Acting through Scratch pad and Examples. There&#39;s no &#39;I&#39; but I guess they thought RAISE sounded better than RASPE or something.</li>
+            <li>It&#39;s based on the ReAct method, but adds the scratchpad for short-term storage and a data set of similar previous examples for long-term storage.
+              <ul class="list-bullet">
+                <li>NOTE How does this work?</li>
+              </ul>            </li>
+            <li>One interesting problem that the race paper found was that agents would often exceed their defined roles such as a sales agent role which ended up writing Python code. The authors also cited problems with hallucinations and difficulty understanding complex logic.</li>
+          </ul>        </li>
+        <li>Reflexion
+          <ul class="list-bullet">
+            <li><a href="https://arxiv.org/abs/2303.11366">Reflexion: Language Agents with Verbal Reinforcement Learning</a></li>
+            <li>Reflexion is a method in which the agent is asked to reflect on its own performance with certain metrics such as success state and if the current trajectory matches the agent&#39;s desired task.</li>
+            <li>NOTE look at the paper to determine more about these</li>
+            <li>Some limitations cited by the authors
+              <ul class="list-bullet">
+                <li>Reflextion is prone to falling into non-optimal local minima</li>
+                <li>The agent&#39;s memory is simply stored in the model&#39;s context with a sliding window and so older important items may be forgotten</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>AutoGPT + P
+          <ul class="list-bullet">
+            <li><a href="https://arxiv.org/abs/2402.10778">AutoGPT+P: Affordance-based Task Planning with Large Language Models</a></li>
+            <li>AutoGPT+P is a technique specifically designed for use in robotics. It uses computer vision to detect the objects present in a scene. And then can use four tools to try to complete its task.
+              <ul class="list-bullet">
+                <li>Plan Tool</li>
+                <li>Partial Plan Tool</li>
+                <li>Suggest Alternative Tool</li>
+                <li>Explore Tool</li>
+              </ul>            </li>
+            <li>The model also works in concert with a traditional planning tool using PDDL or planning domain definition language. This planner helps with translating the model&#39;s instructions into things that the robot is actually able to do given its physical limitations.</li>
+            <li>As with many of the above approaches, it does have some problems such as sometimes choosing the wrong tools or getting stuck in loops. And at least as described in the paper, there&#39;s no opportunity for human interaction such as the agent asking for clarification or the human interrupting if the robot starts to do something wrong.</li>
+          </ul>        </li>
+        <li>LATS
+          <ul class="list-bullet">
+            <li><a href="https://arxiv.org/abs/2310.04406">Language Agent Tree Search Unifies Reasoning Acting and Planning in Language Models</a></li>
+            <li>LATS is an algorithm based on <a href="https://www.phind.com/search?cache=uq80hftxd0w5iru7qg0t8kny">Monte Carlo Tree Search</a>. You can read the link for more details, but basically, it&#39;s inspired by Monte Carlo simulation in which you do a bunch of random runs to get a better idea of the probability space and the best action to take.</li>
+            <li>But as you can imagine, doing a bunch of random runs down a tree with language models can be very slow and expensive. Also, the paper doesn&#39;t tackle particularly complex scenarios.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Multi Agent Architectures</h2>
+      <ul class="list-bullet">
+        <li>Common themes with multi-agent architectures
+          <ul class="list-bullet">
+            <li>Leadership of agent teams</li>
+            <li>Dynamic creation of agent teams between stages</li>
+            <li>Information sharing between team members</li>
+          </ul>        </li>
+        <li><a href="https://arxiv.org/abs/2403.12482">Embodied LLM Agents Learn to Cooperate in Organized Teams</a>
+          <ul class="list-bullet">
+            <li>This method uses a hybrid approach that is mostly a horizontal team, but has a leader agent over the rest of the team.</li>
+            <li>They found that teams with a leader finished their tasks about 10% faster and that without a leader the agents spend about half of their time giving orders to each other. Whereas with a single designated leader, the leader spends 60% of its messages giving directions, while the other agents can focus more on actual exchange of useful information.</li>
+          </ul>        </li>
+        <li>DyLAN
+          <ul class="list-bullet">
+            <li><a href="https://arxiv.org/abs/2310.02170">Dynamic LLM-Agent Network: An LLM-agent Collaboration Framework with Agent Team Optimization</a></li>
+            <li>DyLAN is a dynamic team method which uses elimination rounds to remove the agents that have contributed the least to the task.</li>
+            <li>Team Optimization
+              <ul class="list-bullet">
+                <li>Each agent is asked to rank the other agents’ results</li>
+                <li>These ratings are aggregated</li>
+                <li>An “Agent Importance Score” is calculated</li>
+                <li>Low-performing agents are removed from the system</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>AgentVerse
+          <ul class="list-bullet">
+            <li><a href="https://arxiv.org/abs/2308.10848">AgentVerse: Facilitating Multi-Agent Collaboration and Exploring Emergent Behaviors</a></li>
+            <li>Agentverse uses a four-stage process
+              <ul class="list-bullet">
+                <li>Recruitment, which uses a “recruiter” agent to generate personas for a set of agents to work on this iteration, based on the current goal state.</li>
+                <li>Collaborative decision-making between the agents.
+                  <ul class="list-bullet">
+                    <li>This can be vertical or horizontal arrangement, depending on the task.</li>
+                  </ul>                </li>
+                <li>Independent action execution by each agent
+                  <ul class="list-bullet">
+                    <li>Each agent uses a ReAct loop with up to 10 iterations to get to the desired output</li>
+                  </ul>                </li>
+                <li>Evaluation of how close the current state is to the goal.</li>
+              </ul>            </li>
+            <li>This process can be repeated until the goal is reached.</li>
+            <li>One important finding here is that agent feedback is not always reliable.
+              <ul class="list-bullet">
+                <li>Even if an agent’s feedback is not valid, the receiving agent may incorporate it anyway.</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li>MetaGPT
+          <ul class="list-bullet">
+            <li><a href="https://arxiv.org/abs/2308.00352">MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework</a></li>
+            <li>MetaGPT focuses on using structured outputs to communicate between agents instead of plain text in order to reduce unproductive chatter and inefficiencies, such as &quot;how are you? I&#39;m fine&quot;.</li>
+            <li>It also implements a message bus which allows agents to publish their information to a common place but only listen to information that is relevant to them.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Discussion</h2>
+      <ul class="list-bullet">
+        <li>Single agent patterns tend to work best with a narrowly defined list of tools and well defined processes. They&#39;re also easier to implement because there&#39;s only one agent and set of tools, and they don&#39;t face the limitations of multi-agent systems like poor feedback from other agents or unrelated chatter from other team members. But they are more likely to get stuck in loops and fail to make progress if they find themselves in a situation that does not match their reasoning strengths.</li>
+        <li>Multi-agent architectures work best when feedback from different personas helps to accomplish the task, such as drafting a document and then reviewing or proofreading it. They&#39;re also useful for performing parallel execution when there are distinct independent subtasks. Multi-agent architecture is particularly advantageous when no examples of the task have been provided.</li>
+        <li>Feedback can be very helpful, but it&#39;s not a panacea. The AgentVerse paper notes a case where an agent gave invalid feedback to another agent, but it was still incorporated. Similarly, human feedback may conflict with the desired behavior of the agent, but because the language models tend to be willing to please, they may incorporate it anyway.</li>
+        <li><h3>Information Sharing</h3>
+          <ul class="list-bullet">
+            <li>Information sharing in a horizontal multi-agent system is very useful, but also has issues. For example, agents can too closely simulate a human when assigned a persona and start asking the other agents small-talk questions such as &quot;how are you?&quot; Agents may also be exposed to information that is irrelevant to their particular task, so systems that allow subscribing or filtering incoming information can be helpful for keeping an agent on task.</li>
+            <li>Vertical architectures tend to not have as many of these issues, but can encounter problems when the managing agent does not send enough information to its team for them to do the job. The paper recommends using prompting techniques to help with this.</li>
+          </ul>        </li>
+        <li>Careful design of the system prompt for the persona can help to keep an agent on task and reduce the amount of unnecessary chatter between agents.</li>
+        <li>Dynamic team creation where agents are brought in and out of the system can be a big help because it excludes irrelevant agents from adding noise a particular stage of the problem.</li>
+      </ul>    </li>
+    <li><h2>Limitations</h2>
+      <ul class="list-bullet">
+        <li>Evaluating agents is difficult and there are not very many good standard benchmarks.</li>
+        <li>Many papers introduce their own benchmarks alongside a new agent system, which makes it difficult to compare agent systems beyond those tested in that particular paper.</li>
+        <li>Many agent evals are complex and require manual scoring, which can be tedious, limits the size of the evaluation set, and adds the possibility of evaluator bias. The complexity of agents also leads to a lot more variation in their outputs, so it&#39;s more difficult to properly determine if an agent&#39;s answer is correct or not.</li>
+        <li>As with language model evaluations, data set contamination is a problem, where the tasks that the agents are trying to work on can be found in their training data.</li>
+        <li id="668de20c-2184-45f6-b70a-246e7fcd684e">Many standard benchmarks designed for language model testing, such as MMLU and GSM8K, are not applicable to agents because they don&#39;t really exercise an agent&#39;s ability to reason beyond what you would find in a single call to a language model.</li>
+        <li>Some agent eval systems use simpler answers such as yes or no, which are easier to evaluate, but this limits the real world applicability of the eval, where most tasks require more complex answers. More complex benchmarks that use logic puzzles or video games come closer, but even in those cases it&#39;s questionable how much it translates to the real world, where tasks are less well-defined and data is dirtier.</li>
+        <li>The paper mentions <a href="https://arxiv.org/abs/2406.04770">WildBench</a> and SWE-bench as a couple of benchmarks that use real-world data, though WildBench doesn&#39;t seem to be designed for agent testing.</li>
+      </ul>    </li>
+  </ul>
+

@@ -2,7 +2,7 @@
 title: "Smelter"
 tags: Projects
 date: 2023-06-27
-updated: 2024-06-06
+updated: 2024-06-21
 ---
 
 
@@ -43,7 +43,10 @@ updated: 2024-06-06
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Convert a single SQL statement into a multi-stage set of tasks
               <ul class="list-bullet">
-                <li>This may be better done by integrating with something like <a href="https://arrow.apache.org/datafusion/">Datafusion</a> which already supports creating query plans</li>
+                <li>This may be better done by integrating with something like <a href="https://arrow.apache.org/datafusion/">Datafusion</a> which already supports creating query plans
+                  <ul class="list-bullet">
+                    <li>Check out <a href="https://github.com/datafusion-contrib/ray-sql">https://github.com/datafusion-contrib/ray-sql</a> and <a href="https://github.com/datafusion-contrib/datafusion-federation">https://github.com/datafusion-contrib/datafusion-federation</a> which have some common concerns.</li>
+                  </ul>                </li>
                 <li>Consider also supporting <a href="https://substrait.io/">Substrait</a> query plan format
                   <ul class="list-bullet">
                     <li>DuckDB supports consuming Substrait so I may be able to generate Substrait from SQL, split it into stages, and then run the nodes as needed</li>

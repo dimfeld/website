@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-06-15
+updated: 2024-07-04
 ---
 
 
@@ -17,6 +17,7 @@ updated: 2024-06-15
                 <li>Have a way to really easily load an object from the DB, modify it, and then save it back to the DB for cases where doing it all in a single SQL statement is a hassle.</li>
                 <li>This should probably take the form of methods on the main model struct which internally call the get/update/insert query methods.</li>
                 <li>Each object should be able to populate at query time or afterward.</li>
+                <li>How much would it work to use SeaORM for this as opposed to use SeaQuery?</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Make it easier for differing get/list model types to be used interchangeably
               <ul class="list-bullet">
@@ -40,6 +41,11 @@ updated: 2024-06-15
                 <li>Perhaps just a function that adds default permissions or something like that when we first see a user.</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Use docker compose with separate containers for API and SvelteKit parts</li>
+            <li><input type="checkbox" disabled  /> More flexible configuration
+              <ul class="list-bullet">
+                <li>Switch from <code>clap</code> to <code>config</code> or something</li>
+                <li>Main impetus here is to make it possible to read configuration from ConfigMap-sourced volumes in K8S and similar systems.</li>
+              </ul>            </li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
