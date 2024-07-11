@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-07-04
+updated: 2024-07-11
 ---
 
 
@@ -12,12 +12,22 @@ updated: 2024-07-04
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li id="660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> More ergonomic backend object use
+            <li id="660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> Switch to SeaORM
               <ul class="list-bullet">
-                <li>Have a way to really easily load an object from the DB, modify it, and then save it back to the DB for cases where doing it all in a single SQL statement is a hassle.</li>
-                <li>This should probably take the form of methods on the main model struct which internally call the get/update/insert query methods.</li>
-                <li>Each object should be able to populate at query time or afterward.</li>
-                <li>How much would it work to use SeaORM for this as opposed to use SeaQuery?</li>
+                <li>Probably just switch to SeaORM, will also solve a lot of the other work I need to do around many-to-many relationships. This will be less efficient but easier to maintain and add new functionality quick.</li>
+                <li><input type="checkbox" disabled checked /> Implement relevant traits for the ObjectId type</li>
+                <li><input type="checkbox" disabled  /> Create entities for each model</li>
+                <li><input type="checkbox" disabled  /> Add auth checks to each model and a function to add an auth check to any model query</li>
+                <li><input type="checkbox" disabled  /> Change or replace query functions to call SeaORM functions</li>
+                <li><input type="checkbox" disabled  /> Remove old query files for each model</li>
+                <li><input type="checkbox" disabled  /> Ability to define custom selects for a model in the config file.
+                  <ul class="list-bullet">
+                    <li>Maybe this is better hooked into the page endpoints somehow.</li>
+                  </ul>                </li>
+                <li>What&#39;s the best way to do the admin/user object views? Maybe it&#39;s better to just made admin-only endpoints which return the admin stuff and then the normal endpoints can return all the other stuff. This way there&#39;s less confusion and no need to support all the model types in a single endpoint. This doesn&#39;t make as much sense for REST stuff though so maybe that&#39;s still an issue.
+                  <ul class="list-bullet">
+                    <li>Probably it makes the most sense to fetch different models in the endpoints themselves and serialize them. Those particular REST endpoints are simple enough that they can just branch without much trouble, and the rest can use the least privilege required by default since almost all of them are fine with just the user view and the stuff that does need the admin view will be admin-only endpoints anyway</li>
+                  </ul>                </li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Make it easier for differing get/list model types to be used interchangeably
               <ul class="list-bullet">
@@ -158,7 +168,7 @@ updated: 2024-07-04
                 <li><input type="checkbox" disabled  /> Models with non-writable, but required, fields don&#39;t generate valid tests
                   <ul class="list-bullet">
                     <li>This can happen when the normal &quot;create&quot; workflow happens in some other way than calling a REST create endpoint.</li>
-                    <li>Will be easier to fix once <a class="block-ref" href="/notes/projects_filigree#660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> More ergonomic backend object use</a> is done</li>
+                    <li>Will be easier to fix once <a class="block-ref" href="/notes/projects_filigree#660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> Switch to SeaORM</a> is done</li>
                     <li>Also consider detecting this and just not generating an &quot;insert&quot; script that can&#39;t work.
                       <ul class="list-bullet">
                         <li>The criteria is a model that has at least one field which
