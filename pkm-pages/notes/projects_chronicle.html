@@ -2,7 +2,7 @@
 title: "Chronicle"
 tags: Projects
 date: 2024-03-29
-updated: 2024-07-09
+updated: 2024-07-27
 ---
 
 
@@ -18,10 +18,7 @@ updated: 2024-07-09
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Figure out what to do about large data
-              <ul class="list-bullet">
-                <li>saving input and outputs is useful but can start taking up a lot of space. Ideally we can have something that places records in cloud storage, just need to figure out the formats and so on and if/how to make things queryable before they land in storage.</li>
-              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Support tools with Ollama</li>
             <li><input type="checkbox" disabled  /> Python client
               <ul class="list-bullet">
                 <li>This should be both a normal client and have the ability to wrap other common clients such as the OpenAI SDK. Needs to be compatible with tools like instructor, DSPy, etc.</li>
@@ -34,30 +31,67 @@ updated: 2024-07-09
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Allow passing through user-agent header</li>
-            <li><input type="checkbox" disabled  /> Simple Request caching
-              <ul class="list-bullet">
-                <li>Cache responses based on provider/model/messages</li>
-                <li>Support in-memory, disk, database, Redis</li>
-                <li>Maybe use <a href="https://lib.rs/crates/cacache">https://lib.rs/crates/cacache</a></li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> Claude: support &quot;is_error&quot; flag in tool results</li>
-            <li><input type="checkbox" disabled  /> Claude: support images in tool results</li>
-            <li><input type="checkbox" disabled  /> New Provider: Cohere</li>
-            <li><input type="checkbox" disabled  /> New Provider: OpenRouter</li>
-            <li><input type="checkbox" disabled  /> New Provider: Google Gemini</li>
-            <li><input type="checkbox" disabled  /> Fetch secrets from AWS secrets store</li>
             <li><input type="checkbox" disabled  /> Function to validate configuration and return a list of errors</li>
-            <li><input type="checkbox" disabled  /> Send logged data to arbitrary HTTP endpoint
+            <li>API Management
               <ul class="list-bullet">
-                <li>This should be done in a way that it can sent to something like Kafka, Elasticsearch, or Clickhouse using only the configuration, no custom code</li>
+                <li><input type="checkbox" disabled  /> Endpoints to manage aliases</li>
+                <li><input type="checkbox" disabled  /> Endpoints to manage API keys</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Send logged data to S3</li>
-            <li><input type="checkbox" disabled  /> Option for provider-level or model-level rate limiting
+            <li><input type="checkbox" disabled  /> Watch and reload config file</li>
+            <li>Request Management
               <ul class="list-bullet">
-                <li>So that new requests coming in will automatically wait or fallback</li>
+                <li><input type="checkbox" disabled  /> Allow passing through user-agent header</li>
+                <li><input type="checkbox" disabled  /> Simple Request caching
+                  <ul class="list-bullet">
+                    <li>Cache responses based on provider/model/messages</li>
+                    <li>Support in-memory, disk, database, Redis</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Fetch secrets from AWS secrets store</li>
+                <li><input type="checkbox" disabled  /> When looping around providers with retries, omit providers who had an unrecoverable error.</li>
+                <li><input type="checkbox" disabled  /> Option for provider-level or model-level rate limiting
+                  <ul class="list-bullet">
+                    <li>So that new requests coming in will automatically wait or fallback</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Monitor error rates from providers and auto-switch
+                  <ul class="list-bullet">
+                    <li>This can be built into the alias system perhaps</li>
+                  </ul>                </li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> When looping around providers with retries, omit providers who had an unrecoverable error.</li>
+            <li>New Providers
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> New Provider: Cohere
+                  <ul class="list-bullet">
+                    <li>Very different API than the others, it’s different enough from a feature perspective that I’m not sure it’s worth translating between request formats.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> New Provider: OpenRouter</li>
+                <li><input type="checkbox" disabled  /> New Provider: Google Gemini</li>
+                <li><input type="checkbox" disabled  /> OctoAI</li>
+                <li><input type="checkbox" disabled  /> <a href="https://lepton.ai">Lepton</a></li>
+              </ul>            </li>
+            <li>Specific Provider Upgrades
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Claude: support &quot;is_error&quot; flag in tool results</li>
+                <li><input type="checkbox" disabled  /> Claude: support images in tool results</li>
+              </ul>            </li>
+            <li>Other Modalities
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Support binary upload APIs like Deepgram as well</li>
+              </ul>            </li>
+            <li>Logging
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Send logged data to arbitrary HTTP endpoint
+                  <ul class="list-bullet">
+                    <li>This should be done in a way that it can sent to something like Kafka, Elasticsearch, or Clickhouse using only the configuration, no custom code</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Send logged data to S3
+                  <ul class="list-bullet">
+                    <li>As JSON files? As Parquet?</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Figure out what to do about large data
+                  <ul class="list-bullet">
+                    <li>saving input and outputs is useful but can start taking up a lot of space. Ideally we can have something that places records in cloud storage, just need to figure out the formats and so on and if/how to make things queryable before they land in storage.</li>
+                  </ul>                </li>
+              </ul>            </li>
             <li>Analysis
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> visualize by arbitrary metadata</li>
@@ -68,7 +102,6 @@ updated: 2024-07-09
                 <li><input type="checkbox" disabled  /> Associate each provider and its calls with a pricing plan</li>
                 <li><input type="checkbox" disabled  /> Fetch and update prices for each provider</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Support binary upload APIs like Deepgram as well</li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">

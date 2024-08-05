@@ -1,0 +1,129 @@
+---
+title: "JS Sidecar"
+tags: Projects
+date: 2024-08-05
+updated: 2024-08-05
+---
+
+
+  <ul class="list-bullet">
+    <li>This is a Rust library which, instead of embedding a JavaScript engine directly into the application, communicates with a persistent pool of engine instances that are set up to execute code.</li>
+    <li>It&#39;s somewhat difficult right now to embed a well-equipped JS engine instance into your application if you want to have full API availability, and so this gets around that problem while avoiding the overhead of starting a new process for every expression evaluation.</li>
+    <li><h2>Task List</h2>
+      <ul class="list-bullet">
+        <li><h3>Up Next</h3></li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Allow passing additional dependencies which can be used in the scripts
+              <ul class="list-bullet">
+                <li>This would probably be paths to somewhere on the filesystem that contains a library with package.json and all</li>
+                <li>I think supporting this would require supporting the entire node_modules lookup algorithm. The <a href="https://github.com/lukeed/resolve.exports">resolve.exports</a> library may be helpful here, or it might also work to just use <code>import</code></li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Support callbacks from the JS side to the Rust side
+              <ul class="list-bullet">
+                <li>e.g. to do expensive lookups, mutate state, etc.</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li><h3>Later/Maybe</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Consider using worker_threads instead of cluster
+              <ul class="list-bullet">
+                <li>This should use a bit less memory (though probably not much less), but is complicated by the lack of ability to send sockets across thread boundaries, unlike cluster.</li>
+                <li>The bigger advantage is that it will make it easier to maintain a single code cache, and share data between threads in a zero-copy manner, using SharedArrayBuffers.</li>
+                <li>One approach is to have a single master thread create a new MessagePort pair for each connection. A thread gets the port and then the master shuttles buffers back and forth between them.
+                  <ul class="list-bullet">
+                    <li>Mostly implemented here <a href="https://www.phind.com/search?cache=zdy35n834rpmds1cmiiszwt8">https://www.phind.com/search?cache=zdy35n834rpmds1cmiiszwt8</a>.</li>
+                    <li>Feels bad for latency though</li>
+                  </ul>                </li>
+                <li>Another way would be for each thread to have its own socket and then the Rust side communicates with each one and handles the load balancing. This would also potentially make it easier to share other things like persistent contexts but that is probably over complicating it.
+                  <ul class="list-bullet">
+                    <li>This isn&#39;t great as a general approach but works well for this case because we know that there&#39;s just a single client (the Rust process) with exact knowledge of how things are structured.</li>
+                    <li>I&#39;ll probably go this route.</li>
+                  </ul>                </li>
+                <li>Need to benchmark these approaches</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Support multiple engines (Bun, Deno)
+              <ul class="list-bullet">
+                <li>Bun doesn&#39;t support <code>node:cluster</code> yet</li>
+                <li>Deno should work with minimal changes</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Run entire projects
+              <ul class="list-bullet">
+                <li>with <code>node_modules</code> and so on</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Support running Boa or QuickJS in-process with the same interface</li>
+            <li><input type="checkbox" disabled  /> Allow control over which Node built-in libraries can be imported
+              <ul class="list-bullet">
+                <li>Currently none can be imported, this wouldn&#39;t be hard to change but making it configurable would be great.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Network sandbox
+              <ul class="list-bullet">
+                <li>This can be done most easily by replacing <code>fetch</code> with a function that wraps fetch and checks the URL before passing on the request</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Filesystem sandbox
+              <ul class="list-bullet">
+                <li>Same as network, but for the <code>fs</code> functions. This is a bit more difficult to get right since there are so many functions.</li>
+                <li>Ideally we could just run the isolate in a chroot, but I don&#39;t think that&#39;s possible.</li>
+              </ul>            </li>
+          </ul>        </li>
+        <li><h3>Done</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Benchmarks</li>
+            <li><input type="checkbox" disabled checked /> Support V8 code cache when evaluating code
+              <ul class="list-bullet">
+                <li>Need some kind of content-addressable LRU caching so we don&#39;t hold on to code cache values forever</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Customizable number of workers</li>
+            <li><input type="checkbox" disabled checked /> Improve Rust API for an engine connection
+              <ul class="list-bullet">
+                <li>Single function to run a script and wait for its result</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled checked /> Start a single engine</li>
+            <li><input type="checkbox" disabled checked /> JS code to handle requests, run code, and respond</li>
+            <li><input type="checkbox" disabled checked /> Send requests to the engine, get a response</li>
+            <li><input type="checkbox" disabled checked /> Support one-way communication of a script back to the Rust side (e.g. progress messages)</li>
+            <li><input type="checkbox" disabled checked /> Ability to reuse a context across multiple requests without reinitializing it each time.</li>
+            <li><input type="checkbox" disabled checked /> Hook into <code>console</code> so that it goes back to Rust in a way that is linked to each request.</li>
+            <li><input type="checkbox" disabled checked /> Run a pool of engines and load balance requests between them.</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Basic Design</h2>
+      <ul class="list-bullet">
+        <li><h3>Rust Side</h3>
+          <ul class="list-bullet">
+            <li>Start and maintain a pool of engines</li>
+            <li>Allow passing JS code to the engine, either as strings or as filesystem references</li>
+            <li>Support callbacks which</li>
+          </ul>        </li>
+        <li><h3>JS Side</h3>
+          <ul class="list-bullet">
+            <li>The core is a small application which takes in requests</li>
+            <li>Support auto-importing modules from the filesystem before running the expression.</li>
+            <li>Support compilation snapshots, if possible
+              <ul class="list-bullet">
+                <li>Looks like Node.js support this via <a href="https://nodejs.org/api/vm.html#sourcetextmodulecreatecacheddata">createCachedData</a>. It doesn&#39;t cache stored data but does cache functions.</li>
+              </ul>            </li>
+            <li>Library which can callback to the Rust side to take actions</li>
+          </ul>        </li>
+      </ul>    </li>
+    <li><h2>Alternatives</h2>
+      <ul class="list-bullet">
+        <li><h3>Why not Deno?</h3>
+          <ul class="list-bullet">
+            <li>In <a href="https://github.com/dimfeld/ergo/tree/master/js">my experience in the past</a> this worked out ok, but
+              <ul class="list-bullet">
+                <li>you have to set up a lot of runtime stuff yourself</li>
+                <li>Updating all the Deno crates together is a pain and there were often breaking changes to be handled.</li>
+              </ul>            </li>
+            <li>Some of this might be better now as Deno itself has matured, but overall it seemed that embedding a &quot;full-featured Deno&quot; is not really as easy as it should be.</li>
+          </ul>        </li>
+        <li><h3>Why not bindings to QuickJS/Boa/etc?</h3>
+          <ul class="list-bullet">
+            <li>Runtime compatibility. Some applications may need to do things that only really work in the most popular JS engines, such as talking to Postgres.</li>
+            <li>Harder to include arbitrary NPM packages or similar, without bundling</li>
+            <li>For applications that don&#39;t need this, I do think it&#39;s worth providing a mode that just uses bindings and won&#39;t have to start a separate sidecar process.</li>
+            <li>As QuickJS gets more WinterCG compatibility this also may be less of an issue.</li>
+          </ul>        </li>
+      </ul>    </li>
+  </ul>
+

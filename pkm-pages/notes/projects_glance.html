@@ -2,7 +2,7 @@
 title: "Glance"
 tags: Projects
 date: 2023-09-29
-updated: 2024-02-17
+updated: 2024-07-30
 ---
 
 
@@ -15,7 +15,22 @@ updated: 2024-02-17
         <li><h3>Soon</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> Notifications</li>
-            <li><input type="checkbox" disabled  /> Customize layout of the data items</li>
+            <li><input type="checkbox" disabled  /> Customize layout of the data items
+              <ul class="list-bullet">
+                <li>Get rid of the existing format for items, and make this into a block-based thing with rows and columns, where blocks can be text/image/chart/etc.</li>
+                <li>Block types
+                  <ul class="list-bullet">
+                    <li>Text</li>
+                    <li>Chart</li>
+                    <li>Row</li>
+                    <li>Column</li>
+                    <li>Expansion Pane</li>
+                    <li>Image</li>
+                  </ul>                </li>
+                <li>Blocks can reference a separate data block using JSON pointer syntax</li>
+                <li>Text can be markdown</li>
+                <li>Probably keep &quot;title&quot; and maybe subtitle but the rest should be new</li>
+              </ul>            </li>
           </ul>        </li>
         <li><h3>Later</h3>
           <ul class="list-bullet">
@@ -40,6 +55,8 @@ updated: 2024-02-17
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> REST endpoints to add/update/delete an app &mdash; Jul 29th, 2024</li>
+            <li><input type="checkbox" disabled checked /> REST endpoints to add/update items within an app &mdash; Jul 29th, 2024</li>
             <li><input type="checkbox" disabled checked /> Simple auth system so that I can publish this readonly but still log in and make changes &mdash; Feb 14th, 2024</li>
             <li><input type="checkbox" disabled checked /> Platform can run apps on a schedule &mdash; Dec 12th, 2023</li>
             <li><input type="checkbox" disabled checked /> Web app reloads data on a schedule &mdash; Dec 11th, 2023</li>

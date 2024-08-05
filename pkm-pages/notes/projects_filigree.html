@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-07-11
+updated: 2024-07-25
 ---
 
 
@@ -12,45 +12,28 @@ updated: 2024-07-11
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
-            <li id="660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> Switch to SeaORM
+            <li id="669f04f7-f837-4f1c-849f-0d2f308cd39d"><input type="checkbox" disabled  /> Make test objects easier to manage
               <ul class="list-bullet">
-                <li>Probably just switch to SeaORM, will also solve a lot of the other work I need to do around many-to-many relationships. This will be less efficient but easier to maintain and add new functionality quick.</li>
-                <li><input type="checkbox" disabled checked /> Implement relevant traits for the ObjectId type</li>
-                <li><input type="checkbox" disabled  /> Create entities for each model</li>
-                <li><input type="checkbox" disabled  /> Add auth checks to each model and a function to add an auth check to any model query</li>
-                <li><input type="checkbox" disabled  /> Change or replace query functions to call SeaORM functions</li>
-                <li><input type="checkbox" disabled  /> Remove old query files for each model</li>
-                <li><input type="checkbox" disabled  /> Ability to define custom selects for a model in the config file.
-                  <ul class="list-bullet">
-                    <li>Maybe this is better hooked into the page endpoints somehow.</li>
-                  </ul>                </li>
-                <li>What&#39;s the best way to do the admin/user object views? Maybe it&#39;s better to just made admin-only endpoints which return the admin stuff and then the normal endpoints can return all the other stuff. This way there&#39;s less confusion and no need to support all the model types in a single endpoint. This doesn&#39;t make as much sense for REST stuff though so maybe that&#39;s still an issue.
-                  <ul class="list-bullet">
-                    <li>Probably it makes the most sense to fetch different models in the endpoints themselves and serialize them. Those particular REST endpoints are simple enough that they can just branch without much trouble, and the rest can use the least privilege required by default since almost all of them are fine with just the user view and the stuff that does need the admin view will be admin-only endpoints anyway</li>
-                  </ul>                </li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> Make it easier for differing get/list model types to be used interchangeably
-              <ul class="list-bullet">
-                <li>For every structure, add functions that both get one and run a list operation
-                  <ul class="list-bullet">
-                    <li>This starts to become a lot of SQL files though, what&#39;s a better way to do this? Probably just do this as part of the move to seaquery, and use some OnceLocks for the fixed queries that never change. Mostly have to figure out how best to integrate permissions checks in an easy way here.</li>
-                  </ul>                </li>
+                <li>Instead of a one-size-fits-all bootstrapping we should just do it with a custom function per file, which will speed up the tests overall a bit, and also greatly simplify testing of through models where we need to make sure that the IDs all line up between the different objects.</li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Investigate making it easier to auto-forward page actions through SvelteKit to the API</li>
+            <li><input type="checkbox" disabled  /> Finish tests for through relationships
+              <ul class="list-bullet">
+                <li>Do this after <a class="block-ref" href="/notes/projects_filigree#669f04f7-f837-4f1c-849f-0d2f308cd39d"><input type="checkbox" disabled  /> Make test objects easier to manage</a></li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Evaluate faster API authentication methods between SvelteKit Backend and Rust Backend
               <ul class="list-bullet">
                 <li>Basically to make it work better to make multiple API calls from a single request without hitting the database every time to look up the user/roles/etc.</li>
                 <li>Instead of just a session ID, have an option to generate a short-lived JWT or similar token that contains all the auth info. Store the JWT in the cookie, on each request check the expiration time and get a new one if getting close to expiring.</li>
                 <li>Might also need some hook for client-side requests that can do the renewal if they talk directly to the API.</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Simplify permissions system when using custom auth
+            <li><input type="checkbox" disabled  /> Use docker compose with separate containers for API and SvelteKit parts
               <ul class="list-bullet">
-                <li>Since we aren&#39;t creating the roles and users, we need a way to make sure that people have reasonable permissions when they start.</li>
-                <li>Perhaps just a function that adds default permissions or something like that when we first see a user.</li>
+                <li>More trouble than it&#39;s worth to force the two parts into a single container</li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Use docker compose with separate containers for API and SvelteKit parts</li>
             <li><input type="checkbox" disabled  /> More flexible configuration
               <ul class="list-bullet">
                 <li>Switch from <code>clap</code> to <code>config</code> or something</li>
@@ -59,6 +42,20 @@ updated: 2024-07-11
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Use a build script to inject the current <code>filigree</code> version into the value used by <code>add_deps</code>
+              <ul class="list-bullet">
+                <li>Minor thing but makes the release process a bit smoother. Right now this has to be updated manually.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Simplify permissions system when using custom auth
+              <ul class="list-bullet">
+                <li>Since we aren&#39;t creating the roles and users, we need a way to make sure that people have reasonable permissions when they start.</li>
+                <li>Perhaps just a function that adds default permissions or something like that when we first see a user.</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> organization_members needs to be extendable like users is
+              <ul class="list-bullet">
+                <li>This is so that there&#39;s a place to attach per-org metadata and fields</li>
+                <li>I think the proper thing to do here is that once we fully support <a class="block-ref" href="/notes/projects_filigree#65d828c3-0e80-454f-bb1c-05e0715bef6d"><input type="checkbox" disabled checked /> Joining tables &mdash; Jul 22nd, 2024</a> we can just put this into the system as a joining table.</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled  /> Improve API error printing
               <ul class="list-bullet">
                 <li>Some errors use <code>source</code> and error_stack&#39;s default printer ignores it. Should walk the source chain as well. This seems difficult though without using nightly features</li>
@@ -147,28 +144,33 @@ updated: 2024-07-11
               </ul>            </li>
             <li>Models Backend
               <ul class="list-bullet">
-                <li><input type="checkbox" disabled  /> Joining tables
+                <li><input type="checkbox" disabled  /> Move a lot of the auth queries like <code>add_permissions_to_role</code> into the template system, so they can be placed on the model and/or customized
                   <ul class="list-bullet">
-                    <li>Doesn&#39;t compile yet. Configuration and SQL migrations are done here, need the rest of the support:</li>
-                    <li><input type="checkbox" disabled  /> Handle <code>through</code> relationships in fetch queries</li>
-                    <li><input type="checkbox" disabled  /> Updates in main payload for <code>through</code> relationships
-                      <ul class="list-bullet">
-                        <li>This will just be IDs on the other side. Write payload field name should just be <code>OTHER_SIDE_NAME_ids</code></li>
-                      </ul>                    </li>
-                    <li><input type="checkbox" disabled  /> Generate endpoints for managing links in joining tables
-                      <ul class="list-bullet">
-                        <li>These can just be CRUD endpoints on the linking model. Main difference is the URL structure accounts for the composite ID</li>
-                      </ul>                    </li>
+                    <li>Everything in <code>fiiligree/src/users</code> except <code>add_user_email_login</code> which is used by the OAuth system and so is harder to move.</li>
                   </ul>                </li>
-                <li><input type="checkbox" disabled  /> tests for list endpoint filtering/pagination/sorting</li>
                 <li><input type="checkbox" disabled  /> Generate endpoints for grandchild objects
                   <ul class="list-bullet">
                     <li>Probably need to make this generally recursive which may difficult to do via the current template system, might need a macro that can call itself or some fancier fragment rendering.</li>
+                    <li>I think what we want to do here is for each item in <code>children</code> to potentially have its own <code>children</code>, instead of recalculating each one independently. Also need some way to walk up the stack of children here for URL generation (or do we? Probably it doesn&#39;t matter to have the grandparent in the URL itself).</li>
                   </ul>                </li>
+                <li><input type="checkbox" disabled  /> Make it easier for differing get/list model types to be used interchangeably
+                  <ul class="list-bullet">
+                    <li>This matters more for HTMX mode</li>
+                    <li>Basically we might have a function that renders something for a particular object, but it gets difficult when the input can be either the Get or List result types when they are different.</li>
+                    <li>One option may be to generate a type of view struct which can take a reference to either type and then generate a bunch of methods for the shared fields which can return either value. This is a lot of boilerplate, but its all autogenerated, but these aren&#39;t used too often</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> Allow joining models to have their own extra data fields</li>
+                <li><input type="checkbox" disabled  /> For runtime queries, create query builders that use SeaQuery to add the auth clause automatically
+                  <ul class="list-bullet">
+                    <li>Add an enum of columns in the table</li>
+                    <li>Allow adding any population of data or id at runtime</li>
+                    <li>Each child population can be seen as a column as well (but probably don&#39;t do this, it should )</li>
+                    <li>Add functions for &quot;all base columns&quot; to drop into the query</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> tests for list endpoint filtering/pagination/sorting</li>
                 <li><input type="checkbox" disabled  /> Models with non-writable, but required, fields don&#39;t generate valid tests
                   <ul class="list-bullet">
                     <li>This can happen when the normal &quot;create&quot; workflow happens in some other way than calling a REST create endpoint.</li>
-                    <li>Will be easier to fix once <a class="block-ref" href="/notes/projects_filigree#660233f8-5485-446f-be9b-291572417c2a"><input type="checkbox" disabled  /> Switch to SeaORM</a> is done</li>
                     <li>Also consider detecting this and just not generating an &quot;insert&quot; script that can&#39;t work.
                       <ul class="list-bullet">
                         <li>The criteria is a model that has at least one field which
@@ -186,10 +188,6 @@ updated: 2024-07-11
                   </ul>                </li>
                 <li><input type="checkbox" disabled  /> Test populated get and list when update<em class="italic">with</em>parent is false</li>
                 <li><input type="checkbox" disabled  /> Models can define extra permissions</li>
-                <li><input type="checkbox" disabled  /> Allow disabling child population at runtime in list/get endpoints, when it is enabled by default
-                  <ul class="list-bullet">
-                    <li>This is one place it would help to use sea_query</li>
-                  </ul>                </li>
               </ul>            </li>
             <li>CLI / Template System
               <ul class="list-bullet">
@@ -228,6 +226,10 @@ updated: 2024-07-11
               </ul>            </li>
             <li>Authentication and Registration
               <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> Make organization_members a real model instead of just a table
+                  <ul class="list-bullet">
+                    <li>Once joining tables work properly</li>
+                  </ul>                </li>
                 <li><input type="checkbox" disabled  /> Make SessionBackend work with custom auth
                   <ul class="list-bullet">
                     <li>It mostly works but when the tables are in another schema then it doesn&#39;t. Need a less-fixed query method here.</li>
@@ -382,6 +384,10 @@ updated: 2024-07-11
                     <li>This should have notification templates and also destinations for the notifications</li>
                   </ul>                </li>
               </ul>            </li>
+            <li><input type="checkbox" disabled  /> Event logging
+              <ul class="list-bullet">
+                <li>Should support arbitrary types of events and also allow setting up queries that filter on various event sequences for a user/org</li>
+              </ul>            </li>
             <li>Workflow System
               <ul class="list-bullet">
                 <li><input type="checkbox" disabled  /> Build the workflow system
@@ -426,11 +432,49 @@ updated: 2024-07-11
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Support SQLite
               <ul class="list-bullet">
-                <li>Not sure how much work it will be to support both Postgres and SQLite, could turn out to be a big hassle due to differeing feature support and syntax, but I&#39;ll see at some point</li>
+                <li>Not sure how much work it will be to support both Postgres and SQLite, could turn out to be a big hassle due to differing feature support and syntax, but I&#39;ll see at some point</li>
+                <li>Things I use that are different in SQLite
+                  <ul class="list-bullet">
+                    <li><input type="checkbox" disabled  />AL JOIN (it supports them, just not with this syntax)</li>
+                    <li>No native <code>uuid</code> and <code>timestamptz</code> types</li>
+                    <li>No <code>array_agg</code> - this is probably the biggest one</li>
+                    <li><code>jsonb</code> functions are a bit different</li>
+                    <li>parameter binding syntax is different</li>
+                  </ul>                </li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> When using &quot;string auth IDs&quot; or custom auth in general, make it a different field that references the user/organization/role ID in the external system, and continue using a normal ObjectId type internally &mdash; Jul 22nd, 2024
+              <ul class="list-bullet">
+                <li>This simplifies a whole bunch of code that otherwise has to go back and forth depending on the actual underlying type of the auth object.</li>
+              </ul>            </li>
+            <li id="65d828c3-0e80-454f-bb1c-05e0715bef6d"><input type="checkbox" disabled checked /> Joining tables &mdash; Jul 22nd, 2024</li>
+            <li><input type="checkbox" disabled checked /> Model should have functions for adding/updating/removing child objects &mdash; Jul 17th, 2024</li>
+            <li id="6694db13-c3b4-4e96-977b-c1a50c0d314a"><input type="checkbox" disabled checked /> Rework query template system &mdash; Jul 16th, 2024
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled checked /> Create more of the query template stuff in the Rust code instead of in Tera
+                  <ul class="list-bullet">
+                    <li>This will make certain things a lot simpler especially when dealing with binding parameters</li>
+                    <li><input type="checkbox" disabled checked /> When generating a static query, keep a mapping of binding parameter to position, and have some method for the template system to generate a bunch of bindings from an object.
+                      <ul class="list-bullet">
+                        <li>This allows the query system to call a single function with data generated along with the bindings, which adds the relevant parameter bindings and doesn&#39;t require us to keep the two places in sync.</li>
+                      </ul>                    </li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Remove _permission from all the structs
+                  <ul class="list-bullet">
+                    <li>This removes the ability to have the custom Serialize impl that only serializes fields visible to the Owner if the permission is write.</li>
+                    <li>How useful is it anyway to have fields which are only viewable by the owner? Maybe it doesn&#39;t matter.</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Remove permissions checks from queries for global auth scope cases where we already know the permissions from the roles
+                  <ul class="list-bullet">
+                    <li>project-level and object-level still need it</li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled checked /> Change all the query functions into objects on a struct. Consider making the struct into a thing that takes a reference to the AuthInfo.
+                  <ul class="list-bullet">
+                    <li>This mostly just makes the typing experience nicer since instead of <code>post::queries::create</code> you call <code>Post::create</code>.</li>
+                  </ul>                </li>
+              </ul>            </li>
             <li><input type="checkbox" disabled checked /> Make user/org/role/etc. models optional &mdash; May 26th, 2024</li>
             <li><input type="checkbox" disabled checked /> Allow user/org/role IDs to be strings when using custom auth &mdash; May 26th, 2024</li>
             <li><input type="checkbox" disabled checked /> Add more test apps &mdash; May 24th, 2024
@@ -1007,6 +1051,24 @@ updated: 2024-07-11
         <li>Authentication
           <ul class="list-bullet">
             <li>Need a user/account mapping to support multiple auth methods per user.</li>
+          </ul>        </li>
+        <li id="660233f8-5485-446f-be9b-291572417c2a">Scrapped attempt to switch to SeaORM
+          <ul class="list-bullet">
+            <li>The experience starting to try this ended up with <a class="block-ref" href="/notes/projects_filigree#6694db13-c3b4-4e96-977b-c1a50c0d314a"><input type="checkbox" disabled checked /> Rework query template system &mdash; Jul 16th, 2024</a></li>
+            <li>Problems
+              <ul class="list-bullet">
+                <li><code>exec_with_returning</code> only supports returning a single model, this isn&#39;t an issue with raw sqlx</li>
+                <li><code>find_with_related</code> only supports a single related model, not an issue with the current query building</li>
+              </ul>            </li>
+            <li>But the nice things were...
+              <ul class="list-bullet">
+                <li>Easy to add auth query with a wrapper</li>
+                <li>Easy dynamic query construction</li>
+                <li>ActiveModel is pretty nice</li>
+                <li>Easier to decide at runtime which things to populate</li>
+                <li>Templates were easier to deal with, no more gnarly templates with a bunch of ifs generating SQL or functions to call queries.</li>
+                <li>Partial Models were nice</li>
+              </ul>            </li>
           </ul>        </li>
       </ul>    </li>
   </ul>
