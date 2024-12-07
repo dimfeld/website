@@ -8,7 +8,7 @@
     "dev": "vite dev --host 0.0.0.0",
     "build": "run-s build-repl build:svelte copy-files",
     "build:svelte": "NODE_ENV=production vite build",
-    "copy-files": "zx ./copy_content_to_build_destination.mjs",
+    "copy-files": "./copy_content_to_build_destination.sh",
     "preview": "NODE_ENV=production vite preview",
     "start": "node build",
     "check-types": "tsc",
