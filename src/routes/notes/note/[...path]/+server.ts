@@ -8,7 +8,7 @@ export const GET: RequestHandler = async function GET({ params: { path } }) {
   }
   let note = await lookupContent(noteSources, path);
   if (!note) {
-    throw error(404, 'Note not found');
+    error(404, 'Note not found');
   }
 
   const renderer = md();

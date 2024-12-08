@@ -6,7 +6,7 @@ import md from '$lib/markdown';
 export const load: PageServerLoad = async ({ params }) => {
   let post = lookupContent(postSources, params.id);
   if (!post) {
-    throw error(404, 'not found');
+    error(404, 'not found');
   }
 
   const renderer = md();

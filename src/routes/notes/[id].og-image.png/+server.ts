@@ -6,7 +6,7 @@ export const GET: RequestHandler = async function GET({ params }) {
   let { id } = params;
   let note = await lookupContent(noteSources, id);
   if (!note) {
-    throw error(404, 'not found');
+    error(404, 'not found');
   }
 
   let { body, headers } = await generateImage(note);
