@@ -1,23 +1,22 @@
 import { create_card } from '@dimfeld/create-social-card-wasm';
 import type { Post } from '../readPosts';
-import { read } from '$app/server';
 
-import bgImage from './card-bg.png';
-import inconsolataMedium from './Inconsolata-Medium.ttf';
-import inconsolataSemiBold from './Inconsolata-SemiBold.ttf';
+const bgImage = '/og-image/card-bg.png';
+const inconsolataMedium = '/og-image/Inconsolata-Medium.ttf';
+const inconsolataSemiBold = '/og-image/Inconsolata-SemiBold.ttf';
 
 const prod = process.env.NODE_ENV === 'production';
 
-export async function generateImage(post: Post) {
+export async function generateImage(fetch: typeof window.fetch, post: Post) {
   let { title, date, updated, type } = post;
   let objType = type === 'note' ? 'Note' : 'Post';
 
   let cardDate = new Date(updated || date).toUTCString().slice(0, -13);
 
   let [normal, bold, background] = await Promise.all([
-    read(inconsolataMedium).arrayBuffer(),
-    read(inconsolataSemiBold).arrayBuffer(),
-    read(bgImage).arrayBuffer(),
+    fetch(inconsolataMedium).then((r) => r.bytes()),
+    fetch(inconsolataSemiBold).then((r) => r.bytes()),
+    fetch(bgImage).then((r) => r.bytes()),
   ]);
 
   let config = {

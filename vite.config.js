@@ -1,5 +1,4 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import wasm from 'vite-plugin-wasm';
 
 import * as path from 'path';
 import { string } from 'rollup-plugin-string';
@@ -44,10 +43,8 @@ export default {
       'codemirror/addon/fold/markdown-fold.js',
       'codemirror/addon/fold/comment-fold.js',
     ],
-    exclude: ['@dimfeld/create-social-card-wasm'],
   },
   plugins: [
-    wasm(),
     sveltekit(),
     string({
       include: ['**/*.html', '**/*.md', '**/*.txt'],
