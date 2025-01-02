@@ -15,9 +15,9 @@
   <h1>Separate elements</h1>
   <div class="transition-container">
     {#if enabled}
-      <h3 transition:fly={{ x: -200 }}>Enabled!</h3>
+      <h3 transition:fly|global={{ x: -200 }}>Enabled!</h3>
     {:else}
-      <h3 transition:fly={{ x: 200 }}>Disabled!</h3>
+      <h3 transition:fly|global={{ x: 200 }}>Disabled!</h3>
     {/if}
   </div>
 </section>
@@ -27,7 +27,7 @@
   <div class="transition-container">
     <!-- This also works -->
     {#key enabled}
-      <h3 in:fly={{ x: -200 }} out:fly={{ x: 200 }}>
+      <h3 in:fly|global={{ x: -200 }} out:fly|global={{ x: 200 }}>
         {#if enabled}
           Enabled!
         {:else}
@@ -42,7 +42,7 @@
   <h1>Layout jumps without forced overlap</h1>
 
   {#key enabled}
-    <h3 transition:fly={{ x: -200 }}>
+    <h3 transition:fly|global={{ x: -200 }}>
       {#if enabled}
         Enabled!
       {:else}

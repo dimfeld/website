@@ -1,25 +1,12 @@
-import * as path from 'path';
-import { promises as fs } from 'fs';
-import { fileURLToPath } from 'url';
 import { create_card } from '@dimfeld/create-social-card-wasm';
 import type { Post } from '../readPosts';
+import { read } from '$app/server';
+
+import bgImage from './card-bg.png';
+import inconsolataMedium from './Inconsolata-Medium.ttf';
+import inconsolataSemiBold from './Inconsolata-SemiBold.ttf';
 
 const prod = process.env.NODE_ENV === 'production';
-
-// Work in Vercel serverless function or in Vite.
-const dirname = process.env.VERCEL
-  ? process.cwd()
-  : path.dirname(fileURLToPath(import.meta.url));
-
-async function read(filename: string) {
-  let fullPath = path.join(dirname, filename);
-  let buffer = await fs.readFile(fullPath);
-  return Uint8Array.from(buffer);
-}
-
-const bgImage = 'card-bg.png';
-const inconsolataMedium = 'Inconsolata-Medium.ttf';
-const inconsolataSemiBold = 'Inconsolata-SemiBold.ttf';
 
 export async function generateImage(post: Post) {
   let { title, date, updated, type } = post;
@@ -28,9 +15,9 @@ export async function generateImage(post: Post) {
   let cardDate = new Date(updated || date).toUTCString().slice(0, -13);
 
   let [normal, bold, background] = await Promise.all([
-    read(inconsolataMedium),
-    read(inconsolataSemiBold),
-    read(bgImage),
+    read(inconsolataMedium).arrayBuffer(),
+    read(inconsolataSemiBold).arrayBuffer(),
+    read(bgImage).arrayBuffer(),
   ]);
 
   let config = {

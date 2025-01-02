@@ -41,7 +41,7 @@
 {#if visible}
   <div
     use:clickOutside={hide}
-    transition:fade={{ duration: 200 }}
+    transition:fade|global={{ duration: 200 }}
     {style}
     class="absolute z-20 pb-4 flex flex-col {containerClass}">
     <div class="bg-white rounded-md shadow-lg {classNames}">
