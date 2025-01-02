@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { createHash } from 'crypto';
 import renderFactory from '$lib/markdown';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import * as labels from '../../../postMeta';
 import RSS from 'rss';
 import sorter from 'sorters';

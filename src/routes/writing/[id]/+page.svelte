@@ -12,7 +12,7 @@
     if (cardImage && !cardImage.startsWith('http')) {
       imageUrl = `${process.env.SITE_DOMAIN}/images/${cardImage}`;
     } else {
-      imageUrl = `${process.env.SITE_DOMAIN}/writing/${post.id}.og-image.png`;
+      imageUrl = `${process.env.SITE_DOMAIN}/og-image/writing/${post.id}.png`;
     }
   }
 

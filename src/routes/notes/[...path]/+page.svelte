@@ -10,10 +10,10 @@
     if (imageUrl && !imageUrl.startsWith('http')) {
       imageUrl = `${process.env.SITE_DOMAIN}/images/${imageUrl}`;
     } else {
-      imageUrl = `${process.env.SITE_DOMAIN}/notes/${note.id.replace(
-        /\//g,
+      imageUrl = `${process.env.SITE_DOMAIN}/og-image/note/${note.id.replaceAll(
+        '/',
         '_'
-      )}.og-image.png`;
+      )}.png`;
     }
   }
 

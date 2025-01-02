@@ -1,6 +1,6 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
-import { generateImage } from '../../../lib/og-image/generate';
-import { lookupContent, noteSources } from '../../../lib/readPosts';
+import { generateImage } from '$lib/og-image/generate';
+import { lookupContent, noteSources } from '$lib/readPosts';
 
 export const GET: RequestHandler = async function GET({ fetch, params }) {
   let { id } = params;
