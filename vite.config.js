@@ -1,4 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import wasm from 'vite-plugin-wasm';
 
 import * as path from 'path';
 import { string } from 'rollup-plugin-string';
@@ -45,6 +46,7 @@ export default {
     ],
   },
   plugins: [
+    wasm(),
     sveltekit(),
     string({
       include: ['**/*.html', '**/*.md', '**/*.txt'],

@@ -1,13 +1,17 @@
 import { create_card } from '@dimfeld/create-social-card-wasm';
+import initWasm from '@dimfeld/create-social-card-wasm';
+import wasmUrl from '@dimfeld/create-social-card-wasm/create_social_card_wasm_bg.wasm?url';
 import type { Post } from '../readPosts';
 
-const bgImage = '/og-image/card-bg.png';
-const inconsolataMedium = '/og-image/Inconsolata-Medium.ttf';
-const inconsolataSemiBold = '/og-image/Inconsolata-SemiBold.ttf';
+import bgImage from  './card-bg.png?url';
+import inconsolataMedium from './Inconsolata-Medium.ttf?url';
+import inconsolataSemiBold from './Inconsolata-SemiBold.ttf?url';
 
 const prod = process.env.NODE_ENV === 'production';
 
 export async function generateImage(fetch: typeof window.fetch, post: Post) {
+  const wasmFile = await fetch(wasmUrl);
+  await initWasm(wasmFile);
   let { title, date, updated, type } = post;
   let objType = type === 'note' ? 'Note' : 'Post';
 
