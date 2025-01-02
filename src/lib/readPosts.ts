@@ -1,6 +1,5 @@
 import frontMatter from 'front-matter';
 import uniq from 'just-unique';
-import * as path from 'path';
 
 interface PostAttributes {
   title: string;
@@ -219,10 +218,10 @@ function processPost(
 export function readAllSources(sources: Source[]): Post[] {
   let posts = sources.map((source) => {
     return Object.entries(source.files).map(([filename, data]) => {
-      let ext = path.extname(filename);
+      let lastDot = filename.lastIndexOf('.');
       let name = filename;
-      if (ext) {
-        name = name.slice(0, -ext.length);
+      if(lastDot !== -1) {
+        name = name.slice(0, lastDot);
       }
 
       let result = processPost(name, data);
