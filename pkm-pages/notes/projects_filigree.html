@@ -2,7 +2,7 @@
 title: "Filigree"
 tags: Projects
 date: 2023-12-09
-updated: 2024-07-25
+updated: 2024-12-07
 ---
 
 
@@ -12,6 +12,16 @@ updated: 2024-07-25
       <ul class="list-bullet">
         <li><h3>Up Next</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Figure out what to do with this project
+              <ul class="list-bullet">
+                <li>I&#39;m still not getting something I really like with SQL generation, but ORMs are still too inflexible. What&#39;s the proper solution here?</li>
+                <li>Maybe
+                  <ul class="list-bullet">
+                    <li>Rework auth to use JWT method</li>
+                    <li>Autogenerate Drizzle table definitions for database so that the frontend code can just use Drizzle for database access.</li>
+                    <li>Maybe use GraphQL for complex object fetches?</li>
+                  </ul>                </li>
+              </ul>            </li>
             <li id="669f04f7-f837-4f1c-849f-0d2f308cd39d"><input type="checkbox" disabled  /> Make test objects easier to manage
               <ul class="list-bullet">
                 <li>Instead of a one-size-fits-all bootstrapping we should just do it with a custom function per file, which will speed up the tests overall a bit, and also greatly simplify testing of through models where we need to make sure that the IDs all line up between the different objects.</li>
@@ -36,16 +46,12 @@ updated: 2024-07-25
               </ul>            </li>
             <li><input type="checkbox" disabled  /> More flexible configuration
               <ul class="list-bullet">
-                <li>Switch from <code>clap</code> to <code>config</code> or something</li>
+                <li>Switch from <code>clap</code> to <code>config</code> or something for the <code>serve</code> command&#39;s config</li>
                 <li>Main impetus here is to make it possible to read configuration from ConfigMap-sourced volumes in K8S and similar systems.</li>
               </ul>            </li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Use a build script to inject the current <code>filigree</code> version into the value used by <code>add_deps</code>
-              <ul class="list-bullet">
-                <li>Minor thing but makes the release process a bit smoother. Right now this has to be updated manually.</li>
-              </ul>            </li>
             <li><input type="checkbox" disabled  /> Simplify permissions system when using custom auth
               <ul class="list-bullet">
                 <li>Since we aren&#39;t creating the roles and users, we need a way to make sure that people have reasonable permissions when they start.</li>
@@ -445,6 +451,10 @@ updated: 2024-07-25
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Use a build script to inject the current <code>filigree</code> version into the value used by <code>add_deps</code> &mdash; Aug 6th, 2024
+              <ul class="list-bullet">
+                <li>Minor thing but makes the release process a bit smoother. Right now this has to be updated manually.</li>
+              </ul>            </li>
             <li><input type="checkbox" disabled checked /> When using &quot;string auth IDs&quot; or custom auth in general, make it a different field that references the user/organization/role ID in the external system, and continue using a normal ObjectId type internally &mdash; Jul 22nd, 2024
               <ul class="list-bullet">
                 <li>This simplifies a whole bunch of code that otherwise has to go back and forth depending on the actual underlying type of the auth object.</li>

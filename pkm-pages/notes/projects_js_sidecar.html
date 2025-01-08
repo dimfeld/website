@@ -2,7 +2,7 @@
 title: "JS Sidecar"
 tags: Projects
 date: 2024-08-05
-updated: 2024-08-05
+updated: 2024-08-17
 ---
 
 
@@ -16,8 +16,8 @@ updated: 2024-08-05
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> Allow passing additional dependencies which can be used in the scripts
               <ul class="list-bullet">
-                <li>This would probably be paths to somewhere on the filesystem that contains a library with package.json and all</li>
-                <li>I think supporting this would require supporting the entire node_modules lookup algorithm. The <a href="https://github.com/lukeed/resolve.exports">resolve.exports</a> library may be helpful here, or it might also work to just use <code>import</code></li>
+                <li>This would probably be paths to somewhere on the filesystem that contains a library with package.json and all.</li>
+                <li>Or maybe just a simple package.json with node_modules directory and then the script can be run with that as the CWD</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Support callbacks from the JS side to the Rust side
               <ul class="list-bullet">

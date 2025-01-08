@@ -2,7 +2,7 @@
 title: "Glance"
 tags: Projects
 date: 2023-09-29
-updated: 2024-07-30
+updated: 2024-12-07
 ---
 
 
@@ -11,9 +11,44 @@ updated: 2024-07-30
     <li><a href="https://github.com/dimfeld/glance">Github</a></li>
     <li><h2>Task List</h2>
       <ul class="list-bullet">
-        <li><h3>Up Next</h3></li>
+        <li><h3>Up Next</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Option to store apps within database
+              <ul class="list-bullet">
+                <li>Each app&#39;s code has two Javascript functions, one which does the work and another which formats the result</li>
+                <li>These apps should be bundled and then run on the backend.</li>
+                <li>Add a new table: app_code, which is linked to the app id, contains the code, and has a version r
+                  <ul class="list-bullet">
+                    <li>Hold both the original code and the bundled version.</li>
+                  </ul>                </li>
+                <li>An app with in-app code links to a specific row with the same app id</li>
+                <li>When running, execute using <a href="/notes/projects_js_sidecar">JS Sidecar</a></li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> In-app code editor
+              <ul class="list-bullet">
+                <li>Can take a lot from Ergo for this but worth seeing if there&#39;s new stuff for the code editor
+                  <ul class="list-bullet">
+                    <li><a href="https://github.com/val-town/codemirror-ts">https://github.com/val-town/codemirror-ts</a> for example might have some improvements over what I wrote before, need to check</li>
+                    <li>What&#39;s the best way to do bundling now? The existing method worked pretty well, probably worth just continuing that.</li>
+                  </ul>                </li>
+                <li>Code should have a &quot;latest&quot; version which autosyncs and then the active version activates when clicking save</li>
+              </ul>            </li>
+          </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
+            <li>In App Code
+              <ul class="list-bullet">
+                <li><input type="checkbox" disabled  /> KV interface for functions to persist data
+                  <ul class="list-bullet">
+                    <li>Consider just implementing a light version of <code>node:fs</code> which uses SQLite behind the scenes
+                      <ul class="list-bullet">
+                        <li>Won&#39;t really work with seeking or anything but that&#39;s ok, doesn&#39;t come up often anyway</li>
+                      </ul>                    </li>
+                  </ul>                </li>
+                <li><input type="checkbox" disabled  /> AI code generation</li>
+                <li><input type="checkbox" disabled  /> AI-generated UI</li>
+              </ul>            </li>
+            <li><input type="checkbox" disabled  /> Inbox-style interface</li>
             <li><input type="checkbox" disabled  /> Notifications</li>
             <li><input type="checkbox" disabled  /> Customize layout of the data items
               <ul class="list-bullet">
@@ -41,7 +76,7 @@ updated: 2024-07-30
               <ul class="list-bullet">
                 <li>See <a class="block-ref" href="/notes/projects_glance#6528a6dc-beaf-462e-b58a-18bcae7407c7">Apps can define actions to be done.</a></li>
               </ul>            </li>
-            <li><input type="checkbox" disabled  /> Detail pages can be a web app served by the app itself</li>
+            <li><input type="checkbox" disabled  /> Detail pages can be a web app served by the app itself?</li>
             <li><input type="checkbox" disabled  /> Main Item display can be a simple chart or other viz</li>
             <li><input type="checkbox" disabled  /> Item detail can be a vega viz or something
               <ul class="list-bullet">

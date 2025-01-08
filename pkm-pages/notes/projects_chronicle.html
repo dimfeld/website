@@ -2,7 +2,7 @@
 title: "Chronicle"
 tags: Projects
 date: 2024-03-29
-updated: 2024-07-27
+updated: 2024-08-26
 ---
 
 
@@ -14,11 +14,10 @@ updated: 2024-07-27
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> Write documentation</li>
             <li><input type="checkbox" disabled  /> Basic UI for visualizing runs, steps, etc.</li>
-            <li><input type="checkbox" disabled  /> Option to skip logging model messages</li>
           </ul>        </li>
         <li><h3>Soon</h3>
           <ul class="list-bullet">
-            <li><input type="checkbox" disabled  /> Support tools with Ollama</li>
+            <li><input type="checkbox" disabled  /> Option to skip logging model messages</li>
             <li><input type="checkbox" disabled  /> Python client
               <ul class="list-bullet">
                 <li>This should be both a normal client and have the ability to wrap other common clients such as the OpenAI SDK. Needs to be compatible with tools like instructor, DSPy, etc.</li>
@@ -28,6 +27,8 @@ updated: 2024-07-27
             <li><input type="checkbox" disabled  /> Add fixture tests for Ollama</li>
             <li><input type="checkbox" disabled  /> Add fixture tests for Anyscale</li>
             <li><input type="checkbox" disabled  /> Add fixture tests for DeepInfra</li>
+            <li><input type="checkbox" disabled  /> When waiting to retry, detect if the request has disconnected and cancel it</li>
+            <li><input type="checkbox" disabled  /> Add test for JSON <code>response_format</code></li>
           </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
@@ -105,6 +106,8 @@ updated: 2024-07-27
           </ul>        </li>
         <li><h3>Done</h3>
           <ul class="list-bullet">
+            <li><input type="checkbox" disabled checked /> Support <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching">prompt caching</a> &mdash; Aug 25th, 2024</li>
+            <li><input type="checkbox" disabled checked /> Support tools with Ollama</li>
             <li><input type="checkbox" disabled checked /> New Provider: AWS Bedrock &mdash; Jul 8th, 2024
               <ul class="list-bullet">
                 <li><a href="https://lib.rs/crates/aws-sdk-bedrockruntime">https://lib.rs/crates/aws-sdk-bedrockruntime</a></li>

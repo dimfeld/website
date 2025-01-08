@@ -2,7 +2,7 @@
 title: "Smelter"
 tags: Projects
 date: 2023-06-27
-updated: 2024-06-21
+updated: 2024-08-27
 ---
 
 
@@ -11,7 +11,40 @@ updated: 2024-06-21
     <li><h2>Task List</h2>
       <ul class="list-bullet">
         <li><h3>Up Next</h3></li>
-        <li><h3>Soon</h3></li>
+        <li><h3>Soon</h3>
+          <ul class="list-bullet">
+            <li><input type="checkbox" disabled  /> Global queue system and persistent workers for tasks
+              <ul class="list-bullet">
+                <li>This should speed up the time between tasks a lot and makes things more flexible as new tasks are added dynamically.</li>
+                <li>Start a pool of workers, each of which is qualified to handle one or more stages</li>
+                <li>Each worker communicates with the manager and fetches tasks from it</li>
+                <li>The biggest change this requires is ensuring that the manager and the workers can actually communicate. Can be an issue when it requires punching a hole in a VPC for example, maybe there&#39;s a better way to do it.
+                  <ul class="list-bullet">
+                    <li>Just running the manager as a task inside the VPC as well would accomplish some of this.</li>
+                    <li>Opening a hole in the VPC could work:
+                      <ul class="list-bullet">
+                        <li>Set up VPC ACLs to allow inbound comms on some port</li>
+                        <li>Manager generates a client SSL cert and sends the pubkey along with the worker payload</li>
+                        <li>Worker gets a public IPv6 IP</li>
+                        <li>Once a worker starts,
+                          <ul class="list-bullet">
+                            <li>manager connects to the worker</li>
+                            <li>worker verifies the client cert</li>
+                            <li>uses a 2-way GRPC connection to swap info both ways</li>
+                            <li>This would also help with shipping logs back to the manager.</li>
+                          </ul>                        </li>
+                      </ul>                    </li>
+                    <li>Could also work to use some other queue service like SQS which is easy to talk to from both sides
+                      <ul class="list-bullet">
+                        <li>But this requires supporting a bunch of different APIs on both sides.</li>
+                      </ul>                    </li>
+                  </ul>                </li>
+                <li>This also opens things up in some ways for running in Spot mode
+                  <ul class="list-bullet">
+                    <li>Add a function that allows a worker to checkpoint its work. The checkpoint function sends a payload to the manager, and then if the worker dies during the execution the manager can put the task back in the queue with checkpoint info, and the worker can resume from where it left off, if possible.</li>
+                  </ul>                </li>
+              </ul>            </li>
+          </ul>        </li>
         <li><h3>Later/Maybe</h3>
           <ul class="list-bullet">
             <li><input type="checkbox" disabled  /> Platform adapters could make it easier to build the local and platform-side code
@@ -51,12 +84,6 @@ updated: 2024-06-21
                   <ul class="list-bullet">
                     <li>DuckDB supports consuming Substrait so I may be able to generate Substrait from SQL, split it into stages, and then run the nodes as needed</li>
                   </ul>                </li>
-              </ul>            </li>
-            <li><input type="checkbox" disabled  /> Communication between manager and worker, after worker is started
-              <ul class="list-bullet">
-                <li>This would allow better inter-stage communication</li>
-                <li>For example stage 1 runs a bunch of &quot;map&quot; jobs, and stage 2 does the reduce, but both stages are started at the same time, and as the jobs in stage 1 finish their result locations are streamed to stage 2.</li>
-                <li>If everything is in the same VPC then this is easy; but otherwise it requires either a VPN or some other type of coordinator.</li>
               </ul>            </li>
             <li><input type="checkbox" disabled  /> Clean up inter-level channels
               <ul class="list-bullet">

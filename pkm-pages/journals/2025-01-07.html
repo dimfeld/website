@@ -1,0 +1,31 @@
+---
+title: "2025-01-07"
+tags: 
+date: 2025-01-07
+updated: 2025-01-08
+---
+
+
+    <h3>Building</h3>
+      <ul class="list-bullet">
+        <li>Most of my time lately has been spent between my new startup and my new baby, but when I can squeeze in some free time I&#39;m trying my hand at an autonomous programming agent based around Aider. First attempts with prompts I found from elsewhere were just mediocre, but I&#39;m thinking something like this:</li>
+        <li>Aside from Aider&#39;s internal repo map, I&#39;ll create a list of all the files in the repository and use an LLM to create a short description of each one.</li>
+        <li>Core loop:
+          <ul class="list-bullet">
+            <li>Get a task from plan.md</li>
+            <li>Use file_map.yaml to ask about relevant files, add these to Aider.</li>
+            <li>Generate a plan to implement this task. Lay out the interfaces between the frontend and backend, but do not generate any code except for type definitions.</li>
+            <li>Generate integration tests for the plan</li>
+            <li>Generate the frontend code based on the plan.</li>
+            <li>Generate the backend code based on the plan and the generated frontend code.</li>
+            <li>Check types and edit until type checks pass</li>
+            <li>Generate unit tests for the code</li>
+            <li>run/edit loop on tests</li>
+            <li>once tests pass, run format step</li>
+            <li>run postmortem step updating docs and lessons</li>
+            <li>update file_map.yaml file to describe any newly added files or files that</li>
+          </ul>        </li>
+        <li>As I make progress on this I may need to also come up with a system for developing detailed plan documents for each task. It can be done in ChatGPT/Claude but it gets a bit hard to manage all the different feature-specific chats all in one, and it would be nice to have this live alongside the actual coding agent and be informed by the repository structure.</li>
+      </ul>
+
+
